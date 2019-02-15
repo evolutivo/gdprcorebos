@@ -1,0 +1,910 @@
+<?xml version='1.0'?>
+<module>
+<name>Employees</name>
+<label>Employees</label>
+<parent>Marketing</parent>
+<version>1.0</version>
+<short_description>coreBOS Employees module</short_description>
+<dependencies>
+<vtiger_version>5.4.0</vtiger_version>
+<vtiger_max_version>5.*</vtiger_max_version>
+</dependencies>
+<license>
+<inline><![CDATA[/*************************************************************************************************
+ * Copyright 2015 Opencubed -- This file is a part of TSOLUCIO coreBOS customizations.
+ * You can copy, adapt and distribute the work under the "Attribution-NonCommercial-ShareAlike"
+ * Vizsage Public License (the "License"). You may not use this file except in compliance with the
+ * License. Roughly speaking, non-commercial users may share and modify this code, but must give credit
+ * and share improvements. However, for proper details please read the full License, available at
+ * http://vizsage.com/license/Vizsage-License-BY-NC-SA.html and the handy reference for understanding
+ * the full license at http://vizsage.com/license/Vizsage-Deed-BY-NC-SA.html. Unless required by
+ * applicable law or agreed to in writing, any software distributed under the License is distributed
+ * on an  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and limitations under the
+ * License terms of Creative Commons Attribution-NonCommercial-ShareAlike 3.0 (the License).
+ *************************************************************************************************
+ *  Module       : coreBOS Employees
+ *  Version      : 5.4.0
+ *  Author       : Opencubed
+ *************************************************************************************************/
+]]></inline>
+</license>
+<tables>
+<table>
+<name>vtiger_employees</name>
+<sql><![CDATA[CREATE TABLE `vtiger_employees` (
+  `employeeid` int(11) NOT NULL,
+  `employeeno` varchar(56) default NULL,
+  `employeename` varchar(200) default NULL,
+  `employeelastn` varchar(200) default NULL,
+  `employeetitle` varchar(200) default NULL,
+  `emp_organization` varchar(200) default NULL,
+  `emp_department` varchar(200) default NULL,
+  `emp_officephone` varchar(200) default NULL,
+  `emp_mobile` varchar(200) default NULL,
+  `emp_homephone` varchar(200) default NULL,
+  `emp_otherphone` varchar(200) default NULL,
+  `emp_fax` varchar(200) default NULL,
+  `emp_birthdate` date default NULL,
+  `emp_email` varchar(200) default NULL,
+  `emp_mailingstreet` varchar(200) default NULL,
+  `emp_mailingpobox` varchar(200) default NULL,
+  `emp_mailingcity` varchar(200) default NULL,
+  `emp_mailingstate` varchar(200) default NULL,
+  `emp_mailingpostalcode` varchar(200) default NULL,
+  `emp_mailingcountry` varchar(200) default NULL,
+  `emp_otherstreet` varchar(200) default NULL,
+  `emp_otherpobox` varchar(200) default NULL,
+  `emp_othercity` varchar(200) default NULL,
+  `emp_otherstate` varchar(200) default NULL,
+  `emp_otherpostalcode` varchar(200) default NULL,
+  `emp_othercountry` varchar(200) default NULL,
+  `firstdepartment` varchar(200) default NULL,
+  `seconddepartment` varchar(200) default NULL,
+  `datechangedep1` date default NULL,
+  `datechangedep2` date default NULL,
+  `thirddepartment` varchar(200) default NULL,
+  `forthdepartment` varchar(200) default NULL,
+  `datechangedep3` date default NULL,
+  `datechangedep4` date default NULL,
+    index (`employeename`),
+    index (`employeelastn`),
+    index (`employeeno`),
+  PRIMARY KEY (`employeeid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+<table>
+<name>vtiger_employeescf</name>
+<sql><![CDATA[CREATE TABLE `vtiger_employeescf` (
+  `employeeid` int(11) NOT NULL,
+  PRIMARY KEY (`employeeid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+</tables>
+<blocks>
+<block>
+<label>LBL_EMPLOYEE_INFORMATION</label>
+<fields>
+<field>
+<fieldname>employeename</fieldname>
+<uitype>2</uitype>
+<columnname>employeename</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Name</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>1</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>employeelastn</fieldname>
+<uitype>1</uitype>
+<columnname>employeelastn</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Last Name</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>3</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>employeeno</fieldname>
+<uitype>4</uitype>
+<columnname>employeeno</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Employee No</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~M</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<entityidentifier>
+<entityidfield>employeeid</entityidfield>
+<entityidcolumn>employeeid</entityidcolumn>
+</entityidentifier>
+</field>
+<field>
+<fieldname>assigned_user_id</fieldname>
+<uitype>53</uitype>
+<columnname>smownerid</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Assigned To</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>4</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~M</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>1</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>employeetitle</fieldname>
+<uitype>1</uitype>
+<columnname>employeetitle</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Title</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>5</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_organization</fieldname>
+<uitype>1</uitype>
+<columnname>emp_organization</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Organization Name</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>7</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_department</fieldname>
+<uitype>1</uitype>
+<columnname>emp_department</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Department Name</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>6</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_officephone</fieldname>
+<uitype>1</uitype>
+<columnname>emp_officephone</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>OfficePhone</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>8</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_mobile</fieldname>
+<uitype>1</uitype>
+<columnname>emp_mobile</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Mobile</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>9</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_homephone</fieldname>
+<uitype>1</uitype>
+<columnname>emp_homephone</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Home Phone</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>11</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_otherphone</fieldname>
+<uitype>1</uitype>
+<columnname>emp_otherphone</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Other Phone</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>10</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_fax</fieldname>
+<uitype>1</uitype>
+<columnname>emp_fax</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Fax</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>12</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_birthdate</fieldname>
+<uitype>5</uitype>
+<columnname>emp_birthdate</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Birthdate</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>13</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>D~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_email</fieldname>
+<uitype>13</uitype>
+<columnname>emp_email</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Email</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>15</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>createdtime</fieldname>
+<uitype>70</uitype>
+<columnname>createdtime</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Created Time</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>14</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>T~O</typeofdata>
+<quickcreate>3</quickcreate>
+<quickcreatesequence>8</quickcreatesequence>
+<displaytype>2</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>modifiedtime</fieldname>
+<uitype>70</uitype>
+<columnname>modifiedtime</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Modified Time</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>16</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>T~O</typeofdata>
+<quickcreate>3</quickcreate>
+<quickcreatesequence>9</quickcreatesequence>
+<displaytype>2</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+</fields>
+</block>
+<block>
+<label>LBL_ADDRESS_INFORMATION</label>
+<fields>
+<field>
+<fieldname>emp_mailingstreet</fieldname>
+<uitype>21</uitype>
+<columnname>emp_mailingstreet</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Mailing Street</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>17</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_mailingpobox</fieldname>
+<uitype>1</uitype>
+<columnname>emp_mailingpobox</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Mailing PO Box</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>19</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_mailingcity</fieldname>
+<uitype>1</uitype>
+<columnname>emp_mailingcity</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Mailing City</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>18</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_mailingstate</fieldname>
+<uitype>1</uitype>
+<columnname>emp_email</columnname>
+<tablename>emp_mailingstate</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Mailing State</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>20</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_mailingpostalcode</fieldname>
+<uitype>1</uitype>
+<columnname>emp_mailingpostalcode</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Mailing Postal Code</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>21</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_mailingcountry</fieldname>
+<uitype>1</uitype>
+<columnname>emp_mailingcountry</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Mailing Country</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>23</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_otherstreet</fieldname>
+<uitype>21</uitype>
+<columnname>emp_otherstreet</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Other Street</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>22</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_otherpobox</fieldname>
+<uitype>1</uitype>
+<columnname>emp_otherpobox</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Other PO Box</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>24</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_othercity</fieldname>
+<uitype>1</uitype>
+<columnname>emp_othercity</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Other City</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>25</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_otherstate</fieldname>
+<uitype>1</uitype>
+<columnname>emp_otherstate</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Other State</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>27</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_otherpostalcode</fieldname>
+<uitype>1</uitype>
+<columnname>emp_otherpostalcode</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Other Postal Code</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>26</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>emp_othercountry</fieldname>
+<uitype>1</uitype>
+<columnname>emp_othercountry</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Other Country</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>28</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+</fields>
+</block>
+<block>
+<label>LBL_DEPARTMENT_INFORMATION</label>
+<fields>
+<field>
+<fieldname>firstdepartment</fieldname>
+<uitype>15</uitype>
+<columnname>firstdepartment</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>First Department</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>29</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>--Nessuno--</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>seconddepartment</fieldname>
+<uitype>15</uitype>
+<columnname>seconddepartment</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Change 2^ Department</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>31</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>--Nessuno--</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>datechangedep1</fieldname>
+<uitype>5</uitype>
+<columnname>datechangedep1</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Date Change Department</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>30</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>D~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>datechangedep2</fieldname>
+<uitype>5</uitype>
+<columnname>datechangedep2</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Date Change 2^ Department</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>32</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thirddepartment</fieldname>
+<uitype>15</uitype>
+<columnname>thirddepartment</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Change 3^ Department</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>33</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>--Nessuno--</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>forthdepartment</fieldname>
+<uitype>15</uitype>
+<columnname>forthdepartment</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Change 4^ Department</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>35</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>--Nessuno--</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>datechangedep3</fieldname>
+<uitype>5</uitype>
+<columnname>datechangedep3</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Date Change 3^ Department</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>34</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>D~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>datechangedep4</fieldname>
+<uitype>5</uitype>
+<columnname>datechangedep4</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Date Change 4^ Department</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>36</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>D~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+</fields>
+</block>
+<block>
+<label>LBL_DESCRIPTION_INFORMATION</label>
+<fields>
+<field>
+<fieldname>description</fieldname>
+<uitype>19</uitype>
+<columnname>description</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Description</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<selected>0</selected>
+<sequence>37</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>10</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+</fields>
+</block>
+</blocks>
+<customviews>
+<customview>
+<viewname>All</viewname>
+<setdefault>true</setdefault>
+<setmetrics>false</setmetrics>
+<fields>
+<field>
+<fieldname>employeeno</fieldname>
+<columnindex>0</columnindex>
+</field>
+<field>
+<fieldname>employeename</fieldname>
+<columnindex>1</columnindex>
+</field>
+<field>
+<fieldname>employeelastn</fieldname>
+<columnindex>2</columnindex>
+</field>
+<field>
+<fieldname>assigned_user_id</fieldname>
+<columnindex>3</columnindex>
+</field>
+</fields>
+</customview>
+</customviews>
+<sharingaccess>
+<default>public</default>
+</sharingaccess>
+<actions>
+<action>
+<name><![CDATA[Merge]]></name>
+<status>enabled</status>
+</action>
+<action>
+<name><![CDATA[Import]]></name>
+<status>enabled</status>
+</action>
+<action>
+<name><![CDATA[Export]]></name>
+<status>enabled</status>
+</action>
+</actions>
+<relatedlists>
+</relatedlists>
+<customlinks>
+</customlinks>
+<crons>
+</crons>
+</module>

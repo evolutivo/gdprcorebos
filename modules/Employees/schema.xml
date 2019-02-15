@@ -1,0 +1,55 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_employees</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_employees` (
+  `employeeid` int(11) NOT NULL,
+  `employeeno` varchar(56) default NULL,
+  `employeename` varchar(200) default NULL,
+  `employeelastn` varchar(200) default NULL,
+  `employeetitle` varchar(200) default NULL,
+  `emp_organization` varchar(200) default NULL,
+  `emp_department` varchar(200) default NULL,
+  `emp_officephone` varchar(200) default NULL,
+  `emp_mobile` varchar(200) default NULL,
+  `emp_homephone` varchar(200) default NULL,
+  `emp_otherphone` varchar(200) default NULL,
+  `emp_fax` varchar(200) default NULL,
+  `emp_birthdate` date default NULL,
+  `emp_email` varchar(200) default NULL,
+  `emp_mailingstreet` varchar(200) default NULL,
+  `emp_mailingpobox` varchar(200) default NULL,
+  `emp_mailingcity` varchar(200) default NULL,
+  `emp_mailingstate` varchar(200) default NULL,
+  `emp_mailingpostalcode` varchar(200) default NULL,
+  `emp_mailingcountry` varchar(200) default NULL,
+  `emp_otherstreet` varchar(200) default NULL,
+  `emp_otherpobox` varchar(200) default NULL,
+  `emp_othercity` varchar(200) default NULL,
+  `emp_otherstate` varchar(200) default NULL,
+  `emp_otherpostalcode` varchar(200) default NULL,
+  `emp_othercountry` varchar(200) default NULL,
+  `firstdepartment` varchar(200) default NULL,
+  `seconddepartment` varchar(200) default NULL,
+  `datechangedep1` date default NULL,
+  `datechangedep2` date default NULL,
+  `thirddepartment` varchar(200) default NULL,
+  `forthdepartment` varchar(200) default NULL,
+  `datechangedep3` date default NULL,
+  `datechangedep4` date default NULL,
+    index (`employeename`),
+    index (`employeelastn`),
+    index (`employeeno`),
+  PRIMARY KEY (`employeeid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_employeescf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_employeescf` (
+  `employeeid` int(11) NOT NULL,
+  PRIMARY KEY (`employeeid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

@@ -1,0 +1,46 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_cbsignature</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_cbsignature` (
+  `cbsignatureid` int(11) NOT NULL,
+  `signatureno` varchar(255) DEFAULT NULL,
+  `signaturename` varchar(255) DEFAULT NULL,
+  `signaturetype` varchar(100) DEFAULT NULL,
+  `elementtype` varchar(100) DEFAULT NULL,
+  `ws` varchar(6) DEFAULT NULL,
+  `nodeexec` varchar(5) DEFAULT NULL,
+  `signaturesconfig` varchar(1000) DEFAULT NULL,
+  `scriptname` varchar(255) DEFAULT NULL,
+  `celery` varchar(5) DEFAULT NULL,
+  `conditionmap` varchar(100) DEFAULT NULL,
+  `permissionmap` varchar(100) DEFAULT NULL,
+  `causale` varchar(255) DEFAULT NULL,
+  `modules` varchar(100) DEFAULT NULL,
+  `block` varchar(100) DEFAULT NULL,
+  `signaturestatus` varchar(100) DEFAULT NULL,
+  `sigtrigger` varchar(100) DEFAULT NULL,
+  `sig_type` varchar(100) DEFAULT NULL,
+  `execution_type` varchar(100) DEFAULT NULL,
+  `scheduled` varchar(100) DEFAULT NULL,
+  `scheduledtime` varchar(255) DEFAULT NULL,
+  `parametersmap` varchar(100) DEFAULT NULL,
+  `onerrorcallback` varchar(100) DEFAULT NULL,
+  `iomap` varchar(100) DEFAULT NULL,
+  `immutable` varchar(5) DEFAULT NULL,
+  `sig_range` varchar(100) DEFAULT NULL,
+  `scheduleddate` date DEFAULT NULL,
+  `sig_outputtype` varchar(255) DEFAULT '',
+  PRIMARY KEY (`cbsignatureid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_cbsignaturecf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_cbsignaturecf` (
+  `cbsignatureid` int(11) NOT NULL,
+  PRIMARY KEY (`cbsignatureid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

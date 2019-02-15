@@ -1,0 +1,21 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_cases</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_cases` (
+  `casesid` int(11) default NULL,
+  `cases_no` varchar(56) default NULL,
+  `casesname` varchar(255) default NULL,
+  PRIMARY KEY (`casesid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_casescf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_casescf` (
+  `casesid` int(11) NOT NULL,
+  PRIMARY KEY (`casesid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

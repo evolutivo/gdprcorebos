@@ -1,0 +1,38 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_cbcvmanagement</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_cbcvmanagement` (
+  `cbcvmanagementid` int(11) NOT NULL,
+  `cvid` varchar(190) NOT NULL, 
+  `cbcvmno` varchar(150),
+  `cvrole` varchar(250),
+  `cvcreate` varchar(3),
+  `cvretrieve` varchar(3),
+  `cvupdate` varchar(3),
+  `cvdelete` varchar(3),
+  `cvdefault` varchar(3),
+  `cvapprove` varchar(3),
+  `cvptype` varchar(12),
+  `mandatory` varchar(3),
+  `blocked` varchar(3),
+  `module_list` varchar(500),
+  `default_setting` varchar(3),
+  PRIMARY KEY  (`cbcvmanagementid`),
+  KEY (`cvid`,`cvdefault`),
+  KEY (`cvid`,`cvdefault`,`cvrole`),
+  KEY (`cvid`,`cvdefault`,`mandatory`),
+  KEY (`cvdefault`,`module_list`,`default_setting`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+]]></sql>
+		</table>
+		<table>
+			<name>vtiger_cbcvmanagementcf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_cbcvmanagementcf` (
+  `cbcvmanagementid` int(11) NOT NULL,
+  PRIMARY KEY (`cbcvmanagementid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

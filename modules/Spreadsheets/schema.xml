@@ -1,0 +1,24 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_spreadsheets</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_spreadsheets` (
+  `spreadsheetsid` int(19) NOT NULL,
+  `spreadsheetsname` varchar(255) DEFAULT NULL,
+  `spreadsheetsno` varchar(255) DEFAULT NULL,
+  `module1` varchar(100) DEFAULT NULL,
+  `othercolumns` varchar(255) DEFAULT NULL,
+  `modulecolumns` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`spreadsheetsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_spreadsheetscf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_spreadsheetscf` (
+  `spreadsheetsid` int(19) NOT NULL,
+  PRIMARY KEY (`spreadsheetsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

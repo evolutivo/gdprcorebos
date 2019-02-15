@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_productcomponent</name>
+			<sql><![CDATA[CREATE TABLE IF NOT EXISTS `vtiger_productcomponent` (
+  `productcomponentid` int(11) NOT NULL DEFAULT '0',
+  `relno` varchar(255) NOT NULL,
+  `frompdo` int(11) DEFAULT NULL,
+  `topdo` int(11) DEFAULT NULL,
+  `relmode` varchar(100) DEFAULT NULL,
+  `relfrom` date DEFAULT NULL,
+  `relto` date DEFAULT NULL,
+  `quantity` decimal(25,6) DEFAULT NULL,
+  `instructions` text DEFAULT NULL,
+  index (`frompdo`),
+  index (`topdo`),
+  index (`frompdo`,`topdo`,`relmode`),
+  index (`relfrom`,`relto`),
+  PRIMARY KEY (`productcomponentid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_productcomponentcf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_productcomponentcf` (
+  `productcomponentid` int(11) NOT NULL,
+  PRIMARY KEY (`productcomponentid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

@@ -1,0 +1,21 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_threats</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_threats` (
+  `threatsid` int(19) NOT NULL,
+  `threatsname` varchar(255) DEFAULT NULL,
+  `accounts` int(10) DEFAULT NULL,
+  PRIMARY KEY (`threatsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_threatscf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_threatscf` (
+  `threatsid` int(19) NOT NULL,
+  PRIMARY KEY (`threatsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

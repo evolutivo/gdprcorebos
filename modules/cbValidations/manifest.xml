@@ -1,0 +1,350 @@
+<?xml version='1.0'?>
+<module>
+<name>cbValidations</name>
+<label>cbValidations</label>
+<parent>Tools</parent>
+<version>1.0</version>
+<short_description>cbValidations Module.</short_description>
+<dependencies>
+<vtiger_version>5.4.0</vtiger_version>
+<vtiger_max_version>5.*</vtiger_max_version>
+</dependencies>
+<license>
+<inline><![CDATA[/*************************************************************************************************
+ * Copyright 2016 Spike Associates -- This file is a part of TSOLUCIO coreBOS customizations.
+ * You can copy, adapt and distribute the work under the "Attribution-NonCommercial-ShareAlike"
+ * Vizsage Public License (the "License"). You may not use this file except in compliance with the
+ * License. Roughly speaking, non-commercial users may share and modify this code, but must give credit
+ * and share improvements. However, for proper details please read the full License, available at
+ * http://vizsage.com/license/Vizsage-License-BY-NC-SA.html and the handy reference for understanding
+ * the full license at http://vizsage.com/license/Vizsage-Deed-BY-NC-SA.html. Unless required by
+ * applicable law or agreed to in writing, any software distributed under the License is distributed
+ * on an  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and limitations under the
+ * License terms of Creative Commons Attribution-NonCommercial-ShareAlike 3.0 (the License).
+ *************************************************************************************************
+ *  Module       : cbValidations
+ *  Version      : 5.4.0
+ *  Author       : Spike Associates
+ *************************************************************************************************/
+]]>
+</inline>
+</license>
+<tables>
+<table>
+<name>vtiger_cbvalidations</name>
+<sql><![CDATA[CREATE TABLE `vtiger_cbvalidations` (
+  `cbvalidationsid` int(11) NOT NULL,
+  `cbvalidationsno` varchar(100) DEFAULT NULL,
+  `cbvalidationsname` varchar(255) DEFAULT NULL,
+  `val_type` varchar(250) DEFAULT NULL,
+  `f_name` varchar(250) DEFAULT NULL,
+  `f_tablename` varchar(250) DEFAULT NULL,
+  `f_format` varchar(255) DEFAULT NULL,
+  `f_mandatory` varchar(250)DEFAULT NULL,
+  `f_dipendent` varchar(200) DEFAULT NULL,
+   PRIMARY KEY (`cbvalidationsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+<table>
+<name>vtiger_cbvalidationscf</name>
+<sql><![CDATA[CREATE TABLE `vtiger_cbvalidationscf` (
+  `cbvalidationsid` int(11) NOT NULL,
+  PRIMARY KEY (`cbvalidationsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+</tables>
+<blocks>
+<block>
+<label>LBL_CBVALIDATIONS_INFORMATION</label>
+<fields>
+<field>
+<fieldname>cbvalidationsno</fieldname>
+<uitype>4</uitype>
+<columnname>cbvalidationsno</columnname>
+<tablename>vtiger_cbvalidations</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>cbvalidations No</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>1</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~M</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<entityidentifier>
+<entityidfield>cbvalidationsid</entityidfield>
+<entityidcolumn>cbvalidationsid</entityidcolumn>
+</entityidentifier>
+</field>
+<field>
+<fieldname>cbvalidationsname</fieldname>
+<uitype>1</uitype>
+<columnname>cbvalidationsname</columnname>
+<tablename>vtiger_cbvalidations</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>cbValidations Name</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~M</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>val_type</fieldname>
+<uitype>15</uitype>
+<columnname>val_type</columnname>
+<tablename>vtiger_cbvalidations</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Type</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<selected>0</selected>
+<sequence>13</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>--Nessuno--</picklistvalue>
+<picklistvalue>PIVA_Validation</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>f_name</fieldname>
+<uitype>1</uitype>
+<columnname>f_name</columnname>
+<tablename>vtiger_cbvalidations</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Field Name</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<selected>0</selected>
+<sequence>17</sequence>
+<maximumlength>50</maximumlength>
+<typeofdata>V~O~LE~50</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>1</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>2</masseditable>
+</field>
+<field>
+<fieldname>f_tablename</fieldname>
+<uitype>1</uitype>
+<columnname>f_tablename</columnname>
+<tablename>vtiger_cbvalidations</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Table Name</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<selected>0</selected>
+<sequence>17</sequence>
+<maximumlength>255</maximumlength>
+<typeofdata>V~O~LE~255</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>1</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>2</masseditable>
+</field>
+<field>
+<fieldname>f_format</fieldname>
+<uitype>1</uitype>
+<columnname>f_format</columnname>
+<tablename>vtiger_cbvalidations</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Format</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<selected>0</selected>
+<sequence>17</sequence>
+<maximumlength>255</maximumlength>
+<typeofdata>V~O~LE~255</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>1</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>2</masseditable>
+</field>
+<field>
+<fieldname>f_mandatory</fieldname>
+<uitype>56</uitype>
+<columnname>f_mandatory</columnname>
+<tablename>vtiger_cbvalidations</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Mandatory</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<selected>0</selected>
+<sequence>1</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>C~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>f_dipendent</fieldname>
+<uitype>1</uitype>
+<columnname>f_dipendent</columnname>
+<tablename>vtiger_cbvalidations</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Dipendent</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<selected>0</selected>
+<sequence>17</sequence>
+<maximumlength>255</maximumlength>
+<typeofdata>V~O~LE~255</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>1</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>2</masseditable>
+</field>
+<field>
+<fieldname>assigned_user_id</fieldname>
+<uitype>53</uitype>
+<columnname>smownerid</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Assigned To</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>10</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~M</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>1</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>createdtime</fieldname>
+<uitype>70</uitype>
+<columnname>createdtime</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Created Time</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>12</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>DT~O</typeofdata>
+<quickcreate>3</quickcreate>
+<quickcreatesequence>8</quickcreatesequence>
+<displaytype>2</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>modifiedtime</fieldname>
+<uitype>70</uitype>
+<columnname>modifiedtime</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Modified Time</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>13</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>DT~O</typeofdata>
+<quickcreate>3</quickcreate>
+<quickcreatesequence>9</quickcreatesequence>
+<displaytype>2</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+</fields>
+</block>
+<block>
+<label>LBL_CUSTOM_INFORMATION</label>
+</block>
+<block>
+<label>LBL_DESCRIPTION_INFORMATION</label>
+<fields>
+<field>
+<fieldname>description</fieldname>
+<uitype>19</uitype>
+<columnname>description</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Description</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<selected>0</selected>
+<sequence>1</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>10</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+</fields>
+</block>
+</blocks>
+<customviews>
+<customview>
+<viewname>All</viewname>
+<setdefault>true</setdefault>
+<setmetrics>false</setmetrics>
+<fields>
+<field>
+<fieldname>cbvalidationsno</fieldname>
+<columnindex>0</columnindex>
+</field>
+</fields>
+</customview>
+</customviews>
+<sharingaccess>
+<default>private</default>
+</sharingaccess>
+<customlinks>
+<customlink>
+<linktype></linktype>
+<linklabel></linklabel>
+<linkurl><![CDATA[]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
+</customlinks>
+<crons>
+</crons>
+</module>

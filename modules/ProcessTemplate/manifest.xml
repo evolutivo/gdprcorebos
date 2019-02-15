@@ -1,0 +1,385 @@
+<?xml version='1.0'?>
+<module>
+<name>ProcessTemplate</name>
+<label>ProcessTemplate</label>
+<parent>Inventory</parent>
+<version>1.0</version>
+<short_description>Process Template Module.</short_description>
+<dependencies>
+<vtiger_version>5.4.0</vtiger_version>
+<vtiger_max_version>5.*</vtiger_max_version>
+</dependencies>
+<license>
+<inline><![CDATA[/*************************************************************************************************
+ * Copyright 2015 Opencubed -- This file is a part of TSOLUCIO coreBOS customizations.
+ * You can copy, adapt and distribute the work under the "Attribution-NonCommercial-ShareAlike"
+ * Vizsage Public License (the "License"). You may not use this file except in compliance with the
+ * License. Roughly speaking, non-commercial users may share and modify this code, but must give credit
+ * and share improvements. However, for proper details please read the full License, available at
+ * http://vizsage.com/license/Vizsage-License-BY-NC-SA.html and the handy reference for understanding
+ * the full license at http://vizsage.com/license/Vizsage-Deed-BY-NC-SA.html. Unless required by
+ * applicable law or agreed to in writing, any software distributed under the License is distributed
+ * on an  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and limitations under the
+ * License terms of Creative Commons Attribution-NonCommercial-ShareAlike 3.0 (the License).
+ *************************************************************************************************
+ *  Module       : ProcessTemplate
+ *  Version      : 5.4.0
+ *  Author       : AT CONSULTING
+ *************************************************************************************************/
+]]></inline>
+</license>
+<tables>
+<table>
+<name>vtiger_processtemplate</name>
+<sql><![CDATA[CREATE TABLE `vtiger_processtemplate` (
+  `processtemplateid` int(11) NOT NULL,
+  `processtemplatename` varchar(255) default NULL,
+  `proctemplateid` varchar(100) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `endtasksubstatus` varchar(255) DEFAULT NULL,
+  `processslastart` varchar(255) DEFAULT NULL,
+  `processslaend` varchar(255) DEFAULT NULL,
+  `processtemplatesecurity` varchar(255) DEFAULT NULL,
+  `giornichiususracliente` varchar(10) DEFAULT '',
+  PRIMARY KEY (`processtemplateid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+<table>
+<name>vtiger_processtemplatecf</name>
+<sql><![CDATA[CREATE TABLE `vtiger_processtemplatecf` (
+  `processtemplateid` int(11) NOT NULL,
+  PRIMARY KEY (`processtemplateid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+</tables>
+<blocks>
+<block>
+<label>LBL_PROCESSTEMPLATE_INFORMATION</label>
+<fields>
+<field>
+<fieldname>processtemplatename</fieldname>
+<uitype>2</uitype>
+<columnname>processtemplatename</columnname>
+<tablename>vtiger_processtemplate</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Process Template Name</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>1</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~M</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<entityidentifier>
+<entityidfield>processtemplateid</entityidfield>
+<entityidcolumn>processtemplateid</entityidcolumn>
+</entityidentifier>
+</field>
+<field>
+<fieldname>proctemplateid</fieldname>
+<uitype>4</uitype>
+<columnname>proctemplateid</columnname>
+<tablename>vtiger_processtemplate</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Proc Template ID</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~M</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>description</fieldname>
+<uitype>19</uitype>
+<columnname>description</columnname>
+<tablename>vtiger_processtemplate</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Description</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>3</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~0</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>code</fieldname>
+<uitype>1</uitype>
+<columnname>code</columnname>
+<tablename>vtiger_processtemplate</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Code</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>4</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~0</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>endtasksubstatus</fieldname>
+<uitype>15</uitype>
+<columnname>endtasksubstatus</columnname>
+<tablename>vtiger_processtemplate</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>endtasksubstatus</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>5</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~0</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>Nessuno</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>processslastart</fieldname>
+<uitype>15</uitype>
+<columnname>processslastart</columnname>
+<tablename>vtiger_processtemplate</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Process SLA Start</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>6</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>Nessuno</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>processslaend</fieldname>
+<uitype>15</uitype>
+<columnname>processslaend</columnname>
+<tablename>vtiger_processtemplate</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Process SLA End</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>7</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>Nessuno</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>processtemplatesecurity</fieldname>
+<uitype>15</uitype>
+<columnname>processtemplatesecurity</columnname>
+<tablename>vtiger_processtemplate</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>PT Security</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>8</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>User</picklistvalue>
+<picklistvalue>Group</picklistvalue>
+<picklistvalue>Start role on group</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>assigned_user_id</fieldname>
+<uitype>53</uitype>
+<columnname>smownerid</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Assigned To</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>9</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~M</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>CreatedTime</fieldname>
+<uitype>70</uitype>
+<columnname>createdtime</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Created Time</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>10</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>DT~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>2</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>ModifiedTime</fieldname>
+<uitype>70</uitype>
+<columnname>modifiedtime</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Modified Time</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>11</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>DT~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>2</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>giornichiususracliente</fieldname>
+<uitype>1</uitype>
+<columnname>giornichiususracliente</columnname>
+<tablename>vtiger_processtemplate</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Giorni chiusura cliente</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>12</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~10</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+</fields>
+</block>
+<block>
+<label>LBL_CUSTOM_INFORMATION</label>
+</block>
+</blocks>
+<customviews>
+<customview>
+<viewname>All</viewname>
+<setdefault>true</setdefault>
+<setmetrics>false</setmetrics>
+<fields>
+<field>
+<fieldname>processtemplatename</fieldname>
+<columnindex>0</columnindex>
+</field>
+<field>
+<fieldname>assigned_user_id</fieldname>
+<columnindex>1</columnindex>
+</field>
+</fields>
+</customview>
+</customviews>
+<sharingaccess>
+<default>private</default>
+</sharingaccess>
+<actions>
+<action>
+<name><![CDATA[Merge]]></name>
+<status>enabled</status>
+</action>
+<action>
+<name><![CDATA[Import]]></name>
+<status>enabled</status>
+</action>
+<action>
+<name><![CDATA[Export]]></name>
+<status>enabled</status>
+</action>
+</actions>
+<relatedlists>
+<relatedlist>
+<function>get_dependents_list</function>
+<label>ProcessFlow</label>
+<sequence>1</sequence>
+<presence>0</presence>
+<actions>
+<action>ADD</action>
+</actions>
+<relatedmodule>ProcessFlow</relatedmodule>
+</relatedlist>
+</relatedlists>
+<customlinks>
+<customlink>
+<linktype></linktype>
+<linklabel></linklabel>
+<linkurl><![CDATA[]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
+</customlinks>
+<crons>
+</crons>
+</module>

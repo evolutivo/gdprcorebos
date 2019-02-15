@@ -1,0 +1,239 @@
+<?xml version='1.0'?>
+<module>
+<name>MarketingDashboard</name>
+<label>Marketing Dashboard</label>
+<parent>Marketing</parent>
+<type>extension</type>
+<dependencies>
+<vtiger_version>5.4.0</vtiger_version>
+<vtiger_max_version>5.*</vtiger_max_version>
+</dependencies>
+<license>
+<inline><![CDATA[
+ *************************************************************************************************
+ * Copyright 2015 OpenCubed  --  This file is a part of vtMktDashboard.
+ * You can copy, adapt and distribute the work under the "Attribution-NonCommercial-ShareAlike"
+ * Vizsage Public License (the "License"). You may not use this file except in compliance with the
+ * License. Roughly speaking, non-commercial users may share and modify this code, but must give credit
+ * and share improvements. However, for proper details please read the full License, available at
+ * http://vizsage.com/license/Vizsage-License-BY-NC-SA.html and the handy reference for understanding
+ * the full license at http://vizsage.com/license/Vizsage-Deed-BY-NC-SA.html. Unless required by
+ * applicable law or agreed to in writing, any software distributed under the License is distributed
+ * on an  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and limitations under the
+ * License terms of Creative Commons Attribution-NonCommercial-ShareAlike 3.0 (the License).
+ *************************************************************************************************
+ *  Module       : MarketingDashboard
+ *  Version      : 5.4.0
+ *  Author       : OpenCubed
+ *************************************************************************************************
+]]></inline>
+</license>
+<tables>
+<table>
+<name>entityconverter</name>
+<sql><![CDATA[CREATE TABLE `entityconverter` (
+  `title` int(11) DEFAULT NULL,
+  `duedate` date NOT NULL,
+  `status` varchar(250) DEFAULT NULL,
+  `event` varchar(250) DEFAULT NULL,
+  `assignto` int(11) NOT NULL,
+  `duetime` varchar(5) DEFAULT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `taskstate` varchar(250) DEFAULT NULL,
+  `descrname` varchar(250) DEFAULT NULL,
+  `assigncontact` varchar(250) DEFAULT NULL,
+  `emailtemplate` varchar(250) DEFAULT NULL,
+  `assignaccount` varchar(250) DEFAULT NULL,
+  `relatedmodules` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+<table>
+<name>entityconverter_lastresults</name>
+<sql><![CDATA[CREATE TABLE `entityconverter_lastresults` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `recordid` int(11) DEFAULT NULL,
+  `accountid` int(11) DEFAULT NULL,
+  `accountname` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `entity` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+<table>
+<name>entityconverter_insert</name>
+<sql><![CDATA[INSERT INTO entityconverter
+ (title,duedate,status,event,assignto,duetime,description,taskstate,descrname,assigncontact,emailtemplate,assignaccount,relatedmodules)
+ VALUES (0, '0000-00-00', '', '', 0, '', '', '', '', '', '', '0', '0')]]></sql>
+</table>
+<table>
+<name>mktdb_campaignresults</name>
+<sql><![CDATA[CREATE TABLE IF NOT EXISTS `mktdb_campaignresults` (
+  `userid` int(11) NOT NULL,
+  `crmid` int(11) NOT NULL,
+  `entity` char(1) NOT NULL,
+  `selected` tinyint(4) NOT NULL,
+  KEY `userid` (`userid`,`selected`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+<table>
+<name>mktdb_contactresults</name>
+<sql><![CDATA[CREATE TABLE IF NOT EXISTS `mktdb_contactresults` (
+  `userid` int(11) NOT NULL,
+  `crmid` int(11) NOT NULL,
+  `entity` char(1) NOT NULL,
+  `selected` tinyint(4) NOT NULL,
+  KEY `userid` (`userid`,`selected`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+<table>
+<name>mktdb_assignresults</name>
+<sql><![CDATA[CREATE TABLE IF NOT EXISTS `mktdb_assignresults` (
+  `userid` int(11) NOT NULL,
+  `crmid` int(11) NOT NULL,
+  `entity` char(1) NOT NULL,
+  `selected` tinyint(4) NOT NULL,
+  KEY `userid` (`userid`,`selected`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+<table>
+<name>batch_jobs</name>
+<sql><![CDATA[CREATE TABLE IF NOT EXISTS `batch_jobs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created` datetime NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `class_name` varchar(255) NOT NULL,
+  `data` text NOT NULL,
+  `done` tinyint(1) NOT NULL DEFAULT '0',
+  `delay` varchar(255) NOT NULL,
+  `datestarting` text NOT NULL,
+  `timestarting` text NOT NULL,
+  `launchmassively` tinyint(1) NOT NULL,
+  `threshold` text NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `randomnr` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8]]></sql>
+</table>
+<table>
+<name>batch_items</name>
+<sql><![CDATA[CREATE TABLE IF NOT EXISTS `batch_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `batch_job_id` int(11) NOT NULL,
+  `crmid` int(11) NOT NULL,
+  `crmtype` varchar(255) NOT NULL,
+  `done` tinyint(1) NOT NULL,
+  `data` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8]]></sql>
+</table>
+<table>
+<name>mktdb_calculationresults</name>
+<sql><![CDATA[CREATE TABLE IF NOT EXISTS `mktdb_calculationresults` (
+  `userid` int(11) NOT NULL,
+  `crmid` int(11) NOT NULL,
+  `entity` char(10) NOT NULL,
+  `selected` tinyint(4) NOT NULL,
+  `qty` int(11) DEFAULT NULL,
+  KEY `userid` (`userid`,`selected`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+<table>
+<name>mktdb_calculationparams</name>
+<sql><![CDATA[CREATE TABLE IF NOT EXISTS `mktdb_calculationparams` (
+  `machine_factor` varchar(255) DEFAULT NULL,
+  `hr_factor` varchar(255) DEFAULT NULL,
+  `expired_factor` varchar(255) DEFAULT NULL,
+  `warehouse_factor` varchar(255) DEFAULT NULL,
+  `transport_factor` varchar(255) NOT NULL,
+  `marketing_factor` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+</tables>
+<customlinks>
+<customlink>
+<linktype>HEADERSCRIPTUP</linktype>
+<linklabel>Marketingdashboard.js</linklabel>
+<linkurl><![CDATA[modules/MarketingDashboard/MarketingDashboard.js]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
+<customlink>
+<linktype>HEADERSCRIPTUP</linktype>
+<linklabel>jquerycustom</linklabel>
+<linkurl><![CDATA[kendoui/resources/js/jquery-ui-1.9.2.custom.js]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
+<customlink>
+<linktype>HEADERSCRIPTUP</linktype>
+<linklabel>jquerymultiselect</linklabel>
+<linkurl><![CDATA[kendoui/resources/js/jquery-multiselect.js]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
+<customlink>
+<linktype>HEADERSCRIPTUP</linktype>
+<linklabel>jquerymultiselectfilter</linklabel>
+<linkurl><![CDATA[kendoui/resources/js/jquery-multiselect-filter.js]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
+<customlink>
+<linktype>HEADERCSS</linktype>
+<linklabel>jquerycustomcss</linklabel>
+<linkurl><![CDATA[kendoui/resources/styles/jquery-ui-1.9.2.custom.css]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
+<customlink>
+<linktype>HEADERCSS</linktype>
+<linklabel>jquerymultiselect</linklabel>
+<linkurl><![CDATA[kendoui/resources/styles/jquery-multiselect.css]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
+<customlink>
+<linktype>HEADERCSS</linktype>
+<linklabel>jquerymultiselectfilter</linklabel>
+<linkurl><![CDATA[kendoui/resources/styles/jquery-multiselect-filter.css]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
+</customlinks>
+<sharingaccess>
+<default>private</default>
+</sharingaccess>
+<crons>
+<cron>
+<name>MarketingDashboard</name>
+<frequency>900</frequency>
+<status>0</status>
+<handler>modules/MarketingDashboard/cronjob.php</handler>
+<sequence>7</sequence>
+<description>Batch execution, recommended frequency is 15 min.</description>
+</cron>
+</crons>
+</module>

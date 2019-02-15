@@ -1,0 +1,21 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_thirdparties</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_thirdparties` (
+  `thirdpartiesid` int(19) NOT NULL,
+  `thirdpartiesname` varchar(255) DEFAULT NULL,
+  `accounts` int(10) DEFAULT NULL,
+  PRIMARY KEY (`thirdpartiesid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_thirdpartiescf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_thirdpartiescf` (
+  `thirdpartiesid` int(19) NOT NULL,
+  PRIMARY KEY (`thirdpartiesid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

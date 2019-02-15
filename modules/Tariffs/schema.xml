@@ -1,0 +1,36 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_tariffs</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_tariffs` (
+  `tariffsid` int(11) DEFAULT NULL,
+  `tariffsname` varchar(200) DEFAULT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `price1` decimal(10,2) DEFAULT NULL,
+  `price3` decimal(10,2) DEFAULT NULL,
+  `price4` decimal(10,2) DEFAULT NULL,
+  `pickprice` varchar(250) DEFAULT NULL,
+  `price2` decimal(10,2) DEFAULT NULL,
+  `percentage` decimal(10,2) DEFAULT NULL,
+  `account` varchar(250) DEFAULT NULL,
+  `product` varchar(250) DEFAULT NULL,
+  `finalprice` decimal(12,2) DEFAULT NULL,
+  `finalp` decimal(9,2) DEFAULT NULL,
+  `linktopcategories` varchar(100) DEFAULT NULL,
+  `linktogcompanies` varchar(100) DEFAULT NULL,
+  `initialqty` varchar(100) DEFAULT NULL,
+  `finalqty` varchar(100) DEFAULT NULL,
+  `finalpricefour` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_tariffscf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_tariffscf` (
+  `tariffsid` int(11) NOT NULL,
+  PRIMARY KEY (`tariffsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

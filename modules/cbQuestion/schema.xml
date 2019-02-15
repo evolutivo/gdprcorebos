@@ -1,0 +1,41 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_cbquestion</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_cbquestion` (
+  `cbquestionid` int(11) NOT NULL,
+  `qname` VARCHAR(250) DEFAULT NULL,
+  `cbquestionno` varchar(30) NOT NULL,
+  `qtype` varchar(200) DEFAULT NULL,
+  `qstatus` varchar(200) DEFAULT NULL,
+  `qcollection` varchar(250) DEFAULT NULL,
+  `qmodule` VARCHAR(75) DEFAULT NULL,
+  `cbmapid` int(11),
+  `qpagesize` int(11),
+  `qcolumns` text,
+  `qcondition` text,
+  `qpulse` VARCHAR(3),
+  `schtypeid` int(10) DEFAULT NULL,
+  `schtime` TIME DEFAULT NULL,
+  `schdayofmonth` VARCHAR(200) DEFAULT NULL,
+  `schdayofweek` VARCHAR(200) DEFAULT NULL,
+  `schannualdates` VARCHAR(200) DEFAULT NULL,
+  `schminuteinterval` VARCHAR(200) DEFAULT NULL,
+  `nexttrigger_time` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`cbquestionid`),
+  KEY `cbqqstatus` (`qstatus`),
+  KEY `cbqqcollection` (`qcollection`),
+  KEY `cbqnexttrigger_time` (`nexttrigger_time`),
+  KEY `cbqqname` (`qname`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_cbquestioncf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_cbquestioncf` (
+  `cbquestionid` int(11) NOT NULL,
+  PRIMARY KEY (`cbquestionid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

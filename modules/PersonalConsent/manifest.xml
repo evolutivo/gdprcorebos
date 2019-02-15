@@ -1,0 +1,425 @@
+<?xml version='1.0'?>
+<module>
+<name>PersonalConsent</name>
+<label>PersonalConsent</label>
+<parent>Tools</parent>
+<version>1.0</version>
+<short_description>coreBOS PersonalConsent module</short_description>
+<dependencies>
+<vtiger_version>5.4.0</vtiger_version>
+<vtiger_max_version>5.*</vtiger_max_version>
+</dependencies>
+<license>
+<inline>
+<![CDATA[/*************************************************************************************************
+ * Copyright 2015 Opencubed -- This file is a part of TSOLUCIO coreBOS customizations.
+ * You can copy, adapt and distribute the work under the "Attribution-NonCommercial-ShareAlike"
+ * Vizsage Public License (the "License"). You may not use this file except in compliance with the
+ * License. Roughly speaking, non-commercial users may share and modify this code, but must give credit
+ * and share improvements. However, for proper details please read the full License, available at
+ * http://vizsage.com/license/Vizsage-License-BY-NC-SA.html and the handy reference for understanding
+ * the full license at http://vizsage.com/license/Vizsage-Deed-BY-NC-SA.html. Unless required by
+ * applicable law or agreed to in writing, any software distributed under the License is distributed
+ * on an  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and limitations under the
+ * License terms of Creative Commons Attribution-NonCommercial-ShareAlike 3.0 (the License).
+ *************************************************************************************************
+ *  Module       : coreBOS PersonalConsent
+ *  Version      : 5.4.0
+ *  Author       : Opencubed
+ *************************************************************************************************/
+]]>
+</inline>
+</license>
+<tables>
+<table>
+<name>vtiger_personalconsent</name>
+<sql><![CDATA[CREATE TABLE `vtiger_personalconsent` (
+  `personalconsentid` int(19) NOT NULL,
+  `personalconsentname` varchar(100) DEFAULT NULL,
+  `organization` varchar(100) DEFAULT NULL,
+  `contractualconsent` varchar(100) DEFAULT NULL,
+  `contractualconsentdate` date DEFAULT NULL,
+  `internalcommconsent` varchar(100) DEFAULT NULL,
+  `internalcommconsentdate` date DEFAULT NULL,
+  `externalcommunicationconsent` varchar(100) DEFAULT NULL,
+  `externalcommconsentdate` date DEFAULT NULL,
+  `sociocommconsent` varchar(100) DEFAULT NULL,
+  `sociocommconsentdate` date DEFAULT NULL,
+  `personaltreatment` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;]]></sql>
+</table>
+<table>
+<name>vtiger_evaluationcf</name>
+<sql><![CDATA[CREATE TABLE `vtiger_personalconsentcf` (
+  `personalconsentid` int(19) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;]]></sql>
+</table>
+</tables>
+<blocks>
+<block>
+<label>LBL_PERSONAL_CONSENT_INFORMATION</label>
+<fields> 
+<field>
+<fieldname>personalconsentname</fieldname>
+<uitype>2</uitype>
+<columnname>personalconsentname</columnname>
+<tablename>vtiger_personalconsent</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Personal Consent Name</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>1</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~M</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<entityidentifier>
+<entityidfield>personalconsentid</entityidfield>
+<entityidcolumn>personalconsentid</entityidcolumn>
+</entityidentifier>
+</field>
+<field>
+<fieldname>organization</fieldname>
+<uitype>10</uitype>
+<columnname>organization</columnname>
+<tablename>vtiger_personalconsent</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Organization</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>3</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~M</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<relatedmodules>
+<relatedmodule>Accounts</relatedmodule>
+<relatedmodule>Contacts</relatedmodule>
+</relatedmodules>
+</field>
+<field>
+<fieldname>contractualconsent</fieldname>
+<uitype>15</uitype>
+<columnname>contractualconsent</columnname>
+<tablename>vtiger_personalconsent</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Contractual Consent</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues> 
+<picklistvalue>Yes</picklistvalue>
+<picklistvalue>No</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>contractualconsentdate</fieldname>
+<uitype>5</uitype>
+<columnname>contractualconsentdate</columnname>
+<tablename>vtiger_personalconsent</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Contractual Consent Date</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>D~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>internalcommconsent</fieldname>
+<uitype>15</uitype>
+<columnname>internalcommconsent</columnname>
+<tablename>vtiger_personalconsent</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Internal Communication Consent</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues> 
+<picklistvalue>Yes</picklistvalue>
+<picklistvalue>No</picklistvalue>
+<picklistvalue>Not Applicable</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>internalcommconsentdate</fieldname>
+<uitype>5</uitype>
+<columnname>internalcommconsentdate</columnname>
+<tablename>vtiger_personalconsent</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Internal Communication Consent Date</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>D~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>externalcommconsent</fieldname>
+<uitype>15</uitype>
+<columnname>externalcommconsent</columnname>
+<tablename>vtiger_personalconsent</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>External Communication Consent</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues> 
+<picklistvalue>Yes</picklistvalue>
+<picklistvalue>No</picklistvalue>
+<picklistvalue>Not Applicable</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>externalcommconsentdate</fieldname>
+<uitype>5</uitype>
+<columnname>externalcommconsentdate</columnname>
+<tablename>vtiger_personalconsent</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>External Communication Consent Date</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>D~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>sociocommconsent</fieldname>
+<uitype>15</uitype>
+<columnname>sociocommconsent</columnname>
+<tablename>vtiger_personalconsent</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Socio-Economic Communication Consent</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>Yes</picklistvalue>
+<picklistvalue>No</picklistvalue>
+<picklistvalue>Not Applicable</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>sociocommconsentdate</fieldname>
+<uitype>5</uitype>
+<columnname>sociocommconsentdate</columnname>
+<tablename>vtiger_personalconsent</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Socio-Economic Communication Consent Date</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>D~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>personaltreatment</fieldname>
+<uitype>15</uitype>
+<columnname>personaltreatment</columnname>
+<tablename>vtiger_personalconsent</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Personal Treatment</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues> 
+<picklistvalue>Standard Business Activity</picklistvalue>
+<picklistvalue>Medical Activity</picklistvalue>
+<picklistvalue>Marketing Department Activity</picklistvalue>
+<picklistvalue>Other</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>assigned_user_id</fieldname>
+<uitype>53</uitype>
+<columnname>smownerid</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Assigned To</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>4</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~M</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>1</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>createdtime</fieldname>
+<uitype>70</uitype>
+<columnname>createdtime</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Created Time</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>14</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>T~O</typeofdata>
+<quickcreate>3</quickcreate>
+<quickcreatesequence>8</quickcreatesequence>
+<displaytype>2</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>modifiedtime</fieldname>
+<uitype>70</uitype>
+<columnname>modifiedtime</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Modified Time</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>16</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>T~O</typeofdata>
+<quickcreate>3</quickcreate>
+<quickcreatesequence>9</quickcreatesequence>
+<displaytype>2</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+</fields>
+</block>
+</blocks>
+<customviews>
+<customview>
+<viewname>All</viewname>
+<setdefault>true</setdefault>
+<setmetrics>false</setmetrics>
+<fields>
+<field>
+<fieldname>personalconsentname</fieldname>
+<columnindex>0</columnindex>
+</field>
+<field>
+<fieldname>organization</fieldname>
+<columnindex>1</columnindex>
+</field>
+<field>
+<fieldname>contractualconsent</fieldname>
+<columnindex>2</columnindex>
+</field>
+<field>
+<fieldname>contractualconsentdate</fieldname>
+<columnindex>3</columnindex>
+</field>
+</fields>
+</customview>
+</customviews>
+<sharingaccess>
+<default>public</default>
+</sharingaccess>
+<actions>
+<action>
+<name><![CDATA[Merge]]></name>
+<status>enabled</status>
+</action>
+<action>
+<name><![CDATA[Import]]></name>
+<status>enabled</status>
+</action>
+<action>
+<name><![CDATA[Export]]></name>
+<status>enabled</status>
+</action>
+</actions>
+<customlinks>
+</customlinks>
+<crons>
+</crons>
+</module>

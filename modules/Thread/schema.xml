@@ -1,0 +1,21 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_thread</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_thread` (
+  `threadid` int(11) DEFAULT NULL,
+  `thread` varchar(60) DEFAULT NULL,
+  `linktopt` varchar(100) DEFAULT NULL,
+  `threadlink` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_threadcf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_threadcf` (
+  `threadid` int(11) NOT NULL,
+  PRIMARY KEY (`threadid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

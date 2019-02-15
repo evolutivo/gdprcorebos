@@ -1,0 +1,35 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_palaunch</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_palaunch` (
+  `palaunchid` int(11) NOT NULL DEFAULT '0',
+  `plannedaction_id` int(11) DEFAULT NULL,
+  `related_id` int(11) DEFAULT NULL,
+  `recipient_id` int(11) DEFAULT NULL,
+  `sequencer_id` int(11) DEFAULT NULL,
+  `scheduled_date` date DEFAULT NULL,
+  `processed_date` date DEFAULT NULL,
+  `palaunch_status` varchar(100) DEFAULT NULL,
+  `parameters` text,
+  `count_execution` varchar(100) DEFAULT NULL,
+  `time_start` varchar(100) DEFAULT NULL,
+  `time_end` varchar(100) DEFAULT NULL,
+  `records` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`palaunchid`),
+  KEY `plannedaction_id` (`plannedaction_id`),
+  KEY `related_id` (`related_id`),
+  KEY `recipient_id` (`recipient_id`),
+  KEY `sequencer_id` (`sequencer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_palaunchcf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_palaunchcf` (
+  `palaunchid` int(11) NOT NULL,
+  PRIMARY KEY (`palaunchid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

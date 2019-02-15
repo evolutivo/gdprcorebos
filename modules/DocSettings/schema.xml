@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_docsettings</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_docsettings` (
+  `docsettingsid` int(11) NOT NULL,
+  `docsettingsname` varchar(255) DEFAULT NULL,
+  `causale` varchar(255) DEFAULT NULL,
+  `nometemp` varchar(255) DEFAULT NULL,
+  `paginedaa` varchar(255) DEFAULT NULL,
+  `righedaa` varchar(255) DEFAULT NULL,
+  `tipo` varchar(250) DEFAULT NULL,
+  `autoattach` varchar(250) DEFAULT NULL,
+  `docsettingsnumber` varchar(100) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `linktomapmaster` varchar(100) DEFAULT NULL,
+  `linktomapdetail` varchar(100) DEFAULT NULL,
+  `linktodocuments` int(11) DEFAULT NULL,
+  PRIMARY KEY (`docsettingsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_docsettingscf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_docsettingscf` (
+  `docsettingsid` int(11) NOT NULL,
+  PRIMARY KEY (`docsettingsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

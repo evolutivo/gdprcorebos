@@ -1,0 +1,42 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_cbcompany</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_cbcompany` (
+  `cbcompanyid` int(11) NOT NULL,
+  `companyname` varchar(100) default NULL,
+  `cbcompanyno` varchar(100) default NULL,
+  `comercialname` varchar(100) default NULL,
+  `siccode` varchar(100) default NULL,
+  `accid` int(11) default NULL,
+  `phone` varchar(30) default NULL,
+  `address` varchar(100) default NULL,
+  `fax` varchar(30) default NULL,
+  `city` varchar(100) default NULL,
+  `email` varchar(50) default NULL,
+  `state` varchar(100) default NULL,
+  `website` varchar(255) default NULL,
+  `postalcode` varchar(100) default NULL,
+  `companybr` varchar(100) default NULL,
+  `country` varchar(100) default NULL,
+  `companylopd` varchar(100) default NULL,
+  `defaultcompany` varchar(3) default NULL,
+  `companylogo` text default NULL,
+  `applogo` text default NULL,
+  `favicon` text default NULL,
+    index (`cbcompanyid`),
+    index (`cbcompanyno`),
+    index (`companyname`),
+  PRIMARY KEY (`cbcompanyid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+		<table>
+			<name>vtiger_cbcompanycf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_cbcompanycf` (
+  `cbcompanyid` int(11) NOT NULL,
+  PRIMARY KEY (`cbcompanyid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

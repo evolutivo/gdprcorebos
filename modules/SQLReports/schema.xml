@@ -1,0 +1,32 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_sqlreports</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_sqlreports` (
+  `sqlreportsid` int(11) DEFAULT NULL,
+  `reportnum` varchar(100) DEFAULT NULL,
+  `reportname` varchar(300) DEFAULT NULL,
+  `reportsql` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE
+utf8_general_ci]]></sql>
+		</table>
+		<table>
+			<name>vtiger_sqlreportscf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_sqlreportscf` (
+  `sqlreportsid` int(11) NOT NULL,
+  PRIMARY KEY (`sqlreportsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE
+utf8_general_ci]]></sql>
+		</table>
+		<table>
+			<name>vtiger_sqlreportsgrouprel</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_sqlreportsgrouprel` (
+  `sqlreportsid` int(11) NOT NULL,
+  `groupname` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`sqlreportsid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE
+utf8_general_ci]]></sql>
+		</table>
+	</tables>
+</schema>

@@ -1,0 +1,55 @@
+Index: modules/Documents/language/*.lang.php
+===================================================================
++'Template'=>'Template',
++'Template For' => 'Template For',
+
+Index: include/language/*.lang.php
+===================================================================
++'Generate Document'=>'Merge Document',
+
+Index: include/js/*.lang.js
+===================================================================
++'SELECTTEMPLATE':'Por favor, selecciona al menos una plantilla de documento',
++'SELECTMERGE':'Por favor, selecciona una entidad para la combinación.',
++'GENDOCSAVED':'Document saved. Please verify that it has been created correctly.',
+
+Index: Smarty/templates/ListView.tpl
+===================================================================
+--- Smarty/templates/ListView.tpl	(revisión: 1120)
++++ Smarty/templates/ListView.tpl	(revisión: 1220)
+@@ -313,7 +313,9 @@
+ 		</tr>
+ 	</table>
+ </form>
+-</div>		
++</div>
++{*<!-- Generating documents -->*}
++{include file='modules/evvtgendoc/gendocdiv.tpl'}
+ {*<!-- Searching UI -->*}
+ 
+ <div id="mergeDup" style="z-index:1;display:none;position:relative;">
+Index: Smarty/templates/Popup.tpl
+===================================================================
+--- Smarty/templates/Popup.tpl	(revisión: 1120)
++++ Smarty/templates/Popup.tpl	(revisión: 1220)
+@@ -54,7 +54,11 @@
+ <script language="JavaScript" type="text/javascript" src="include/js/vtlib.js"></script>
+ <!-- END -->
+ <script language="JavaScript" type="text/javascript" src="include/js/{php} echo $_SESSION['authenticated_user_language'];{/php}.lang.js?{php} echo $_SESSION['vtiger_version'];{/php}"></script>
++{if $smarty.request.srcmodule neq 'evvtgendoc'}
+ <script language="JavaScript" type="text/javascript" src="modules/{$MODULE}/{$MODULE}.js"></script>
++{else}
++<script language="JavaScript" type="text/javascript" src="modules/evvtgendoc/evvtgendoc.js"></script>
++{/if}
+ <script language="javascript" type="text/javascript" src="include/scriptaculous/prototype.js"></script>
+ <script type="text/javascript">
+ function add_data_to_relatedlist(entity_id,recordid,mod) {ldelim}
+@@ -98,7 +102,7 @@
+ 											 {html_options  options=$SEARCHLISTHEADER }
+ 								</select>
+ 								<input type="hidden" name="searchtype" value="BasicSearch">
+-								<input type="hidden" name="module" value="{$MODULE}">
++								<input type="hidden" name="module" id="module" value="{$MODULE}">
+ 								<input type="hidden" name="action" value="Popup">
+ 								<input type="hidden" name="query" value="true">
+ 								<input type="hidden" name="select_enable" id="select_enable" value="{$SELECT}">
