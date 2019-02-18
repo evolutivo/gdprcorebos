@@ -47,7 +47,7 @@ $cbodShowLicenseOnUserCreation = false;
 $cbodUserLog = false;
 
 // Install database
-$corebosInstallDatabase = 'corebos_justinstalled_empty';
+$corebosInstallDatabase = 'gdprcore';
 
 // Connection to Central Server
 $cbodCSURL = '';
