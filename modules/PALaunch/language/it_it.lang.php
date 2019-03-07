@@ -11,18 +11,25 @@
 $mod_strings = Array(
 	'PALaunch' => 'PALaunch',
 	'SINGLE_PALaunch' => 'PALaunch',
-	'LBL_CUSTOM_INFORMATION' => 'Informazione Personalizzata',
-	'LBL_PALAUNCH_INFORMATION' => 'Informazione PALaunch',
-	'LBL_DESCRIPTION_INFORMATION' => 'Informazione Descrizione',
-	'Planned Action' => 'Azione Pianificata',
-	'Related To' => 'Relazionato a',
-	'Recipient' => 'Destinatario',
+
+	'LBL_CUSTOM_INFORMATION' => 'Custom Information',
+	'LBL_PALAUNCH_INFORMATION' => 'PALaunch Information',
+	'LBL_DESCRIPTION_INFORMATION' => 'Description Information',
+
+	'Planned Action' => 'Planned Action',
+        'PALaunch Name' => 'PALaunch Name',
+	'Related To' => 'Related To',
+	'Recipient' => 'Recipient',
 	'Sequencer' => 'Sequencer',
-	'Scheduled Date' => 'Data di schedulazione',
-	'Processed Date' => 'Data di eseguzione',
-	'Status' => 'Stato',
-	'Descrition' => 'Descrizione',
-        'Parameters'=>'Parametri',
-        'Number of Execution'=>'Numero di eseguzioni'
+	'Scheduled Date' => 'Scheduled Date',
+	'Processed Date' => 'Processed Date',
+	'Status' => 'Status',
+        'Parameters' => 'Parameters',
+        'Start Time' => 'Start Time',
+        'End Time' => 'End Time',
+        'Number of execution' => 'Number of execution',
+        'palaunch_no' => 'palaunch_no',
+	'Description' => 'Description',
 );
+
 ?>

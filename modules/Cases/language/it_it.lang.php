@@ -9,14 +9,21 @@
  ************************************************************************************/
 
 $mod_strings = Array(
-	'Cases' => 'Casi',
-	'SINGLE_Cases' => 'Casi',
-	'Cases ID' => 'Casi ID',
-	'LBL_CUSTOM_INFORMATION' => 'Informazione Personalizzata',
-	'LBL_CASES_INFORMATION' => 'Informazione Casi',
-	'LBL_DESCRIPTION_INFORMATION' => 'Descrizione',
-	'cases_no'=>'No Casi',
-        'Cases Name'=>'Nome Casi',
-        'Description'=>'Descrizione',         
+	'Cases' => 'Cases',
+	'SINGLE_Cases' => 'Cases',
+	'Cases ID' => 'Cases ID',
+
+	'LBL_CUSTOM_INFORMATION' => 'Custom Information',
+	'LBL_CASES_INFORMATION' => 'Cases Information',
+	'LBL_DESCRIPTION_INFORMATION' => 'Description Information',
+
+	'cases_no'=>'cases_no',
+        'Cases Name'=>'Cases Name',
+        'Assigned To'=>'Assigned To',
+        'Created Time'=>'Created Time',
+        'Modified Time'=>'Modified Time',
+        'Description'=>'Description',
+         
 );
+
 ?>

@@ -14,9 +14,9 @@ class EmailsTemplates extends CRMEntity {
 	public $db;
 	public $log;
 
-public $table_name = 'vtiger_emailstemplates';
-public $table_index= 'emailstemplatesid';
-public $column_fields = array();
+	public $table_name = 'vtiger_emailstemplates';
+	public $table_index= 'emailstemplatesid';
+	public $column_fields = array();
 
 	/** Indicator if this is a custom module or standard module */
 	public $IsCustomModule = true;
@@ -55,15 +55,16 @@ public $column_fields = array();
 		'Template No'=> array('emailstemplates'=> 'emailstemplatesno'),
 		'Template Name'=> array('emailstemplates'=> 'templatename'),
 		'Email Subject'=> array('emailstemplates'=> 'subject'),
-		'Assigned To' => array('crmentity'=>'smownerid')
+		'Assigned To' => array('crmentity' =>'smownerid')
 	);
-
 	public $list_fields_name = array(
-	    	/* Format: Field Label => fieldname */
+		/* Format: Field Label => fieldname */
 		'Template No'=> 'emailstemplatesno',
 		'Template Name'=> 'templatename',
 		'Email Subject'=> 'subject',
-		'Assigned To' => 'assigned_user_id');
+		'Assigned To' => 'assigned_user_id'
+	);
+
 	// Make the field link to detail view from list view (Fieldname)
 	public $list_link_field = 'emailstemplatesno';
 

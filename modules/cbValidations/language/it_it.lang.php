@@ -9,15 +9,22 @@
  ************************************************************************************/
 
 $mod_strings = Array(
-	'cbValidations' => 'Validazioni',
-	'SINGLE_cbValidations' => 'Validazione',
-	'cbValidations ID' => 'Validazioni ID',
-        'cbvalidations No'=>'No Validazione',
-        'cbValidations Name'=>'Nome Validazione',
-	'LBL_CUSTOM_INFORMATION' => 'Informazione Personalizzata',
-	'LBL_DESCRIPTION_INFORMATION' => 'Descrizione',
-	'LBL_CBVALIDATIONS_INFORMATION' => 'Informazione Validazioni',
-        'Field Name'=>'Nome campo',
-        'Table Name'=>'Nome tabella'
+	'ModuleName' => 'cbValidations',
+	'SINGLE_ModuleName' => 'cbValidations',
+	'ModuleName ID' => 'cbValidations ID',
+
+	'LBL_CUSTOM_INFORMATION' => 'Custom Information',
+	'LBL_DESCRIPTION_INFORMATION' => 'Description',
+	'LBL_CBVALIDATIONS_INFORMATION' => 'Cb Validation',
+    
+        'cbvalidations No' => 'cbvalidations No',
+        'cbValidations Name' => 'cbValidations Name',
+        'Type' => 'Type',
+        'Field Name' => 'Field Name',
+        'Table Name' => 'Table Name',
+        'Format' => 'Format',
+        'Dipendent' => 'Dependent',
+        'Mandatory' => 'Mandatory'
 );
+
 ?>

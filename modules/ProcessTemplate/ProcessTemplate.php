@@ -43,7 +43,7 @@ class ProcessTemplate extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_processtemplate'   => 'processtemplateid',
-		'vtiger_processtemplatecf' => 'processtemplateid',
+	    	'vtiger_processtemplatecf' => 'processtemplateid',
 	);
 
 	/**
@@ -52,8 +52,8 @@ class ProcessTemplate extends CRMEntity {
 	public $list_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-		'ProcessTemplate Name'=> array('processtemplate'=> 'processtemplatename'),
-		'Assigned To' => array('crmentity'=> 'smownerid')
+		'ProcessTemplate Name'=> array('processtemplate', 'processtemplatename'),
+		'Assigned To' => array('crmentity' => 'smownerid')
 	);
 	public $list_fields_name = array(
 		/* Format: Field Label => fieldname */
@@ -68,7 +68,7 @@ class ProcessTemplate extends CRMEntity {
 	public $search_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-		'ProcessTemplate Name'=> array('processtemplate'=> 'processtemplatename')
+		'ProcessTemplate Name'=> array('processtemplate', 'processtemplatename')
 	);
 	public $search_fields_name = array(
 		/* Format: Field Label => fieldname */

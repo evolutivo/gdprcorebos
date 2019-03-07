@@ -13,7 +13,6 @@ require_once 'data/Tracker.php';
 class DocSettings extends CRMEntity {
 	public $db;
 	public $log;
-
 	public $table_name = 'vtiger_docsettings';
 	public $table_index= 'docsettingsid';
 	public $column_fields = array();
@@ -43,7 +42,7 @@ class DocSettings extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_docsettings'   => 'docsettingsid',
-		'vtiger_docsettingscf' => 'docsettingsid',
+	    'vtiger_docsettingscf' => 'docsettingsid',
 	);
 
 	/**
@@ -88,7 +87,7 @@ class DocSettings extends CRMEntity {
 	public $def_detailview_recname = 'docsettingsname';
 
 	// Required Information for enabling Import feature
-	public $required_fields = Array('docsettingsname'=>1);
+	public $required_fields = array('docsettingsname'=>1);
 
 	// Callback function list during Importing
 	public $special_functions = array('set_import_assigned_user');

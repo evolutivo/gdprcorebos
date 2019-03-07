@@ -19,13 +19,16 @@
 
 $mod_strings = Array(
 	'Entitylog' => 'Entity Log',
+        'SINGLE_Entitylog'=>'Entity Log',
+    
 	'LBL_CUSTOM_INFORMATION' => 'Custom Information',
 	'LBL_ENTITYLOG_INFORMATION' => 'Entity Log Information',
-        'LBLDESCRIPTIONINFORMATION'=>'Description',
-        'SINGLE_Entitylog'=>'Entity Log',
+        'LBLDESCRIPTIONINFORMATION'=>'Description',  
+
         'Entitylog Name'=>'Entitylog Name',
         'User'=>'User',
         'Final State'=>'Final State',
-        'Related Module'=>'Related Module'
+        'Related to' => 'Related to',
+        'Related Module'=>'Related Module',
 );
 ?>

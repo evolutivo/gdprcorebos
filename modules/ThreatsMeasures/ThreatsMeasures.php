@@ -43,7 +43,8 @@ class ThreatsMeasures extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_threatsmeasures'   => 'threatsmeasuresid',
-		'vtiger_threatsmeasurescf' => 'threatsmeasuresid');
+		'vtiger_threatsmeasurescf' => 'threatsmeasuresid',
+	);
 
 	/**
 	 * Mandatory for Listing (Related listview)

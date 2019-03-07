@@ -45,9 +45,12 @@ $mod_strings = Array(
 	'Date Change 2^ Department' => 'Date Change 2^ Department',
 	'Date Change 3^ Department' => 'Date Change 3^ Department',
 	'Date Change 4^ Department' => 'Date Change 4^ Department',
+
 	'LBL_EMPLOYEE_INFORMATION' => 'Employee Information',
 	'LBL_DEPARTMENT_INFORMATION' => 'Department Information',
 	'LBL_ADDRESS_INFORMATION' => 'Address Information',
 	'LBL_DESCRIPTION_INFORMATION' => 'Description',
+
 );
+
 ?>

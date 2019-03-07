@@ -9,14 +9,14 @@
  ************************************************************************************/
 
 $mod_strings = array(
-	'PhysicalAreas' => 'Aree Fisiche',
-	'SINGLE_PhysicalAreas' => 'Aree Fisiche',
-	'PhysicalAreas ID' => 'Aree Fisiche ID',
-	'MAIN_BLOCK' => 'Informazione sul blocco principale',
-	'PhysicalAreasname' => 'Aree Fisiche',
-	'Accounts' => 'Aziende',
-	'Assigned To' => 'Assegnato a',
-	'Created Time' => 'Ora di creazione',
-	'Modified Time' => 'Ora di modificacione',
-);
+	'PhysicalAreas' => 'Physical Areas',
+	'SINGLE_PhysicalAreas' => 'Physical Areas',
+	'PhysicalAreas ID' => 'Physical Areas ID',
+
+	'MAIN_BLOCK' => 'Main Block Information',
+
+	'PhysicalAreasname' => 'Physical Areas Name',
+        'Accounts' => 'Accounts',
+); 
+
 ?>

@@ -1,17 +1,41 @@
 <?xml version='1.0'?>
 <module>
-<exporttime>2016-12-16 17:45:27</exporttime>
 <name>PALaunch</name>
 <label>PALaunch</label>
-<parent>Marketing</parent>
+<parent>Inventory</parent>
+<version>1.0</version>
+<short_description>PALaunch Module.</short_description>
 <dependencies>
 <vtiger_version>5.4.0</vtiger_version>
+<vtiger_max_version>5.*</vtiger_max_version>
 </dependencies>
+<license>
+<inline><![CDATA[/*************************************************************************************************
+ * Copyright 2015 Opencubed -- This file is a part of TSOLUCIO coreBOS customizations.
+ * You can copy, adapt and distribute the work under the "Attribution-NonCommercial-ShareAlike"
+ * Vizsage Public License (the "License"). You may not use this file except in compliance with the
+ * License. Roughly speaking, non-commercial users may share and modify this code, but must give credit
+ * and share improvements. However, for proper details please read the full License, available at
+ * http://vizsage.com/license/Vizsage-License-BY-NC-SA.html and the handy reference for understanding
+ * the full license at http://vizsage.com/license/Vizsage-Deed-BY-NC-SA.html. Unless required by
+ * applicable law or agreed to in writing, any software distributed under the License is distributed
+ * on an  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and limitations under the
+ * License terms of Creative Commons Attribution-NonCommercial-ShareAlike 3.0 (the License).
+ *************************************************************************************************
+ *  Module       : PALaunch
+ *  Version      : 5.4.0
+ *  Author       : AT CONSULTING
+ *************************************************************************************************/
+]]></inline>
+</license>
 <tables>
 <table>
 <name>vtiger_palaunch</name>
 <sql><![CDATA[CREATE TABLE `vtiger_palaunch` (
-  `palaunchid` int(11) NOT NULL,
+  `palaunchid` int(11) NOT NULL DEFAULT '0',
+  `palaunch_no` varchar(56) default NULL,
+  `palaunchname` varchar(255) default NULL,
   `plannedaction_id` int(11) DEFAULT NULL,
   `related_id` int(11) DEFAULT NULL,
   `recipient_id` int(11) DEFAULT NULL,
@@ -19,11 +43,10 @@
   `scheduled_date` date DEFAULT NULL,
   `processed_date` date DEFAULT NULL,
   `palaunch_status` varchar(100) DEFAULT NULL,
-  `parameters` text,
+  `time_start` varchar(250) NOT NULL,
+  `time_end` varchar(250) NOT NULL,
+  `parameters` varchar(8500) DEFAULT NULL,
   `count_execution` varchar(100) DEFAULT NULL,
-  `time_start` varchar(100) DEFAULT NULL,
-  `time_end` varchar(100) DEFAULT NULL,
-  `records` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`palaunchid`),
   KEY `plannedaction_id` (`plannedaction_id`),
   KEY `related_id` (`related_id`),
@@ -44,21 +67,21 @@
 <label>LBL_PALAUNCH_INFORMATION</label>
 <fields>
 <field>
-<fieldname>palaunchid</fieldname>
-<uitype>1</uitype>
-<columnname>palaunchid</columnname>
+<fieldname>palaunchname</fieldname>
+<uitype>2</uitype>
+<columnname>palaunchname</columnname>
 <tablename>vtiger_palaunch</tablename>
 <generatedtype>1</generatedtype>
-<fieldlabel>PALaunch Id</fieldlabel>
+<fieldlabel>PALaunch Name</fieldlabel>
 <readonly>1</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
-<sequence>1</sequence>
+<sequence>2</sequence>
 <maximumlength>100</maximumlength>
-<typeofdata>V~O</typeofdata>
+<typeofdata>V~M</typeofdata>
 <quickcreate>1</quickcreate>
 <quickcreatesequence></quickcreatesequence>
-<displaytype>2</displaytype>
+<displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
@@ -87,7 +110,7 @@
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
 <relatedmodules>
-<relatedmodule>PlannedActions</relatedmodule>
+<relatedmodule>BusinessActions</relatedmodule>
 </relatedmodules>
 </field>
 <field>
@@ -96,7 +119,7 @@
 <columnname>related_id</columnname>
 <tablename>vtiger_palaunch</tablename>
 <generatedtype>1</generatedtype>
-<fieldlabel>Related to</fieldlabel>
+<fieldlabel>Related To</fieldlabel>
 <readonly>1</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
@@ -172,13 +195,13 @@
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
 <relatedmodules>
-<relatedmodule>Sequencers</relatedmodule>
 <relatedmodule>BusinessActions</relatedmodule>
+<relatedmodule>Sequencers</relatedmodule>
 </relatedmodules>
 </field>
 <field>
 <fieldname>scheduled_date</fieldname>
-<uitype>5</uitype>
+<uitype>6</uitype>
 <columnname>scheduled_date</columnname>
 <tablename>vtiger_palaunch</tablename>
 <generatedtype>1</generatedtype>
@@ -188,7 +211,7 @@
 <defaultvalue></defaultvalue>
 <sequence>6</sequence>
 <maximumlength>100</maximumlength>
-<typeofdata>D~M</typeofdata>
+<typeofdata>DT~M</typeofdata>
 <quickcreate>1</quickcreate>
 <quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
@@ -198,7 +221,7 @@
 </field>
 <field>
 <fieldname>processed_date</fieldname>
-<uitype>5</uitype>
+<uitype>6</uitype>
 <columnname>processed_date</columnname>
 <tablename>vtiger_palaunch</tablename>
 <generatedtype>1</generatedtype>
@@ -208,7 +231,7 @@
 <defaultvalue></defaultvalue>
 <sequence>7</sequence>
 <maximumlength>100</maximumlength>
-<typeofdata>D~M</typeofdata>
+<typeofdata>DT~M</typeofdata>
 <quickcreate>1</quickcreate>
 <quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
@@ -244,6 +267,106 @@
 </picklistvalues>
 </field>
 <field>
+<fieldname>time_start</fieldname>
+<uitype>1</uitype>
+<columnname>time_start</columnname>
+<tablename>vtiger_palaunch</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Start Time</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>17</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>T~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>3</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>time_end</fieldname>
+<uitype>1</uitype>
+<columnname>time_end</columnname>
+<tablename>vtiger_palaunch</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>End Time</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>15</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>T~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>3</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>parameters</fieldname>
+<uitype>1</uitype>
+<columnname>parameters</columnname>
+<tablename>vtiger_palaunch</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Parameters</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>18</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~250</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>count_execution</fieldname>
+<uitype>2</uitype>
+<columnname>count_execution</columnname>
+<tablename>vtiger_palaunch</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Number of execution</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>19</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>palaunch_no</fieldname>
+<uitype>4</uitype>
+<columnname>palaunch_no</columnname>
+<tablename>vtiger_palaunch</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>palaunch_no</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>1</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~M</typeofdata>
+<quickcreate>0</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
 <fieldname>assigned_user_id</fieldname>
 <uitype>53</uitype>
 <columnname>smownerid</columnname>
@@ -251,13 +374,13 @@
 <generatedtype>1</generatedtype>
 <fieldlabel>Assigned To</fieldlabel>
 <readonly>1</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>9</sequence>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>10</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~M</typeofdata>
 <quickcreate>1</quickcreate>
-<quickcreatesequence></quickcreatesequence>
+<quickcreatesequence>1</quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -271,13 +394,13 @@
 <generatedtype>1</generatedtype>
 <fieldlabel>Created Time</fieldlabel>
 <readonly>1</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>10</sequence>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>12</sequence>
 <maximumlength>100</maximumlength>
-<typeofdata>DT~O</typeofdata>
-<quickcreate>1</quickcreate>
-<quickcreatesequence></quickcreatesequence>
+<typeofdata>T~O</typeofdata>
+<quickcreate>3</quickcreate>
+<quickcreatesequence>8</quickcreatesequence>
 <displaytype>2</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -291,114 +414,14 @@
 <generatedtype>1</generatedtype>
 <fieldlabel>Modified Time</fieldlabel>
 <readonly>1</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>11</sequence>
-<maximumlength>100</maximumlength>
-<typeofdata>DT~O</typeofdata>
-<quickcreate>1</quickcreate>
-<quickcreatesequence></quickcreatesequence>
-<displaytype>2</displaytype>
-<info_type>BAS</info_type>
-<helpinfo><![CDATA[]]></helpinfo>
-<masseditable>1</masseditable>
-</field>
-<field>
-<fieldname>parameters</fieldname>
-<uitype>19</uitype>
-<columnname>parameters</columnname>
-<tablename>vtiger_palaunch</tablename>
-<generatedtype>1</generatedtype>
-<fieldlabel>Parameters</fieldlabel>
-<readonly>1</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>12</sequence>
-<maximumlength>100</maximumlength>
-<typeofdata>V~O</typeofdata>
-<quickcreate>1</quickcreate>
-<quickcreatesequence></quickcreatesequence>
-<displaytype>1</displaytype>
-<info_type>BAS</info_type>
-<helpinfo><![CDATA[]]></helpinfo>
-<masseditable>0</masseditable>
-</field>
-<field>
-<fieldname>count_execution</fieldname>
-<uitype>1</uitype>
-<columnname>count_execution</columnname>
-<tablename>vtiger_palaunch</tablename>
-<generatedtype>1</generatedtype>
-<fieldlabel>Number of Execution</fieldlabel>
-<readonly>1</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
+<presence>0</presence>
+<selected>0</selected>
 <sequence>13</sequence>
 <maximumlength>100</maximumlength>
-<typeofdata>V~O</typeofdata>
-<quickcreate>1</quickcreate>
-<quickcreatesequence></quickcreatesequence>
-<displaytype>1</displaytype>
-<info_type>BAS</info_type>
-<helpinfo><![CDATA[]]></helpinfo>
-<masseditable>0</masseditable>
-</field>
-<field>
-<fieldname>time_start</fieldname>
-<uitype>14</uitype>
-<columnname>time_start</columnname>
-<tablename>vtiger_palaunch</tablename>
-<generatedtype>1</generatedtype>
-<fieldlabel>Time start</fieldlabel>
-<readonly>1</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>14</sequence>
-<maximumlength>100</maximumlength>
 <typeofdata>T~O</typeofdata>
-<quickcreate>1</quickcreate>
-<quickcreatesequence></quickcreatesequence>
-<displaytype>1</displaytype>
-<info_type>BAS</info_type>
-<helpinfo><![CDATA[]]></helpinfo>
-<masseditable>0</masseditable>
-</field>
-<field>
-<fieldname>time_end</fieldname>
-<uitype>14</uitype>
-<columnname>time_end</columnname>
-<tablename>vtiger_palaunch</tablename>
-<generatedtype>1</generatedtype>
-<fieldlabel>Time end</fieldlabel>
-<readonly>1</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>15</sequence>
-<maximumlength>100</maximumlength>
-<typeofdata>T~O</typeofdata>
-<quickcreate>1</quickcreate>
-<quickcreatesequence></quickcreatesequence>
-<displaytype>1</displaytype>
-<info_type>BAS</info_type>
-<helpinfo><![CDATA[]]></helpinfo>
-<masseditable>0</masseditable>
-</field>
-<field>
-<fieldname>records</fieldname>
-<uitype>1</uitype>
-<columnname>records</columnname>
-<tablename>vtiger_palaunch</tablename>
-<generatedtype>2</generatedtype>
-<fieldlabel>Record ID</fieldlabel>
-<readonly>0</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>16</sequence>
-<maximumlength>100</maximumlength>
-<typeofdata>V~O~LE~20</typeofdata>
-<quickcreate>1</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
-<displaytype>1</displaytype>
+<quickcreate>3</quickcreate>
+<quickcreatesequence>9</quickcreatesequence>
+<displaytype>2</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
@@ -420,12 +443,12 @@
 <fieldlabel>Description</fieldlabel>
 <readonly>1</readonly>
 <presence>2</presence>
-<defaultvalue></defaultvalue>
+<selected>0</selected>
 <sequence>1</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
 <quickcreate>1</quickcreate>
-<quickcreatesequence></quickcreatesequence>
+<quickcreatesequence>10</quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -441,7 +464,7 @@
 <setmetrics>false</setmetrics>
 <fields>
 <field>
-<fieldname>palaunchid</fieldname>
+<fieldname>palaunchname</fieldname>
 <columnindex>0</columnindex>
 </field>
 <field>
@@ -475,20 +498,20 @@
 </fields>
 </customview>
 <customview>
-<viewname>Tutti</viewname>
+<viewname>Pending</viewname>
 <setdefault>false</setdefault>
 <setmetrics>false</setmetrics>
 <fields>
 <field>
-<fieldname>palaunchid</fieldname>
+<fieldname>scheduled_date</fieldname>
 <columnindex>0</columnindex>
 </field>
 <field>
-<fieldname>scheduled_date</fieldname>
+<fieldname>processed_date</fieldname>
 <columnindex>1</columnindex>
 </field>
 <field>
-<fieldname>processed_date</fieldname>
+<fieldname>assigned_user_id</fieldname>
 <columnindex>2</columnindex>
 </field>
 <field>
@@ -496,20 +519,45 @@
 <columnindex>3</columnindex>
 </field>
 <field>
-<fieldname>palaunch_status</fieldname>
+<fieldname>palaunchname</fieldname>
 <columnindex>4</columnindex>
 </field>
 <field>
-<fieldname>parameters</fieldname>
+<fieldname>time_start</fieldname>
 <columnindex>5</columnindex>
 </field>
+<field>
+<fieldname>time_end</fieldname>
+<columnindex>6</columnindex>
+</field>
 </fields>
+<rules>
+<rule>
+<columnindex>0</columnindex>
+<fieldname>palaunch_status</fieldname>
+<comparator>EQUALS</comparator>
+<value>Pending</value>
+<groupid>1</groupid>
+<column_condition></column_condition>
+</rule>
+</rules>
+<groups>
+<group>
+<groupid>1</groupid>
+<group_condition></group_condition>
+<condition_expression> 0 </condition_expression>
+</group>
+</groups>
 </customview>
 </customviews>
 <sharingaccess>
 <default>private</default>
 </sharingaccess>
 <actions>
+<action>
+<name><![CDATA[Merge]]></name>
+<status>enabled</status>
+</action>
 <action>
 <name><![CDATA[Import]]></name>
 <status>enabled</status>
@@ -518,11 +566,16 @@
 <name><![CDATA[Export]]></name>
 <status>enabled</status>
 </action>
-<action>
-<name><![CDATA[Merge]]></name>
-<status>enabled</status>
-</action>
 </actions>
+<relatedlists>
+<relatedlist>
+<function>get_log_history</function>
+<label>History log</label>
+<sequence>1</sequence>
+<presence>0</presence>
+<relatedmodule>Entitylog</relatedmodule>
+</relatedlist>
+</relatedlists>
 <customlinks>
 <customlink>
 <linktype></linktype>
@@ -536,11 +589,5 @@
 </customlink>
 </customlinks>
 <crons>
-<name>sendPlannedActions</name>
-<frequency>720</frequency>
-<status>0</status>
-<handler>modules/PALaunch/cronPlannedActions.php</handler>
-<sequence>7</sequence>
-<description>Recommended frequency for sending emails is 12 minutes</description>
 </crons>
 </module>

@@ -31,7 +31,7 @@
 <table>
 <name>vtiger_cases</name>
 <sql><![CDATA[CREATE TABLE `vtiger_cases` (
-  `casesid` int(11) NOT NULL,
+  `casesid` int(11) default NULL,
   `cases_no` varchar(56) default NULL,
   `casesname` varchar(255) default NULL,
   PRIMARY KEY (`casesid`)

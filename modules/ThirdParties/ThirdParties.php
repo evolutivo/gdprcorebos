@@ -43,7 +43,7 @@ class ThirdParties extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_thirdparties'   => 'thirdpartiesid',
-		'vtiger_thirdpartiescf' => 'thirdpartiesid'
+		'vtiger_thirdpartiescf' => 'thirdpartiesid',
 	);
 
 	/**

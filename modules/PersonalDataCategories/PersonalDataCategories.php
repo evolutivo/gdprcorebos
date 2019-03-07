@@ -51,9 +51,9 @@ class PersonalDataCategories extends CRMEntity {
 	 */
 	public $list_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
-		// tablename should not have prefix 'vtig
+		// tablename should not have prefix 'vtiger_'
 		'PersonalDataCat Name'=> array('personaldatacategories' => 'personaldatacatname'),
-		'Azienda collegata'=> array('personaldatacategories' => 'pdclinktoaccounts'),
+                'Azienda collegata'=> array('personaldatacategories' => 'pdclinktoaccounts'),
 		'Assigned To' => array('crmentity' => 'smownerid')
 	);
 	public $list_fields_name = array(

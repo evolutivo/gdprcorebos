@@ -16,7 +16,6 @@
   `description` varchar(255) DEFAULT NULL,
   `linktomapmaster` varchar(100) DEFAULT NULL,
   `linktomapdetail` varchar(100) DEFAULT NULL,
-  `linktodocuments` int(11) DEFAULT NULL,
   PRIMARY KEY (`docsettingsid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
 		</table>

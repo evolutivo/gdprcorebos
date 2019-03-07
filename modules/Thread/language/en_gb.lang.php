@@ -11,13 +11,14 @@
 $mod_strings = Array(
         'Thread'=>'Thread',
         'SINGLE_Thread'=>'Thread',
+    
         'LBL_THREAD_DETAIL'=>'Informazione Thread',
 	'LBL_CUSTOM_INFORMATION' => 'Custom Information',
 	'LBL_THREAD_INFORMATION' => 'Informazione Thread',
 	'LBL_DESCRIPTION_INFORMATION'=>'Informazione Descrizione',
+    
         'Thread No'=>'No Thread',
         'Thread Link'=>'Link Thread',
-        'Oggetto'=>'Oggetto',
-        'Sender'=>'Sender'
+        'Subject'=>'Subject',
     );
 ?>

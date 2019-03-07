@@ -16,6 +16,7 @@ $mod_strings = array(
 	'MAIN_BLOCK' => 'Main Block Information',
 
 	'PhysicalAreasname' => 'Physical Areas Name',
-);
+        'Accounts' => 'Accounts',
+); 
 
 ?>

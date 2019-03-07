@@ -24,12 +24,6 @@ class ModuleClass extends CRMEntity {
 	 * Mandatory table for supporting custom fields.
 	 */
 	var $customFieldTable = Array('vtiger_payslipcf', 'payslipid');
-	// related_tables variable should define the association (relation) between dependent tables
-	// FORMAT: related_tablename => Array ( related_tablename_column[, base_tablename, base_tablename_column[, related_module]] )
-	// Here base_tablename_column should establish relation with related_tablename_column
-	// NOTE: If base_tablename and base_tablename_column are not specified, it will default to modules (table_name, related_tablename_column)
-	// Uncomment the line below to support custom field columns on related lists
-	// var $related_tables = Array('vtiger_payslipcf'=>array('payslipid','vtiger_payslip', 'payslipid', 'PaySlip'));
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
@@ -419,7 +413,6 @@ class ModuleClass extends CRMEntity {
 	function vtlib_handler($modulename, $event_type) {
 		if($event_type == 'module.postinstall') {
 			// TODO Handle post installation actions
-			$this->setModuleSeqNumber('configure', $modulename, $modulename.'-', '0000001');
 		} else if($event_type == 'module.disabled') {
 			// TODO Handle actions when this module is disabled.
 		} else if($event_type == 'module.enabled') {

@@ -1,33 +1,34 @@
 <?xml version='1.0'?>
 <module>
+<exporttime>2018-05-10 16:34:22</exporttime>
 <name>ProcessingActivities</name>
 <label>ProcessingActivities</label>
 <parent>Tools</parent>
 <version>1.0</version>
-<short_description>ProcessingActivities Module</short_description>
 <dependencies>
 <vtiger_version>5.4.0</vtiger_version>
 <vtiger_max_version>5.*</vtiger_max_version>
 </dependencies>
-<license>
-<inline><![CDATA[
-*********************************************************************************
-** The contents of this file are subject to the vtiger CRM Public License Version 1.0
- * ("License"); You may not use this file except in compliance with the License
- * The Original Code is:  vtiger CRM Open Source
- * The Initial Developer of the Original Code is vtiger.
- * Portions created by vtiger are Copyright (C) vtiger.
- * All Rights Reserved.
- ********************************************************************************
-]]></inline>
-</license>
 <tables>
 <table>
 <name>vtiger_processingactivities</name>
 <sql><![CDATA[CREATE TABLE `vtiger_processingactivities` (
   `processingactivitiesid` int(11) NOT NULL,
-  `processingno` varchar(56) default NULL,
-  `processingname` varchar(250) default NULL,
+  `processingno` varchar(56) DEFAULT NULL,
+  `processingname` varchar(250) DEFAULT NULL,
+  `pactcategoriadatipersonali` varchar(100) DEFAULT '',
+  `thcodicedb` varchar(100) DEFAULT '',
+  `thscopotrattamento` varchar(100) DEFAULT '',
+  `pactcategoriadegliinteressati` varchar(100) DEFAULT '',
+  `thtransferimentoue` varchar(100) DEFAULT '',
+  `pactretentionpolicy` varchar(100) DEFAULT '',
+  `pactlocazione` varchar(100) DEFAULT '',
+  `thmisureorganizzative` varchar(100) DEFAULT '',
+  `pactresponsabile` varchar(100) DEFAULT '',
+  `authenticationeauthorization` varchar(100) DEFAULT '',
+  `pactlegalbasis` varchar(100) DEFAULT '',
+  `pactdb012geolocalizzazione` tinyint(1) DEFAULT NULL,
+  `pactdbddeiclienti` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`processingactivitiesid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
 </table>
@@ -52,20 +53,16 @@
 <fieldlabel>Processing No</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>1</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~M</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>0</masseditable>
-<entityidentifier>
-<entityidfield>processingactivitiesid</entityidfield>
-<entityidcolumn>processingactivitiesid</entityidcolumn>
-</entityidentifier>
 </field>
 <field>
 <fieldname>processingname</fieldname>
@@ -86,6 +83,10 @@
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
+<entityidentifier>
+<entityidfield>processingactivitiesid</entityidfield>
+<entityidcolumn>processingactivitiesid</entityidcolumn>
+</entityidentifier>
 </field>
 <field>
 <fieldname>assigned_user_id</fieldname>
@@ -96,12 +97,12 @@
 <fieldlabel>Assigned To</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>10</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~M</typeofdata>
 <quickcreate>1</quickcreate>
-<quickcreatesequence>1</quickcreatesequence>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -116,12 +117,12 @@
 <fieldlabel>Created By</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>11</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
 <quickcreate>3</quickcreate>
-<quickcreatesequence>1</quickcreatesequence>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>2</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -136,12 +137,12 @@
 <fieldlabel>Created Time</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>12</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>DT~O</typeofdata>
 <quickcreate>3</quickcreate>
-<quickcreatesequence>8</quickcreatesequence>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>2</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -156,16 +157,276 @@
 <fieldlabel>Modified Time</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>13</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>DT~O</typeofdata>
 <quickcreate>3</quickcreate>
-<quickcreatesequence>9</quickcreatesequence>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>2</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>0</masseditable>
+</field>
+<field>
+<fieldname>pactcategoriadatipersonali</fieldname>
+<uitype>1</uitype>
+<columnname>pactcategoriadatipersonali</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Categoria dati personali</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>14</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~100</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thcodicedb</fieldname>
+<uitype>1</uitype>
+<columnname>thcodicedb</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Codice DB</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>15</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~100</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thscopotrattamento</fieldname>
+<uitype>1</uitype>
+<columnname>thscopotrattamento</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Scopo del trattamento</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>16</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~100</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>pactcategoriadegliinteressati</fieldname>
+<uitype>1</uitype>
+<columnname>pactcategoriadegliinteressati</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Categoria degli interessati</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>17</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~100</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thtransferimentoue</fieldname>
+<uitype>1</uitype>
+<columnname>thtransferimentoue</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Trasferimento extra UE</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>18</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~100</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>pactretentionpolicy</fieldname>
+<uitype>1</uitype>
+<columnname>pactretentionpolicy</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Retention Policy</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>19</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~100</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>pactlocazione</fieldname>
+<uitype>1</uitype>
+<columnname>pactlocazione</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Locazione</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>20</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~100</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thmisureorganizzative</fieldname>
+<uitype>1</uitype>
+<columnname>thmisureorganizzative</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Misure organizzative</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>21</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~100</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>pactresponsabile</fieldname>
+<uitype>1</uitype>
+<columnname>pactresponsabile</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Responsabile del trattamento</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>22</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~100</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>authenticationeauthorization</fieldname>
+<uitype>1</uitype>
+<columnname>authenticationeauthorization</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Authentication e Authorization</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>23</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~100</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>pactlegalbasis</fieldname>
+<uitype>1</uitype>
+<columnname>pactlegalbasis</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Legal Basis</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>24</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~100</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>pactdb012geolocalizzazione</fieldname>
+<uitype>56</uitype>
+<columnname>pactdb012geolocalizzazione</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Registro DB012 Dati Geolocalizzazione</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>25</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>C~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>pactdbddeiclienti</fieldname>
+<uitype>56</uitype>
+<columnname>pactdbddeiclienti</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Registro Dati dipendenti dei clienti</fieldlabel>
+<readonly>1</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>26</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>C~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
 </field>
 </fields>
 </block>
@@ -181,12 +442,12 @@
 <fieldlabel>Description</fieldlabel>
 <readonly>1</readonly>
 <presence>2</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>1</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
 <quickcreate>1</quickcreate>
-<quickcreatesequence>10</quickcreatesequence>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -217,10 +478,6 @@
 </sharingaccess>
 <actions>
 <action>
-<name><![CDATA[Merge]]></name>
-<status>enabled</status>
-</action>
-<action>
 <name><![CDATA[Import]]></name>
 <status>enabled</status>
 </action>
@@ -228,12 +485,22 @@
 <name><![CDATA[Export]]></name>
 <status>enabled</status>
 </action>
+<action>
+<name><![CDATA[Merge]]></name>
+<status>enabled</status>
+</action>
 </actions>
-<relatedlists>
-</relatedlists>
-<events>
-</events>
 <customlinks>
+<customlink>
+<linktype></linktype>
+<linklabel></linklabel>
+<linkurl><![CDATA[]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
 </customlinks>
 <crons>
 </crons>

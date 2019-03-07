@@ -43,7 +43,8 @@ class Thread extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_thread'   => 'threadid',
-		'vtiger_threadcf' => 'threadid');
+		'vtiger_threadcf' => 'threadid',
+	);
 
 	/**
 	 * Mandatory for Listing (Related listview)
@@ -53,7 +54,7 @@ class Thread extends CRMEntity {
 		// tablename should not have prefix 'vtiger_'
 		'Thread'=> array('thread'=>'thread'),
                 'Compito'=> array('thread'=> 'linktopt'),
-                'Thread Link' => array('thread'=>'threadlink')
+                'Thread Link'=> array('thread'=>'threadlink')
 	);
 	public $list_fields_name = array(
 		/* Format: Field Label => fieldname */
@@ -71,13 +72,11 @@ class Thread extends CRMEntity {
 		// tablename should not have prefix 'vtiger_'
 		'Thread'=> array('thread'=>'thread'),
                 'Thread Link'=> array('thread'=>'threadlink'),
-
 	);
 	public $search_fields_name = array(
 		/* Format: Field Label => fieldname */
 		'Thread'=> 'thread',
                 'Thread Link'=>'threadlink'
-
 	);
 
 	// For Popup window record selection

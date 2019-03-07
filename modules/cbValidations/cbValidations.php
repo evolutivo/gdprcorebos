@@ -43,7 +43,8 @@ class cbValidations extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_cbvalidations'   => 'cbvalidationsid',
-		'vtiger_cbvalidationscf' => 'cbvalidationsid');
+		'vtiger_cbvalidationscf' => 'cbvalidationsid'
+	);
 
 	/**
 	 * Mandatory for Listing (Related listview)
@@ -102,50 +103,7 @@ class cbValidations extends CRMEntity {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id, $module);
 		}
-                $this->createxml();
 	}
-        
-        function createxml(){
-            $xml = new DOMDocument("1.0");
-            $root = $xml->createElement("map");
-            $xml->appendChild($root);
-            $root1 = $xml->createElement("types");
-            $xml->appendChild($root1);
-            while($i<20){
-            if($i==0) $i='';
-            $fldname='f_length'.$i;
-            $sel=$this->db->query("select * from vtiger_field where fieldname='$fldname'");
-            if($this->db->num_rows($sel)>0){
-            if ($this->column_fields['operators'.$i]!='' && $this->column_fields['operators'.$i]!=null){
-            $type = $xml->createElement("type");
-            $operators = $xml->createElement("op");
-            $mandatory = $xml->createElement("mandatory");
-            $opText = $xml->createTextNode($this->column_fields['operators'.$i]);
-            if($this->column_fields['f_mandatory'.$i]=='on')
-            $mand=1;
-            else $mand=0;
-            $mandText = $xml->createTextNode($mand);
-            $operators->appendChild($opText);
-            $mandatory->appendChild($mandText);
-            $length = $xml->createElement("length");
-            if($this->column_fields['f_length'.$i]!='' && $this->column_fields['f_length'.$i]!=null)
-            $form=$this->column_fields['f_length'.$i];
-            else $form=$this->column_fields['f_format'.$i];
-            $lengthText = $xml->createTextNode($form);
-            $length->appendChild($lengthText);
-            $type->appendChild($operators);
-            $type->appendChild($mandatory);
-            $type->appendChild($length);
-            $root1->appendChild($type);
-            $root->appendChild($root1);
-            }
-            }
-            else break;
-            $i++;
-            }
-
-            $this->db->pquery("update vtiger_crmentity set description=? where crmid=?",array($xml->saveXML(),$this->id));
-        }
 
 	/**
 	 * Invoked when special actions are performed on the module.

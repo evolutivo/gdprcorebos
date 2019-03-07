@@ -33,9 +33,8 @@
 <table>
 <name>vtiger_processtemplate</name>
 <sql><![CDATA[CREATE TABLE `vtiger_processtemplate` (
-  `processtemplateid` int(11) NOT NULL,
+  `processtemplateid` int(11) default NULL,
   `processtemplatename` varchar(255) default NULL,
-  `proctemplateid` varchar(100) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `code` varchar(255) DEFAULT NULL,
   `endtasksubstatus` varchar(255) DEFAULT NULL,
@@ -81,26 +80,6 @@
 <entityidfield>processtemplateid</entityidfield>
 <entityidcolumn>processtemplateid</entityidcolumn>
 </entityidentifier>
-</field>
-<field>
-<fieldname>proctemplateid</fieldname>
-<uitype>4</uitype>
-<columnname>proctemplateid</columnname>
-<tablename>vtiger_processtemplate</tablename>
-<generatedtype>1</generatedtype>
-<fieldlabel>Proc Template ID</fieldlabel>
-<readonly>1</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>2</sequence>
-<maximumlength>100</maximumlength>
-<typeofdata>V~M</typeofdata>
-<quickcreate>1</quickcreate>
-<quickcreatesequence></quickcreatesequence>
-<displaytype>1</displaytype>
-<info_type>BAS</info_type>
-<helpinfo><![CDATA[]]></helpinfo>
-<masseditable>1</masseditable>
 </field>
 <field>
 <fieldname>description</fieldname>

@@ -145,8 +145,8 @@
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
 <entityidentifier>
-<entityidfield>employeeid</entityidfield>
-<entityidcolumn>employeeid</entityidcolumn>
+<entityidfield>employeeno</entityidfield>
+<entityidcolumn>employeeno</entityidcolumn>
 </entityidentifier>
 </field>
 <field>

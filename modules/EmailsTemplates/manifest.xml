@@ -31,13 +31,12 @@
 <table>
 <name>vtiger_emailstemplates</name>
 <sql><![CDATA[CREATE TABLE `vtiger_emailstemplates` (
-  `emailstemplatesid` int(11) NOT NULL,
+  `emailstemplatesid` int(11) DEFAULT NULL,
   `emailstemplatesno` varchar(100) DEFAULT NULL,
   `templatename` varchar(255) DEFAULT NULL,
   `subject` varchar(255) DEFAULT NULL,
   `template` varchar(100) DEFAULT NULL,
-  `templateonlytext` varchar(100) DEFAULT NULL,
-   PRIMARY KEY (`emailstemplatesid`)
+  `templateonlytext` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
 </table>
 <table>

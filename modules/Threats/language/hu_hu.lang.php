@@ -11,11 +11,11 @@
 $mod_strings = array(
 	'Threats' => 'Threats',
 	'SINGLE_Threats' => 'Threats',
-	'Threats ID' => 'Threats ID',
 
 	'MAIN_BLOCK' => 'Main Block Information',
 
 	'Threatsname' => 'Threats Name',
+        'Accounts' => 'Accounts',
 );
 
 ?>

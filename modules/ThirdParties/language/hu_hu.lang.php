@@ -11,11 +11,11 @@
 $mod_strings = array(
 	'ThirdParties' => 'Third Parties',
 	'SINGLE_ThirdParties' => 'Third Parties',
-	'ThirdParties ID' => 'Third Parties ID',
 
 	'MAIN_BLOCK' => 'Main Block Information',
 
 	'ThirdPartiesname' => 'Third Parties Name',
+        'Accounts' => 'Accounts',
 );
 
 ?>

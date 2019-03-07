@@ -9,16 +9,18 @@
  ************************************************************************************/
 
 $mod_strings = Array(
-	'EmailsTemplates' => 'Email Templates',
-	'SINGLE_EmailsTemplates' => 'Email Template',
-	'LBL_EMAILTEMPLATES_INFORMATION'=>'Information',
-	'LBL_DESCRIPTION_INFORMATION'=>'Description',
-	'LBL_CUSTOM_INFORMATION' => 'Custom Information',
+        'EmailsTemplates' => 'EmailsTemplates',
+	'SINGLE_EmailsTemplates' => 'EmailsTemplates',
+    
+        'LBL_EMAILTEMPLATES_INFORMATION'=>'Information',
+        'LBL_DESCRIPTION_INFORMATION'=>'Description',
+    
+        'subject'=>'Subject',
+        'templateonlytext'=>'Template Only Text',
+        'Template No' => 'Template No',
+        'templatename' => 'Template Name',
+        'template' => 'Template',
 
-	'LBL_SUBJECT'=>'Subject',
-	'LBL_MESSAGE'=>'Message',
-	'LBL_MESSAGE_ONLYTEXT'=>'Message Only Text',
+);
 
-	);
-
-	?>
+?>

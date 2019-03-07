@@ -43,8 +43,7 @@ class Employees extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_employees'   => 'employeeid',
-		'vtiger_employeescf' => 'employeeid',
-	);
+		'vtiger_employeescf' => 'employeeid');
 
 	/**
 	 * Mandatory for Listing (Related listview)
@@ -52,16 +51,16 @@ class Employees extends CRMEntity {
 	public $list_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-		'Employee No'  => array('employees' => 'employeeno'),
-		'Name'         => array('employees' => 'employeename'),
-		'Last Name'    => array('employees' => 'employeelastn'),
+		'Employee No'=> array('employees' => 'employeeno'),
+		'Name'=> array('employees' => 'employeename'),
+		'Last Name'=> array('employees' => 'employeelastn'),
 		'Assigned To' => array('crmentity' => 'smownerid')
 	);
 	public $list_fields_name = array(
 		/* Format: Field Label => fieldname */
-		'Employee No' => 'employeeno',
-		'Name'        => 'employeename',
-		'Last Name'   => 'employeelastn',
+		'Employee No'=> 'employeeno',
+		'Name'=> 'employeename',
+		'Last Name'=> 'employeelastn',
 		'Assigned To' => 'assigned_user_id'
 	);
 
@@ -72,17 +71,17 @@ class Employees extends CRMEntity {
 	public $search_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-		'Employee No'  => array('employees' => 'employeeno'),
-		'Name'         => array('employees' => 'employeename'),
-		'Last Name'    => array('employees' => 'employeelastn'),
-		'Assigned To'  => array('crmentity' => 'smownerid')
+		'Employee No'=> array('employees' => 'employeeno'),
+		'Name'=> array('employees' => 'employeename'),
+		'Last Name'=> array('employees' => 'employeelastn'),
+		'Assigned To'=> array('crmentity' => 'smownerid')
 	);
 	public $search_fields_name = array(
 		/* Format: Field Label => fieldname */
-		'Employee No' => 'employeeno',
-		'Name'        => 'employeename',
-		'Last Name'   => 'employeelastn',
-		'Assigned To' => 'assigned_user_id'
+		'Employee No'=> 'employeeno',
+		'Name'=> 'employeename',
+		'Last Name'=> 'employeelastn',
+		'Assigned To'=> 'assigned_user_id'
 	);
 
 	// For Popup window record selection

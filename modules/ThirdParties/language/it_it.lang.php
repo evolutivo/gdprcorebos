@@ -9,14 +9,13 @@
  ************************************************************************************/
 
 $mod_strings = array(
-	'ThirdParties' => 'Soggetti Esterni',
-	'SINGLE_ThirdParties' => 'Soggetti Esterni',
-	'ThirdParties ID' => 'Soggetti Esterni ID',
-	'MAIN_BLOCK' => 'Informazioni sul blocco principale',
-	'ThirdPartiesname' => 'Nome di Soggetto Esterno',
-	'Accounts' => 'Aziende',
-	'Assigned To' => 'Assegnato a',
-	'Created Time' => 'Ora di creazione',
-	'Modified Time' => 'Ora di modificacione',
+	'ThirdParties' => 'Third Parties',
+	'SINGLE_ThirdParties' => 'Third Parties',
+
+	'MAIN_BLOCK' => 'Main Block Information',
+
+	'ThirdPartiesname' => 'Third Parties Name',
+        'Accounts' => 'Accounts',
 );
+
 ?>

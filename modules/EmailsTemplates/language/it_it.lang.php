@@ -8,23 +8,19 @@
  * All Rights Reserved.
  ************************************************************************************/
 
-$mod_strings = array(
-	'EmailsTemplates' => 'Email Templates',
-	'SINGLE_EmailsTemplates' => 'Email Template',
-	'LBL_EMAILTEMPLATES_INFORMATION' => 'Informazione',
-	'LBL_DESCRIPTION_INFORMATION' => 'Descrizione',
-	'LBL_CUSTOM_INFORMATION' => 'Informazione personalizzata',
-	'LBL_SUBJECT' => 'Soggetto',
-	'LBL_MESSAGE' => 'Messaggio',
-	'LBL_MESSAGE_ONLYTEXT' => 'Messaggio solo testo',
-	'Template No' => 'N. template',
-	'templatename' => 'Nome tamplate',
-	'subject' => 'Soggetto',
-	'Assigned To' => 'Assegnato a',
-	'Created Time' => 'Orario creazione',
-	'Modified Time' => 'Orario modifica',
-	'template' => 'Template',
-	'templateonlytext' => 'Solo testo',
-	'Description' => 'Descrizione',
+$mod_strings = Array(
+        'EmailsTemplates' => 'EmailsTemplates',
+	'SINGLE_EmailsTemplates' => 'EmailsTemplates',
+    
+        'LBL_EMAILTEMPLATES_INFORMATION'=>'Information',
+        'LBL_DESCRIPTION_INFORMATION'=>'Description',
+    
+        'subject'=>'Subject',
+        'templateonlytext'=>'Template Only Text',
+        'Template No' => 'Template No',
+        'templatename' => 'Template Name',
+        'template' => 'Template',
+
 );
+
 ?>

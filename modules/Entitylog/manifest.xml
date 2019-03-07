@@ -225,9 +225,6 @@
 </fields>
 </block>
 <block>
-<label>LBL_CUSTOM_INFORMATION</label>
-</block>
-<block>
 <label>LBLDESCRIPTIONINFORMATION</label>
 <fields>
 <field>

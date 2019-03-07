@@ -43,7 +43,7 @@ class Adocdetail extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_adocdetail'   => 'adocdetailid',
-		'vtiger_adocdetailcf' => 'adocdetailid'
+		'vtiger_adocdetailcf' => 'adocdetailid',
 	);
 
 	/**
@@ -57,10 +57,10 @@ class Adocdetail extends CRMEntity {
 		'adoc_product'=> array('adocdetail'=> 'adoc_product'),
 		'Quantity'=> array('adocdetail'=> 'adoc_quantity'),
 		'Price'=> array('adocdetail'=> 'adoc_price'),
-		'Assigned To' => array('crmentity' => 'smownerid')
+		'Assigned To' => array('crmentity'=> 'smownerid')
 	);
-	public $list_fields_name = array(
-		/* Format: Field Label => fieldname */
+
+	public $list_fields_name =array(
 		'AdocdetailNo'=>'adocdetailno',
 		'Line Nr'=> 'nrline',
 		'adoc_product'=> 'adoc_product',
@@ -73,7 +73,7 @@ class Adocdetail extends CRMEntity {
 	public $list_link_field = 'adocdetailno';
 
 	// For Popup listview and UI type support
-	public $search_fields = array( 
+	public $search_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'AdocdetailNo'=> array('adocdetail'=> 'adocdetailno'),
@@ -82,18 +82,19 @@ class Adocdetail extends CRMEntity {
 		'Quantity'=> array('adocdetail'=> 'adoc_quantity'),
 		'Price'=> array('adocdetail'=> 'adoc_price'),
 	 );
-	public $search_fields_name = array( 
+	public $search_fields_name = array(
+		/* Format: Field Label => fieldname */
 		'AdocdetailNo'=>'adocdetailno',
 		'Line Nr'=> 'nrline',
 		'adoc_product'=> 'adoc_product',
 		'Quantity'=> 'adoc_quantity',
 		'Price'=> 'adoc_price',
 	);
-
+	
 	// For Popup window record selection
 	public $popup_fields = array('adocdetailno');
 
-	// Placeholder for sort fields - All the fields will be initialized for Sorting
+	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
 	public $sortby_fields = array();
 
 	// For Alphabetical search
@@ -104,7 +105,7 @@ class Adocdetail extends CRMEntity {
 
 	// Required Information for enabling Import feature
 	public $required_fields = array();
-
+	
 	// Callback function list during Importing
 	public $special_functions = array('set_import_assigned_user'); 
 
@@ -119,6 +120,29 @@ class Adocdetail extends CRMEntity {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id, $module);
 		}
+	    /*
+	    add it to a workflow
+	    require_once("modules/Adocmaster/calculateTariffPrice.php");
+            $res = $this->db->pquery("Select adoctomaster,adoc_product,adoc_quantity FROM vtiger_adocdetail WHERE adocdetailid=?", array($this->id));
+            $adocmasterid=$this->db->query_result($res, 0,'adoctomaster');
+            $productid=$this->db->query_result($res,0,'adoc_product');
+            $quantity=$this->db->query_result($res,0,'adoc_quantity');
+            $foundRes2=calculatePrice('Adocdetail', $productid, $adocmasterid, $quantity);
+            $foundRes3=explode("::",$foundRes2);
+            $new_price=$foundRes3[7];
+            $new_tax=$foundRes3[8];
+            $queryString=$this->db->pquery("Select taxamount,totalamount,amount FROM vtiger_adocmaster where adocmasterid=?",array($adocmasterid));
+            $actualtotal=$this->db->query_result($queryString,0,'totalamount');
+            $actualtax=$this->db->query_result($queryString,0,'taxamount');
+            $actualtotal2=$this->db->query_result($queryString,0,'amount');
+            $addthis=$quantity*$new_price;
+            $newtotal=$actualtotal+$addthis;
+            $totaltaxed=$new_price*$quantity*$new_tax;
+            $newtax=$actualtax+$totaltaxed;
+            $total2=$actualtotal2+$new_price*$quantity*$new_tax+$quantity*$new_price;
+            $this->db->pquery("UPDATE vtiger_adocdetail set adoc_price=?,adocdtax=?,adocdtotalamount=?,adocdtotal=? WHERE adocdetailid=?",array($new_price,$new_tax,$addthis,$totaltaxed,$this->id));
+            $this->db->pquery("UPDATE vtiger_adocmaster set totalamount=?,taxamount=?,amount=? WHERE adocmasterid=?",array($newtotal,$newtax,$total2,$adocmasterid));
+     	    */
 	}
 
 	/**
@@ -162,13 +186,13 @@ class Adocdetail extends CRMEntity {
 	 * NOTE: This function has been added to CRMEntity (base class).
 	 * You can override the behavior by re-defining it here.
 	 */
-	//function get_related_list($id, $cur_tab_id, $rel_tab_id, $actions=false) { }
+	//public function get_related_list($id, $cur_tab_id, $rel_tab_id, $actions=false) { }
 
 	/**
 	 * Handle getting dependents list information.
 	 * NOTE: This function has been added to CRMEntity (base class).
 	 * You can override the behavior by re-defining it here.
 	 */
-	//function get_dependents_list($id, $cur_tab_id, $rel_tab_id, $actions=false) { }
+	//public function get_dependents_list($id, $cur_tab_id, $rel_tab_id, $actions=false) { }
 }
 ?>

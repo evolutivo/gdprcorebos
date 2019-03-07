@@ -43,7 +43,8 @@ class Cases extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_cases'   => 'casesid',
-		'vtiger_casescf' => 'casesid');
+		'vtiger_casescf' => 'casesid'
+	);
 
 	/**
 	 * Mandatory for Listing (Related listview)
@@ -67,7 +68,7 @@ class Cases extends CRMEntity {
 	public $search_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-		'Cases Name'=> Array('cases' => 'casesname')
+		'Cases Name'=> array('cases' => 'casesname')
 	);
 	public $search_fields_name = array(
 		/* Format: Field Label => fieldname */

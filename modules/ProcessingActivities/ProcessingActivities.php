@@ -52,14 +52,12 @@ class ProcessingActivities extends CRMEntity {
 	public $list_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-
 		'Processing Name'=> array('processingactivities' => 'processingname'),
-		'Azienda collegata'=> array('processingactivities','pactlinktoaccounts'),
+		'Azienda collegata'=> array('processingactivities'=>'pactlinktoaccounts'),
 		'Assigned To' => array('crmentity' => 'smownerid')
 	);
 	public $list_fields_name = array(
 		/* Format: Field Label => fieldname */
-
 		'Processing Name'=> 'processingname',
                 'Azienda collegata'=> 'pactlinktoaccounts',
 		'Assigned To' => 'assigned_user_id'
@@ -72,13 +70,11 @@ class ProcessingActivities extends CRMEntity {
 	public $search_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-		
 		'Processing Name'=> array('processingactivities' => 'processingname'),
 		'Azienda collegata'=> array('processingactivities','pactlinktoaccounts'),
 	);
 	public $search_fields_name = array(
 		/* Format: Field Label => fieldname */
-		
 		'Processing Name'=> 'processingname',
 		'Azienda collegata'=> 'pactlinktoaccounts',
 	);

@@ -43,7 +43,8 @@ class PhysicalAreas extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_physicalareas'   => 'physicalareasid',
-		'vtiger_physicalareascf' => 'physicalareasid');
+		'vtiger_physicalareascf' => 'physicalareasid',
+	);
 
 	/**
 	 * Mandatory for Listing (Related listview)
@@ -51,12 +52,12 @@ class PhysicalAreas extends CRMEntity {
 	public $list_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-		'Physical Areas Name'=> array('physicalareas' => 'physicalareasname'),
+		'Physicalareasname'=> array('physicalareas' => 'physicalareasname'),
 		'Assigned To' => array('crmentity' => 'smownerid')
 	);
 	public $list_fields_name = array(
 		/* Format: Field Label => fieldname */
-		'Physical Areas Name'=> 'physicalareasname',
+		'Physicalareasname'=> 'physicalareasname',
 		'Assigned To' => 'assigned_user_id'
 	);
 
@@ -67,11 +68,11 @@ class PhysicalAreas extends CRMEntity {
 	public $search_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-		'Physical Areas Name'=> array('physicalareas' => 'physicalareasname')
+		'Physicalareasname'=> array('physicalareas' => 'physicalareasname')
 	);
 	public $search_fields_name = array(
 		/* Format: Field Label => fieldname */
-		'Physical Areas Name'=> 'physicalareasname'
+		'Physicalareasname'=> 'physicalareasname'
 	);
 
 	// For Popup window record selection
@@ -92,11 +93,11 @@ class PhysicalAreas extends CRMEntity {
 	// Callback function list during Importing
 	public $special_functions = array('set_import_assigned_user');
 
-	public $default_order_by = 'MODULE_REFERENCE_FIELD';
+	public $default_order_by = 'physicalareasname';
 	public $default_sort_order='ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	public $mandatory_fields = array('createdtime', 'modifiedtime', 'MODULE_REFERENCE_FIELD');
+	public $mandatory_fields = array('createdtime', 'modifiedtime', 'physicalareasname');
 
 	public function save_module($module) {
 		if ($this->HasDirectImageField) {

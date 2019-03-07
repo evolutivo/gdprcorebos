@@ -14,7 +14,6 @@ class PALaunch extends CRMEntity {
 	public $db;
 	public $log;
 	public $disableVtCallbacks = true;
-
 	public $table_name = 'vtiger_palaunch';
 	public $table_index= 'palaunchid';
 	public $column_fields = array();
@@ -44,7 +43,7 @@ class PALaunch extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_palaunch'   => 'palaunchid',
-		'vtiger_palaunchcf' => 'palaunchid'
+		'vtiger_palaunchcf' => 'palaunchid',
 	);
 
 	/**
@@ -53,17 +52,17 @@ class PALaunch extends CRMEntity {
 	public $list_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-		'PALaunch Id'=> array('palaunch'=> 'palaunchid'),
-		'Planned Action' => array('palaunch'=>'plannedaction_id'),
-		'Related To' => array('palaunch'=>'related_id'),
-		'Recipient' => array('palaunch'=>'recipient_id'),
-		'Sequencer' => array('palaunch'=>'sequencer_id'),
-		'Scheduled Date' => array('palaunch'=>'scheduled_date'),
-		'Processed Date' => array('palaunch'=>'processed_date'),
+		'PALaunch Name'=> array('palaunch', 'palaunchname'),
+		'Planned Action'=> array('palaunch','plannedaction_id'),
+		'Related To'=> array('palaunch','related_id'),
+		'Recipient'=> array('palaunch','recipient_id'),
+		'Sequencer'=> array('palaunch','sequencer_id'),
+		'Scheduled Date'=> array('palaunch','scheduled_date'),
+		'Processed Date'=> array('palaunch','processed_date'),
 	);
 	public $list_fields_name = array(
 		/* Format: Field Label => fieldname */
-		'PALaunch Id'=> 'palaunchid',
+		'PALaunch Name'=> 'palaunchname',
 		'Planned Action' => 'plannedaction_id',
 		'Related To' => 'related_id',
 		'Recipient' => 'recipient_id',
@@ -73,23 +72,23 @@ class PALaunch extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	public $list_link_field = 'palaunchid';
+	public $list_link_field = 'palaunchname';
 
 	// For Popup listview and UI type support
 	public $search_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-		'PALaunch Id'=> array('palaunch'=> 'palaunchid'),
-		'Planned Action' => array('palaunch'=>'plannedaction_id'),
-		'Related To' => array('palaunch'=>'related_id'),
-		'Recipient' => array('palaunch'=>'recipient_id'),
-		'Sequencer' => array('palaunch'=>'sequencer_id'),
-		'Scheduled Date' => array('palaunch'=>'scheduled_date'),
-		'Processed Date' => array('palaunch'=>'processed_date'),
+		'PALaunch Name'=> array('palaunch', 'palaunchname'),
+		'Planned Action'=> array('palaunch','plannedaction_id'),
+		'Related To'=> array('palaunch','related_id'),
+		'Recipient'=> array('palaunch','recipient_id'),
+		'Sequencer'=> array('palaunch','sequencer_id'),
+		'Scheduled Date'=> array('palaunch','scheduled_date'),
+		'Processed Date'=> array('palaunch','processed_date'),
 	);
 	public $search_fields_name = array(
 		/* Format: Field Label => fieldname */
-		'PALaunch Id'=> 'palaunchid',
+		'PALaunch Name'=> 'palaunchname',
 		'Planned Action' => 'plannedaction_id',
 		'Related To' => 'related_id',
 		'Recipient' => 'recipient_id',
@@ -99,19 +98,19 @@ class PALaunch extends CRMEntity {
 	);
 
 	// For Popup window record selection
-	public $popup_fields = array('paulaunchid');
+	public $popup_fields = array('palaunchname');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
 	public $sortby_fields = array();
 
 	// For Alphabetical search
-	public $def_basicsearch_col = 'related_id';
+	public $def_basicsearch_col = 'palaunchname';
 
 	// Column value to use on detail view record text display
-	public $def_detailview_recname = 'palaunchid';
+	public $def_detailview_recname = 'palaunchname';
 
 	// Required Information for enabling Import feature
-	public $required_fields = array('MODULE_REFERENCE_FIELD'=>1);
+	public $required_fields = array();
 
 	// Callback function list during Importing
 	public $special_functions = array('set_import_assigned_user');
@@ -120,15 +119,27 @@ class PALaunch extends CRMEntity {
 	public $default_sort_order='DESC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	public $mandatory_fields = array('createdtime', 'modifiedtime',);
+	public $mandatory_fields = array('createdtime', 'modifiedtime');
 
 	public function save_module($module) {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id, $module);
 		}
 	}
-
-	public function getRecipientId($relatedId, $relatedModule = NULL) {
+        
+        public function beforeSave() {
+		if (empty($this->column_fields['recipient_id'])) {
+			$this->column_fields['recipient_id'] = $this->getRecipientId($this->column_fields['related_id']);
+		}
+		/*$query = "select exists (select 1 from vtiger_palaunch where plannedaction_id={$this->column_fields['plannedaction_id']} and recipient_id={$this->column_fields['recipient_id']} and related_id={$this->column_fields['related_id']} and palaunch_status='Pending')";
+		$res = $adb->query($query);
+		if ($adb->query_result($res, 0, 0) > 0) {
+			return false;
+		}*/
+		return true;
+	}
+        
+        public function getRecipientId($relatedId, $relatedModule = NULL) {
 		global $adb;
 		if (is_null($relatedModule)) {
 			$relatedModule = getSalesEntityType($relatedId);
@@ -195,14 +206,6 @@ class PALaunch extends CRMEntity {
 				$recipientId = $adb->query_result($rspot,0,'account_message');
 			}
 			break;
-		case 'cbSurveyDone':
-			$rspot = $adb->query("select relatewith from vtiger_cbsurveydone where cbsurveydoneid=$relatedId");
-			$recipientId = $adb->query_result($rspot,0,'relatewith');
-			break;
-		case 'cbSurveyAnswer':
-			$rspot = $adb->query("select relatedwith from vtiger_cbsurveyanswer where cbsurveyanswerid=$relatedId");
-			$recipientId = $adb->query_result($rspot,0,'relatedwith');
-			break;
 		case 'Contacts':
 		case 'Accounts':
 		case 'Leads':
@@ -212,57 +215,56 @@ class PALaunch extends CRMEntity {
 		return $recipientId;
 	}
 
+	public function save($module, $fileid = '') {
+		if ($this->beforeSave()) {
+			return parent::save($module, $fileid);
+		}
+		return false;
+	}
 
 	/**
 	 * Invoked when special actions are performed on the module.
 	 * @param String Module name
 	 * @param String Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
 	 */
-        function create_palaunch ($actionid,$delay,$param,$parampos=null,$delaybetween=null,$recordid){
-         global $adb,$log;
-         $date_time = date("Y-m-d H:i", strtotime("+ $delay minutes"));  
-         $date = date("Y-m-d",  strtotime($date_time));
-         $time=date('H:i',strtotime($date_time ));
-         $action=$adb->query("select threshold from vtiger_actions where actionsid=$actionid");
-         if($adb->num_rows($action)==0){
-         $action=$adb->query("select threshold from vtiger_sequencers where sequencersid=$actionid");
-         }
-         //$param1=explode(":::",$param);
-         $threshold=$adb->query_result($action,0,"threshold");
-         if($threshold=='' || $threshold==null) $threshold=1;
-         //$paramdec=json_decode(str_replace(array("'[","]'"),array("[","]"),$param[($parampos-1)]));$log->debug($paramdec);
-         $ths=ceil(sizeof($param)/$threshold);
-         for($i=0;$i<$ths;$i++){
-         if($delaybetween!=''&& $delaybetween!=0 && $i>0)
-             $time = date("H:i", strtotime("+ $delaybetween minutes",strtotime($time)));
-         
-         unset($arr); 
-         $arr=array();
-         for($j=1;$j<=$threshold;$j++){
-         if($param[($j-1)+$threshold*$i]!='')
-         $arr[]=$param[($j-1)+$threshold*$i];
-         else break;
-         } 
-         $param[$parampos-1]=json_encode(array("parameters"=>$arr));
-         $focus=new PALaunch();
-         $focus->column_fields['sequencer_id']=$actionid;
-         $focus->column_fields['scheduled_date']=$date;
-         $focus->column_fields['time_start']=$time;
-         $focus->column_fields['processed_date']=$date;
-         $focus->column_fields['parameters']=json_encode(array("parameters"=>$arr));
-         $focus->column_fields['time_end']=$time;
-         $focus->column_fields['palaunch_status']='Pending';
-         $focus->column_fields['assigned_user_id']=1;
-         if($recordid!=null && $recordid!='')
-         $focus->column_fields['records']=$recordid;
-         $focus->saveentity("PALaunch");}
+         public function create_palaunch ($actionid,$delay,$param,$parampos=null,$delaybetween){
+		 global $adb,$log;
+		 $date = date("Y-m-d");
+		 $time = date("H:i", strtotime("+ $delay minutes"));
+		 $action=$adb->query("select threshold from vtiger_actions where actionsid=$actionid");
+		 if($adb->num_rows($action)==0){
+                    $action=$adb->query("select threshold from vtiger_sequencers where sequencersid=$actionid");
+		 }
+		 $param1=explode(":::",$param);
+		 $threshold=$adb->query_result($action,0,"threshold");
+		 $paramdec=json_decode(str_replace(array("'[","]'"),array("[","]"),$param1[($parampos-1)]));$log->debug($paramdec);
+		 $ths=ceil(sizeof($paramdec)/$threshold);
+		 for($i=0;$i<$ths;$i++){
+                    if($delaybetween!=''&& $delaybetween!=0 && $i>0){
+                        $time = date("H:i", strtotime("+ $delaybetween minutes",strtotime($time)));
+                    }
+                    unset($arr);  
+                    $arr=array();
+                    for($j=1;$j<=$threshold;$j++){
+                        if($paramdec[($j-1)+$threshold*$i]!='')
+                        $arr[]=$paramdec[($j-1)+$threshold*$i];
+                        else break;
+                    }
+                    $param1[$parampos-1]=str_replace(array("[","]"),array("'[","]'"),json_encode($arr));
+                    $param=implode(":::",$param1);
+                    $focus=new PALaunch();
+                    $focus->column_fields['sequencer_id']=$actionid;
+                    $focus->column_fields['scheduled_date']=$date;
+                    $focus->column_fields['time_start']=$time;
+                    $focus->column_fields['processed_date']=$date;
+                    $focus->column_fields['parameters']=$param;
+                    $focus->column_fields['time_end']=$time;
+                    $focus->column_fields['palaunch_status']='Pending';
+                    $focus->column_fields['assigned_user_id']=1;
+                    $focus->saveentity("PALaunch");
+                }
         }
-	
-	/**
-	 * Invoked when special actions are performed on the module.
-	 * @param String Module name
-	 * @param String Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
-	 */
+        
 	public function vtlib_handler($modulename, $event_type) {
 		if ($event_type == 'module.postinstall') {
 			// TODO Handle post installation actions

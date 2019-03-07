@@ -9,19 +9,25 @@
  ************************************************************************************/
 
 $mod_strings = Array(
-	'DocSettings' => 'Doc Settings',
-	'SINGLE_DocSettings' => 'Doc Setting',
-	'DocSettings ID' => 'ID Doc Settings',
-	'LBL_CUSTOM_INFORMATION' => 'Informazione Personalizzata',
-	'LBL_DOCSETTINGS_INFORMATION' => 'Informazione Doc Settings',
-        'DocSettings Name'=>'Nome Doc Settings',
-        'Nome template PDF'=>'Nome template PDF',
-        'Pagine da a'=>'Pagine da a',
-        'Righe da a'=>'Righe da a',
-        'Tipo'=>'Tipo',
-        'DocSettings Number'=>'Numero Doc Settings',
-        'Map Master'=>'Mappa Master',
-        'Map Detail'=>'Mappa di Dettaglio',
-        'Documento'=>'Documento'   
-);
+	'DocSettings' => 'DocSettings',
+	'SINGLE_DocSettings' => 'DocSettings',
+	'DocSettings ID' => 'DocSettings ID',
+
+	'LBL_CUSTOM_INFORMATION' => 'Custom Information',
+	'LBL_DOCSETTINGS_INFORMATION' => 'DocSettings Information',
+	'LBL_DESCRIPTION_INFORMATION' => 'Description',
+
+	'DocSettings Name' => 'DocSettings Name',
+        'Causale' => 'Causale',
+        'Nome template PDF' => 'Template PDF Name',
+        'Pagine da a' => 'Pages From To',
+        'Righe da a' => 'Row From To',
+        'Tipo' => 'Type',
+        'Autoattach' => 'Autoattach',
+        'DocSettings Number' => 'DocSettings Number',
+        'Map Master' => 'Map Master',
+        'Map Detail' => 'Map Detail',
+        'Document' => 'Document'
+); 
+
 ?>

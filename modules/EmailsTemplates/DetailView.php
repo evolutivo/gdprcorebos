@@ -14,6 +14,11 @@ global $mod_strings, $app_strings, $currentModule, $current_user, $theme, $log;
 $smarty = new vtigerCRM_Smarty();
 
 require_once 'modules/Vtiger/DetailView.php';
+//add to generic detailview
+//$smarty->assign('TEMPLATE_SUBJECT', $focus->column_fields['subject']);
+//$smarty->assign('TEMPLATE_BODY', decode_html($focus->column_fields['template']));
+
+//$smarty->assign('TEMPLATE_BODY_ONLYTEXT', $focus->column_fields['templateonlytext']);
 
 $smarty->display('DetailView.tpl');
 ?>

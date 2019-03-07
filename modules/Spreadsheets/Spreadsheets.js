@@ -17,5 +17,4 @@ function updatedatanew(ethid){
                 var test=result.split("/");
                 window.location.href="newsp.php?id="+test[1];
                } });
-
  }

@@ -43,7 +43,7 @@ class Entitylog extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_entitylog'   => 'entitylogid',
-		'vtiger_entitylogcf' => 'entitylogid',
+                'vtiger_entitylogcf' => 'entitylogid',
 	);
 
 	/**
@@ -53,10 +53,10 @@ class Entitylog extends CRMEntity {
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
 		'Entitylog Name'=> array('entitylog'=> 'entitylogname'),
-                'Related to' => array('entitylog'=> 'relatedto'),                
-                'User' => array('entitylog'=> 'user'),
-                'Related Module' => array('entitylog'=> 'tabid'),
-                'Changes Message' => array('entitylog'=> 'finalstate'),
+                'Related to'=> array('entitylog'=> 'relatedto'),                
+                'User'=> array('entitylog'=> 'user'),
+                'Related Module'=> array('entitylog'=> 'tabid'),
+                'Changes Message'=> array('entitylog'=> 'finalstate'),
 		'Assigned To' => array('crmentity'=> 'smownerid')
 	);
 	public $list_fields_name = array(
@@ -113,191 +113,6 @@ class Entitylog extends CRMEntity {
 		}
 	}
 
-	/*
-         * function to create norm or denorm index in elastic
-         */
-        function create_elastic_index($moduleName,$id,$changevalues){
-         global $adb,$current_user;
-         include_once("modules/LoggingConf/LoggingUtils.php");
-         $tabid=getTabid($moduleName); 
-         $type=explode(",",getEntitylogtype($tabid));
-         $queryel=getqueryelastic($tabid);
-         $indextype=getEntitylogindextype($tabid);
-         require_once("modules/Users/CreateUserPrivilegeFile.php");
-         require_once("include/utils/GetUserGroups.php");
-         $q=$adb->pquery("select smownerid from vtiger_crmentity  where crmid=?",array($id));
-         $owner=$adb->query_result($q,0,"smownerid");
-         $role=$adb->query("select parentrole,vtiger_role.roleid from vtiger_user2role join vtiger_role on vtiger_role.roleid=vtiger_user2role.roleid  where vtiger_user2role.userid=$owner");
-         $current_user_roles=$adb->query_result($role,0,"roleid");
-    //$roleid=$adb->query_result($role,0,"parentrole");
-         $parrol=getParentRole($current_user_roles);
-         $roleid=implode("::",$parrol);
-         $userGroupFocus=new GetUserGroups();
-         $userGroupFocus->getAllUserGroups($owner);
-         $current_user_groups= $userGroupFocus->user_groups;
-         if(count($current_user_groups)!=0)
-         $grpid='::'.implode("::",$current_user_groups);
-         $def_org_share=getAllDefaultSharingAction();
-         $arr=getUserModuleSharingRoles($moduleName,$owner,$def_org_share ,$current_user_roles,$parrol,$current_user_groups);
-         $gr=$adb->pquery("select * from vtiger_groups where groupid=?",array($owner));
-         if($adb->num_rows($gr)==0){
-         if(count(array_keys($arr['read']['ROLE']))!=0)
-         $roleid.='::'.implode('::',array_keys($arr['read']['ROLE']));}
-         else $roleid.=implode('::',array_keys($arr['read']['GROUP']));
-         $roleid.='::'.$owner;
-         $tab=$adb->query("select * from  vtiger_entityname where tabid=$tabid");
-         $tableid=$adb->query_result($tab,0,'tablename').'.'.$adb->query_result($tab,0,'entityidfield');
-         $ip=GlobalVariable::getVariable('ip_elastic_server', '',1);
-         $fl=$adb->pquery("select fieldlabel from vtiger_elastic_indexes where elasticname='$indextype'");
-         $fldlabel1=explode(",", $adb->query_result($fl,0,0));
-         $user="1";
-         $update_log = unserialize($changevalues);
-                  $lines = array();
-                  foreach($update_log as $data) {
-                    $query = "select fieldlabel,uitype,columnname,fieldid from vtiger_field where tabid={$tabid} and fieldname='{$data['fieldname']}'";
-                    $res = $adb->query($query);
-                    $fieldlabel = $adb->query_result($res, 0, 0);
-                    $uitype = $adb->query_result($res, 0, 1);
-                    $columnname = $adb->query_result($res, 0, 2);
-                    $fieldid = $adb->query_result($res, 0, 3);
-                    if (in_array($uitype,array(10)))
-                    {                     
-                         $idold=$data['oldvalue'];
-                         $relatedModule=$adb->query_result($adb->pquery("Select setype from vtiger_crmentity where crmid=?",array($idold)),0,0);
-                         $data['oldvalue']=  getEntityName($relatedModule, $idold);
-                         $data['oldvalue']=$data['oldvalue'][$idold];
-
-                         $idnew= $data['newvalue'];
-                         $relatedModule=$adb->query_result($adb->pquery("Select setype from vtiger_crmentity where crmid=?",array($idnew)),0,0);
-                         $data['newvalue']=getEntityName($relatedModule, $idnew);
-                         $data['newvalue']=$data['newvalue'][$idnew]; 
-                     
-                    }
-                   if(is_array($data))
-                    {
-                    $lines[] ='fieldname='.$fieldlabel.';oldvalue='.$data['oldvalue'].';newvalue='.$data['newvalue'].';';
-                    } 
-                    else{
-                    $lines[] ='fieldname='.$fieldlabel.';oldvalue='.$data.';newvalue='.$data.';';
-                    }
-                    }
-         $lines=implode("",$lines);
-     
-         if(in_array('normalized',$type)) {
-         $endpointUrl2 = "http://$ip:9200/$indextype/norm";
-         $fields1=$adb->pquery("$queryel and $tableid=?",array($id));
-         $fld=array();
-         $fld['roles']=$roleid;
-         $fld['changedvalues']=$lines;
-         $fld['userchange']=$user;
-         $fld['urlrecord']="<a href='index.php?module=$moduleName&action=DetailView&record=$id'>Details</a>";
-         unset($fields1->fields[0]);
-         $in=0;
-         foreach($fields1->fields as $key => $value) {
-            if( floatval($key)) {
-                 unset($fields1->fields[$key]);
-            }
-            else {
-            $fldlabel=$fldlabel1[$in];
-            $fld["$fldlabel"]=$value;
-            $in++;}
-        }
-        $channel11 = curl_init();
-        //curl_setopt($channel1, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($channel11, CURLOPT_URL, $endpointUrl2);
-        curl_setopt($channel11, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($channel11, CURLOPT_POST, true);
-        //curl_setopt($channel11, CURLOPT_CUSTOMREQUEST, "PUT");
-        curl_setopt($channel11, CURLOPT_POSTFIELDS, json_encode($fld));
-        curl_setopt($channel11, CURLOPT_CONNECTTIMEOUT, 100);
-        curl_setopt($channel11, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($channel11, CURLOPT_TIMEOUT, 1000);
-        $response2 = curl_exec($channel11);
-       }
-      
-       if(in_array('denormalized',$type)) {
-        $getid=$id;
-        $endpointUrl12 = "http://$ip:9200/$indextype/denorm/_search?pretty";
-        $pk=$adb->query_result($tab,0,'entityidfield');
-        $fields1 =array('query'=>array("term"=>array("$pk"=>"$getid")));
-        $channel1 = curl_init();
-        curl_setopt($channel1, CURLOPT_URL, $endpointUrl12);
-        curl_setopt($channel1, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($channel1, CURLOPT_POST, true);
-        //curl_setopt($channel1, CURLOPT_CUSTOMREQUEST, "PUT");
-        curl_setopt($channel1, CURLOPT_POSTFIELDS, json_encode($fields1));
-        curl_setopt($channel1, CURLOPT_CONNECTTIMEOUT, 100);
-        curl_setopt($channel1, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($channel1, CURLOPT_TIMEOUT, 1000);
-        $response1 = json_decode(curl_exec($channel1));
-        //if(strstr($response1->error,'IndexMissingException'))
-        //{$ij=1;
-        //} 
-        $ij=$response1->hits->hits[0]->_id;
-        if($ij!='' && $ij!=null && $response1->hits->total!=0 ){
-        $endpointUrl2 = "http://$ip:9200/$indextype/denorm/$ij";
-        $fields1=$adb->pquery("$queryel and $tableid=?",array($id));
-        $fld=array();
-        $fld['roles']=$roleid;
-        $fld['changedvalues']=$lines;
-        $fld['userchange']=$user;
-        $fld['urlrecord']="<a href='index.php?module=$moduleName&action=DetailView&record=$id'>Details</a>";
-        unset($fields1->fields[0]);
-        $in=0;
-        foreach($fields1->fields as $key => $value) {
-            if( floatval($key)) {
-                 unset($fields1->fields[$key]);
-            }
-            else {
-            $fldlabel=$fldlabel1[$in];
-            $fld["$fldlabel"]=$value;
-            $in++;}
-        }
-        $channel11 = curl_init();
-        //curl_setopt($channel1, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($channel11, CURLOPT_URL, $endpointUrl2);
-        curl_setopt($channel11, CURLOPT_RETURNTRANSFER, true);
-        //curl_setopt($channel11, CURLOPT_POST, true);
-        curl_setopt($channel11, CURLOPT_CUSTOMREQUEST, "PUT");
-        curl_setopt($channel11, CURLOPT_POSTFIELDS, json_encode($fld));
-        curl_setopt($channel11, CURLOPT_CONNECTTIMEOUT, 100);
-        curl_setopt($channel11, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($channel11, CURLOPT_TIMEOUT, 1000);
-        $response2 = curl_exec($channel11);
-        }
-        else {
-        $endpointUrl2 = "http://$ip:9200/$indextype/denorm";
-        $fields1=$adb->pquery("$queryel and $tableid=?",array($id));
-        $fld=array();
-        $fld['roles']=$roleid;
-        $fld['changedvalues']=$lines;
-        $fld['userchange']=$user;
-        $fld['urlrecord']="<a href='index.php?module=$moduleName&action=DetailView&record=$id'>Details</a>";
-        unset($fields1->fields[0]);
-        $in=0;
-        foreach($fields1->fields as $key => $value) {
-            if( floatval($key)) {
-                 unset($fields1->fields[$key]);
-            }
-            else {
-            $fldlabel=$fldlabel1[$in];
-            $fld["$fldlabel"]=$value;
-            $in++;}
-        }
-        $channel11 = curl_init();
-        //curl_setopt($channel1, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($channel11, CURLOPT_URL, $endpointUrl2);
-        curl_setopt($channel11, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($channel11, CURLOPT_POST, true);
-        //curl_setopt($channel11, CURLOPT_CUSTOMREQUEST, "PUT");
-        curl_setopt($channel11, CURLOPT_POSTFIELDS, json_encode($fld));
-        curl_setopt($channel11, CURLOPT_CONNECTTIMEOUT, 100);
-        curl_setopt($channel11, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($channel11, CURLOPT_TIMEOUT, 1000);
-        $response23 = curl_exec($channel11); 
-    }
-    }     
-    }
 	/**
 	 * Invoked when special actions are performed on the module.
 	 * @param String Module name

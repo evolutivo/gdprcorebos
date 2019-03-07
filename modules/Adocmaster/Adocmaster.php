@@ -21,7 +21,7 @@ class Adocmaster extends CRMEntity {
 	/** Indicator if this is a custom module or standard module */
 	public $IsCustomModule = true;
 	public $HasDirectImageField = false;
-	/**
+/**
 	 * Mandatory table for supporting custom fields.
 	 */
 	public $customFieldTable = array('vtiger_adocmastercf', 'adocmasterid');
@@ -36,26 +36,28 @@ class Adocmaster extends CRMEntity {
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
 	public $tab_name = array('vtiger_crmentity', 'vtiger_adocmaster', 'vtiger_adocmastercf');
-
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_adocmaster'   => 'adocmasterid',
-		'vtiger_adocmastercf' => 'adocmasterid',
+		'vtiger_adocmastercf' => 'adocmasterid'
 	);
 
 	/**
 	 * Mandatory for Listing (Related listview)
 	 */
 	public $list_fields = array(
+		/* Format: Field Label => array(tablename => columnname) */
+		// tablename should not have prefix 'vtiger_'
 		'AdocmasterNo'=> array('adocmaster'=> 'adocmasterno'),
 		'Adocmaster Name'=> array('adocmaster'=> 'adocmastername'),
 		'Doc Nr'=> array('adocmaster'=> 'nrdoc'),
-		'Assigned To' => array('crmentity'=> 'smownerid')
+		'Assigned To' => array('crmentity' => 'smownerid')
 	);
 	public $list_fields_name = array(
+		/* Format: Field Label => fieldname */
 		'AdocmasterNo'=> 'adocmasterno',
 		'Adocmaster Name'=> 'adocmastername',
 		'Doc Nr'=> 'nrdoc',
@@ -66,25 +68,28 @@ class Adocmaster extends CRMEntity {
 	public $list_link_field = 'adocmasterno';
 
 	// For Popup listview and UI type support
-	public $search_fields = array(
+	public $search_fields = array( 
+		/* Format: Field Label => array(tablename => columnname) */
+		// tablename should not have prefix 'vtiger_'
 		'AdocmasterNo'=> array('adocmaster'=> 'adocmasterno'),
 		'Adocmaster Name'=> array('adocmaster'=> 'adocmastername'),
 		'Doc Nr'=> array('adocmaster'=> 'nrdoc'),
 	);
-	public $search_fields_name = array(
+	public $search_fields_name = array( 
+		/* Format: Field Label => fieldname */
 		'AdocmasterNo'=> 'adocmasterno',
 		'Adocmaster Name'=> 'adocmastername',
 		'Doc Nr'=> 'nrdoc',
-	);
+	); 
 
 	// For Popup window record selection
 	public $popup_fields = array('adocmasterno');
-
-	// Placeholder for sort fields - All the fields will be initialized for Sorting
+	
+	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
 	public $sortby_fields = array();
-
+	
 	// For Alphabetical search
-	public $def_basicsearch_col = 'adocmasterno';
+	public $def_basicsearch_col = 'adocmasterno'; 
 
 	// Column value to use on detail view record text display
 	public $def_detailview_recname = 'adocmasterno';
@@ -100,6 +105,7 @@ class Adocmaster extends CRMEntity {
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
 	public $mandatory_fields = array('createdtime', 'modifiedtime','adocmastername');
+
 
 	public function save_module($module) {
 		if ($this->HasDirectImageField) {

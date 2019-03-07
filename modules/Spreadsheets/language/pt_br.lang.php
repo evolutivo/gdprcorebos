@@ -9,7 +9,7 @@
  ************************************************************************************/
 
 $mod_strings = Array(
-'Spreadsheets' => 'Spreadsheets',
+	'Spreadsheets' => 'Spreadsheets',
 	'SINGLE_Spreadsheets' => 'Spreadsheets',
 	'Spreadsheets ID' => 'Spreadsheets ID',
 
@@ -17,7 +17,11 @@ $mod_strings = Array(
 	'LBL_SPREADSHEETS_INFORMATION' => 'Spreadsheets Information',
 	'LBL_DESCRIPTION_INFORMATION' => 'Description Information',
 
-	'ModuleFieldLabel' => 'ModuleFieldLabel Text',
+	'Spreadsheets' => 'Spreadsheets',
+        'Spreadsheets No' => 'Spreadsheets No',
+        'Module' => 'Module',
+        'Other Columns' => 'Other Columns',
+        'Module Columns' => 'Module Columns',
 );
 
 ?>

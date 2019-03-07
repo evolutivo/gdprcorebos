@@ -43,7 +43,8 @@ class cbSignature extends CRMEntity {
 	public $tab_name_index = array(
 		'vtiger_crmentity' => 'crmid',
 		'vtiger_cbsignature'   => 'cbsignatureid',
-		'vtiger_cbsignaturecf' => 'cbsignatureid');
+		'vtiger_cbsignaturecf' => 'cbsignatureid',
+	);
 
 	/**
 	 * Mandatory for Listing (Related listview)
@@ -67,7 +68,7 @@ class cbSignature extends CRMEntity {
 	public $search_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-		'Signature Name'=> Array('cbsignature' => 'signaturename')
+		'Signature Name'=> array('cbsignature' => 'signaturename')
 	);
 	public $search_fields_name = array(
 		/* Format: Field Label => fieldname */
