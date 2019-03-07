@@ -78,7 +78,7 @@ class HistoryLogHandler extends VTEventHandler {
       if(count($current_user_groups)!=0)
       $grpid='::'.implode("::",$current_user_groups);
       $def_org_share=getAllDefaultSharingAction();
-      $arr=getUserModuleSharingRoles($moduleName,$owner,$def_org_share ,$current_user_roles,$parrol,$current_user_groups);
+      $arr=getUserModuleSharingObjects($moduleName,$owner,$def_org_share ,$current_user_roles,$parrol,$current_user_groups);
       $gr=$adb->pquery("select * from vtiger_groups where groupid=?",array($owner));
       if($adb->num_rows($gr)==0){
       if(count(array_keys($arr['read']['ROLE']))!=0)
@@ -122,7 +122,7 @@ class HistoryLogHandler extends VTEventHandler {
     $focus->column_fields['finalstate']=$act2;
     $focus->saveentity("Entitylog");}
     $ip=GlobalVariable::getVariable('ip_elastic_server', '');
-    $fl=$adb->pquery("select fieldlabel from vtiger_elastic_indexes where elasticname='$indextype'");
+    $fl=$adb->pquery("select fieldlabel from vtiger_elastic_indexes where elasticname='$indextype'",array());
     if($adb->num_rows($fl)!=0)
     $fldlabel1=explode(",", $adb->query_result($fl,0,0));
     if(in_array('normalized',$type)) {
