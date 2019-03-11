@@ -1,0 +1,28 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_personalconsent</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_personalconsent` (
+  `personalconsentid` int(19) NOT NULL,
+  `personalconsentname` varchar(100) DEFAULT NULL,
+  `organization` varchar(100) DEFAULT NULL,
+  `contractualconsent` varchar(100) DEFAULT NULL,
+  `contractualconsentdate` date DEFAULT NULL,
+  `internalcommconsent` varchar(100) DEFAULT NULL,
+  `internalcommconsentdate` date DEFAULT NULL,
+  `externalcommunicationconsent` varchar(100) DEFAULT NULL,
+  `externalcommconsentdate` date DEFAULT NULL,
+  `sociocommconsent` varchar(100) DEFAULT NULL,
+  `sociocommconsentdate` date DEFAULT NULL,
+  `personaltreatment` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;]]></sql>
+		</table>
+		<table>
+			<name>vtiger_evaluationcf</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_personalconsentcf` (
+  `personalconsentid` int(19) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;]]></sql>
+		</table>
+	</tables>
+</schema>

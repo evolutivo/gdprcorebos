@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <module>
-<exporttime>2018-05-10 16:34:22</exporttime>
+<exporttime>2019-03-08 12:45:56</exporttime>
 <name>ProcessingActivities</name>
 <label>ProcessingActivities</label>
 <parent>Tools</parent>
@@ -20,15 +20,16 @@
   `thcodicedb` varchar(100) DEFAULT '',
   `thscopotrattamento` varchar(100) DEFAULT '',
   `pactcategoriadegliinteressati` varchar(100) DEFAULT '',
-  `thtransferimentoue` varchar(100) DEFAULT '',
   `pactretentionpolicy` varchar(100) DEFAULT '',
-  `pactlocazione` varchar(100) DEFAULT '',
   `thmisureorganizzative` varchar(100) DEFAULT '',
   `pactresponsabile` varchar(100) DEFAULT '',
-  `authenticationeauthorization` varchar(100) DEFAULT '',
-  `pactlegalbasis` varchar(100) DEFAULT '',
-  `pactdb012geolocalizzazione` tinyint(1) DEFAULT NULL,
-  `pactdbddeiclienti` tinyint(1) DEFAULT NULL,
+  `pacttypeofproccessing` varchar(255) DEFAULT '',
+  `pacdatacategory` varchar(255) DEFAULT '',
+  `pactlegalbasis` varchar(255) DEFAULT '',
+  `pacttransferdati` varchar(255) DEFAULT '',
+  `pactdispozitivobackup` varchar(255) DEFAULT '',
+  `pactfreqback` varchar(255) DEFAULT '',
+  `pactmisurasicurezzadati` varchar(255) DEFAULT '',
   PRIMARY KEY (`processingactivitiesid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
 </table>
@@ -74,7 +75,7 @@
 <readonly>1</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
-<sequence>1</sequence>
+<sequence>10</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
 <quickcreate>1</quickcreate>
@@ -98,7 +99,7 @@
 <readonly>1</readonly>
 <presence>0</presence>
 <defaultvalue></defaultvalue>
-<sequence>10</sequence>
+<sequence>1</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~M</typeofdata>
 <quickcreate>1</quickcreate>
@@ -118,7 +119,7 @@
 <readonly>1</readonly>
 <presence>0</presence>
 <defaultvalue></defaultvalue>
-<sequence>11</sequence>
+<sequence>21</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
 <quickcreate>3</quickcreate>
@@ -138,7 +139,7 @@
 <readonly>1</readonly>
 <presence>0</presence>
 <defaultvalue></defaultvalue>
-<sequence>12</sequence>
+<sequence>23</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>DT~O</typeofdata>
 <quickcreate>3</quickcreate>
@@ -158,7 +159,7 @@
 <readonly>1</readonly>
 <presence>0</presence>
 <defaultvalue></defaultvalue>
-<sequence>13</sequence>
+<sequence>22</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>DT~O</typeofdata>
 <quickcreate>3</quickcreate>
@@ -198,7 +199,7 @@
 <readonly>0</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
-<sequence>15</sequence>
+<sequence>11</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O~LE~100</typeofdata>
 <quickcreate>1</quickcreate>
@@ -218,7 +219,7 @@
 <readonly>0</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
-<sequence>16</sequence>
+<sequence>13</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O~LE~100</typeofdata>
 <quickcreate>1</quickcreate>
@@ -238,27 +239,7 @@
 <readonly>0</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
-<sequence>17</sequence>
-<maximumlength>100</maximumlength>
-<typeofdata>V~O~LE~100</typeofdata>
-<quickcreate>1</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
-<displaytype>1</displaytype>
-<info_type>BAS</info_type>
-<helpinfo><![CDATA[]]></helpinfo>
-<masseditable>1</masseditable>
-</field>
-<field>
-<fieldname>thtransferimentoue</fieldname>
-<uitype>1</uitype>
-<columnname>thtransferimentoue</columnname>
-<tablename>vtiger_processingactivities</tablename>
-<generatedtype>2</generatedtype>
-<fieldlabel>Trasferimento extra UE</fieldlabel>
-<readonly>0</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>18</sequence>
+<sequence>15</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O~LE~100</typeofdata>
 <quickcreate>1</quickcreate>
@@ -278,47 +259,7 @@
 <readonly>0</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
-<sequence>19</sequence>
-<maximumlength>100</maximumlength>
-<typeofdata>V~O~LE~100</typeofdata>
-<quickcreate>1</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
-<displaytype>1</displaytype>
-<info_type>BAS</info_type>
-<helpinfo><![CDATA[]]></helpinfo>
-<masseditable>1</masseditable>
-</field>
-<field>
-<fieldname>pactlocazione</fieldname>
-<uitype>1</uitype>
-<columnname>pactlocazione</columnname>
-<tablename>vtiger_processingactivities</tablename>
-<generatedtype>2</generatedtype>
-<fieldlabel>Locazione</fieldlabel>
-<readonly>0</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>20</sequence>
-<maximumlength>100</maximumlength>
-<typeofdata>V~O~LE~100</typeofdata>
-<quickcreate>1</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
-<displaytype>1</displaytype>
-<info_type>BAS</info_type>
-<helpinfo><![CDATA[]]></helpinfo>
-<masseditable>1</masseditable>
-</field>
-<field>
-<fieldname>thmisureorganizzative</fieldname>
-<uitype>1</uitype>
-<columnname>thmisureorganizzative</columnname>
-<tablename>vtiger_processingactivities</tablename>
-<generatedtype>2</generatedtype>
-<fieldlabel>Misure organizzative</fieldlabel>
-<readonly>0</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>21</sequence>
+<sequence>16</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O~LE~100</typeofdata>
 <quickcreate>1</quickcreate>
@@ -338,7 +279,7 @@
 <readonly>0</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
-<sequence>22</sequence>
+<sequence>12</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O~LE~100</typeofdata>
 <quickcreate>1</quickcreate>
@@ -349,37 +290,128 @@
 <masseditable>1</masseditable>
 </field>
 <field>
-<fieldname>authenticationeauthorization</fieldname>
-<uitype>1</uitype>
-<columnname>authenticationeauthorization</columnname>
+<fieldname>pacttypeofproccessing</fieldname>
+<uitype>15</uitype>
+<columnname>pacttypeofproccessing</columnname>
 <tablename>vtiger_processingactivities</tablename>
 <generatedtype>2</generatedtype>
-<fieldlabel>Authentication e Authorization</fieldlabel>
-<readonly>0</readonly>
-<presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>23</sequence>
-<maximumlength>100</maximumlength>
-<typeofdata>V~O~LE~100</typeofdata>
-<quickcreate>1</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
-<displaytype>1</displaytype>
-<info_type>BAS</info_type>
-<helpinfo><![CDATA[]]></helpinfo>
-<masseditable>1</masseditable>
-</field>
-<field>
-<fieldname>pactlegalbasis</fieldname>
-<uitype>1</uitype>
-<columnname>pactlegalbasis</columnname>
-<tablename>vtiger_processingactivities</tablename>
-<generatedtype>2</generatedtype>
-<fieldlabel>Legal Basis</fieldlabel>
+<fieldlabel>Type of Processing</fieldlabel>
 <readonly>0</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
 <sequence>24</sequence>
 <maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>--None--</picklistvalue>
+<picklistvalue>Cartacei</picklistvalue>
+<picklistvalue>Formato elettronico</picklistvalue>
+<picklistvalue>Altro</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>pacdatacategory</fieldname>
+<uitype>15</uitype>
+<columnname>pacdatacategory</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>GDPR Data Category</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>25</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>--None--</picklistvalue>
+<picklistvalue>Dati personali sensibili</picklistvalue>
+<picklistvalue>Dati personali</picklistvalue>
+<picklistvalue>Dati commerciali sensibili</picklistvalue>
+<picklistvalue>Altro</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>pactlegalbasis</fieldname>
+<uitype>15</uitype>
+<columnname>pactlegalbasis</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Basis for Processing</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>26</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>Diagnosi medica e trattamento</picklistvalue>
+<picklistvalue>Prestazioni di assistenza sanitaria e sociale</picklistvalue>
+<picklistvalue>Richiesto dalla legge</picklistvalue>
+<picklistvalue>Consent</picklistvalue>
+<picklistvalue>Gestione del sistema di assistenza sanitaria o sociale</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>pacttransferdati</fieldname>
+<uitype>15</uitype>
+<columnname>pacttransferdati</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Transferimento dati esteri</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>27</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>--Nessuno--</picklistvalue>
+<picklistvalue>Nessun dato estero</picklistvalue>
+<picklistvalue>Dati intra UE</picklistvalue>
+<picklistvalue>Dati extra UE</picklistvalue>
+</picklistvalues>
+</field>
+</fields>
+</block>
+<block>
+<label>Strumemti e politiche di sicurezza</label>
+<fields>
+<field>
+<fieldname>thmisureorganizzative</fieldname>
+<uitype>1</uitype>
+<columnname>thmisureorganizzative</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Misure organizzative</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>3</sequence>
+<maximumlength>100</maximumlength>
 <typeofdata>V~O~LE~100</typeofdata>
 <quickcreate>1</quickcreate>
 <quickcreatesequence>0</quickcreatesequence>
@@ -389,44 +421,79 @@
 <masseditable>1</masseditable>
 </field>
 <field>
-<fieldname>pactdb012geolocalizzazione</fieldname>
-<uitype>56</uitype>
-<columnname>pactdb012geolocalizzazione</columnname>
+<fieldname>pactdispozitivobackup</fieldname>
+<uitype>15</uitype>
+<columnname>pactdispozitivobackup</columnname>
 <tablename>vtiger_processingactivities</tablename>
-<generatedtype>1</generatedtype>
-<fieldlabel>Registro DB012 Dati Geolocalizzazione</fieldlabel>
-<readonly>1</readonly>
+<generatedtype>2</generatedtype>
+<fieldlabel>Dispozitivo di backup</fieldlabel>
+<readonly>0</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
-<sequence>25</sequence>
+<sequence>1</sequence>
 <maximumlength>100</maximumlength>
-<typeofdata>C~O</typeofdata>
+<typeofdata>V~O</typeofdata>
 <quickcreate>1</quickcreate>
-<quickcreatesequence></quickcreatesequence>
+<quickcreatesequence>0</quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>Non esistente</picklistvalue>
+<picklistvalue>Si, presente</picklistvalue>
+</picklistvalues>
 </field>
 <field>
-<fieldname>pactdbddeiclienti</fieldname>
-<uitype>56</uitype>
-<columnname>pactdbddeiclienti</columnname>
+<fieldname>pactfreqback</fieldname>
+<uitype>15</uitype>
+<columnname>pactfreqback</columnname>
 <tablename>vtiger_processingactivities</tablename>
-<generatedtype>1</generatedtype>
-<fieldlabel>Registro Dati dipendenti dei clienti</fieldlabel>
-<readonly>1</readonly>
+<generatedtype>2</generatedtype>
+<fieldlabel>Frequenza di backup</fieldlabel>
+<readonly>0</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
-<sequence>26</sequence>
+<sequence>2</sequence>
 <maximumlength>100</maximumlength>
-<typeofdata>C~O</typeofdata>
+<typeofdata>V~O</typeofdata>
 <quickcreate>1</quickcreate>
-<quickcreatesequence></quickcreatesequence>
+<quickcreatesequence>0</quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>Giornaliero</picklistvalue>
+<picklistvalue>Settimanale</picklistvalue>
+<picklistvalue>Mensile</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>pactmisurasicurezzadati</fieldname>
+<uitype>15</uitype>
+<columnname>pactmisurasicurezzadati</columnname>
+<tablename>vtiger_processingactivities</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Misura di sicurezza tecnica</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>4</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>Non applicabile</picklistvalue>
+<picklistvalue>Encrypted</picklistvalue>
+<picklistvalue>Pseudonimizzati</picklistvalue>
+<picklistvalue>Anonymized</picklistvalue>
+</picklistvalues>
 </field>
 </fields>
 </block>
@@ -469,6 +536,56 @@
 <field>
 <fieldname>assigned_user_id</fieldname>
 <columnindex>1</columnindex>
+</field>
+</fields>
+</customview>
+<customview>
+<viewname>default</viewname>
+<setdefault>false</setdefault>
+<setmetrics>false</setmetrics>
+<fields>
+<field>
+<fieldname>processingno</fieldname>
+<columnindex>0</columnindex>
+</field>
+<field>
+<fieldname>assigned_user_id</fieldname>
+<columnindex>1</columnindex>
+</field>
+<field>
+<fieldname>processingname</fieldname>
+<columnindex>2</columnindex>
+</field>
+<field>
+<fieldname>description</fieldname>
+<columnindex>3</columnindex>
+</field>
+</fields>
+</customview>
+<customview>
+<viewname>Registro trattamenti</viewname>
+<setdefault>false</setdefault>
+<setmetrics>false</setmetrics>
+<fields>
+<field>
+<fieldname>processingname</fieldname>
+<columnindex>0</columnindex>
+</field>
+<field>
+<fieldname>thcodicedb</fieldname>
+<columnindex>1</columnindex>
+</field>
+<field>
+<fieldname>pactcategoriadegliinteressati</fieldname>
+<columnindex>2</columnindex>
+</field>
+<field>
+<fieldname>pactcategoriadatipersonali</fieldname>
+<columnindex>3</columnindex>
+</field>
+<field>
+<fieldname>assigned_user_id</fieldname>
+<columnindex>4</columnindex>
 </field>
 </fields>
 </customview>

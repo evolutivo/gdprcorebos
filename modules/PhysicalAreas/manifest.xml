@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <module>
-<exporttime>2017-11-15 10:41:37</exporttime>
+<exporttime>2019-03-08 12:21:36</exporttime>
 <name>PhysicalAreas</name>
 <label>PhysicalAreas</label>
 <parent>Tools</parent>
@@ -14,6 +14,15 @@
   `physicalareasid` int(19) NOT NULL,
   `physicalareasname` varchar(255) DEFAULT NULL,
   `accounts` int(10) DEFAULT NULL,
+  `phareatype` varchar(255) DEFAULT '',
+  `phasede` varchar(100) DEFAULT '',
+  `phanumeripc` decimal(3,0) DEFAULT NULL,
+  `phamisurefisiche` text,
+  `phadatitrattati` text,
+  `phystrumentiarchivazione` text,
+  `phyarchivicartac` text,
+  `phyriskassesment` varchar(255) DEFAULT '',
+  `phycategoria` varchar(255) DEFAULT '',
   PRIMARY KEY (`physicalareasid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
 </table>
@@ -136,6 +145,204 @@
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
 </field>
+<field>
+<fieldname>phareatype</fieldname>
+<uitype>15</uitype>
+<columnname>phareatype</columnname>
+<tablename>vtiger_physicalareas</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Tipo asset</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>6</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>--Nessuno--</picklistvalue>
+<picklistvalue>Room</picklistvalue>
+<picklistvalue>Server</picklistvalue>
+<picklistvalue>Servizio cloud</picklistvalue>
+<picklistvalue>Servizio</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>phasede</fieldname>
+<uitype>1</uitype>
+<columnname>phasede</columnname>
+<tablename>vtiger_physicalareas</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Sede</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>7</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~100</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>phanumeripc</fieldname>
+<uitype>7</uitype>
+<columnname>phanumeripc</columnname>
+<tablename>vtiger_physicalareas</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Numeri PC</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>8</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>NN~O~2,0</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>phamisurefisiche</fieldname>
+<uitype>21</uitype>
+<columnname>phamisurefisiche</columnname>
+<tablename>vtiger_physicalareas</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Misure fisiche</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>9</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>phadatitrattati</fieldname>
+<uitype>21</uitype>
+<columnname>phadatitrattati</columnname>
+<tablename>vtiger_physicalareas</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Dati trattati</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>10</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>phystrumentiarchivazione</fieldname>
+<uitype>21</uitype>
+<columnname>phystrumentiarchivazione</columnname>
+<tablename>vtiger_physicalareas</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Strumenti di archiviazione</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>13</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>phyarchivicartac</fieldname>
+<uitype>21</uitype>
+<columnname>phyarchivicartac</columnname>
+<tablename>vtiger_physicalareas</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Dotazione di contenitori per archivi cartacei</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>14</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>phyriskassesment</fieldname>
+<uitype>15</uitype>
+<columnname>phyriskassesment</columnname>
+<tablename>vtiger_physicalareas</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Risk Assesment</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>15</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>Basso</picklistvalue>
+<picklistvalue>Medio</picklistvalue>
+<picklistvalue>Alto</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>phycategoria</fieldname>
+<uitype>15</uitype>
+<columnname>phycategoria</columnname>
+<tablename>vtiger_physicalareas</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Categoria</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>16</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>Sistema Elaborativo Server</picklistvalue>
+<picklistvalue>Sistema Elaborativo Client</picklistvalue>
+<picklistvalue>Singolo PC</picklistvalue>
+<picklistvalue>Luogho fisico</picklistvalue>
+</picklistvalues>
+</field>
 </fields>
 </block>
 </blocks>
@@ -155,10 +362,90 @@
 </field>
 </fields>
 </customview>
+<customview>
+<viewname>default</viewname>
+<setdefault>false</setdefault>
+<setmetrics>false</setmetrics>
+<fields>
+<field>
+<fieldname>physicalareasname</fieldname>
+<columnindex>0</columnindex>
+</field>
+<field>
+<fieldname>assigned_user_id</fieldname>
+<columnindex>1</columnindex>
+</field>
+<field>
+<fieldname>accounts</fieldname>
+<columnindex>2</columnindex>
+</field>
+<field>
+<fieldname>CreatedTime</fieldname>
+<columnindex>3</columnindex>
+</field>
+<field>
+<fieldname>ModifiedTime</fieldname>
+<columnindex>4</columnindex>
+</field>
+</fields>
+</customview>
+<customview>
+<viewname>Aree Fisiche</viewname>
+<setdefault>false</setdefault>
+<setmetrics>false</setmetrics>
+<fields>
+<field>
+<fieldname>physicalareasname</fieldname>
+<columnindex>0</columnindex>
+</field>
+<field>
+<fieldname>phareatype</fieldname>
+<columnindex>1</columnindex>
+</field>
+<field>
+<fieldname>phasede</fieldname>
+<columnindex>2</columnindex>
+</field>
+<field>
+<fieldname>phadatitrattati</fieldname>
+<columnindex>5</columnindex>
+</field>
+<field>
+<fieldname>phamisurefisiche</fieldname>
+<columnindex>6</columnindex>
+</field>
+<field>
+<fieldname>phanumeripc</fieldname>
+<columnindex>7</columnindex>
+</field>
+<field>
+<fieldname>assigned_user_id</fieldname>
+<columnindex>8</columnindex>
+</field>
+</fields>
+</customview>
 </customviews>
 <sharingaccess>
-<default>private</default>
+<default>public_readonly</default>
 </sharingaccess>
+<actions>
+<action>
+<name><![CDATA[Merge]]></name>
+<status>enabled</status>
+</action>
+</actions>
+<customlinks>
+<customlink>
+<linktype></linktype>
+<linklabel></linklabel>
+<linkurl><![CDATA[]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
+</customlinks>
 <crons>
 </crons>
 </module>

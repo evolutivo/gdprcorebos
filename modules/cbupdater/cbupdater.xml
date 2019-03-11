@@ -1312,4 +1312,11 @@
 	<classname>Addmodulemessages</classname>
 	<systemupdate>1</systemupdate>
 </changeSet>
+<changeSet>
+	<author>loridacito</author>
+	<description>Install Modules</description>
+	<filename>build/changeSets/2019/installmodules.php</filename>
+	<classname>Installmodules</classname>
+	<systemupdate>1</systemupdate>
+</changeSet>
 </updatesChangeLog>

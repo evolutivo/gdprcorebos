@@ -1,76 +1,57 @@
 <?xml version='1.0'?>
 <module>
+<exporttime>2019-03-08 12:46:48</exporttime>
 <name>Employees</name>
 <label>Employees</label>
 <parent>Marketing</parent>
 <version>1.0</version>
-<short_description>coreBOS Employees module</short_description>
 <dependencies>
 <vtiger_version>5.4.0</vtiger_version>
 <vtiger_max_version>5.*</vtiger_max_version>
 </dependencies>
-<license>
-<inline><![CDATA[/*************************************************************************************************
- * Copyright 2015 Opencubed -- This file is a part of TSOLUCIO coreBOS customizations.
- * You can copy, adapt and distribute the work under the "Attribution-NonCommercial-ShareAlike"
- * Vizsage Public License (the "License"). You may not use this file except in compliance with the
- * License. Roughly speaking, non-commercial users may share and modify this code, but must give credit
- * and share improvements. However, for proper details please read the full License, available at
- * http://vizsage.com/license/Vizsage-License-BY-NC-SA.html and the handy reference for understanding
- * the full license at http://vizsage.com/license/Vizsage-Deed-BY-NC-SA.html. Unless required by
- * applicable law or agreed to in writing, any software distributed under the License is distributed
- * on an  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and limitations under the
- * License terms of Creative Commons Attribution-NonCommercial-ShareAlike 3.0 (the License).
- *************************************************************************************************
- *  Module       : coreBOS Employees
- *  Version      : 5.4.0
- *  Author       : Opencubed
- *************************************************************************************************/
-]]></inline>
-</license>
 <tables>
 <table>
 <name>vtiger_employees</name>
 <sql><![CDATA[CREATE TABLE `vtiger_employees` (
   `employeeid` int(11) NOT NULL,
-  `employeeno` varchar(56) default NULL,
-  `employeename` varchar(200) default NULL,
-  `employeelastn` varchar(200) default NULL,
-  `employeetitle` varchar(200) default NULL,
-  `emp_organization` varchar(200) default NULL,
-  `emp_department` varchar(200) default NULL,
-  `emp_officephone` varchar(200) default NULL,
-  `emp_mobile` varchar(200) default NULL,
-  `emp_homephone` varchar(200) default NULL,
-  `emp_otherphone` varchar(200) default NULL,
-  `emp_fax` varchar(200) default NULL,
-  `emp_birthdate` date default NULL,
-  `emp_email` varchar(200) default NULL,
-  `emp_mailingstreet` varchar(200) default NULL,
-  `emp_mailingpobox` varchar(200) default NULL,
-  `emp_mailingcity` varchar(200) default NULL,
-  `emp_mailingstate` varchar(200) default NULL,
-  `emp_mailingpostalcode` varchar(200) default NULL,
-  `emp_mailingcountry` varchar(200) default NULL,
-  `emp_otherstreet` varchar(200) default NULL,
-  `emp_otherpobox` varchar(200) default NULL,
-  `emp_othercity` varchar(200) default NULL,
-  `emp_otherstate` varchar(200) default NULL,
-  `emp_otherpostalcode` varchar(200) default NULL,
-  `emp_othercountry` varchar(200) default NULL,
-  `firstdepartment` varchar(200) default NULL,
-  `seconddepartment` varchar(200) default NULL,
-  `datechangedep1` date default NULL,
-  `datechangedep2` date default NULL,
-  `thirddepartment` varchar(200) default NULL,
-  `forthdepartment` varchar(200) default NULL,
-  `datechangedep3` date default NULL,
-  `datechangedep4` date default NULL,
-    index (`employeename`),
-    index (`employeelastn`),
-    index (`employeeno`),
-  PRIMARY KEY (`employeeid`)
+  `employeeno` varchar(56) DEFAULT NULL,
+  `employeename` varchar(200) DEFAULT NULL,
+  `employeelastn` varchar(200) DEFAULT NULL,
+  `employeetitle` varchar(200) DEFAULT NULL,
+  `emp_organization` varchar(200) DEFAULT NULL,
+  `emp_department` varchar(200) DEFAULT NULL,
+  `emp_officephone` varchar(200) DEFAULT NULL,
+  `emp_mobile` varchar(200) DEFAULT NULL,
+  `emp_homephone` varchar(200) DEFAULT NULL,
+  `emp_otherphone` varchar(200) DEFAULT NULL,
+  `emp_fax` varchar(200) DEFAULT NULL,
+  `emp_birthdate` date DEFAULT NULL,
+  `emp_email` varchar(200) DEFAULT NULL,
+  `emp_mailingstreet` varchar(200) DEFAULT NULL,
+  `emp_mailingpobox` varchar(200) DEFAULT NULL,
+  `emp_mailingcity` varchar(200) DEFAULT NULL,
+  `emp_mailingstate` varchar(200) DEFAULT NULL,
+  `emp_mailingpostalcode` varchar(200) DEFAULT NULL,
+  `emp_mailingcountry` varchar(200) DEFAULT NULL,
+  `emp_otherstreet` varchar(200) DEFAULT NULL,
+  `emp_otherpobox` varchar(200) DEFAULT NULL,
+  `emp_othercity` varchar(200) DEFAULT NULL,
+  `emp_otherstate` varchar(200) DEFAULT NULL,
+  `emp_otherpostalcode` varchar(200) DEFAULT NULL,
+  `emp_othercountry` varchar(200) DEFAULT NULL,
+  `firstdepartment` varchar(200) DEFAULT NULL,
+  `seconddepartment` varchar(200) DEFAULT NULL,
+  `datechangedep1` date DEFAULT NULL,
+  `datechangedep2` date DEFAULT NULL,
+  `thirddepartment` varchar(200) DEFAULT NULL,
+  `forthdepartment` varchar(200) DEFAULT NULL,
+  `datechangedep3` date DEFAULT NULL,
+  `datechangedep4` date DEFAULT NULL,
+  `empltoaccounts` int(11) DEFAULT NULL,
+  PRIMARY KEY (`employeeid`),
+  KEY `employeename` (`employeename`),
+  KEY `employeelastn` (`employeelastn`),
+  KEY `employeeno` (`employeeno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
 </table>
 <table>
@@ -94,12 +75,12 @@
 <fieldlabel>Name</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>1</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -114,12 +95,12 @@
 <fieldlabel>Last Name</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>3</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -134,19 +115,19 @@
 <fieldlabel>Employee No</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>2</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~M</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
-<masseditable>1</masseditable>
+<masseditable>0</masseditable>
 <entityidentifier>
-<entityidfield>employeeno</entityidfield>
-<entityidcolumn>employeeno</entityidcolumn>
+<entityidfield>employeeid</entityidfield>
+<entityidcolumn>employeeid</entityidcolumn>
 </entityidentifier>
 </field>
 <field>
@@ -158,12 +139,12 @@
 <fieldlabel>Assigned To</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>4</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~M</typeofdata>
 <quickcreate>1</quickcreate>
-<quickcreatesequence>1</quickcreatesequence>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -178,12 +159,12 @@
 <fieldlabel>Title</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>5</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -198,12 +179,12 @@
 <fieldlabel>Organization Name</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
-<sequence>7</sequence>
+<defaultvalue></defaultvalue>
+<sequence>9</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -218,12 +199,12 @@
 <fieldlabel>Department Name</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>6</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -238,12 +219,12 @@
 <fieldlabel>OfficePhone</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>8</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -258,12 +239,12 @@
 <fieldlabel>Mobile</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
-<sequence>9</sequence>
+<defaultvalue></defaultvalue>
+<sequence>11</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -278,12 +259,12 @@
 <fieldlabel>Home Phone</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
-<sequence>11</sequence>
+<defaultvalue></defaultvalue>
+<sequence>13</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -298,12 +279,12 @@
 <fieldlabel>Other Phone</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>10</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -318,12 +299,12 @@
 <fieldlabel>Fax</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>12</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -338,12 +319,12 @@
 <fieldlabel>Birthdate</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
-<sequence>13</sequence>
+<defaultvalue></defaultvalue>
+<sequence>15</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>D~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -358,12 +339,12 @@
 <fieldlabel>Email</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
-<sequence>15</sequence>
+<defaultvalue></defaultvalue>
+<sequence>17</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -378,12 +359,12 @@
 <fieldlabel>Created Time</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>14</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>T~O</typeofdata>
 <quickcreate>3</quickcreate>
-<quickcreatesequence>8</quickcreatesequence>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>2</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -398,16 +379,39 @@
 <fieldlabel>Modified Time</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>16</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>T~O</typeofdata>
 <quickcreate>3</quickcreate>
-<quickcreatesequence>9</quickcreatesequence>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>2</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>empltoaccounts</fieldname>
+<uitype>10</uitype>
+<columnname>empltoaccounts</columnname>
+<tablename>vtiger_employees</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Azienda collegata</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>18</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>I~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>1</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<relatedmodules>
+<relatedmodule>Accounts</relatedmodule>
+</relatedmodules>
 </field>
 </fields>
 </block>
@@ -423,12 +427,12 @@
 <fieldlabel>Mailing Street</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>17</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -443,12 +447,12 @@
 <fieldlabel>Mailing PO Box</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>19</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -463,32 +467,12 @@
 <fieldlabel>Mailing City</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>18</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
-<displaytype>1</displaytype>
-<info_type>BAS</info_type>
-<helpinfo><![CDATA[]]></helpinfo>
-<masseditable>1</masseditable>
-</field>
-<field>
-<fieldname>emp_mailingstate</fieldname>
-<uitype>1</uitype>
-<columnname>emp_email</columnname>
-<tablename>emp_mailingstate</tablename>
-<generatedtype>1</generatedtype>
-<fieldlabel>Mailing State</fieldlabel>
-<readonly>1</readonly>
-<presence>0</presence>
-<selected>0</selected>
-<sequence>20</sequence>
-<maximumlength>100</maximumlength>
-<typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -503,12 +487,12 @@
 <fieldlabel>Mailing Postal Code</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>21</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -523,12 +507,12 @@
 <fieldlabel>Mailing Country</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>23</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -543,12 +527,12 @@
 <fieldlabel>Other Street</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>22</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -563,12 +547,12 @@
 <fieldlabel>Other PO Box</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>24</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -583,12 +567,12 @@
 <fieldlabel>Other City</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>25</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -603,12 +587,12 @@
 <fieldlabel>Other State</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>27</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -623,12 +607,12 @@
 <fieldlabel>Other Postal Code</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>26</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -643,12 +627,12 @@
 <fieldlabel>Other Country</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>28</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -668,12 +652,12 @@
 <fieldlabel>First Department</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>29</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -691,12 +675,12 @@
 <fieldlabel>Change 2^ Department</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>31</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -714,12 +698,12 @@
 <fieldlabel>Date Change Department</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>30</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>D~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -734,12 +718,12 @@
 <fieldlabel>Date Change 2^ Department</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>32</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -754,12 +738,12 @@
 <fieldlabel>Change 3^ Department</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>33</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -777,12 +761,12 @@
 <fieldlabel>Change 4^ Department</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>35</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -800,12 +784,12 @@
 <fieldlabel>Date Change 3^ Department</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>34</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>D~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -820,12 +804,12 @@
 <fieldlabel>Date Change 4^ Department</fieldlabel>
 <readonly>1</readonly>
 <presence>0</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>36</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>D~O</typeofdata>
-<quickcreate>0</quickcreate>
-<quickcreatesequence>0</quickcreatesequence>
+<quickcreate>1</quickcreate>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -845,12 +829,12 @@
 <fieldlabel>Description</fieldlabel>
 <readonly>1</readonly>
 <presence>2</presence>
-<selected>0</selected>
+<defaultvalue></defaultvalue>
 <sequence>37</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>V~O</typeofdata>
 <quickcreate>1</quickcreate>
-<quickcreatesequence>10</quickcreatesequence>
+<quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -885,13 +869,9 @@
 </customview>
 </customviews>
 <sharingaccess>
-<default>public</default>
+<default>public_readwritedelete</default>
 </sharingaccess>
 <actions>
-<action>
-<name><![CDATA[Merge]]></name>
-<status>enabled</status>
-</action>
 <action>
 <name><![CDATA[Import]]></name>
 <status>enabled</status>
@@ -900,10 +880,22 @@
 <name><![CDATA[Export]]></name>
 <status>enabled</status>
 </action>
+<action>
+<name><![CDATA[Merge]]></name>
+<status>enabled</status>
+</action>
 </actions>
-<relatedlists>
-</relatedlists>
 <customlinks>
+<customlink>
+<linktype></linktype>
+<linklabel></linklabel>
+<linkurl><![CDATA[]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
 </customlinks>
 <crons>
 </crons>
