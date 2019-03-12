@@ -12,11 +12,24 @@ $mod_strings = array(
 	'PhysicalAreas' => 'Physical Areas',
 	'SINGLE_PhysicalAreas' => 'Physical Areas',
 	'PhysicalAreas ID' => 'Physical Areas ID',
-
 	'MAIN_BLOCK' => 'Main Block Information',
-
 	'PhysicalAreasname' => 'Physical Areas Name',
-        'Accounts' => 'Accounts',
-); 
-
+	'Accounts' => 'Accounts',
+	'Assigned To' => 'Assigned To',
+	'Created Time' => 'Created Time',
+	'Modified Time' => 'Modified Time',
+	'Tipo asset' => 'Asset type',
+	'Sede' => 'Sede',
+	'Numeri PC' => 'Number of PC',
+	'Misure fisiche' => 'Physical measures',
+	'Dati trattati' => 'Data processed',
+	'Strumenti di archiviazione' => 'Archiving tools',
+	'Dotazione di contenitori per archivi cartacei' => 'Supply of containers for paper archives',
+	'Risk Assesment' => 'Risk Assesment',
+	'Categoria' => 'Categoria',
+	'' => '',
+	'' => '',
+	'' => '',
+	'' => '',
+);
 ?>

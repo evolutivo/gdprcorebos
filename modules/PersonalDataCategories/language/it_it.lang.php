@@ -21,5 +21,8 @@ $mod_strings = array(
 	'Created Time' => 'Orario creazione',
 	'Modified Time' => 'Orario modifica',
 	'Description' => 'Descrizione',
+	'Responsabile del incarico' => 'Responsabile del incarico',
+	'Datti trattati' => 'Datti trattati	',
+	'Reparto Responsabile' => 'Reparto Responsabile',
 );
 ?>

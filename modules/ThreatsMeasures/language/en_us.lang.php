@@ -11,11 +11,16 @@
 $mod_strings = array(
 	'ThreatsMeasures' => 'Threats Measures',
 	'SINGLE_ThreatsMeasures' => 'Threats Measures',
-
+	'ThreatsMeasures ID' => 'Threats Measures ID',
 	'MAIN_BLOCK' => 'Main Block Information',
-
 	'ThreatsMeasuresname' => 'Threats Measures Name',
-        'Accounts' => 'Accounts',
+	'Accounts' => 'Accounts',
+	'Assigned To' => 'Assigned To',
+	'Created Time' => 'Created Time',
+	'Modified Time' => 'Modified Time',
+	'Tippo di misure' => 'Measure type',
+	'Data di adattamento' => 'Date of adaptation',
+	'Valutazione' => 'Rating',
+	'Responsabile di adattamento' => 'Responsible for adaptation',
 );
-
 ?>

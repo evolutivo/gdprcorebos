@@ -11,11 +11,24 @@
 $mod_strings = array(
 	'ThirdParties' => 'Third Parties',
 	'SINGLE_ThirdParties' => 'Third Parties',
-
+	'ThirdParties ID' => 'Third Parties ID',
 	'MAIN_BLOCK' => 'Main Block Information',
-
 	'ThirdPartiesname' => 'Third Parties Name',
-        'Accounts' => 'Accounts',
+	'Accounts' => 'Accounts',
+	'Assigned To' => 'Assigned To',
+	'Created Time' => 'Created Time',
+	'Modified Time' => 'Modified Time',
+	'Tipo di soggeto esterno' => 'Third Party Category',
+	'Retention Period' => 'Retention Period',
+	'Contract Renewal Date' => 'Contract Renewal Date',
+	'Incident Reporting' => 'Incident Reporting',
+	'Email' => 'Email',
+	'Phone' => 'Phone',
+	'Website' => 'Website',
+	'Address' => 'Address',
+	'City' => 'City',
+	'Country' => 'Country',
+	'Postal Code' => 'Postal Code',
+	'State' => 'State',
 );
-
 ?>

@@ -9,13 +9,18 @@
  ************************************************************************************/
 
 $mod_strings = array(
-	'Threats' => 'Threats',
-	'SINGLE_Threats' => 'Threats',
-
-	'MAIN_BLOCK' => 'Main Block Information',
-
-	'Threatsname' => 'Threats Name',
-        'Accounts' => 'Accounts',
+	'Threats' => 'Rischi',
+	'SINGLE_Threats' => 'Rischio',
+	'Threats ID' => 'ID Rischio',
+	'MAIN_BLOCK' => 'Informazioni principali',
+	'Threatsname' => 'Nome Rischio',
+	'Accounts' => 'Azienda collegata',
+	'Assigned To' => 'Assegnato a',
+	'Created Time' => 'Orario creazione',
+	'Modified Time' => 'Orario modifica',
+	'Impatto' => 'Impatto',
+	'Propabilita' => 'Probabilita\'',
+	'Rischio Residuo' => 'Rischio Residuo',
+	'Tippo rischio' => 'Tipo rischio',
 );
-
 ?>

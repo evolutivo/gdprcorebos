@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <module>
-<exporttime>2017-11-15 10:40:56</exporttime>
+<exporttime>2019-03-11 16:28:21</exporttime>
 <name>ThirdParties</name>
 <label>ThirdParties</label>
 <parent>Tools</parent>
@@ -14,6 +14,18 @@
   `thirdpartiesid` int(19) NOT NULL,
   `thirdpartiesname` varchar(255) DEFAULT NULL,
   `accounts` int(10) DEFAULT NULL,
+  `thptiposoggetoes` varchar(255) DEFAULT '',
+  `thpretentionperiod` varchar(20) DEFAULT '',
+  `thpcontratrenewal` date DEFAULT NULL,
+  `thpincidentereporting` varchar(255) DEFAULT '',
+  `thpemail` varchar(50) DEFAULT '',
+  `thpphone` varchar(30) DEFAULT '',
+  `thpwebsite` varchar(20) DEFAULT '',
+  `thpaddress` varchar(20) DEFAULT '',
+  `thpcity` varchar(20) DEFAULT '',
+  `thpcountry` varchar(20) DEFAULT '',
+  `thppostalcode` varchar(20) DEFAULT '',
+  `thpstate` varchar(20) DEFAULT '',
   PRIMARY KEY (`thirdpartiesid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
 </table>
@@ -61,13 +73,13 @@
 <generatedtype>1</generatedtype>
 <fieldlabel>Accounts</fieldlabel>
 <readonly>1</readonly>
-<presence>2</presence>
+<presence>1</presence>
 <defaultvalue></defaultvalue>
 <sequence>2</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>I~O</typeofdata>
 <quickcreate>1</quickcreate>
-<quickcreatesequence></quickcreatesequence>
+<quickcreatesequence>1</quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
@@ -136,6 +148,266 @@
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
 </field>
+<field>
+<fieldname>thptiposoggetoes</fieldname>
+<uitype>15</uitype>
+<columnname>thptiposoggetoes</columnname>
+<tablename>vtiger_thirdparties</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Tipo di soggeto esterno</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>6</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>--Nessuno--</picklistvalue>
+<picklistvalue>Consulente Privacy</picklistvalue>
+<picklistvalue>Commercialisti</picklistvalue>
+<picklistvalue>Paghe</picklistvalue>
+<picklistvalue>Sicurezza</picklistvalue>
+<picklistvalue>IT esterno</picklistvalue>
+<picklistvalue>Tecnici</picklistvalue>
+<picklistvalue>Altro</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>thpretentionperiod</fieldname>
+<uitype>1</uitype>
+<columnname>thpretentionperiod</columnname>
+<tablename>vtiger_thirdparties</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Retention Period</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>7</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~20</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thpcontratrenewal</fieldname>
+<uitype>5</uitype>
+<columnname>thpcontratrenewal</columnname>
+<tablename>vtiger_thirdparties</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Contract Renewal Date</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>8</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>D~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thpincidentereporting</fieldname>
+<uitype>15</uitype>
+<columnname>thpincidentereporting</columnname>
+<tablename>vtiger_thirdparties</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Incident Reporting</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>9</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+<picklistvalues>
+<picklistvalue>-None-</picklistvalue>
+<picklistvalue>Yes</picklistvalue>
+<picklistvalue>No</picklistvalue>
+</picklistvalues>
+</field>
+<field>
+<fieldname>thpemail</fieldname>
+<uitype>13</uitype>
+<columnname>thpemail</columnname>
+<tablename>vtiger_thirdparties</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Email</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>10</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>E~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thpphone</fieldname>
+<uitype>11</uitype>
+<columnname>thpphone</columnname>
+<tablename>vtiger_thirdparties</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Phone</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>11</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thpwebsite</fieldname>
+<uitype>1</uitype>
+<columnname>thpwebsite</columnname>
+<tablename>vtiger_thirdparties</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Website</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>12</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~20</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+</fields>
+</block>
+<block>
+<label>Address Information</label>
+<fields>
+<field>
+<fieldname>thpaddress</fieldname>
+<uitype>1</uitype>
+<columnname>thpaddress</columnname>
+<tablename>vtiger_thirdparties</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Address</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>1</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~20</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thpcity</fieldname>
+<uitype>1</uitype>
+<columnname>thpcity</columnname>
+<tablename>vtiger_thirdparties</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>City</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~20</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thpcountry</fieldname>
+<uitype>1</uitype>
+<columnname>thpcountry</columnname>
+<tablename>vtiger_thirdparties</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Country</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>3</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~20</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thppostalcode</fieldname>
+<uitype>1</uitype>
+<columnname>thppostalcode</columnname>
+<tablename>vtiger_thirdparties</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>Postal Code</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>4</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~20</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>thpstate</fieldname>
+<uitype>1</uitype>
+<columnname>thpstate</columnname>
+<tablename>vtiger_thirdparties</tablename>
+<generatedtype>2</generatedtype>
+<fieldlabel>State</fieldlabel>
+<readonly>0</readonly>
+<presence>2</presence>
+<defaultvalue></defaultvalue>
+<sequence>5</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O~LE~20</typeofdata>
+<quickcreate>1</quickcreate>
+<quickcreatesequence>0</quickcreatesequence>
+<displaytype>1</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>1</masseditable>
+</field>
 </fields>
 </block>
 </blocks>
@@ -159,6 +431,24 @@
 <sharingaccess>
 <default>private</default>
 </sharingaccess>
+<actions>
+<action>
+<name><![CDATA[Merge]]></name>
+<status>enabled</status>
+</action>
+</actions>
+<customlinks>
+<customlink>
+<linktype></linktype>
+<linklabel></linklabel>
+<linkurl><![CDATA[]]></linkurl>
+<linkicon><![CDATA[]]></linkicon>
+<sequence></sequence>
+<handler_path><![CDATA[]]></handler_path>
+<handler_class><![CDATA[]]></handler_class>
+<handler><![CDATA[]]></handler>
+</customlink>
+</customlinks>
 <crons>
 </crons>
 </module>

@@ -9,13 +9,18 @@
  ************************************************************************************/
 
 $mod_strings = array(
-	'ThreatsMeasures' => 'Threats Measures',
-	'SINGLE_ThreatsMeasures' => 'Threats Measures',
-
-	'MAIN_BLOCK' => 'Main Block Information',
-
-	'ThreatsMeasuresname' => 'Threats Measures Name',
-        'Accounts' => 'Accounts',
+	'ThreatsMeasures' => 'Misure',
+	'SINGLE_ThreatsMeasures' => 'Misure',
+	'ThreatsMeasures ID' => 'ID Misure',
+	'MAIN_BLOCK' => 'Informazioni principali',
+	'ThreatsMeasuresname' => 'Nome misura',
+	'Accounts' => 'Azienda collegata',
+	'Assigned To' => 'Assegnato a',
+	'Created Time' => 'Orario creazione',
+	'Modified Time' => 'Orario modifica',
+	'Tippo di misure' => 'Tipo misure',
+	'Data di adattamento' => 'Data di Adozione',
+	'Valutazione' => 'Valutazione',
+	'Responsabile di adattamento' => 'Responsabile per l\'adozione',
 );
-
 ?>

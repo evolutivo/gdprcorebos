@@ -12,13 +12,17 @@ $mod_strings = array(
 	'PersonalDataCategories' => 'PersonalDataCategories',
 	'SINGLE_PersonalDataCategories' => 'PersonalDataCategories',
 	'PersonalDataCategories ID' => 'PersonalDataCategories ID',
-
-
 	'LBL_PERSONALDATACATEGORIES_INFORMATION' => 'Personal Data Categories Information',
 	'LBL_DESCRIPTION_INFORMATION' => 'Description',
-
 	'PersonalDataCat No' => 'PersonalDataCat No',
-	'PersonalDataCat Name' => 'PersonalDataCat Name'
+	'PersonalDataCat Name' => 'PersonalDataCat Name',
+	'Assigned To' => 'Assigned To',
+	'Created By' => 'Created By',
+	'Created Time' => 'Created Time',
+	'Modified Time' => 'Modified Time',
+	'Description' => 'Description',
+	'Responsabile del incarico' => 'Responsible for the personal data category',
+	'Datti trattati' => 'List of data processed',
+	'Reparto Responsabile' => 'Responsible Department',
 );
-
 ?>
