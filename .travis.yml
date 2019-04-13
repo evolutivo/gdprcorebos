@@ -2,10 +2,23 @@ sudo: required
 services:
   - docker
 
+env:
+  global:
+    - SHA=$(git rev-parse HEAD)
+
 before_install:
-  - docker build -t tsolucio/corebos-formatter -f ./docker/Dockerfile .
+  - docker build -t spikelabs/corebos-formatter -f ./docker/Dockerfile .
 
 script:
-#  - docker run tsolucio/corebos-formatter phpcs.phar --standard=build/cbSR/ci.xml --extensions=inc,js,php,service `cat build/cbSR/cifiles`
-  - docker run tsolucio/corebos-formatter eslint -c build/cbSR/eslintci.js `cat build/cbSR/cifilesjs`
-#  - docker run tsolucio/corebos-formatter find . -not -path "./.git/*" -type f -perm /u=x,g=x,o=x -print | sort | diff build/cbSR/executables -
+#  - docker run spikelabs/corebos-formatter phpcs.phar --standard=build/cbSR/ci.xml --extensions=inc,js,php,service `cat build/cbSR/cifiles`
+  - docker run spikelabs/corebos-formatter eslint -c build/cbSR/eslintci.js `cat build/cbSR/cifilesjs`
+#  - docker run spikelabs/corebos-formatter find . -not -path "./.git/*" -type f -perm /u=x,g=x,o=x -print | sort | diff build/cbSR/executables -
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+deploy:
+  provider: script
+  script: bash deployment/deploy.sh
+  on:
+    branch: master
