@@ -14,7 +14,7 @@ require_once 'modules/Calendar/Activity.php';
 require_once 'modules/Documents/Documents.php';
 require_once 'modules/Emails/Emails.php';
 require_once 'include/utils/utils.php';
-require 'user_privileges/default_module_view.php';
+require 'modules/Vtiger/default_module_view.php';
 
 class Accounts extends CRMEntity {
 	public $db;
@@ -693,8 +693,8 @@ class Accounts extends CRMEntity {
 	public function getColumnNames_Acnt() {
 		global $log,$current_user;
 		$log->debug('> getColumnNames_Acnt');
-		require 'user_privileges/user_privileges_'.$current_user->id.'.php';
-		if ($is_admin == true || $profileGlobalPermission[1] == 0 || $profileGlobalPermission[2] == 0) {
+		$userprivs = $current_user->getPrivileges();
+		if ($userprivs->hasGlobalReadPermission()) {
 			$sql1 = 'SELECT fieldlabel FROM vtiger_field WHERE tabid = 6 and vtiger_field.presence in (0,2)';
 			$params1 = array();
 		} else {
@@ -734,27 +734,49 @@ class Accounts extends CRMEntity {
 		global $adb,$log;
 		$log->debug("> transferRelatedRecords $module, $transferEntityIds, $entityId");
 		parent::transferRelatedRecords($module, $transferEntityIds, $entityId);
-		$rel_table_arr = array("Contacts"=>"vtiger_contactdetails","Potentials"=>"vtiger_potential","Quotes"=>"vtiger_quotes",
-					"SalesOrder"=>"vtiger_salesorder","Invoice"=>"vtiger_invoice",
-					"HelpDesk"=>"vtiger_troubletickets","Attachments"=>"vtiger_seattachmentsrel",
-					"Products"=>"vtiger_seproductsrel","Campaigns"=>"vtiger_campaignaccountrel");
-
-		$tbl_field_arr = array("vtiger_contactdetails"=>"contactid","vtiger_potential"=>"potentialid","vtiger_quotes"=>"quoteid",
-					"vtiger_salesorder"=>"salesorderid","vtiger_invoice"=>"invoiceid","vtiger_troubletickets"=>"ticketid","vtiger_seattachmentsrel"=>"attachmentsid",
-					"vtiger_seproductsrel"=>"productid","vtiger_campaignaccountrel"=>"campaignid");
-
-		$entity_tbl_field_arr = array("vtiger_contactdetails"=>"accountid","vtiger_potential"=>"related_to","vtiger_quotes"=>"accountid",
-					"vtiger_salesorder"=>"accountid","vtiger_invoice"=>"accountid","vtiger_troubletickets"=>"parent_id","vtiger_seattachmentsrel"=>"crmid",
-					"vtiger_seproductsrel"=>"crmid","vtiger_campaignaccountrel"=>"accountid");
-
+		$rel_table_arr = array(
+			'Contacts'=>'vtiger_contactdetails',
+			'Potentials'=>'vtiger_potential',
+			'Quotes'=>'vtiger_quotes',
+			'SalesOrder'=>'vtiger_salesorder',
+			'Invoice'=>'vtiger_invoice',
+			'HelpDesk'=>'vtiger_troubletickets',
+			'Attachments'=>'vtiger_seattachmentsrel',
+			'Products'=>'vtiger_seproductsrel',
+			'Campaigns'=>'vtiger_campaignaccountrel',
+			'cbCalendar'=>'vtiger_activity',
+		);
+		$tbl_field_arr = array(
+			'vtiger_contactdetails'=>'contactid',
+			'vtiger_potential'=>'potentialid',
+			'vtiger_quotes'=>'quoteid',
+			'vtiger_salesorder'=>'salesorderid',
+			'vtiger_invoice'=>'invoiceid',
+			'vtiger_troubletickets'=>'ticketid',
+			'vtiger_seattachmentsrel'=>'attachmentsid',
+			'vtiger_seproductsrel'=>'productid',
+			'vtiger_campaignaccountrel'=>'campaignid',
+			'vtiger_activity'=>'activityid',
+		);
+		$entity_tbl_field_arr = array(
+			'vtiger_contactdetails'=>'accountid',
+			'vtiger_potential'=>'related_to',
+			'vtiger_quotes'=>'accountid',
+			'vtiger_salesorder'=>'accountid',
+			'vtiger_invoice'=>'accountid',
+			'vtiger_troubletickets'=>'parent_id',
+			'vtiger_seattachmentsrel'=>'crmid',
+			'vtiger_seproductsrel'=>'crmid',
+			'vtiger_campaignaccountrel'=>'accountid',
+			'vtiger_activity'=>'rel_id',
+		);
 		foreach ($transferEntityIds as $transferId) {
 			foreach ($rel_table_arr as $rel_table) {
 				$id_field = $tbl_field_arr[$rel_table];
 				$entity_id_field = $entity_tbl_field_arr[$rel_table];
 				// IN clause to avoid duplicate entries
 				$sel_result = $adb->pquery(
-					"select $id_field from $rel_table where $entity_id_field=? " .
-						" and $id_field not in (select $id_field from $rel_table where $entity_id_field=?)",
+					"select $id_field from $rel_table where $entity_id_field=? and $id_field not in (select $id_field from $rel_table where $entity_id_field=?)",
 					array($transferId,$entityId)
 				);
 				$res_cnt = $adb->num_rows($sel_result);
@@ -1124,11 +1146,11 @@ class Accounts extends CRMEntity {
 		$user_id=$seed_user->retrieve_user_id($username);
 		$current_user=$seed_user;
 		$current_user->retrieve_entity_info($user_id, 'Users');
-		require 'user_privileges/user_privileges_'.$current_user->id.'.php';
-		require 'user_privileges/sharing_privileges_'.$current_user->id.'.php';
+		$userprivs = $current_user->getPrivileges();
 		$log->debug('> Accounts:get_searchbyemailid '.$username.','.$emailaddress);
 		//get users group ID's
 		$gresult = $adb->pquery('SELECT groupid FROM vtiger_users2group WHERE userid=?', array($user_id));
+		$groupidlist = '';
 		for ($j=0; $j < $adb->num_rows($gresult); $j++) {
 			$groupidlist.=",".$adb->query_result($gresult, $j, 'groupid');
 		}
@@ -1145,14 +1167,13 @@ class Accounts extends CRMEntity {
 		} else {
 			$query .= " AND (vtiger_account.email1 like '". formatForSqlLike($emailaddress) ."' and vtiger_account.email1 != '')";
 		}
-		if (isset($groupidlist)) {
+		if ($groupidlist != '') {
 			$query .= " AND (vtiger_users.user_name='".$username."' OR vtiger_crmentity.smownerid IN (".substr($groupidlist, 1)."))";
 		} else {
 			$query .= " AND vtiger_users.user_name='".$username."'";
 		}
 
-		$tab_id = getTabid('Accounts');
-		if ($is_admin==false && $profileGlobalPermission[1] == 1 && $profileGlobalPermission[2] == 1 && $defaultOrgSharingPermission[$tab_id] == 3) {
+		if (!$userprivs->hasGlobalReadPermission() && !$userprivs->hasModuleReadSharing(getTabid('Accounts'))) {
 			$sec_parameter=getListViewSecurityParameter('Accounts');
 			$query .= $sec_parameter;
 		}
@@ -1165,8 +1186,8 @@ class Accounts extends CRMEntity {
 		global $log,$adb,$current_user, $currentModule;
 		$log->debug('> process_list_query1 '.$query);
 		$permitted_field_lists = array();
-		require 'user_privileges/user_privileges_'.$current_user->id.'.php';
-		if ($is_admin == true || $profileGlobalPermission[1] == 0 || $profileGlobalPermission[2] == 0) {
+		$userprivs = $current_user->getPrivileges();
+		if ($userprivs->hasGlobalReadPermission()) {
 			$sql1 = 'select columnname from vtiger_field where tabid=6 and block <> 75 and vtiger_field.presence in (0,2)';
 			$params1 = array();
 		} else {

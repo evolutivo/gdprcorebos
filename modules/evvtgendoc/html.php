@@ -23,6 +23,5 @@ $odtout = new OpenDocument;
 //$orgfile='ServiciosTarifas.odt';
 //$orgfile='MergeTest.odt';
 $orgfile='MergeTest1.odt';
-$odtout->GenHTML($orgfile,$id,$module);
-
+$odtout->GenHTML($orgfile, $id, $module);
 ?>

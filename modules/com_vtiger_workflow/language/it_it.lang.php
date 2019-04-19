@@ -86,6 +86,8 @@ $mod_strings = array(
 'groupEmailList' => 'Group Email List',
 
 'Workflow'=>'Workflow',
+'WORKFLOW_DELETE_CONFIRMATION' => 'Are you sure you want to delete this Workflow?',
+'LBL_DELETE_WORKFLOW' => 'Delete Workflow',
 
 'VTCreateEntityTask' => 'Crea Oggetto',
 'LBL_ENTITY_TYPE' => 'Tipo Oggetto',
@@ -95,6 +97,8 @@ $mod_strings = array(
 'LBL_PARENT_OWNER' => 'Parent Record Owner',
 'LBL_SPECIAL_OPTIONS' => 'Special Options',
 'CBTagTask' => 'Add/Delete Tag',
+'CBMassiveUpdateRelatedTask' => 'Aggiornamento di record relazionati',
+'DuplicateRecords' => 'Duplicate Records',
 'Add Tag' => 'Add Tag',
 'Delete Tag' => 'Delete Tag',
 'Tags' => 'Tags',
@@ -164,6 +168,5 @@ $mod_strings = array(
 'NO_METHOD_AVAILABLE' => 'No method is available for this module.',
 'launchrelwf' => 'Launch workflows on related updates',
 'LBL_WFPURPOSE' => 'Purpose',
-'whatsappworkflowtask' => 'Send Whatsapp Message',
 );
 ?>

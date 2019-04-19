@@ -7,8 +7,8 @@
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
  ************************************************************************************/
-require_once('data/CRMEntity.php');
-require_once('data/Tracker.php');
+require_once 'data/CRMEntity.php';
+require_once 'data/Tracker.php';
 
 class evvtgendoc extends CRMEntity {
 
@@ -19,8 +19,8 @@ class evvtgendoc extends CRMEntity {
 	 */
 	public function vtlib_handler($modulename, $event_type) {
 		if ($event_type == 'module.postinstall') {
-			// TODO Handle post installation actions
 			$module = Vtiger_Module::getInstance('evvtgendoc');
+			$module->addLink('HEADERSCRIPT', 'evvtgendoc.js', 'modules/evvtgendoc/evvtgendoc.js');
 			require_once 'modules/evvtgendoc/OpenDocument.php';
 			@mkdir(OpenDocument::GENDOCCACHE);
 
@@ -30,16 +30,16 @@ class evvtgendoc extends CRMEntity {
 
 			$global_variables = array(
 				'GenDoc_Save_Document_Folder',
-				'GenDoc_Company_Account',
+				'GenDoc_Default_Compile_Language',
 			);
 			$moduleInstance = Vtiger_Module::getInstance('GlobalVariable');
-			$field = Vtiger_Field::getInstance('gvname',$moduleInstance);
+			$field = Vtiger_Field::getInstance('gvname', $moduleInstance);
 			if ($field) {
 				$field->setPicklistValues($global_variables);
 			}
 
 			$mod_pr = VTiger_Module::getInstance('Documents');
-			$block_pr = VTiger_Block::getInstance('LBL_NOTE_INFORMATION',$mod_pr);
+			$block_pr = VTiger_Block::getInstance('LBL_NOTE_INFORMATION', $mod_pr);
 			$field8 = new Vtiger_Field();
 			$field8->name = 'template';
 			$field8->label= 'Template';
@@ -48,7 +48,6 @@ class evvtgendoc extends CRMEntity {
 			$field8->uitype = 56;
 			$field8->displaytype = 1;
 			$field8->presence = 0;
-			$field8->sequence = 6;
 			$block_pr->addField($field8);
 
 			$field8 = new Vtiger_Field();
@@ -60,6 +59,33 @@ class evvtgendoc extends CRMEntity {
 			$field8->displaytype = 1;
 			$field8->presence = 0;
 			$block_pr->addField($field8);
+
+			$field8 = new Vtiger_Field();
+			$field8->name = 'mergetemplate';
+			$field8->label= 'Merge Template';
+			$field8->column = 'mergetemplate';
+			$field8->columntype = 'INT(1)';
+			$field8->uitype = 56;
+			$field8->displaytype = 1;
+			$field8->presence = 0;
+			$block_pr->addField($field8);
+			include_once 'modules/cbMap/cbMap.php';
+			$focusnew = new cbMap();
+			$focusnew->column_fields['assigned_user_id'] = Users::getActiveAdminID();
+			$focusnew->column_fields['mapname'] = 'GenDocMerge_ConditionExpression';
+			$focusnew->column_fields['maptype'] = 'Condition Expression';
+			$focusnew->column_fields['targetname'] = 'Accounts';
+			$focusnew->column_fields['content'] = '<map>
+<function>
+	<name>isPermitted</name>
+	<parameters>
+		<parameter>currentModule</parameter>
+		<parameter>Merge</parameter>
+		<parameter></parameter>
+	</parameters>
+</function>
+</map>';
+			$focusnew->save('cbMap');
 		} elseif ($event_type == 'module.disabled') {
 			// TODO Handle actions when this module is disabled.
 		} elseif ($event_type == 'module.enabled') {

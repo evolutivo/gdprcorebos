@@ -10,7 +10,7 @@
 * The whole library is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* 
+*
 * You should have received a copy of the GNU Lesser General Public
 * License along with this library; if not, write to the Free Software
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -34,123 +34,130 @@ require_once 'Element.php';
 * @link       http://pear.php.net/package/OpenDocument
 * @since      File available since Release 0.1.0
 */
-class OpenDocument_DrawObject extends OpenDocument_StyledElement
-{
-    /**
-     * Collection of children objects
-     *
-     * @var ArrayIterator
-     * @access read-only
-     */
-    public $children;
-    
-    // Atributos
-    public $href;
+class OpenDocument_DrawObject extends OpenDocument_StyledElement {
+
+	/**
+	 * Collection of children objects
+	 *
+	 * @var ArrayIterator
+	 * @access read-only
+	 */
+	public $children;
+
+		// Atributos
+	public $href;
 	public $type;
 	public $show;
 	public $actuate;
 	public $draw_notifyonupdateofranges;
-    /**
-     * Node namespace
-     */
-    const nodeNS = OpenDocument::NS_DRAW;
+	/**
+	 * Node namespace
+	 */
+	const nodeNS = OpenDocument::NS_DRAW;
 
-    /**
-     * Node amespace
-     */
-    const nodePrefix = 'draw';
-    
-    /**
-     * Node name
-     */
-    const nodeName = 'object';
-    
-    /**
-     * Element style name prefix
-     */
-    const styleNamePrefix = 'obj';
+	/**
+	 * Node amespace
+	 */
+	const nodePrefix = 'draw';
 
-    /**
-     * Constructor
-     *
-     * @param DOMNode $node
-     * @param OpenDocument $document
-     */
-    public function __construct(DOMNode $node, OpenDocument $document)
-    {
-        parent::__construct($node, $document);
-        $this->allowedElements = array(
-        );
-        return true;
-        $href = $node->getAttributeNS(OpenDocument::NS_XLINK, 'href');
-        if (empty($href)) $href=$ahref;
-    	if (!empty($href)) {
-          $this->node->setAttribute('xlink:href', $href);
-          $this->href = $href;  
-        }
-    	$type = $node->getAttributeNS(OpenDocument::NS_XLINK, 'type');
-        if (empty($type)) $type=$atype;
-    	if (!empty($type)) {
-          $this->node->setAttribute('xlink:type', $type);
-          $this->type = $type;  
-        }
-    	$show = $node->getAttributeNS(OpenDocument::NS_XLINK, 'show');
-        if (empty($show)) $show=$ashow;
-    	if (!empty($show)) {
-          $this->node->setAttribute('xlink:show', $show);
-          $this->show = $show;  
-        }
-    	$actuate = $node->getAttributeNS(OpenDocument::NS_XLINK, 'actuate');
-        if (empty($actuate)) $actuate=$aactuate;
-    	if (!empty($actuate)) {
-          $this->node->setAttribute('xlink:actuate', $actuate);
-          $this->actuate = $actuate;  
-        }
-    	$draw_notifyonupdateofranges = $node->getAttributeNS(OpenDocument::NS_DRAW, 'notify-on-update-of-ranges');
-        if (empty($draw_notifyonupdateofranges)) $draw_notifyonupdateofranges=$adraw_notifyonupdateofranges;
-    	if (!empty($draw_notifyonupdateofranges)) {
-          $this->node->setAttribute('draw:notify-on-update-of-ranges', $draw_notifyonupdateofranges);
-          $this->draw_notifyonupdateofranges = $draw_notifyonupdateofranges;
-        }
+		/**
+	 * Node name
+	 */
+	const nodeName = 'object';
 
-        $this->allowedElements = array(
-        );
-    }
-    
-    /**
-     * Create element instance
-     *
-     * @param mixed $object
-     * @param mixed $content
-     * @return OpenDocument_FrameImage
-     * @throws OpenDocument_Exception
-     */
-    public static function instance($object)
-    {
-        if ($object instanceof OpenDocument) {
-            $document = $object;
-            $node = $object->cursor;
-        } else if ($object instanceof OpenDocument_Element) {
-            $document = $object->getDocument();
-            $node = $object->getNode();
-        } else {
-            throw new OpenDocument_Exception(OpenDocument_Exception::ELEM_OR_DOC_EXPECTED);
-        }
+		/**
+	 * Element style name prefix
+	 */
+	const styleNamePrefix = 'obj';
 
-        $element = new OpenDocument_FrameImage($node->ownerDocument->createElementNS(self::nodeNS, self::nodeName), $document, $text, $href, $type, $show, $actuate, $draw_notifyonupdateofranges);
-        $node->appendChild($element->node);
-        return $element;
-    }
+	/**
+	 * Constructor
+	 *
+	 * @param DOMNode $node
+	 * @param OpenDocument $document
+	 */
+	public function __construct(DOMNode $node, OpenDocument $document) {
+		parent::__construct($node, $document);
+		$this->allowedElements = array(
+		);
+		return true;
+		$href = $node->getAttributeNS(OpenDocument::NS_XLINK, 'href');
+		if (empty($href)) {
+			$href=$ahref;
+		}
+		if (!empty($href)) {
+			$this->node->setAttribute('xlink:href', $href);
+			$this->href = $href;
+		}
+		$type = $node->getAttributeNS(OpenDocument::NS_XLINK, 'type');
+		if (empty($type)) {
+			$type=$atype;
+		}
+		if (!empty($type)) {
+			$this->node->setAttribute('xlink:type', $type);
+			$this->type = $type;
+		}
+		$show = $node->getAttributeNS(OpenDocument::NS_XLINK, 'show');
+		if (empty($show)) {
+			$show=$ashow;
+		}
+		if (!empty($show)) {
+			$this->node->setAttribute('xlink:show', $show);
+			$this->show = $show;
+		}
+		$actuate = $node->getAttributeNS(OpenDocument::NS_XLINK, 'actuate');
+		if (empty($actuate)) {
+			$actuate=$aactuate;
+		}
+		if (!empty($actuate)) {
+			$this->node->setAttribute('xlink:actuate', $actuate);
+			$this->actuate = $actuate;
+		}
+		$draw_notifyonupdateofranges = $node->getAttributeNS(OpenDocument::NS_DRAW, 'notify-on-update-of-ranges');
+		if (empty($draw_notifyonupdateofranges)) {
+			$draw_notifyonupdateofranges=$adraw_notifyonupdateofranges;
+		}
+		if (!empty($draw_notifyonupdateofranges)) {
+			$this->node->setAttribute('draw:notify-on-update-of-ranges', $draw_notifyonupdateofranges);
+			$this->draw_notifyonupdateofranges = $draw_notifyonupdateofranges;
+		}
 
-    /**
-     * Generate new style name
-     *
-     * @return string $stylename
-     */
-    public function generateStyleName()
-    {
-        self::$styleNameMaxNumber ++;
-        return self::styleNamePrefix . self::$styleNameMaxNumber;
-    }
+		$this->allowedElements = array(
+		);
+	}
+
+		/**
+	 * Create element instance
+	 *
+	 * @param mixed $object
+	 * @param mixed $content
+	 * @return OpenDocument_FrameImage
+	 * @throws OpenDocument_Exception
+	 */
+	public static function instance($object) {
+		if ($object instanceof OpenDocument) {
+			$document = $object;
+			$node = $object->cursor;
+		} elseif ($object instanceof OpenDocument_Element) {
+			$document = $object->getDocument();
+			$node = $object->getNode();
+		} else {
+			throw new OpenDocument_Exception(OpenDocument_Exception::ELEM_OR_DOC_EXPECTED);
+		}
+
+		$element = new OpenDocument_FrameImage($node->ownerDocument->createElementNS(self::nodeNS, self::nodeName), $document, $text, $href, $type, $show, $actuate, $draw_notifyonupdateofranges);
+		$node->appendChild($element->node);
+		return $element;
+	}
+
+	/**
+	 * Generate new style name
+	 *
+	 * @return string $stylename
+	 */
+	public function generateStyleName() {
+		self::$styleNameMaxNumber ++;
+		return self::styleNamePrefix . self::$styleNameMaxNumber;
+	}
 }
 ?>

@@ -13,7 +13,7 @@
  * permissions and limitations under the License. You may obtain a copy of the License
  * at <http://corebos.org/documentation/doku.php?id=en:devel:vpl11>
  *************************************************************************************************/
-$mod_strings = Array(
+$mod_strings = array(
 'SINGLE_evvtgendoc'=>'Generar Documento',
 'evvtgendoc'=>'Generar Documento',
 'OOMerge GENDOC'=>'Generate Documents',
@@ -42,5 +42,6 @@ $mod_strings = Array(
 'External Server' => 'Use External Server',
 'LBL_DEBUG' => 'Debug',
 'LBL_LANG' => 'Language',
+'UpdatePrevious' => 'Update Previous Merge',
 );
 ?>

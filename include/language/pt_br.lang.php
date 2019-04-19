@@ -7,9 +7,7 @@
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
  * Contributor(s): Valmir Carlos Trindade/Translate to Brazilian Portuguese | 13/04/2012 |Curitiba/Paraná/Brasil.| www.ttcasolucoes.com.br
- * Contributor(s): Ranieri Slemer/Translate to Brazilian Portuguese | 15/01/2018 |Sao Paulo/SP/Brasil.| www.slemernet.com.br
- * Contributor(s): Ranieri Slemer/Translate to Brazilian Portuguese | 13/05/2018 |Sao Paulo/SP/Brasil.| www.slemernet.com.br
- * Contributor(s): Ranieri Slemer/Translate to Brazilian Portuguese | 21/05/2018 |Sao Paulo/SP/Brasil.| www.slemernet.com.br
+ * Contributor(s): Ranieri Slemer/Translate to Brazilian Portuguese | 05/04/2019 |Sao Paulo/SP/Brasil.| www.slemernet.com.br
  ********************************************************************************/
 $app_strings = array (
 'LBL_BROWSER_TITLE' => 'coreBOS',
@@ -40,6 +38,7 @@ $app_strings = array (
 'LBL_SAVE_BUTTON_TITLE' => 'Salvar [Alt+S]',
 'LBL_SAVEREPEAT_BUTTON_TITLE' => 'Save+Repeat [Alt+H]',
 'LBL_SKIP_BUTTON_TITLE' => 'Skip [Alt+K]',
+'LBL_GOBACK_BUTTON_TITLE' => 'Go back [Alt+B]',
 'LBL_EDIT_BUTTON_TITLE' => 'Editar [Alt+E]',
 'LBL_RECALCULATE_BUTTON_TITLE' => 'Recalcular [Alt+R]',
 'LBL_CONVERTSO_BUTTON_TITLE' => 'Criar pedido venda',
@@ -77,6 +76,7 @@ $app_strings = array (
 'LBL_SAVE_BUTTON_KEY' => 'S',
 'LBL_SAVEREPEAT_BUTTON_KEY' => 'H',
 'LBL_SKIP_BUTTON_KEY' => 'K',
+'LBL_GOBACK_BUTTON_KEY' => 'B',
 'LBL_EDIT_BUTTON_KEY' => 'E',
 'LBL_RECALCULATE_BUTTON_KEY' => 'R',
 'LBL_CONVERTSO_BUTTON_KEY' => 'S',
@@ -92,6 +92,7 @@ $app_strings = array (
 'LBL_SAVE_BUTTON_LABEL' => 'Salvar',
 'LBL_SAVEREPEAT_BUTTON_LABEL' => 'Save+Repeat',
 'LBL_SKIP_BUTTON_LABEL' => 'Skip',
+'LBL_GOBACK_BUTTON_LABEL' => 'Go back',
 'LBL_EDIT_BUTTON_LABEL' => 'Editar',
 'LBL_RECALCULATE_BUTTON' => 'Recalcular',
 'LBL_CONVERTSO_BUTTON_LABEL' => 'Criar pedido vendas',
@@ -1046,6 +1047,7 @@ $app_strings = array (
 'Issue Date'=>'Emissão',
 'Shipping Address'=>'Endereço entrega',
 'Page'=>'Página',
+'Pages'=>'Pages',
 'Tracking No.'=>'No. rastrear',
 'Req. No.'=>'No. Req.',
 'Customer Name'=>'Cliente',
@@ -1302,15 +1304,15 @@ $app_strings = array (
 'Subscribe' => 'Subscrever',
 'View History' => 'Ver histórico',
 'SYNCH_NOW' => 'Sincronizar agora',
-'Updated' => 'Updated',
+'Updated' => 'Atualizado',
 'id' => 'id',
-'data' => 'data',
-'record' => 'Record',
-'saved' => 'saved',
-'notsaved' => 'notsaved',
-'processcomplete' => 'Process Complete',
-'typetosearch_prodser' => 'Type to search products or services',
-'RecordIsAssignedToInactiveUser' => 'The record is assigned to an inactive user. Please select another user.',
+'data' => 'dados',
+'record' => 'Registro',
+'saved' => 'salvo',
+'notsaved' => 'não foi salvo',
+'processcomplete' => 'Processo Completo',
+'typetosearch_prodser' => 'Digite p/pesquisar produto/serviço',
+'RecordIsAssignedToInactiveUser' => 'O registro é atribuído a um usuário inativo. Por favor, selecione outro usuário.',
 );
 
 // Translation for currency names

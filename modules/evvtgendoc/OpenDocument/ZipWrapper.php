@@ -15,111 +15,107 @@
  *************************************************************************************************/
 
 class ZipWrapper {
-    public static function read($archive, $filename)
-    {
-        $zip = new ZipArchive;
-        if (file_exists($archive)) {
-            if ($zip->open(realpath($archive))) {
-                if ($zip->locateName($filename) !== false) {
-                    return $zip->getFromName($filename);
-                }
-            }
-        }
-        return false;
-    }
+	public static function read($archive, $filename) {
+		$zip = new ZipArchive;
+		if (file_exists($archive)) {
+			if ($zip->open(realpath($archive))) {
+				if ($zip->locateName($filename) !== false) {
+					return $zip->getFromName($filename);
+				}
+			}
+		}
+		return false;
+	}
 
-    public static function write($archive, $filename, $content)
-    {
-        $zip = new ZipArchive;
-        if (file_exists($archive)) {
-            $zip->open(realpath($archive));
-        } else {
-            $zip->open(getcwd() . '/' .  $archive, ZipArchive::CREATE);
-        }
+	public static function write($archive, $filename, $content) {
+		$zip = new ZipArchive;
+		if (file_exists($archive)) {
+			$zip->open(realpath($archive));
+		} else {
+			$zip->open(getcwd() . '/' . $archive, ZipArchive::CREATE);
+		}
 
-        if ($zip->locateName($filename) !== false) {
-            $zip->deleteName($filename);
-        }
+		if ($zip->locateName($filename) !== false) {
+			$zip->deleteName($filename);
+		}
 
-        return $zip->addFromString($filename, $content);
-    }
+		return $zip->addFromString($filename, $content);
+	}
 
-    public static function copyPictures($origin, $destination, $changedImages=array(), $newImages=array())
-    {
-        $ziporg = new ZipArchive;
-        $zipdst = new ZipArchive;
-        if (file_exists($origin) and file_exists($destination)) {
-            if ($ziporg->open(realpath($origin)) and $zipdst->open(realpath($destination))) {
-                $tempdir="/tmp/".uniqid('gendoc');
-                mkdir($tempdir);
-                $ziporg->extractTo($tempdir);
-                $ziporg->close();
-                if (is_dir("$tempdir/Pictures")) {  // Tenemos imagenes para copiar y ficheros
-                    foreach (new DirectoryIterator("$tempdir/Pictures") as $pictures) {
-                        if($pictures->isDot()) continue;
-                        $fname=$pictures->getFilename();
-                        if (array_key_exists("Pictures/".$fname,$changedImages))
-                          $filein=$changedImages["Pictures/".$fname];
-                        else
-                          $filein="$tempdir/Pictures/".$fname;
-                        $zipdst->addFile($filein,'Pictures/'.$fname);
-                    }
-                }
-                if (count($newImages)>0) {  // Imagenes nuevas
-                    // Manifest ya esta actualizado, solo hay que añadir estas imagenes
-                    foreach ($newImages as $newImage) {
-                        $rdo=$zipdst->addFile(realpath($newImage),'Pictures/'.basename($newImage));
-                    }
-                }
-				// Now we look for any Object Drawings/Graphs
-				foreach (glob("$tempdir/Object*",GLOB_ONLYDIR) as $ocode) {
-					$dname = str_replace_once(dirname($ocode).'/','',$ocode);
-					foreach (new DirectoryIterator($ocode) as $pictures) {
-						if($pictures->isDot()) continue;
+	public static function copyPictures($origin, $destination, $changedImages = array(), $newImages = array()) {
+		$ziporg = new ZipArchive;
+		$zipdst = new ZipArchive;
+		if (file_exists($origin) && file_exists($destination)) {
+			if ($ziporg->open(realpath($origin)) && $zipdst->open(realpath($destination))) {
+				$tempdir= 'cache/'.uniqid('gendoc');
+				mkdir($tempdir);
+				$ziporg->extractTo($tempdir);
+				$ziporg->close();
+				if (is_dir("$tempdir/Pictures")) { // Tenemos imagenes para copiar y ficheros
+					foreach (new DirectoryIterator("$tempdir/Pictures") as $pictures) {
+						if ($pictures->isDot()) {
+							continue;
+						}
 						$fname=$pictures->getFilename();
-						$filein=$ocode.'/'.$fname;
-						$zipdst->addFile($filein,$dname.'/'.$fname);
+						if (array_key_exists('Pictures/'.$fname, $changedImages)) {
+							$filein=$changedImages['Pictures/'.$fname];
+						} else {
+							$filein="$tempdir/Pictures/".$fname;
+						}
+						$zipdst->addFile($filein, 'Pictures/'.$fname);
 					}
 				}
-                $zipdst->close();
-                ZipWrapper::unlinkRecursive($tempdir,true);  // Elimino directorio temporal
-            }
-        }
-    }
+				if (count($newImages)>0) { // Imagenes nuevas
+					// Manifest ya esta actualizado, solo hay que añadir estas imagenes
+					foreach ($newImages as $newImage) {
+						$zipdst->addFile(realpath($newImage), 'Pictures/'.basename($newImage));
+					}
+				}
+				// Now we look for any Object Drawings/Graphs
+				foreach (glob("$tempdir/Object*", GLOB_ONLYDIR) as $ocode) {
+					$dname = str_replace_once(dirname($ocode).'/', '', $ocode);
+					foreach (new DirectoryIterator($ocode) as $pictures) {
+						if ($pictures->isDot()) {
+							continue;
+						}
+						$fname=$pictures->getFilename();
+						$filein=$ocode.'/'.$fname;
+						$zipdst->addFile($filein, $dname.'/'.$fname);
+					}
+				}
+				$zipdst->close();
+				ZipWrapper::unlinkRecursive($tempdir, true); // Elimino directorio temporal
+			}
+		}
+	}
 
-    /**
-     * Recursively delete a directory
-     *
-     * @param string $dir Directory name
-     * @param boolean $deleteRootToo Delete specified top-level directory as well
-     */
+	/**
+	 * Recursively delete a directory
+	 *
+	 * @param string $dir Directory name
+	 * @param boolean $deleteRootToo Delete specified top-level directory as well
+	 */
 	public static function unlinkRecursive($dir, $deleteRootToo) {
-        if(!$dh = @opendir($dir))
-        {
-            return;
-        }
-        while (false !== ($obj = readdir($dh)))
-        {
-            if($obj == '.' || $obj == '..')
-            {
-                continue;
-            }
-    
-            if (!@unlink($dir . '/' . $obj))
-            {
-                ZipWrapper::unlinkRecursive($dir.'/'.$obj, true);
-            }
-        }
-    
-        closedir($dh);
-       
-        if ($deleteRootToo)
-        {
-            @rmdir($dir);
-        }
-       
-        return;
-    }
+		if (!$dh = @opendir($dir)) {
+			return;
+		}
+		while (false !== ($obj = readdir($dh))) {
+			if ($obj == '.' || $obj == '..') {
+				continue;
+			}
 
+			if (!@unlink($dir . '/' . $obj)) {
+				ZipWrapper::unlinkRecursive($dir.'/'.$obj, true);
+			}
+		}
+
+			closedir($dh);
+
+		if ($deleteRootToo) {
+			@rmdir($dir);
+		}
+
+		return;
+	}
 }
 ?>

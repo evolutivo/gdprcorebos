@@ -17,115 +17,121 @@
  *  Author       : JPL TSolucio, S. L.
  *************************************************************************************************/
 $Vtiger_Utils_Log = false;
-include_once('vtlib/Vtiger/Module.php');
+include_once 'vtlib/Vtiger/Module.php';
 require_once 'modules/evvtgendoc/OpenDocument.php';
-require_once('modules/Documents/Documents.php');
+require_once 'modules/Documents/Documents.php';
 global $currentModule,$current_language,$current_user,$adb,$mod_strings,$log;
 $fileid=vtlib_purify($_REQUEST['gdtemplate']);
 $record=vtlib_purify($_REQUEST['gdcrmid']);
 $record = preg_replace('/[^0-9]/', '', $record);
 $module=vtlib_purify($_REQUEST['gdmodule']);
 $module=preg_replace('/[[:^alnum:]]/', '', $module);
-$modulei18n = getTranslatedString('SINGLE_'.$module,$module);
+$modulei18n = getTranslatedString('SINGLE_'.$module, $module);
 $format=vtlib_purify($_REQUEST['gdformat']);
 $action=vtlib_purify($_REQUEST['gdaction']);
 
 $holdUser = $current_user;
 $current_user = Users::getActiveAdminUser();
 
-$orgfile=$adb->pquery("Select CONCAT(a.path,'',a.attachmentsid,'_',a.name) as filepath, a.name
+$orgfile=$adb->pquery(
+	"Select CONCAT(a.path,'',a.attachmentsid,'_',a.name) as filepath, a.name, n.mergetemplate, n.template_for
 		from vtiger_notes n
 		join vtiger_seattachmentsrel sa on sa.crmid=n.notesid
 		join vtiger_attachments a on a.attachmentsid=sa.attachmentsid
-		where n.notesid=?",array($fileid));
-$mergeTemplatePath=$adb->query_result($orgfile,0,'filepath');
-$mergeTemplateName=basename($adb->query_result($orgfile,0,'name'),'.odt');
-if(!empty($record)) {
-	$out = '';
-	$fullfilename = $root_directory .  OpenDocument::GENDOCCACHE . '/' . $module . '/odtout' . $record . '.odt';
-	$fullpdfname = $root_directory . OpenDocument::GENDOCCACHE . '/' . $module . '/odtout' . $record . '.pdf';
-	$filename = OpenDocument::GENDOCCACHE . '/' . $module . '/odtout' . $record . '.odt';
-	$pdfname = OpenDocument::GENDOCCACHE . '/' . $module . '/odtout' . $record . '.pdf';
-	$odtout = new OpenDocument();
-	if (!is_dir(OpenDocument::GENDOCCACHE . '/' . $module)) {
-		mkdir( OpenDocument::GENDOCCACHE . '/' . $module);
+		where n.notesid=?",
+	array($fileid)
+);
+$mergeTemplatePath=$adb->query_result($orgfile, 0, 'filepath');
+$mergeTemplateName=basename($adb->query_result($orgfile, 0, 'name'), '.odt');
+$mergetemplate = $adb->query_result($orgfile, 0, 'mergetemplate');
+if ($mergetemplate=='1') {
+	$mergetemplatefor = $adb->query_result($orgfile, 0, 'template_for');
+	if (in_array($mergetemplatefor, array('Accounts', 'Contacts', 'Leads', 'HelpDesk'))) {
+		// the script below uses the $mergeTemplatePath and $mergeTemplateName variables which are defined here
+		$_REQUEST['recordval'] = $record;
+		$_REQUEST['recordval_type'] = $module;
+		ob_start();
+		include "modules/$mergetemplatefor/Merge.php";
+		ob_end_clean();
+		header('Pragma: public');
+		header('Expires: 0');
+		header('Cache-Control: private must-revalidate, post-check=0, pre-check=0');
+		header('Content-Description: PHP OpenOffice Generated Data');
+		if ($extension=='odt') {
+			header('Content-type: application/vnd.oasis.opendocument.text');
+			header('Content-Disposition: attachment; filename="'.$entityid.$filename);
+			readfile('cache/wordtemplatedownload/'.$entityid.$filename);
+		} else {
+			header('Content-type: application/rtf');
+			header('Content-Disposition: attachment; filename="'.$entityid.$filename);
+			readfile('cache/wordtemplatedownload/'.$entityid.$filename);
+		}
+	} else {
+		$smarty = new vtigerCRM_Smarty();
+		$smarty->assign('APP', $app_strings);
+		$smarty->display('modules/Vtiger/OperationNotPermitted.tpl');
 	}
-	if (file_exists($fullfilename)) unlink($fullfilename);
-	if (file_exists($fullpdfname)) unlink($fullpdfname);
-	$odtout->GenDoc($mergeTemplatePath,$record,$module);
-	$odtout->save($filename);
-	ZipWrapper::copyPictures($mergeTemplatePath, $filename, $odtout->changedImages, $odtout->newImages);
-	$odtout->postprocessing($fullfilename);
-	if ($format=='pdf') {
-		$odtout->convert($filename,$pdfname);
-	}
-	$einfo = getEntityName($module, $record);
-	$name = str_replace(' ', '_', $modulei18n.'_'.$einfo[$record]);
-	switch ($action) {
-		case 'export':
-			header("Pragma: public");
-			header('Expires: 0');
-			header("Cache-Control: private must-revalidate, post-check=0, pre-check=0");
-			header("Content-Description: PHP OpenOffice Generated Data");
-			if ($format=='doc') {
-				header("Content-type: application/vnd.oasis.opendocument.text");
-				header('Content-Disposition: attachment; filename="'.$name.'.odt"');
-				readfile($filename);
-			} else {
-				header("Content-type: application/pdf");
-				header('Content-Disposition: attachment; filename="'.$name.'.pdf"');
-				readfile($pdfname);
-			}
-			break;
-		case 'email':
-			$sname = 'storage/'.$modulei18n.'_'.$record.($format=='doc'?'.odt':'.pdf');
-			if (file_exists($sname)) unlink($sname);
-			rename(($format=='doc'?$filename:$pdfname),$sname);
-			break;
-		case 'save':
-			$doc = new Documents();
-			$doc->column_fields["notes_title"] = $modulei18n.' '.$einfo[$record].' '.$mergeTemplateName;
-			$doc->column_fields["notecontent"] = '';
-			$doc->column_fields["fileversion"] = 1;
-			$doc->column_fields["docyear"] = date('Y');
-			$doc->column_fields["filelocationtype"] = 'I';
-			$gdfolder = GlobalVariable::getVariable('GenDoc_Save_Document_Folder','');
-			if ($gdfolder!='') {
-				$sql = 'select folderid from vtiger_attachmentsfolder where foldername=?';
-				$res = $adb->pquery($sql, array($gdfolder));
-				if ($adb->num_rows($res)==0) {
-					$sql = "select folderid from vtiger_attachmentsfolder order by foldername";
-					$res = $adb->pquery($sql, array());
+} else {
+	if (!empty($record)) {
+		$out = '';
+		$fullfilename = $root_directory .  OpenDocument::GENDOCCACHE . '/' . $module . '/odtout' . $record . '.odt';
+		$fullpdfname = $root_directory . OpenDocument::GENDOCCACHE . '/' . $module . '/odtout' . $record . '.pdf';
+		$filename = OpenDocument::GENDOCCACHE . '/' . $module . '/odtout' . $record . '.odt';
+		$pdfname = OpenDocument::GENDOCCACHE . '/' . $module . '/odtout' . $record . '.pdf';
+		$odtout = new OpenDocument();
+		if (!is_dir(OpenDocument::GENDOCCACHE . '/' . $module)) {
+			mkdir(OpenDocument::GENDOCCACHE . '/' . $module, 0777, true);
+		}
+		if (file_exists($fullfilename)) {
+			unlink($fullfilename);
+		}
+		if (file_exists($fullpdfname)) {
+			unlink($fullpdfname);
+		}
+		OpenDocument::$compile_language = GlobalVariable::getVariable('GenDoc_Default_Compile_Language', substr($current_language, 0, 2), $module);
+		if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language . '.php')) {
+			include 'modules/evvtgendoc/commands_'. OpenDocument::$compile_language . '.php';
+		} else {
+			include 'modules/evvtgendoc/commands_en.php';
+		}
+		$odtout->GenDoc($mergeTemplatePath, $record, $module);
+		$odtout->save($filename);
+		ZipWrapper::copyPictures($mergeTemplatePath, $filename, $odtout->changedImages, $odtout->newImages);
+		$odtout->postprocessing($fullfilename);
+		if ($format=='pdf') {
+			$odtout->convert($filename, $pdfname);
+		}
+		$einfo = getEntityName($module, $record);
+		$name = str_replace(' ', '_', $modulei18n.'_'.$einfo[$record]);
+		switch ($action) {
+			case 'export':
+				header('Pragma: public');
+				header('Expires: 0');
+				header('Cache-Control: private must-revalidate, post-check=0, pre-check=0');
+				header('Content-Description: PHP OpenOffice Generated Data');
+				if ($format=='doc') {
+					header('Content-type: application/vnd.oasis.opendocument.text');
+					header('Content-Disposition: attachment; filename="'.$name.'.odt"');
+					readfile($filename);
+				} else {
+					header('Content-type: application/pdf');
+					header('Content-Disposition: attachment; filename="'.$name.'.pdf"');
+					readfile($pdfname);
 				}
-			} else {
-				$sql = "select folderid from vtiger_attachmentsfolder order by foldername";
-				$res = $adb->pquery($sql, array());
-			}
-			$doc->column_fields["folderid"]=$adb->query_result($res, 0, "folderid");
-			$doc->column_fields["filestatus"] = '1';
-			$doc->date_due_flag = 'off';
-			$_REQUEST['assigntype'] = 'U';
-			$doc->column_fields['assigned_user_id'] = $current_user->id;
-			unset($_FILES);
-			$name .= '_'.str_replace(' ', '_', $mergeTemplateName);
-			$f=array(
-				'name'=>$name.($format=='pdf' ? '.pdf' : '.odt'),
-				'type'=> ($format=='pdf' ? 'application/pdf' : 'application/vnd.oasis.opendocument.text'),
-				'tmp_name'=> ($format=='pdf' ? $fullpdfname : $fullfilename),
-				'error'=>0,
-				'size'=>filesize(($format=='pdf' ? $fullpdfname : $fullfilename))
-			);
-			$_FILES["file0"] = $f;
-			$doc->column_fields["filename"] = $f['name'];
-			$doc->column_fields["filesize"] = $f['size'];
-			$doc->column_fields["filetype"] = $f['type'];
-			$_REQUEST['createmode'] = 'link';
-			$_REQUEST['return_module'] = $module;
-			$_REQUEST['return_id'] = $record;
-			$doc->save("Documents");
-			break;
+				break;
+			case 'email':
+				$sname = 'storage/'.$modulei18n.'_'.$record.($format=='doc'?'.odt':'.pdf');
+				if (file_exists($sname)) {
+					unlink($sname);
+				}
+				rename(($format=='doc'?$filename:$pdfname), $sname);
+				break;
+			case 'save':
+				OpenDocument::saveAsDocument($record, $module, $format, $mergeTemplateName, ($format=='pdf' ? $fullpdfname : $fullfilename), $name);
+				break;
+		}
+		$out.= '<a href="' . OpenDocument::GENDOCCACHE . '/' . $module . '/odtout' . $record . '.odt">' . $app_strings['DownloadMergeFile'] . '</a></td></tr></table><br/>';
 	}
-	$out.= '<a href="' . OpenDocument::GENDOCCACHE . '/' . $module . '/odtout' . $record . '.odt">' . $app_strings['DownloadMergeFile'] . '</a></td></tr></table><br/>';
 }
 $current_user = $holdUser;
 ?>

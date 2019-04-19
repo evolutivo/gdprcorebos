@@ -16,9 +16,9 @@
  *  Version      : 1.0
  *  Author       : JPL TSolucio, S. L.
  *************************************************************************************************/
-require_once('modules/Users/Users.php');
+require_once 'modules/Users/Users.php';
 require_once 'modules/evvtgendoc/OpenDocument.php';
-require_once('modules/com_vtiger_workflow/VTWorkflowUtils.php');
+require_once 'modules/com_vtiger_workflow/VTWorkflowUtils.php';
 global $currentModule, $theme, $app_strings, $adb;
 $modules = VTWorkflowUtils::vtGetModules($adb);
 $modssorted = $modsfixed = array(

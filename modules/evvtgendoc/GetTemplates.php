@@ -18,20 +18,31 @@
  *************************************************************************************************/
 global $adb,$mod_strings;
 $moduletemplate = vtlib_purify($_REQUEST['moduletemplate']);
-$templates=$adb->pquery('select notesid,title from vtiger_notes
-	INNER JOIN vtiger_crmentity ON vtiger_crmentity.crmid = vtiger_notes.notesid
-	where deleted = 0 and template=1 and template_for=? order by title',array($moduletemplate));
+$templates=$adb->pquery(
+	'SELECT notesid,title
+		FROM vtiger_notes
+		INNER JOIN vtiger_crmentity ON vtiger_crmentity.crmid = vtiger_notes.notesid
+		WHERE deleted = 0 and template=1 and template_for=? order by title',
+	array($moduletemplate)
+);
 $tpls = array();
 while ($t = $adb->fetch_array($templates)) {
 	$tpls[$t['notesid']] = $t['title'];
 }
 asort($tpls);
 $number=$adb->num_rows($templates);
-if ($number>0) $output="<select class='small' size=8 style='width:300px;' id='gendoctemplate' name='gendoctemplate'>";
-foreach ($tpls as $nid => $tname) {
-	$output.="<option value='".$nid."'>".$tname."</option>";
+if ($number>0) {
+	$output="<select class='small' size=8 style='width:300px;' id='gendoctemplate' name='gendoctemplate'>";
 }
-if ($number==0) $output=$mod_strings['LBL_NOTEMPLATE'];
-else $output.="</select><br/><br/>";
+foreach ($tpls as $nid => $tname) {
+	$output.="<option value='".$nid."'>".$tname.'</option>';
+}
+if (isPermitted($moduletemplate, 'Merge')!='yes') {
+	$output=getTranslatedString('LBL_PERMISSION');
+} elseif ($number==0) {
+	$output=$mod_strings['LBL_NOTEMPLATE'];
+} else {
+	$output.='</select><br/><br/>';
+}
 echo $output;
 ?>

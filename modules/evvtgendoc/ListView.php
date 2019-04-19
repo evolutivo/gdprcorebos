@@ -7,5 +7,5 @@
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
  ************************************************************************************/
-include_once('modules/evvtgendoc/index.php');
+include_once 'modules/evvtgendoc/index.php';
 ?>

@@ -47,7 +47,7 @@ $cbodShowLicenseOnUserCreation = false;
 $cbodUserLog = false;
 
 // Install database
-$corebosInstallDatabase = 'gdprcore';
+$corebosInstallDatabase = 'corebos_justinstalled_empty';
 
 // Connection to Central Server
 $cbodCSURL = '';
@@ -56,3 +56,6 @@ $cbodCSKey = '';
 
 // User IDs with permission to get full sync information
 $cbodCSAppSyncUser = array(1);
+
+// Where to save user privileges information
+$cbodUserPrivilegesStorage = 'db'; // file | db

@@ -25,79 +25,81 @@
 * @since      File available since Release 0.1.0
 */
 
-require_once 'PEAR/Exception.php';
+if (!class_exists('PEAR_Exception')) {
+	require_once 'vtlib/thirdparty/network/PEAR/Exception.php';
+}
 
-class OpenDocument_Exception extends PEAR_Exception
-{
-    /**
-     * Error while accessing OpenDocument file
-     */
-    const ACCESS_FILE_ERR = 1;
+class OpenDocument_Exception extends PEAR_Exception {
 
-    /**
-     * Error while loading mimetype file
-     */
-    const LOAD_MIMETYPE_ERR = 2;
+	/**
+	 * Error while accessing OpenDocument file
+	 */
+	const ACCESS_FILE_ERR = 1;
 
-    /**
-     * Error while loading content file
-     */
-    const LOAD_CONTENT_ERR = 3;
+	/**
+	 * Error while loading mimetype file
+	 */
+	const LOAD_MIMETYPE_ERR = 2;
 
-    /**
-     * Error while loading meta file
-     */
-    const LOAD_META_ERR = 4;
+	/**
+	 * Error while loading content file
+	 */
+	const LOAD_CONTENT_ERR = 3;
 
-    /**
-     * Error while loading settings file
-     */
-    const LOAD_SETTINGS_ERR = 5;
+	/**
+	 * Error while loading meta file
+	 */
+	const LOAD_META_ERR = 4;
 
-    /**
-     * Error while loading styles file
-     */
-    const LOAD_STYLES_ERR = 6;
+	/**
+	 * Error while loading settings file
+	 */
+	const LOAD_SETTINGS_ERR = 5;
 
-    /**
-     * Error while loading manifest file
-     */
-    const LOAD_MANIFEST_ERR = 7;
+	/**
+	 * Error while loading styles file
+	 */
+	const LOAD_STYLES_ERR = 6;
 
-    /**
-     * Error while writing mimetype file
-     */
-    const WRITE_MIMETYPE_ERR = 8;
+	/**
+	 * Error while loading manifest file
+	 */
+	const LOAD_MANIFEST_ERR = 7;
 
-    /**
-     * Error while writing content file
-     */
-    const WRITE_CONTENT_ERR = 9;
+	/**
+	 * Error while writing mimetype file
+	 */
+	const WRITE_MIMETYPE_ERR = 8;
 
-    /**
-     * Error while writing meta file
-     */
-    const WRITE_META_ERR = 10;
+	/**
+	 * Error while writing content file
+	 */
+	const WRITE_CONTENT_ERR = 9;
 
-    /**
-     * Error while writing settings file
-     */
-    const WRITE_SETTINGS_ERR = 11;
+	/**
+	 * Error while writing meta file
+	 */
+	const WRITE_META_ERR = 10;
 
-    /**
-     * Error while writing styles file
-     */
-    const WRITE_STYLES_ERR = 12;
+	/**
+	 * Error while writing settings file
+	 */
+	const WRITE_SETTINGS_ERR = 11;
 
-    /**
-     * Error while writing manifest file
-     */
-    const WRITE_MANIFEST_ERR = 13;
+	/**
+	 * Error while writing styles file
+	 */
+	const WRITE_STYLES_ERR = 12;
 
-    /**
-     * OpenDocument_Element or OpenDocument expected
-     *
-     */
-    const ELEM_OR_DOC_EXPECTED = 14;
+	/**
+	 * Error while writing manifest file
+	 */
+	const WRITE_MANIFEST_ERR = 13;
+
+	/**
+	 * OpenDocument_Element or OpenDocument expected
+	 *
+	 */
+	const ELEM_OR_DOC_EXPECTED = 14;
 }
 ?>

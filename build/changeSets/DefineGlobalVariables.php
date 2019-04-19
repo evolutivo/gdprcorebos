@@ -64,6 +64,8 @@ class DefineGlobalVariables extends cbupdaterWorker {
 				'Application_ListView_Max_Text_Length',
 				'Application_ListView_PageSize',
 				'Application_ListView_Default_Sort_Order',
+				'Application_ListView_Default_OrderDirection',
+				'Application_ListView_Default_OrderField',
 				'Application_ListView_Record_Change_Indicator',
 				'Application_ListView_Default_Sorting',
 				'Application_ListView_Compute_Page_Count',
@@ -90,7 +92,9 @@ class DefineGlobalVariables extends cbupdaterWorker {
 				'Application_Permit_Assign_SameRole',
 				'Application_Permit_Assign_AllGroups',
 				'Application_User_SortBy',
+				'Application_SendUserPasswordByEmail',
 				'Application_Pagination_Limit',
+				'Application_Popup_Address_Selection',
 
 				'RelatedList_Activity_DefaultStatusFilter',
 
@@ -152,6 +156,8 @@ class DefineGlobalVariables extends cbupdaterWorker {
 				'Lead_Convert_ContactSelected',
 				'PBX_Get_Line_Prefix',
 				'PBX_Unknown_CallerID',
+				'PBX_callerNumberField',
+				'PBX_callerNumberSeparator',
 				'Product_Copy_Bundle_OnDuplicate',
 				'Product_Show_Subproducts_Popup',
 				'Product_Permit_Relate_Bundle_Parent',
@@ -205,7 +211,6 @@ class DefineGlobalVariables extends cbupdaterWorker {
 				'CustomerPortal_PDFTemplate_SalesOrder',
 				'CustomerPortal_PDFTemplate_Invoice',
 				'CustomerPortal_PDFTemplate_PurchaseOrder',
-				'PBXManager_SearchOnlyOnTheseFields',
 			);
 			$delete_these = array(
 				'preload_prototype',
@@ -331,6 +336,9 @@ class DefineGlobalVariables extends cbupdaterWorker {
 				),
 				'Application_Search_Panel_Open' => array(
 					'to' => 'Application_ListView_SearchPanel_Open',
+				),
+				'PBXManager_SearchOnlyOnTheseFields' => array(
+					'to' => 'PBX_SearchOnTheseFields',
 				),
 			);
 			$moduleInstance = Vtiger_Module::getInstance('GlobalVariable');

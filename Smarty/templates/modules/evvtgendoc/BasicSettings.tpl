@@ -12,63 +12,63 @@
 <br>
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="98%">
 <tr>
-    <td valign="top"><img src="{'showPanelTopLeft.gif'|@vtiger_imageurl:$THEME}"></td>
-    <td class="showPanelBg" style="padding: 10px;" valign="top" width="100%">
-    <br>
+	<td valign="top"><img src="{'showPanelTopLeft.gif'|@vtiger_imageurl:$THEME}"></td>
+	<td class="showPanelBg" style="padding: 10px;" valign="top" width="100%">
+	<br>
 
-    <div align="center">
-        {include file='SetMenu.tpl'}
+	<div align="center">
+		{include file='SetMenu.tpl'}
 
-        <table class="settingsSelUITopLine" border="0" cellpadding="5" cellspacing="0" width="100%">
-        <tr>
-            <td rowspan="2" valign="top" width="50">
-            <img src="modules/evvtgendoc/images/oomerge.jpg" alt="{$MOD.evvtgendoc}" title="{$MOD.evvtgendoc}" border="0" height="48" width="48">
-            </td>
-            <td class="heading2" valign="bottom">
-            <b><a href="index.php?module=Settings&action=index&parenttab=Settings">{$APP.LBL_SETTINGS}</a> &gt; {$MOD.evvtgendoc}</b>
-            </td>
-        </tr>
+		<table class="settingsSelUITopLine" border="0" cellpadding="5" cellspacing="0" width="100%">
+		<tr>
+			<td rowspan="2" valign="top" width="50">
+			<img src="modules/evvtgendoc/images/oomerge.jpg" alt="{$MOD.evvtgendoc}" title="{$MOD.evvtgendoc}" border="0" height="48" width="48">
+			</td>
+			<td class="heading2" valign="bottom">
+			<b><a href="index.php?module=Settings&action=index&parenttab=Settings">{$APP.LBL_SETTINGS}</a> &gt; {$MOD.evvtgendoc}</b>
+			</td>
+		</tr>
 
-        <tr>
-            <td class="small" valign="top">{$MOD.LBL_CONFIGURATION_DESCRIPTION}</td>
-        </tr>
-        </table>
+		<tr>
+			<td class="small" valign="top">{$MOD.LBL_CONFIGURATION_DESCRIPTION}</td>
+		</tr>
+		</table>
 
-        <table border=0 cellspacing=1 cellpadding=0 width="100%" class="lvtBg">
-        <tr>
-            <td>
-                <table border=0 cellspacing=0 cellpadding=2 width="100%" class="small">
-                <tr>
-                    <td style="padding-right:20px" nowrap align="right"></td>
-                </tr>
-                </table>
+		<table border=0 cellspacing=1 cellpadding=0 width="100%" class="lvtBg">
+		<tr>
+			<td>
+				<table border=0 cellspacing=0 cellpadding=2 width="100%" class="small">
+				<tr>
+					<td style="padding-right:20px" nowrap align="right"></td>
+				</tr>
+				</table>
 
-                <table border=0 cellspacing=0 cellpadding=0 width="95%" class="small">
+				<table border=0 cellspacing=0 cellpadding=0 width="95%" class="small">
 
-                <tr><td>
-                    <table border=0 cellspacing=0 cellpadding=10 width="100%" class="dvtContentSpace" style='border-bottom: 0'>
-                    <tr>
-                        <td>
-                            <div id="gendocContents">
-                            {include file="modules/evvtgendoc/BasicSettingsContents.tpl"}
-                            </div>
-                        </td>
-                    </tr>
-                    </table>
-                </td></tr>
-                </table>
-            </td>
-        </tr>
-        </table>
-        </td>
-        </tr>
-    </table>
-    </td>
-    </tr>
-    </table>
+				<tr><td>
+					<table border=0 cellspacing=0 cellpadding=10 width="100%" class="dvtContentSpace" style='border-bottom: 0'>
+					<tr>
+						<td>
+							<div id='gendocContents'>
+							{include file='modules/evvtgendoc/BasicSettingsContents.tpl'}
+							</div>
+						</td>
+					</tr>
+					</table>
+				</td></tr>
+				</table>
+			</td>
+		</tr>
+		</table>
+		</td>
+		</tr>
+	</table>
+	</td>
+	</tr>
+	</table>
    </div>
-        </td>
-        <td valign="top"><img src="{'showPanelTopRight.gif'|@vtiger_imageurl:$THEME}"></td>
-    </tr>
+		</td>
+		<td valign="top"><img src="{'showPanelTopRight.gif'|@vtiger_imageurl:$THEME}"></td>
+	</tr>
 </table>
 <br>
