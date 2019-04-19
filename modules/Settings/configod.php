@@ -58,4 +58,4 @@ $cbodCSKey = '';
 $cbodCSAppSyncUser = array(1);
 
 // Where to save user privileges information
-$cbodUserPrivilegesStorage = 'db'; // file | db
+$cbodUserPrivilegesStorage = 'file'; // file | db
