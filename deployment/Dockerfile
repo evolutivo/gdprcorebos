@@ -39,6 +39,10 @@ EXPOSE 80
 
 COPY deployment/supervisor.conf /etc/supervisor/conf.d/supervisord.conf
 
+RUN mkdir /tmp_storage
+
+COPY ./storage /tmp_storage
+
 COPY --chown=www:www . /www
 
 WORKDIR /www
