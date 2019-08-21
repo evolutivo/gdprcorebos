@@ -268,7 +268,7 @@ function patternValidateObject(fldObject, fldLabel, type) {
 	}
 
 	if (typeUC=='TIME') { //TIME validation
-		var re = /^\d{1,2}\:\d{2}:\d{2}$|^\d{1,2}\:\d{2}$/;
+		var re = /^\d{1,3}\:\d{2}:\d{2}$|^\d{1,2}\:\d{2}$/;
 		if (checkval.indexOf(' ')>0) {
 			var dt = checkval.split(' ');
 			checkval = dt[1];
@@ -736,7 +736,7 @@ function timeValidate(fldName, fldLabel, type) {
 	var secval=parseInt(timeval.substring(timeval.indexOf(':')+4, timeval.length));
 	var currObj=getObj(fldName);
 
-	if (hourval>23 || minval>59 || secval>59) {
+	if (hourval>838 || minval>59 || secval>59) {
 		alert(alert_arr.ENTER_VALID+fldLabel);
 		try {
 			currObj.focus();
@@ -1150,6 +1150,11 @@ function run_massedit() {
 				sentForm[myFields[f].name] = CKEDITOR.instances[myFields[f].name].getData();
 			} else if (myFields[f].type == 'radio' && myFields[f].checked) {
 				sentForm[myFields[f].name] = myFields[f].value;
+			} else if (myFields[f].type == 'select-multiple') {
+				var myFieldValue = Array.prototype.map.call(myFields[f].selectedOptions, function (x) {
+					return x.value;
+				}).join(' |##| ');
+				sentForm[myFields[f].name.substring(0, myFields[f].name.length-2)] = myFieldValue;
 			} else if (myFields[f].type != 'radio' && myFields[f].type != 'button') {
 				sentForm[myFields[f].name] = myFields[f].value;
 			}
@@ -3097,6 +3102,7 @@ function ActivityReminderRemovePopupDOM(id) {
 
 /* ActivityReminder Customization: Pool Callback */
 var ActivityReminder_regcallback_timer;
+var ActivityReminder_Deactivated = false;
 
 var ActivityReminder_callback_delay = 40 * 1000; // Milli Seconds
 var ActivityReminder_autohide = false; // If the popup should auto hide after callback_delay?
@@ -3111,7 +3117,7 @@ var ActivityReminder_popup_onscreen = 2 * 1000; // Milli Seconds (should be less
 var ActivityReminder_callback_win_uniqueids = new Object();
 
 function ActivityReminderCallback() {
-	if (typeof(jQuery) == 'undefined') {
+	if (typeof(jQuery) == 'undefined' || ActivityReminder_Deactivated) {
 		return;
 	}
 	if (ActivityReminder_regcallback_timer) {

@@ -48,6 +48,13 @@ $GlobalVariableDefinitons = array(
 	'values' => 'Example: 127.0.0.1,192.168.0.100',
 	'definition' => 'Comma separated list of IP addresses from which users will be permitted to login',
 ),
+'Application_SendUserPasswordByEmail' => array(
+	'status' => 'Implemented',
+	'valuetype' => 'Boolean',
+	'category' => 'Security',
+	'values' => '0 | 1',
+	'definition' => 'If true, the application will send an email with the user password everytime the password is changed using the "Password Change Template"',
+),
 'Debug_Record_Not_Found' => array(
 	'status' => 'Implemented',
 	'valuetype' => 'Boolean',
@@ -271,6 +278,20 @@ $GlobalVariableDefinitons = array(
 	'category' => 'Application',
 	'values' => 'ASC | DESC',
 	'definition' => 'Initial sort order for records when clicking on list view header. The default is ASC',
+),
+'Application_ListView_Default_OrderDirection' => array(
+	'status' => 'Implemented',
+	'valuetype' => 'string',
+	'category' => 'Application',
+	'values' => 'ASC | DESC',
+	'definition' => 'Sort order for records of a module. If not defined the internal default value of each module will be used.',
+),
+'Application_ListView_Default_OrderField' => array(
+	'status' => 'Implemented',
+	'valuetype' => 'string',
+	'category' => 'Application',
+	'values' => 'module column name',
+	'definition' => 'Field of the module to sort by. If not defined the internal default value of each module will be used.',
 ),
 'Application_ListView_Record_Change_Indicator' => array(
 	'status' => 'Implemented',
@@ -656,6 +677,27 @@ $GlobalVariableDefinitons = array(
 	'category' => 'Application',
 	'values' => '',
 	'definition' => 'When calling or receiving a call to an unknown party this string will be used as the record name identifier next to the number dialed. The default value is Unknown',
+),
+'PBX_SearchOnTheseFields' => array(
+	'status' => 'Implemented',
+	'valuetype' => 'String',
+	'category' => 'Application',
+	'values' => 'list of field names',
+	'definition' => 'List of fields to search in when we get a call from Asterisk. The first result found will be returned.',
+),
+'PBX_callerNumberField' => array(
+	'status' => 'Implemented',
+	'valuetype' => 'String',
+	'category' => 'Application',
+	'values' => 'PBX field name',
+	'definition' => 'Field name coming from PBX which we should use to search inside the application. By default it is CallerID',
+),
+'PBX_callerNumberSeparator' => array(
+	'status' => 'Implemented',
+	'valuetype' => 'Character',
+	'category' => 'Application',
+	'values' => 'character',
+	'definition' => 'Incoming number from PBX will be split by this character if given and each element will be searched individually. The default is to not split the number',
 ),
 'Mobile_Module_by_default' => array(
 	'status' => 'Implemented',
@@ -1063,6 +1105,13 @@ $GlobalVariableDefinitons = array(
 	'values' => '0 | 1',
 	'definition' => 'When selecting an Account/Contact/Vendor in the popup window, the application asks if it must fill in addresses. This variable sets the Shipping Address check box.',
 ),
+'Application_Popup_Address_Selection'=> array(
+	'status' => 'Implemented',
+	'valuetype' => 'Boolean',
+	'category' => 'Application',
+	'values' => '0 | 1',
+	'definition' => 'Shows option to select an address in Account and Contact(by default is 1),if set to 0 then the whole option to select an address will not be shown.',
+),
 'Application_Show_Copy_Address' => array(
 	'status' => 'Implemented',
 	'valuetype' => 'Boolean',
@@ -1245,13 +1294,6 @@ $GlobalVariableDefinitons = array(
 	'values' => 'Any valid Zero Bounce API KEY',
 	'definition' => 'The valid Zero Bounce API KEY',
 ),
-'PBXManager_SearchOnlyOnTheseFields' => array(
-	'status' => 'Implemented',
-	'valuetype' => 'String',
-	'category' => 'Application',
-	'values' => 'list of field names',
-	'definition' => 'List of fields to search in when we get a call from Asterisk. The first result found will be returned.',
-),
 'GenDoc_CopyLabelToClipboard' => array(
 	'status' => 'Implemented',
 	'valuetype' => 'Boolean',
@@ -1284,7 +1326,7 @@ $GlobalVariableDefinitons = array(
 	'status' => 'Implemented',
 	'valuetype' => 'String',
 	'category' => 'Application',
-	'values' => 'SQL sort specification',
+	'values' => 'SQL sort specification|DO NOT SORT',
 	'definition' => 'If given will be feeded directly into the SQL query to retrieve users that appear in the Assigned To dropdown permitting us to customize the sort order of these users.',
 ),
 'Workflow_ListView_PageSize' => array(

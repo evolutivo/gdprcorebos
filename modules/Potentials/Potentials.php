@@ -15,7 +15,7 @@ require_once 'modules/Calendar/Activity.php';
 require_once 'modules/Documents/Documents.php';
 require_once 'modules/Emails/Emails.php';
 require_once 'include/utils/utils.php';
-require 'user_privileges/default_module_view.php';
+require 'modules/Vtiger/default_module_view.php';
 
 class Potentials extends CRMEntity {
 	public $db;
@@ -118,7 +118,7 @@ class Potentials extends CRMEntity {
 	}
 
 	public function save_module($module) {
-		global $adb;
+		global $adb, $current_user;
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id, $module);
 		}
@@ -129,12 +129,19 @@ class Potentials extends CRMEntity {
 				$this->column_fields['closingdate'] :
 				$closingDateField->getDBInsertDateValue();
 			$sql = 'insert into vtiger_potstagehistory (potentialid, amount, stage, probability, expectedrevenue, closedate, lastmodified) values (?,?,?,?,?,?,?)';
+			$amountField = empty($this->column_fields['amount']) ? 0 : $this->column_fields['amount'];
+			$amountField = new CurrencyField($amountField);
+			$amountField = $amountField->getDBInsertedValue($current_user, false);
+			$prbField = empty($this->column_fields['probability']) ? 0 : $this->column_fields['probability'];
+			$prbField = new CurrencyField($prbField);
+			$prbField = $prbField->getDBInsertedValue($current_user, false);
+			$forecast_amount = ($amountField==0 || $prbField==0) ? 0 : ($amountField * $prbField / 100);
 			$params = array(
 				$this->id,
-				$this->column_fields['amount'],
+				$amountField,
 				decode_html($this->sales_stage),
-				$this->column_fields['probability'],
-				$this->column_fields['forecast_amount'],
+				$prbField,
+				$forecast_amount,
 				$adb->formatDate($closingdate, true),
 				$adb->formatDate($date_var, true)
 			);
@@ -505,15 +512,27 @@ class Potentials extends CRMEntity {
 		global $adb,$log;
 		$log->debug("> transferRelatedRecords $module, $transferEntityIds, $entityId");
 		parent::transferRelatedRecords($module, $transferEntityIds, $entityId);
-		$rel_table_arr = array("Contacts"=>"vtiger_contpotentialrel","Products"=>"vtiger_seproductsrel",
-						"Attachments"=>"vtiger_seattachmentsrel","Quotes"=>"vtiger_quotes","SalesOrder"=>"vtiger_salesorder");
-
-		$tbl_field_arr = array("vtiger_contpotentialrel"=>"contactid","vtiger_seproductsrel"=>"productid",
-						"vtiger_seattachmentsrel"=>"attachmentsid","vtiger_quotes"=>"quoteid","vtiger_salesorder"=>"salesorderid");
-
-		$entity_tbl_field_arr = array("vtiger_contpotentialrel"=>"potentialid","vtiger_seproductsrel"=>"crmid",
-						"vtiger_seattachmentsrel"=>"crmid","vtiger_quotes"=>"potentialid","vtiger_salesorder"=>"potentialid");
-
+		$rel_table_arr = array(
+			'Contacts'=>'vtiger_contpotentialrel',
+			'Products'=>'vtiger_seproductsrel',
+			'Attachments'=>'vtiger_seattachmentsrel',
+			'Quotes'=>'vtiger_quotes',
+			'SalesOrder'=>'vtiger_salesorder',
+		);
+		$tbl_field_arr = array(
+			'vtiger_contpotentialrel'=>'contactid',
+			'vtiger_seproductsrel'=>'productid',
+			'vtiger_seattachmentsrel'=>'attachmentsid',
+			'vtiger_quotes'=>'quoteid',
+			'vtiger_salesorder'=>'salesorderid',
+		);
+		$entity_tbl_field_arr = array(
+			'vtiger_contpotentialrel'=>'potentialid',
+			'vtiger_seproductsrel'=>'crmid',
+			'vtiger_seattachmentsrel'=>'crmid',
+			'vtiger_quotes'=>'potentialid',
+			'vtiger_salesorder'=>'potentialid',
+		);
 		foreach ($transferEntityIds as $transferId) {
 			foreach ($rel_table_arr as $rel_table) {
 				$id_field = $tbl_field_arr[$rel_table];

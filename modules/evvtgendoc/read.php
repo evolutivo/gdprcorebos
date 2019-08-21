@@ -21,18 +21,18 @@ require_once 'OpenDocument.php'; // open document class
 //open test.odt
 $odt = new OpenDocument('MergeTest1.odt');
 
-echo "<pre>";
+echo '<pre>';
 //loop throught document children
 $elems=$odt->getChildren();
 foreach ($elems as $child) {
-    //strip headings
-    //if ($child instanceof OpenDocument_Heading) {
-    //    $child->delete();
-    //}
-    var_dump($elems);
-    echo "\n";
+	//strip headings
+	//if ($child instanceof OpenDocument_Heading) {
+	//    $child->delete();
+	//}
+	var_dump($elems);
+	echo "\n";
 }
-echo "</pre>";
+echo '</pre>';
 
 //save as no_headings.pdt
 //$odt->save('no_headings.odt');

@@ -185,8 +185,8 @@ class cbCalendar extends CRMEntity {
 			} else {
 				$adb->pquery('insert into vtiger_seactivityrel(crmid,activityid) values(?,?)', array($this->column_fields['rel_id'],$this->id));
 			}
-		} elseif (($this->column_fields['rel_id']=='' || $this->column_fields['rel_id']=='0') && $this->mode=="edit") {
-			$this->deleteRelation("vtiger_seactivityrel");
+		} elseif (($this->column_fields['rel_id']=='' || $this->column_fields['rel_id']=='0') && $this->mode=='edit') {
+			$this->deleteRelation('vtiger_seactivityrel');
 		}
 		//Insert into cntactivity rel
 		if (empty($this->column_fields['contact_id']) && !empty($this->column_fields['cto_id'])) {
@@ -196,6 +196,9 @@ class cbCalendar extends CRMEntity {
 			$listofctos = explode(';', $this->column_fields['contact_id']);
 			foreach ($listofctos as $cto) {
 				if (!empty($cto)) {
+					if (getSalesEntityType($cto)!='Contacts') {
+						continue;
+					}
 					if (strpos($cto, 'x')) {
 						list($wsid,$cto) = explode('x', $cto);
 					}
@@ -505,8 +508,7 @@ class cbCalendar extends CRMEntity {
 	 */
 	public function getListViewSecurityParameter($module) {
 		global $current_user;
-		require 'user_privileges/user_privileges_'.$current_user->id.'.php';
-		require 'user_privileges/sharing_privileges_'.$current_user->id.'.php';
+		$userprivs = $current_user->getPrivileges();
 
 		$sec_query = '';
 		$tabid = getTabid($module);
@@ -517,7 +519,7 @@ class cbCalendar extends CRMEntity {
 					SELECT vtiger_user2role.userid FROM vtiger_user2role
 					INNER JOIN vtiger_users ON vtiger_users.id=vtiger_user2role.userid
 					INNER JOIN vtiger_role ON vtiger_role.roleid=vtiger_user2role.roleid
-					WHERE vtiger_role.parentrole LIKE '".$current_user_parent_role_seq."::%'
+					WHERE vtiger_role.parentrole LIKE '".$userprivs->getParentRoleSequence()."::%'
 				)
 				OR vtiger_crmentity.smownerid IN
 				(
@@ -527,8 +529,8 @@ class cbCalendar extends CRMEntity {
 				OR (";
 
 			// Build the query based on the group association of current user.
-			if (count($current_user_groups) > 0) {
-				$sec_query .= ' vtiger_groups.groupid IN ('. implode(',', $current_user_groups) .') OR ';
+			if ($userprivs->hasGroups()) {
+				$sec_query .= ' vtiger_groups.groupid IN ('. implode(',', $userprivs->getGroups()) .') OR ';
 			}
 			$sec_query .= ' vtiger_groups.groupid IN
 				(

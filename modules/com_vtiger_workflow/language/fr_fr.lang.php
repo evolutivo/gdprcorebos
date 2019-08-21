@@ -79,6 +79,8 @@ $mod_strings = array(
 	'Portal Url' => 'URL du portail CRM',
 	'groupEmailList' => 'Group Email List',
 	'Workflow'=>'Flux de travail',
+	'WORKFLOW_DELETE_CONFIRMATION' => 'Are you sure you want to delete this Workflow?',
+	'LBL_DELETE_WORKFLOW' => 'Delete Workflow',
 	'VTCreateEntityTask' => 'Créer une entité',
 	'LBL_ENTITY_TYPE' => 'Type d\'entité',
 	'LBL_SELECT_ENTITY_TYPE' => '-- Choix du type d\'entité --',
@@ -87,6 +89,8 @@ $mod_strings = array(
 	'LBL_PARENT_OWNER' => 'Parent Record Owner',
 	'LBL_SPECIAL_OPTIONS' => 'Options Spéciales',
 	'CBTagTask' => 'Ajouter/Supprimer Tag',
+	'CBMassiveUpdateRelatedTask' => 'Update Related Records',
+	'DuplicateRecords' => 'Duplicate Records',
 	'Add Tag' => 'Ajouter Tag',
 	'Delete Tag' => 'Supprimer Tag',
 	'Tags' => 'Tags',
@@ -156,6 +160,5 @@ $mod_strings = array(
 	'NO_METHOD_AVAILABLE' => 'Aucune méthode disponible pour ce module.',
 	'launchrelwf' => 'Launch workflows on related updates',
 	'LBL_WFPURPOSE' => 'Purpose',
-	'whatsappworkflowtask' => 'Send Whatsapp Message',
 );
 ?>

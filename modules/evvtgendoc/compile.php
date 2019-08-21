@@ -16,15 +16,15 @@
 *  Version      : 5.3.0
 *  Author       : JPL TSolucio, S. L.
 *************************************************************************************************/
-include_once('config.inc.php');
-require_once('include/logging.php');
-require_once('data/Tracker.php');
-require_once('include/utils/utils.php');
-require_once('modules/evvtgendoc/OpenDocument.php');
+include_once 'config.inc.php';
+require_once 'include/logging.php';
+require_once 'data/Tracker.php';
+require_once 'include/utils/utils.php';
+require_once 'modules/evvtgendoc/OpenDocument.php';
 if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language . '.php')) {
-	include('modules/evvtgendoc/commands_'. OpenDocument::$compile_language . '.php');
+	include 'modules/evvtgendoc/commands_'. OpenDocument::$compile_language . '.php';
 } else {
-	include('modules/evvtgendoc/commands_en.php');
+	include 'modules/evvtgendoc/commands_en.php';
 }
 
 	//Array de moduls relacionats amb el que estem tractant
@@ -218,12 +218,17 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 
 	function eval_expression($marcador, $entityid) {
 		global $expressionGD,$adb,$current_user;
-		include_once('modules/com_vtiger_workflow/expression_engine/VTParser.inc');
-		include_once('modules/com_vtiger_workflow/expression_engine/VTTokenizer.inc');
-		include_once('modules/com_vtiger_workflow/expression_engine/VTExpressionEvaluater.inc');
+		include_once 'modules/com_vtiger_workflow/expression_engine/VTParser.inc';
+		include_once 'modules/com_vtiger_workflow/expression_engine/VTTokenizer.inc';
+		include_once 'modules/com_vtiger_workflow/expression_engine/VTExpressionEvaluater.inc';
 		$lenexp = strlen($expressionGD);
 		$compile_expression = substr($marcador, $lenexp);
 		$type = getSalesEntityType($entityid);
+		if (strpos($compile_expression, '~')>0 && strpos($compile_expression, '¬')>0) {
+			$compile_expression = str_replace('~', '{', $compile_expression);
+			$compile_expression = str_replace('¬', '}', $compile_expression);
+			$compile_expression = compile($compile_expression, $entityid, $type);
+		}
 		OpenDocument::debugmsg('COMPILE EXPRESSION: '.$compile_expression.' WITH: '.$type.' ('.$entityid.')');
 		$entityws = $adb->getone("SELECT id FROM vtiger_ws_entity WHERE name='$type'");
 		$entityId = $entityws.'x'.$entityid;
@@ -239,11 +244,12 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 	function retrieve_from_db($marcador, $id, $module, $applyformat = true) {
 		global $current_user,$repe,$adb,$related_module,$special_modules,$special_inv,$iter_modules,$default_charset,$genxmlaggregates;
 		global $dateGD, $repeticionGD, $lineGD;
+		OpenDocument::debugmsg("retrieve_from_db: $marcador with $module($id)");
 		$token_pair = explode('.', $marcador);
 		if (count($token_pair) == 1) {
 			if (module_exists($token_pair[0]) || (!empty($special_modules[$token_pair[0]])) && module_exists($special_modules[$token_pair[0]])) {
 				if (module_exists($module)) {
-					require_once("modules/$module/$module.php");
+					require_once "modules/$module/$module.php";
 					$focus = new $module();
 					//Comprovem que l'entitat existisca i no estiga borrada
 					if (!entity_exists($focus, $id, $module)) {
@@ -251,7 +257,7 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 					}
 					$focus->retrieve_entity_info($id, $module);
 					$mod_rel = (module_exists($token_pair[0]) ? $token_pair[0] : $special_modules[$token_pair[0]]);
-					require_once("modules/$mod_rel/$mod_rel.php");
+					require_once "modules/$mod_rel/$mod_rel.php";
 					$focus_rel = new $mod_rel();
 					if (areModulesRelated($token_pair[0], $module)) {
 						return entity_exists($focus_rel, $focus->column_fields[$related_module[$module][$token_pair[0]]], $mod_rel);
@@ -268,7 +274,18 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 				}
 				switch ($token_pair[0]) {
 					case $dateGD: // fecha
-						$reemplazo = date($date_format);
+						switch ($date_format) {
+							case 'l':
+								require_once 'modules/cbtranslation/cbtranslation.php';
+								$reemplazo = cbtranslation::getDayOfWeekName(date('N') % 7, OpenDocument::$compile_language);
+								break;
+							case 'F':
+								require_once 'modules/cbtranslation/cbtranslation.php';
+								$reemplazo = cbtranslation::getMonthName(date('n')-1, OpenDocument::$compile_language);
+								break;
+							default:
+								$reemplazo = date($date_format);
+						}
 						break;
 					case $repeticionGD:
 						$reemplazo = $repe[count($repe)-1];
@@ -284,22 +301,22 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 		}
 		if (count($token_pair) == 3) {
 			if ($token_pair[2]=='enletras') {
-				require_once("enletras.php");
+				require_once 'modules/cbtranslation/number2string.php';
 				$nuevomarcador = $token_pair[0].'.'.$token_pair[1];
-				$reemplazo =   retrieve_from_db($nuevomarcador, $id, $module);
-				$reemplazo = strtolower(EnLetras($reemplazo));
+				$reemplazo = retrieve_from_db($nuevomarcador, $id, $module);
+				$reemplazo = strtolower(number2string::convert($reemplazo, OpenDocument::$compile_language));
 				return $reemplazo;
 			}
 			if ($token_pair[0]=='genxmlsum') {
 				return $genxmlaggregates['sum'][$token_pair[1]][$token_pair[2]];
 			}
 		}
-		if (count($token_pair) == 2 and $token_pair[0]=='genxmlcount') {
+		if (count($token_pair) == 2 && $token_pair[0]=='genxmlcount') {
 			return $genxmlaggregates['cnt'][$token_pair[1]]['genxmlcnt'];
 		}
 		//Anem a vore si tenim un modul com el que ens passen
 		if (module_exists($module)) {
-			require_once("modules/$module/$module.php");
+			require_once "modules/$module/$module.php";
 			$focus = new $module();
 			//Comprovem que l'entitat existisca i no estiga borrada
 			if (!entity_exists($focus, $id, $module)) {
@@ -321,7 +338,7 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 						if (is_date($token_pair[1], $module) && !empty($cadena)) {
 							$date = new DateTimeField($cadena);
 							$cadena = $date->getDisplayDate($current_user);
-							if (strpos($cadena, '0000')!==false or $cadena=='--') {
+							if (strpos($cadena, '0000')!==false || $cadena=='--') {
 								$cadena='';
 							}
 						}
@@ -345,11 +362,22 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 							}
 						}
 
-						if ($come_from_compile && getUitypefield($module, $token_pair[1]) == 56 && is_numeric($cadena)) {
-							if ($cadena == 1) {
-								$cadena = 'Yes';
-							} else {
-								$cadena = 'No';
+						if ($come_from_compile && is_numeric($cadena)) {
+							$uitype = getUitypefield($module, $token_pair[1]);
+							switch ($uitype) {
+								case 56:
+									if ($cadena == 1) {
+										$cadena = 'Yes';
+									} else {
+										$cadena = 'No';
+									}
+									break;
+								case 101:
+								case 77:
+									$cadena = getUserFullName($cadena);
+									break;
+								default:
+									break;
 							}
 						}
 					}
@@ -370,36 +398,73 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 				} else {
 					$reemplazo = '{'.$marcador.'}';
 				}
-			} elseif (areModulesRelated($token_pair[0], $module)) {
-				$reemplazo = retrieve_from_db($marcador, $focus->column_fields[$related_module[$module][$token_pair[0]]], $token_pair[0]);
+			} elseif ($token_pair[0] == 'CurrentUser') {
+				$reemplazo = isset($current_user->column_fields[$token_pair[1]]) ? getTranslatedString($current_user->column_fields[$token_pair[1]], 'Users') : '';
+			} elseif ($token_pair[0] == 'CreatedBy' || $token_pair[0] == 'ModifiedBy') {
+				$uid = ($token_pair[0] == 'CreatedBy' ? $focus->column_fields['created_user_id'] : $focus->column_fields['modifiedby']);
+				require_once 'modules/Users/Users.php';
+				$usr = new Users();
+				if (!entity_exists($usr, $uid, 'Users')) {
+					return false;
+				}
+				$usr->retrieve_entity_info($uid, 'Users');
+				$reemplazo = isset($usr->column_fields[$token_pair[1]]) ? getTranslatedString($usr->column_fields[$token_pair[1]], 'Users') : '';
 			} elseif (array_key_exists($token_pair[0], $iter_modules)) {
 				if ($token_pair[0] == 'ProductList' || $token_pair[0] == 'ServiceList' || $token_pair[0] == 'QuestionList' || $token_pair[0] == 'QuestionListCat') {
 					if (array_key_exists($token_pair[1], $iter_modules[$token_pair[0]][0])) {
-						$reemplazo = getTranslatedString(elimina_llave(html_entity_decode($iter_modules[$token_pair[0]][0][$token_pair[1]], ENT_QUOTES, $default_charset)), $module);
+						$reemplazo=getTranslatedString(elimina_llave(html_entity_decode($iter_modules[$token_pair[0]][0][$token_pair[1]], ENT_QUOTES, $default_charset)), $module);
 					} else {
-						$reemplazo = retrieve_from_db($marcador, $iter_modules[$token_pair[0]][0]['productid'], $token_pair[0]);
+						$reemplazo=retrieve_from_db($marcador, $iter_modules[$token_pair[0]][0]['productid'], $token_pair[0]);
 					}
 				} else {
 					$reemplazo = retrieve_from_db($marcador, $iter_modules[$token_pair[0]][0], $token_pair[0]);
 				}
+			} elseif (areModulesRelated($token_pair[0], $module)) {
+				$reemplazo = retrieve_from_db($marcador, $focus->column_fields[$related_module[$module][$token_pair[0]]], $token_pair[0]);
 			} elseif ($token_pair[0] == 'Organization') {
-				$marcador = 'Accounts.'.$token_pair[1];
-				$SQL = "SELECT * FROM vtiger_organizationdetails";
-				$res = $adb->query($SQL);
+				$res = $adb->query('SELECT * FROM vtiger_cbcompany WHERE defaultcompany=1');
 				$org_fields = $adb->getFieldsArray($res);
 				if (in_array($token_pair[1], $org_fields)) {
 					$reemplazo = $adb->query_result($res, 0, $token_pair[1]);
 				} else {
-					$id = $adb->query_result($res, 0, 'account_id');
-					if (empty($id)) {
-						$id = GlobalVariable::getVariable('GenDoc_Company_Account', 0);
-						if (empty($id)) {
-							$reemplazo = '{'.$marcador.'}';
-						} else {
-							$reemplazo = retrieve_from_db($marcador, $id, 'Accounts');
+					$id = $adb->query_result($res, 0, 'cbcompanyid');
+					$accid = $adb->query_result($res, 0, 'accid');
+					if (empty($accid) || $token_pair[1] == 'rm') {
+						switch ($token_pair[1]) {
+							case 'accountname':
+							case 'organizationname':
+								$token_pair[1] = 'companyname';
+								break;
+							case 'rm':
+								$token_pair[1] = 'companybr';
+								break;
+							case 'bill_street':
+							case 'ship_street':
+								$token_pair[1] = 'address';
+								break;
+							case 'bill_city':
+							case 'ship_city':
+								$token_pair[1] = 'city';
+								break;
+							case 'bill_code':
+							case 'ship_code':
+								$token_pair[1] = 'postalcode';
+								break;
+							case 'bill_state':
+							case 'ship_state':
+							case 'bill_provincia':
+							case 'ship_provincia':
+								$token_pair[1] = 'state';
+								break;
+							case 'email1':
+								$token_pair[1] = 'email';
+								break;
 						}
+						$marcador = 'cbCompany.'.$token_pair[1];
+						$reemplazo = retrieve_from_db($marcador, $id, 'cbCompany');
 					} else {
-						$reemplazo = retrieve_from_db($marcador, $id, 'Accounts');
+						$marcador = 'Accounts.'.$token_pair[1];
+						$reemplazo = retrieve_from_db($marcador, $accid, 'Accounts');
 					}
 				}
 			} else {
@@ -411,6 +476,23 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 					$reemplazo = getTranslatedString(elimina_llave(html_entity_decode($iter_modules[$token_pair[0]][0][$token_pair[1]], ENT_QUOTES, $default_charset)), $module);
 				} else {
 					$reemplazo = retrieve_from_db($marcador, $iter_modules[$token_pair[0]][0]['productid'], $token_pair[0]);
+				}
+			} elseif (array_key_exists($module, $special_modules)) {
+				if (is_array($special_modules[$module])) {
+					$reemplazo = '.';
+					foreach ($special_modules[$module] as $multvalue) {
+						$entitymod = getEntityModule($id);
+						if ($entitymod == $multvalue) {
+							$reemplazo = retrieve_from_db($multvalue.'.'.$token_pair[1], $id, $multvalue);
+							if ($reemplazo == '{'.$token_pair[0].'.'.$token_pair[1].'}') {
+								$reemplazo = '';
+							}
+							break;
+						}
+					}
+				} else {
+					$map = $special_modules[$module];
+					$reemplazo = retrieve_from_db($map.'.'.$token_pair[1], $id, $map);
 				}
 			} else {
 				$reemplazo = retrieve_from_db($marcador, $iter_modules[$token_pair[0]][0], $token_pair[0]);
@@ -606,7 +688,7 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 				$res = $adb->pquery($SQL, array($tab_mod,$tab_rel));
 				$func_rel = $adb->query_result($res, 0, 'name');
 
-				require_once("modules/$module/$module.php");
+				require_once "modules/$module/$module.php";
 				$focus = new $module();
 				//Comprovem que l'entitat existisca i no estiga borrada
 				if (!entity_exists($focus, $id, $module)) {
@@ -616,6 +698,8 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 				$focus->retrieve_entity_info($id, $module);
 				$currentModule_anterior = $currentModule;
 				$currentModule = $module;
+				$related = array();
+				$related['entries'] = array();
 				if (!empty($func_rel)) {
 					global $GetRelatedList_ReturnOnlyQuery;
 					$GetRelatedList_ReturnOnlyQuery = true;
@@ -629,7 +713,7 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 						$clave = '';
 					}
 					if (!empty($clave)) {
-						$related['entries'] = array( $clave => $clave);
+						$related['entries'] = array($clave => $clave);
 					}
 				}
 				$currentModule = $currentModule_anterior;
@@ -692,17 +776,13 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 				$tmp_iter = array();
 				switch ($token_pair[0]) {
 					case 'Organization':
-						$id = GlobalVariable::getVariable('GenDoc_Company_Account', 0);
-						if (empty($id)) {
-							$SQL = 'SELECT * FROM vtiger_organizationdetails';
-							$res = $adb->query($SQL);
-							$id = $adb->query_result($res, 0, 'account_id');
-						}
-						$token_pair[0] = 'Accounts';
+						$res = $adb->query('SELECT cbcompanyid FROM vtiger_cbcompany WHERE defaultcompany=1');
+						$id = $adb->query_result($res, 0, 'cbcompanyid');
+						$token_pair[0] = 'cbCompany';
 						$tmp_iter = array($id);
 						break;
 					case 'ProductList':
-						require_once("modules/$module/$module.php");
+						require_once "modules/$module/$module.php";
 						$focus = new $module();
 						//Comprovem que l'entitat existisca i no estiga borrada
 						if (!entity_exists($focus, $id, $module)) {
@@ -712,7 +792,7 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 						$tmp_iter = getProductList($module, $id);
 						break;
 					case 'ServiceList':
-						require_once("modules/$module/$module.php");
+						require_once "modules/$module/$module.php";
 						$focus = new $module();
 						//Comprovem que l'entitat existisca i no estiga borrada
 						if (!entity_exists($focus, $id, $module)) {
@@ -734,7 +814,7 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 							);
 							$comp = '=';
 						}
-						require_once("modules/$module/$module.php");
+						require_once "modules/$module/$module.php";
 						$focus = new $module();
 						//Comprovem que l'entitat existisca i no estiga borrada
 						if (!entity_exists($focus, $id, $module)) {
@@ -744,7 +824,7 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 						$tmp_iter = getQuestionList($module, $id);
 						break;
 					case 'QuestionListCat':
-						require_once("modules/$module/$module.php");
+						require_once "modules/$module/$module.php";
 						$focus = new $module();
 						//Comprovem que l'entitat existisca i no estiga borrada
 						if (!entity_exists($focus, $id, $module)) {
@@ -798,7 +878,7 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 	}
 
 	function eval_imagen($entity, $id, $module) {
-		global $adb, $image_modules, $iter_modules, $log, $related_module;
+		global $adb, $image_modules, $iter_modules, $related_module;
 		OpenDocument::debugmsg("eval_image: $entity, $id, $module");
 		list($mod,$field) = explode('.', $entity);
 		$att_name = '';
@@ -892,15 +972,14 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 	}
 
 	function eval_incluir($entity, $id, $module) {
-		global $adb,$related_module,$iter_modules,$log,$special_modules;
-		//$log->fatal("eval_imagen($entity,$id,$module)");
+		global $related_module, $iter_modules, $special_modules;
 		if (module_exists($entity) || array_key_exists($entity, $special_modules)) {
 			if ($entity == $module) {
 				$entid = $id;
 			} elseif (array_key_exists($entity, $iter_modules)) {
 				$entid = $iter_modules[$entity][0];
 			} else {
-				require_once("modules/$module/$module.php");
+				require_once "modules/$module/$module.php";
 				$focus = new $module();
 				//Comprovem que l'entitat existisca i no estiga borrada
 				if (!entity_exists($focus, $id, $module)) {
@@ -944,6 +1023,12 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 		}
 	}
 
+	function get_current_iter_module() {
+		global $iter_modules;
+		$keys = array_keys($iter_modules);
+		return $keys[count($iter_modules)-1];
+	}
+
 	function array_inverse($array) {
 		$ret = array();
 		foreach ($array as $key => $value) {
@@ -968,8 +1053,7 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 
 	function module_exists($module) {
 		global $adb;
-		$SQL = "SELECT COUNT(*) as qtab FROM vtiger_tab WHERE name=? AND presence=0";
-		$res = $adb->pquery($SQL, array($module));
+		$res = $adb->pquery('SELECT COUNT(*) as qtab FROM vtiger_tab WHERE name=? AND presence=0', array($module));
 		return ($adb->query_result($res, 0, 'qtab') != 0);
 	}
 
@@ -978,6 +1062,8 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 		$params = array($id);
 		switch ($module) {
 			case 'Users':
+			case 'CreatedBy':
+			case 'ModifiedBy':
 				$SQL = 'SELECT COUNT(*) as qtab FROM vtiger_users WHERE id=? AND deleted=0';
 				break;
 			default:
@@ -987,6 +1073,7 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 		$res = $adb->pquery($SQL, $params);
 		return ($adb->query_result($res, 0, 'qtab') != 0);
 	}
+
 	function getProductList($module, $id) {
 		global $adb;
 		$fmt_number = array(
@@ -1302,6 +1389,7 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 			';' => '',
 			':' => '',
 			'-' => '',
+			'/' => '',
 			);
 			// elimina espacios
 			$cadena = str_replace(' ', '_', $cadena);
@@ -1546,6 +1634,9 @@ if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language 
 	function areModulesRelated($relmodule, $mergemodule) {
 		global $adb, $related_module;
 		if (isset($related_module[$mergemodule]) && array_key_exists($relmodule, $related_module[$mergemodule])) {
+			return true;
+		} elseif ($relmodule=='Users') {
+			$related_module[$mergemodule][$relmodule] = 'assigned_user_id';
 			return true;
 		} else {
 			$sql = 'select fieldname

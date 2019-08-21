@@ -48,6 +48,13 @@ $GlobalVariableDefinitons = array(
 	'values' => 'Ejemplo: 127.0.0.1,192.168.0.100',
 	'definition' => 'Lista separada por comas de direcciones IP desde las que se permitirá el acceso a la aplicación de los usuarios',
 ),
+'Application_SendUserPasswordByEmail' => array(
+	'status' => 'Implementada',
+	'valuetype' => 'Booleano',
+	'category' => 'Seguridad',
+	'values' => '0 | 1',
+	'definition' => 'Si es verdadero, la aplicación enviará un correo electrónico con la contraseña del usuario cada vez que se cambie la contraseña utilizando la plantilla "Password Change Template"',
+),
 'Debug_Record_Not_Found' => array(
 	'status' => 'Implementada',
 	'valuetype' => 'Booleano',
@@ -271,6 +278,21 @@ $GlobalVariableDefinitons = array(
 	'category' => 'Aplicación',
 	'values' => 'ASC | DESC',
 	'definition' => 'Orden inicial de los registros al hacer clic en el encabezado de vista de lista. El orden por defecto es ASC',
+),
+'Application_ListView_Default_OrderDirection' => array(
+	'status' => 'Implementada',
+	'valuetype' => 'Texto',
+	'category' => 'Aplicación',
+	'values' => 'ASC | DESC',
+	'definition' => 'Sort order for records of a module. If not defined the internal default value of each module will be used.',
+	'definition' => 'Dirección de ordenación de los registros de un módulo. Si no es definido se utilizará el valor interno de cada módulo.',
+),
+'Application_ListView_Default_OrderField' => array(
+	'status' => 'Implementada',
+	'valuetype' => 'Texto',
+	'category' => 'Aplicación',
+	'values' => 'columna del módulo',
+	'definition' => 'Campo del módulo por el que hay que ordenar. Si no es definido se utilizará el valor interno de cada módulo.',
 ),
 'Application_ListView_Record_Change_Indicator' => array(
 	'status' => 'Implementada',
@@ -656,6 +678,27 @@ $GlobalVariableDefinitons = array(
 	'category' => 'Aplicación',
 	'values' => '',
 	'definition' => 'Al llamar o recibir una llamada de un contacto desconocido, esta cadena se usará como el identificador de nombre de registro junto al número marcado. El valor predeterminado es Unknown',
+),
+'PBX_SearchOnTheseFields' => array(
+	'status' => 'Implementada',
+	'valuetype' => 'Cadena',
+	'category' => 'Aplicación',
+	'values' => 'nombres de campos',
+	'definition' => 'Lista de campos en los que buscar al recibir una llamada de Asterisk. Se devolverá el primer resultado encontrado.',
+),
+'PBX_callerNumberField' => array(
+	'status' => 'Implementada',
+	'valuetype' => 'Cadena',
+	'category' => 'Aplicación',
+	'values' => 'nombre de campo PBX',
+	'definition' => 'Nombre del campo proveniente del PBX que debemos utilizar para buscar en la aplicación. Por defecto se utiliza CallerID',
+),
+'PBX_callerNumberSeparator' => array(
+	'status' => 'Implementada',
+	'valuetype' => 'Carácter',
+	'category' => 'Aplicación',
+	'values' => 'carácter',
+	'definition' => 'El número entrante del PBX se separará por este caracter y se buscará cada parte de manera individual. Por defecto no se separa el número.',
 ),
 'Mobile_Module_by_default' => array(
 	'status' => 'Implementada',
@@ -1063,6 +1106,13 @@ $GlobalVariableDefinitons = array(
 	'values' => '0 | 1',
 	'definition' => 'Al seleccionar una Cuenta/Contacto/Vendedor en la ventana emergente, la aplicación te pregunta si debe rellenar las direcciones. Esta variable establece la casilla de verificación Dirección de Envío.',
 ),
+'Application_Popup_Address_Selection'=> array(
+	'status' => 'Implementada',
+	'valuetype' => 'Booleano',
+	'category' => 'Aplicación',
+	'values' => '0 | 1',
+	'definition' => 'Muestra la opción para seleccionar una dirección en Cuenta y Contacto (por defecto es 1), si se establece en 0, no se mostrará la opción completa para seleccionar una dirección.',
+),
 'Application_Show_Copy_Address' => array(
 	'status' => 'Implementada',
 	'valuetype' => 'Booleano',
@@ -1245,13 +1295,6 @@ $GlobalVariableDefinitons = array(
 	'values' => 'Cualquier Clave API válida de Zero Bounce',
 	'definition' => 'Una clave válida para el API de Zero Bounce para poder validar cuentas de correo.',
 ),
-'PBXManager_SearchOnlyOnTheseFields' => array(
-	'status' => 'Implementada',
-	'valuetype' => 'Cadena',
-	'category' => 'Aplicación',
-	'values' => 'nombres de campos',
-	'definition' => 'Lista de campos en los que buscar al recibir una llamada de Asterisk. Se devolverá el primer resultado encontrado.',
-),
 'GenDoc_CopyLabelToClipboard' => array(
 	'status' => 'Implementada',
 	'valuetype' => 'Booleano',
@@ -1284,7 +1327,7 @@ $GlobalVariableDefinitons = array(
 	'status' => 'Implementada',
 	'valuetype' => 'Cadena',
 	'category' => 'Aplicación',
-	'values' => 'Especificación SQL para order by',
+	'values' => 'Especificación SQL para order by|DO NOT SORT',
 	'definition' => 'Si se proporciona, se incorporará directamente a la consulta SQL para recuperar los usuarios que aparecen en el menú desplegable Asignado a, lo que nos permite personalizar el orden de aparición de estos usuarios.',
 ),
 'Workflow_ListView_PageSize' => array(

@@ -34,6 +34,7 @@ if (coreBOS_Session::has('ME1x1Info')) {
 	$smarty->assign('ERROR_MESSAGE_CLASS', 'cb-alert-info');
 	$memsg = getTranslatedString('LBL_MASS_EDIT').':&nbsp;'.getTranslatedString('LBL_RECORD').(count($ME1x1Info['processed'])+1).'/'.count($ME1x1Info['complete']);
 	$smarty->assign('ERROR_MESSAGE', $memsg);
+	$smarty->assign('gobackBTN', count($ME1x1Info['processed'])==0);
 } else {
 	$smarty->assign('MED1x1MODE', 0);
 }
@@ -151,7 +152,7 @@ $smarty->assign('FIELDS', $focus->column_fields);
 if (isset($_REQUEST['name']) && is_null($focus->name)) {
 	$focus->name = $_REQUEST['name'];
 }
-if (isset($_REQUEST['vendorid']) && is_null($focus->vendorid)) {
+if (isset($_REQUEST['vendorid']) && empty($focus->vendorid)) {
 	$focus->vendorid = $_REQUEST['vendorid'];
 }
 

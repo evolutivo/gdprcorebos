@@ -209,6 +209,7 @@ $mod_strings = array(
 
 	'LBL_ASTERISKEXTENSIONS_EXIST' => 'Die Asterisk Erweiterung gibt es bereits!',
 	'LBL_CURRENCY_SEPARATORS_INCORRECT' => 'Decimal Separator and Digit Grouping Separator cannot be the same.',
+	'LBL_FORUSER' => ' for User ',
 
 	// Added fields in createnewgroup.php
 	'LBL_CREATE_NEW_GROUP'=>'Erstelle neue Gruppe',
@@ -338,6 +339,8 @@ $mod_strings = array(
 	'LBL_EMAIL_SCHDS_DESC'=>'Automatische E-Mail Benachrichtigungen werden beim Eintreten der folgenden Ereignisse erstellt',
 	'LBL_ACTIVE'=>'Aktiv',
 	'LBL_INACTIVE'=>'Inaktiv',
+	'LBL_ON' => 'An',
+	'LBL_OFF' => 'Aus',
 	'LBL_NOTIFICATION'=>'Ereignis',
 	'LBL_DESCRIPTION'=>'Beschreibung',
 	'LBL_TASK_NOTIFICATION'=>'Aufgabe verspätet',

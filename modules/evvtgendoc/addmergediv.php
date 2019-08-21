@@ -22,16 +22,24 @@ class AddGenDocMergeDIV extends VTEventHandler {
 	 * @param $entityData VTEntityData
 	 */
 	public function handleEvent($handlerType, $entityData) {
-		global $adb, $log, $currentModule;
+		global $adb, $currentModule;
 		if ($handlerType == 'corebos.header') {
 			$mname = (isset($currentModule) ? $currentModule : '');
-			$tabid = getTabid($mname);
-			$checkres = $adb->pquery('SELECT linkid FROM vtiger_links WHERE tabid=? AND linktype=? AND linklabel=?', Array($tabid, 'DETAILVIEWWIDGET', 'Generate Document'));
+			$checkres = $adb->pquery(
+				"SELECT businessactionsid
+					FROM vtiger_businessactions
+					INNER JOIN vtiger_crmentity ON crmid=businessactionsid
+					WHERE module_list like '%".vtlib_purify($mname)."%' AND elementtype_action=? AND linklabel=?",
+				array('DETAILVIEWWIDGET', 'Generate Document')
+			);
 			if ($adb->num_rows($checkres)) {
-				require_once('Smarty_setup.php');
+				require_once 'Smarty_setup.php';
 				$smarty = new vtigerCRM_Smarty();
 				$smarty->assign('MODULE', $mname);
 				$smarty->assign('ID', (isset($_REQUEST['record']) ? vtlib_purify($_REQUEST['record']) : ''));
+				$gendoc_pdfactive = coreBOS_Settings::getSetting('cbgendoc_active', 0);
+				$gendoc_showpdf = coreBOS_Settings::getSetting('cbgendoc_showpdflinks', 0);
+				$smarty->assign('gendoc_active', ($gendoc_pdfactive==1 || $gendoc_showpdf==1));
 				$smarty->display('modules/evvtgendoc/gendocdiv.tpl');
 			}
 		}

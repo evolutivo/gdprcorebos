@@ -15,7 +15,7 @@
 function cbmqtm_Consumelog() {
 	global $adb;
 	$cbmq = coreBOS_MQTM::getInstance();
-	$msg = $cbmq->getMessage('WSGendocChannel', 'gendoclogger','gendoc');
+	$msg = $cbmq->getMessage('WSGendocChannel', 'gendoclogger', 'gendoc');
 	$logarray = unserialize($msg['information']);
 	$uname = getUserName($logarray['user']);
 	$adb->pquery(

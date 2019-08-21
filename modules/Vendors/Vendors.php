@@ -209,9 +209,10 @@ class Vendors extends CRMEntity {
 			}
 			if (in_array('ADD', $actions) && isPermitted($related_module, 1, '') == 'yes') {
 				$singular_modname = getTranslatedString('SINGLE_' . $related_module, $related_module);
-				$button .= "<input title='".getTranslatedString('LBL_ADD_NEW'). " ". $singular_modname ."' class='crmbutton small create'" .
+				$button .=  "<input type='hidden' name='createmode' value='link' />"
+					."<input title='".getTranslatedString('LBL_ADD_NEW').' '.$singular_modname ."' class='crmbutton small create'" .
 					" onclick='this.form.action.value=\"EditView\";this.form.module.value=\"$related_module\"' type='submit' name='button'" .
-					" value='". getTranslatedString('LBL_ADD_NEW'). " " . $singular_modname ."'>&nbsp;";
+					" value='". getTranslatedString('LBL_ADD_NEW').' '. $singular_modname ."'>&nbsp;";
 			}
 		}
 
@@ -247,20 +248,28 @@ class Vendors extends CRMEntity {
 		global $adb,$log;
 		$log->debug("> transferRelatedRecords $module, $transferEntityIds, $entityId");
 		parent::transferRelatedRecords($module, $transferEntityIds, $entityId);
-		$rel_table_arr = array("Products"=>"vtiger_products","PurchaseOrder"=>"vtiger_purchaseorder","Contacts"=>"vtiger_vendorcontactrel");
-
-		$tbl_field_arr = array("vtiger_products"=>"productid","vtiger_vendorcontactrel"=>"contactid","vtiger_purchaseorder"=>"purchaseorderid");
-
-		$entity_tbl_field_arr = array("vtiger_products"=>"vendor_id","vtiger_vendorcontactrel"=>"vendorid","vtiger_purchaseorder"=>"vendorid");
-
+		$rel_table_arr = array(
+			'Products'=>'vtiger_products',
+			'PurchaseOrder'=>'vtiger_purchaseorder',
+			'Contacts'=>'vtiger_vendorcontactrel',
+		);
+		$tbl_field_arr = array(
+			'vtiger_products'=>'productid',
+			'vtiger_vendorcontactrel'=>'contactid',
+			'vtiger_purchaseorder'=>'purchaseorderid',
+		);
+		$entity_tbl_field_arr = array(
+			'vtiger_products'=>'vendor_id',
+			'vtiger_vendorcontactrel'=>'vendorid',
+			'vtiger_purchaseorder'=>'vendorid',
+		);
 		foreach ($transferEntityIds as $transferId) {
 			foreach ($rel_table_arr as $rel_table) {
 				$id_field = $tbl_field_arr[$rel_table];
 				$entity_id_field = $entity_tbl_field_arr[$rel_table];
 				// IN clause to avoid duplicate entries
 				$sel_result = $adb->pquery(
-					"select $id_field from $rel_table where $entity_id_field=? " .
-						" and $id_field not in (select $id_field from $rel_table where $entity_id_field=?)",
+					"select $id_field from $rel_table where $entity_id_field=? and $id_field not in (select $id_field from $rel_table where $entity_id_field=?)",
 					array($transferId,$entityId)
 				);
 				$res_cnt = $adb->num_rows($sel_result);

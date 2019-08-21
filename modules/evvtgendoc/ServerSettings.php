@@ -7,12 +7,12 @@
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
  ********************************************************************************/
-require_once('Smarty_setup.php');
+require_once 'Smarty_setup.php';
 require_once 'vtlib/Vtiger/Module.php';
 global $app_strings, $mod_strings, $current_language,$currentModule, $theme,$current_user,$log;
 
-$theme_path="themes/".$theme."/";
-$image_path=$theme_path."images/";
+$theme_path='themes/'.$theme.'/';
+$image_path=$theme_path.'images/';
 
 $smarty = new vtigerCRM_Smarty;
 
@@ -23,17 +23,17 @@ $smarty->assign('THEME', $theme);
 $smarty->assign('IMAGE_PATH', $image_path);
 
 if (!is_admin($current_user)) {
-	$smarty->display(vtlib_getModuleTemplate('Vtiger','OperationNotPermitted.tpl'));
+	$smarty->display(vtlib_getModuleTemplate('Vtiger', 'OperationNotPermitted.tpl'));
 } else {
-	$gendoc_active = coreBOS_Settings::getSetting('cbgendoc_active',0);
-	$gendoc_server = coreBOS_Settings::getSetting('cbgendoc_server','');
-	$gendoc_user = coreBOS_Settings::getSetting('cbgendoc_user','');
-	$gendoc_accesskey = coreBOS_Settings::getSetting('cbgendoc_accesskey','');
+	$gendoc_active = coreBOS_Settings::getSetting('cbgendoc_active', 0);
+	$gendoc_server = coreBOS_Settings::getSetting('cbgendoc_server', '');
+	$gendoc_user = coreBOS_Settings::getSetting('cbgendoc_user', '');
+	$gendoc_accesskey = coreBOS_Settings::getSetting('cbgendoc_accesskey', '');
 	$active = ($gendoc_active == 1 ? 'checked' : '');
-	$smarty->assign('active',$active);
-	$smarty->assign('server',$gendoc_server);
-	$smarty->assign('user',$gendoc_user);
-	$smarty->assign('key',$gendoc_accesskey);
-	$smarty->display(vtlib_getModuleTemplate($currentModule,'ServerSettings.tpl'));
+	$smarty->assign('active', $active);
+	$smarty->assign('server', $gendoc_server);
+	$smarty->assign('user', $gendoc_user);
+	$smarty->assign('key', $gendoc_accesskey);
+	$smarty->display(vtlib_getModuleTemplate($currentModule, 'ServerSettings.tpl'));
 }
 ?>

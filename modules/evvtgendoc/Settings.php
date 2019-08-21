@@ -7,9 +7,9 @@
  * Portions created by vtiger are Copyright (C) vtiger.
  * All Rights Reserved.
  ********************************************************************************/
-require_once('Smarty_setup.php');
-require_once("include/utils/utils.php");
-require_once("modules/com_vtiger_workflow/VTWorkflowUtils.php");
+require_once 'Smarty_setup.php';
+require_once 'include/utils/utils.php';
+require_once 'modules/com_vtiger_workflow/VTWorkflowUtils.php';
 
 global $mod_strings, $app_strings, $theme, $adb, $current_user;
 $smarty = new vtigerCRM_Smarty;
@@ -31,7 +31,6 @@ if (!is_admin($current_user)) {
 		coreBOS_Settings::setSetting('cbgendoc_server', $_REQUEST['server']);
 		coreBOS_Settings::setSetting('cbgendoc_user', $_REQUEST['user']);
 		coreBOS_Settings::setSetting('cbgendoc_accesskey', $_REQUEST['key']);
-		coreBOS_Settings::setSetting('cbgendoc_active', $active);
 	}
 
 	$module = empty($_REQUEST['formodule']) ? 'evvtgendoc' : vtlib_purify($_REQUEST['formodule']);

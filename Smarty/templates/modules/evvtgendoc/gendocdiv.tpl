@@ -18,11 +18,14 @@
 						<input name='recordval_type' type='hidden' value='{$MODULE}'>
 						<input name='recordval' id='recordval' type='hidden' value='{if isset($ID)}{$ID}{/if}'>
 						<input name='gdformat' id='gdformat' type='hidden' value='oo'>
-						<input type='submit' class='crmbutton small edit' onclick="document.getElementById('gdformat').value='oo';" value='{'Export Doc'|@getTranslatedString:'evvtgendoc'}' title='{'Export Doc'|@getTranslatedString:'evvtgendoc'}'>
+						<input name='compilelang' id='compilelang' type='hidden' value="">
+						<input type='submit' class='crmbutton small edit' onclick="document.getElementById('gdformat').value='oo';document.getElementById('compilelang').value=gVTuserLanguage.split('_')[0];" value='{'Export Doc'|@getTranslatedString:'evvtgendoc'}' title='{'Export Doc'|@getTranslatedString:'evvtgendoc'}'>
 						&nbsp;&nbsp;
-						<input type='submit' class='crmbutton small edit' onclick="document.getElementById('gdformat').value='pdf';" value='{'Export PDF'|@getTranslatedString:'evvtgendoc'}' title='{'Export PDF'|@getTranslatedString:'evvtgendoc'}'>
+						{if $gendoc_active}
+						<input type='submit' class='crmbutton small edit' onclick="document.getElementById('gdformat').value='pdf';document.getElementById('compilelang').value=gVTuserLanguage.split('_')[0];" value='{'Export PDF'|@getTranslatedString:'evvtgendoc'}' title='{'Export PDF'|@getTranslatedString:'evvtgendoc'}'>
 						&nbsp;&nbsp;
-						<input type='submit' class='crmbutton small edit' onclick="document.getElementById('gdformat').value='onepdf';" value='{'Export to one PDF'|@getTranslatedString:'evvtgendoc'}' title='{'Export to one PDF'|@getTranslatedString:'evvtgendoc'}'>
+						<input type='submit' class='crmbutton small edit' onclick="document.getElementById('gdformat').value='onepdf';document.getElementById('compilelang').value=gVTuserLanguage.split('_')[0];" value='{'Export to one PDF'|@getTranslatedString:'evvtgendoc'}' title='{'Export to one PDF'|@getTranslatedString:'evvtgendoc'}'>
+						{/if}
 					</td>
 				</tr>
 			</table>

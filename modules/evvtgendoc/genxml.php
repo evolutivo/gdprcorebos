@@ -16,21 +16,23 @@
  *  Version      : 1.0
  *  Author       : JPL TSolucio, S. L.
  *************************************************************************************************/
-require_once('include/utils/utils.php');
-require_once('config.inc.php');
-require_once('modules/Users/Users.php');
+require_once 'include/utils/utils.php';
+require_once 'config.inc.php';
+require_once 'modules/Users/Users.php';
 require_once 'modules/evvtgendoc/OpenDocument.php'; // open document class
-require_once('include/logging.php');
+require_once 'include/logging.php';
 $log =& LoggerManager::getLogger('index');
 global $currentModule,$current_language,$current_user,$adb,$mod_strings;
 
 function show_error_import($errmsg) {
 	global $currentModule;
-	echo '<div id="errorcontainer" style="padding:20px;"><div id="errormsg" style="color: #f85454; font-weight: bold; padding: 10px; border: 1px solid #FF0000; background: #FFFFFF; border-radius: 5px; margin-bottom: 10px;">'.getTranslatedString($errmsg,$currentModule).'</div></div>';
+	echo '<div id="errorcontainer" style="padding:20px;">
+		<div id="errormsg" style="color: #f85454;font-weight: bold;padding: 10px;border: 1px solid #FF0000;background: #FFFFFF;border-radius: 5px;margin-bottom: 10px;">'
+		.getTranslatedString($errmsg, $currentModule).'</div></div>';
 }
 
 $xmltpl=vtlib_purify($_REQUEST['genxmltemplate']);
-if (empty($xmltpl) or !file_exists($xmltpl)) {
+if (empty($xmltpl) || !file_exists($xmltpl)) {
 	show_error_import('GenXMLTplRequired');
 	die();
 }
@@ -43,7 +45,7 @@ $crmid = preg_replace('/[^0-9]/', '', $crmid);
 $module=getSalesEntityType($crmid);
 
 $odtout = new OpenDocument;
-$bytes = $odtout->GenXML($xmltpl,$crmid,$module);
+$bytes = $odtout->GenXML($xmltpl, $crmid, $module);
 $out = '<table class="lvtCol" width="100%"><tr><td>';
 $out.=$mod_strings['LBL_INFORMATION'].$module.$mod_strings['LBL_WITH']." : $crmid ".$mod_strings['LBL_TEMPLATE']." $xmltpl<br/>";
 //$out.="<br/>".$odtout->output().'<br/><br/>';

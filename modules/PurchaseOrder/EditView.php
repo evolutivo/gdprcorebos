@@ -38,6 +38,7 @@ if (coreBOS_Session::has('ME1x1Info')) {
 	$smarty->assign('ERROR_MESSAGE_CLASS', 'cb-alert-info');
 	$memsg = getTranslatedString('LBL_MASS_EDIT').':&nbsp;'.getTranslatedString('LBL_RECORD').(count($ME1x1Info['processed'])+1).'/'.count($ME1x1Info['complete']);
 	$smarty->assign('ERROR_MESSAGE', $memsg);
+	$smarty->assign('gobackBTN', count($ME1x1Info['processed'])==0);
 } else {
 	$smarty->assign('MED1x1MODE', 0);
 }
@@ -231,12 +232,15 @@ if ($focus->mode == 'edit') {
 }
 $cbMap = cbMap::getMapByName($currentModule.'InventoryDetails', 'MasterDetailLayout');
 $smarty->assign('moreinfofields', '');
-if ($cbMap!=null) {
+if ($cbMap!=null && isPermitted('InventoryDetails', 'EditView')=='yes') {
 	$cbMapFields = $cbMap->MasterDetailLayout();
 	$smarty->assign('moreinfofields', "'".implode("','", $cbMapFields['detailview']['fieldnames'])."'");
 	if (empty($associated_prod) && $isduplicate != 'true') { // creating
 		$product_Detail = $col_fields = array();
 		foreach ($cbMapFields['detailview']['fields'] as $mdfield) {
+			if ($mdfield['fieldinfo']['name']=='id') {
+				continue;
+			}
 			$col_fields[$mdfield['fieldinfo']['name']] = '';
 			$foutput = getOutputHtml(
 				$mdfield['fieldinfo']['uitype'],

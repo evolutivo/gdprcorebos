@@ -16,6 +16,21 @@
  *  Version      : 5.3.0
  *  Author       : JPL TSolucio, S. L.
  *************************************************************************************************/
+global $foreachGD;
+global $foreachEndGD;
+global $imageGD;
+global $includeGD;
+global $ifexistsGD;
+global $ifnotexistsGD;
+global $ifexistsEndGD;
+global $ifnotexistsEndGD;
+global $insertindexGD;
+global $expressionGD;
+global $dateGD;
+global $lineGD;
+global $repeticionGD;
+global $enGD;
+
 $foreachGD="{paracada ";
 $foreachEndGD="{/paracada}";
 $imageGD="{imagen ";

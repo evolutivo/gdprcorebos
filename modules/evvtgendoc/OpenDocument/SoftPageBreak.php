@@ -10,11 +10,11 @@
 * The whole library is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* 
+*
 * You should have received a copy of the GNU Lesser General Public
 * License along with this library; if not, write to the Free Software
 * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-* 
+*
 * @category   File Formats
 * @package    OpenDocument
 * @author     Joe Bordes, JPL TSolucio, S.L. <joe@tsolucio.com>
@@ -34,64 +34,61 @@ require_once 'Element.php';
 * @link       http://pear.php.net/package/OpenDocument
 * @since      File available since Release 0.1.0
 */
-class OpenDocument_TextSoftPageBreak extends OpenDocument_StyledElement
-{
-    /**
-     * Node namespace
-     */
-    const nodeNS = OpenDocument::NS_TEXT;
+class OpenDocument_TextSoftPageBreak extends OpenDocument_StyledElement {
 
-    /**
-     * Node amespace
-     */
-    const nodePrefix = 'text';
-    
-    /**
-     * Node name
-     */
-    const nodeName = 'soft-page-break';
-    
-    /**
-     * Element style name prefix
-     */
-    const styleNamePrefix = 'SPB';
+	/**
+	 * Node namespace
+	 */
+	const nodeNS = OpenDocument::NS_TEXT;
 
-    /**
-     * Create element instance
-     *
-     * @param mixed $object
-     * @param mixed $content
-     * @return OpenDocument_TextSoftPageBreak
-     * @throws OpenDocument_Exception
-     */
-    public static function instance($object)
-    {
-        if ($object instanceof OpenDocument) {
-            $document = $object;
-            $node = $object->cursor;
-        } else if ($object instanceof OpenDocument_Element) {
-            $document = $object->getDocument();
-            $node = $object->getNode();
-        } else {
-            throw new OpenDocument_Exception(OpenDocument_Exception::ELEM_OR_DOC_EXPECTED);
-        }
-        
-        $element = new OpenDocument_TextSoftPageBreak($node->ownerDocument->createElementNS(self::nodeNS, self::nodeName), $document);
-        $node->appendChild($element->node);
+	/**
+	 * Node amespace
+	 */
+	const nodePrefix = 'text';
 
-        return $element;
-    }
-    
-    /**
-     * Generate new style name
-     *
-     * @return string $stylename
-     */
-    public function generateStyleName()
-    {
-        self::$styleNameMaxNumber ++;
-        return self::styleNamePrefix . self::$styleNameMaxNumber;
-    }
-    
+		/**
+	 * Node name
+	 */
+	const nodeName = 'soft-page-break';
+
+		/**
+	 * Element style name prefix
+	 */
+	const styleNamePrefix = 'SPB';
+
+	/**
+	 * Create element instance
+	 *
+	 * @param mixed $object
+	 * @param mixed $content
+	 * @return OpenDocument_TextSoftPageBreak
+	 * @throws OpenDocument_Exception
+	 */
+	public static function instance($object) {
+		if ($object instanceof OpenDocument) {
+			$document = $object;
+			$node = $object->cursor;
+		} elseif ($object instanceof OpenDocument_Element) {
+			$document = $object->getDocument();
+			$node = $object->getNode();
+		} else {
+			throw new OpenDocument_Exception(OpenDocument_Exception::ELEM_OR_DOC_EXPECTED);
+		}
+
+				$element = new OpenDocument_TextSoftPageBreak($node->ownerDocument->createElementNS(self::nodeNS, self::nodeName), $document);
+		$node->appendChild($element->node);
+
+		return $element;
+	}
+
+		/**
+	 * Generate new style name
+	 *
+	 * @return string $stylename
+	 */
+	public function generateStyleName() {
+		self::$styleNameMaxNumber ++;
+		return self::styleNamePrefix . self::$styleNameMaxNumber;
+	}
 }
 ?>

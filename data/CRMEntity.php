@@ -27,6 +27,7 @@ class CRMEntity {
 	static protected $methods = array();
 	static protected $dbvalues = array();
 	static protected $todvalues = array();
+	public $moduleIcon = array('library' => 'utility', 'icon'=>'account');
 
 	public function __construct() {
 		global $log;
@@ -99,14 +100,14 @@ class CRMEntity {
 			}
 		}
 		if (!$anyValue) {
-			die("<center>" .getTranslatedString('LBL_MANDATORY_FIELD_MISSING')."</center>");
+			die('<center>' .getTranslatedString('LBL_MANDATORY_FIELD_MISSING').'</center>');
 		}
 
 		$this->db->println("TRANS saveentity starts $module");
 		$this->db->startTransaction();
 
 		foreach ($this->tab_name as $table_name) {
-			if ($table_name == "vtiger_crmentity") {
+			if ($table_name == 'vtiger_crmentity') {
 				$this->insertIntoCrmEntity($module, $fileid);
 			} else {
 				$this->insertIntoEntityTable($table_name, $module, $fileid);
@@ -124,7 +125,7 @@ class CRMEntity {
 		$this->save_module($module);
 
 		$this->db->completeTransaction();
-		$this->db->println("TRANS saveentity ends");
+		$this->db->println('TRANS saveentity ends');
 
 		// vtlib customization: Hook provide to enable generic module relation.
 		if (isset($_REQUEST['createmode']) && $_REQUEST['createmode'] == 'link') {
@@ -291,7 +292,7 @@ class CRMEntity {
 
 		$current_id = $adb->getUniqueID('vtiger_crmentity');
 
-		$filename = ltrim(basename(" " . $binFile)); //allowed filename like UTF-8 characters
+		$filename = ltrim(basename(' ' . $binFile)); //allowed filename like UTF-8 characters
 		$filetype = $file_details['type'];
 		//$filesize = $file_details['size'];
 		$filetmp_name = $file_details['tmp_name'];
@@ -306,9 +307,9 @@ class CRMEntity {
 
 		//upload the file in server
 		if ($direct_import || !is_uploaded_file($filetmp_name)) {
-			$upload_status = @copy($filetmp_name, $upload_file_path . $current_id . "_" . $binFile);
+			$upload_status = @copy($filetmp_name, $upload_file_path . $current_id . '_' . $binFile);
 		} else {
-			$upload_status = @move_uploaded_file($filetmp_name, $upload_file_path . $current_id . "_" . $binFile);
+			$upload_status = @move_uploaded_file($filetmp_name, $upload_file_path . $current_id . '_' . $binFile);
 		}
 		if ($upload_status) {
 			$description_val = empty($this->column_fields['description']) ? '' : $this->column_fields['description'];
@@ -370,21 +371,16 @@ class CRMEntity {
 				if ($attachmentsid != '') {
 					$cntrels = $adb->pquery('select count(*) as cnt from vtiger_seattachmentsrel where attachmentsid=?', array($attachmentsid));
 					$numrels = $adb->query_result($cntrels, 0, 'cnt');
-					$delquery = 'delete from vtiger_seattachmentsrel where crmid=? and attachmentsid=?';
-					$adb->pquery($delquery, array($id, $attachmentsid));
+					$adb->pquery('delete from vtiger_seattachmentsrel where crmid=? and attachmentsid=?', array($id, $attachmentsid));
 					if ($numrels == 1) {
-						$crm_delquery = "delete from vtiger_crmentity where crmid=?";
-						$adb->pquery($crm_delquery, array($attachmentsid));
+						$adb->pquery('delete from vtiger_crmentity where crmid=?', array($attachmentsid));
 					}
-					$sql5 = 'insert into vtiger_seattachmentsrel values(?,?)';
-					$adb->pquery($sql5, array($id, $current_id));
+					$adb->pquery('insert into vtiger_seattachmentsrel values(?,?)', array($id, $current_id));
 				} else {
-					$sql3 = 'insert into vtiger_seattachmentsrel values(?,?)';
-					$adb->pquery($sql3, array($id, $current_id));
+					$adb->pquery('insert into vtiger_seattachmentsrel values(?,?)', array($id, $current_id));
 				}
 			} else {
-				$sql3 = 'insert into vtiger_seattachmentsrel values(?,?)';
-				$adb->pquery($sql3, array($id, $current_id));
+				$adb->pquery('insert into vtiger_seattachmentsrel values(?,?)', array($id, $current_id));
 			}
 			return true;
 		} else {
@@ -439,11 +435,10 @@ class CRMEntity {
 		}
 		$description_val = (empty($this->column_fields['description']) ? '' : $this->column_fields['description']);
 		if ($this->mode == 'edit') {
-			checkFileAccessForInclusion('user_privileges/user_privileges_' . $current_user->id . '.php');
-			require 'user_privileges/user_privileges_' . $current_user->id . '.php';
+			$userprivs = $current_user->getPrivileges();
 			$tabid = getTabid($module);
-			if ($is_admin == true || $profileGlobalPermission[1] == 0 || $profileGlobalPermission[2] == 0) {
-				$sql = "update vtiger_crmentity set smownerid=?,modifiedby=?,description=?, modifiedtime=? where crmid=?";
+			if ($userprivs->hasGlobalReadPermission()) {
+				$sql = 'update vtiger_crmentity set smownerid=?,modifiedby=?,description=?, modifiedtime=? where crmid=?';
 				$params = array($ownerid, $current_user->id, $description_val, $adb->formatDate($date_var, true), $this->id);
 			} else {
 				$profileList = getCurrentUserProfileList();
@@ -553,12 +548,11 @@ class CRMEntity {
 		if ($insertion_mode == 'edit') {
 			$update = array();
 			$update_params = array();
-			checkFileAccessForInclusion('user_privileges/user_privileges_' . $current_user->id . '.php');
-			require 'user_privileges/user_privileges_' . $current_user->id . '.php';
+			$userprivs = $current_user->getPrivileges();
 			if (isset($from_wf) && $from_wf) {
 				$sql = "select $selectFields from vtiger_field where $uniqueFieldsRestriction and tablename=? and displaytype in (1,3,4$creatingdisplay) and presence in (0,2)";
 				$params = array($tabid, $table_name);
-			} elseif ($is_admin == true || $profileGlobalPermission[1] == 0 || $profileGlobalPermission[2] == 0) {
+			} elseif ($userprivs->hasGlobalReadPermission()) {
 				$sql = "select $selectFields from vtiger_field where $uniqueFieldsRestriction and tablename=? and displaytype in (1,3$creatingdisplay) and presence in (0,2)";
 				$params = array($tabid, $table_name);
 			} else {
@@ -836,8 +830,10 @@ class CRMEntity {
 			}
 			self::$dbvalues = $dbvals;
 			$dbvalue = empty(self::$dbvalues[$fieldname]) ? 0 : self::$dbvalues[$fieldname];
-			$fldrs = $adb->pquery('select fieldname,typeofdata from vtiger_field
-				where vtiger_field.uitype in (7,9,71,72) and vtiger_field.tabid=?', array($tabid));
+			$fldrs = $adb->pquery(
+				'select fieldname,typeofdata from vtiger_field where vtiger_field.uitype in (7,9,71,72) and vtiger_field.tabid=?',
+				array($tabid)
+			);
 			while ($fldinf = $adb->fetch_array($fldrs)) {
 				self::$todvalues[$fldinf['fieldname']] = $fldinf['typeofdata'];
 			}
@@ -886,12 +882,12 @@ class CRMEntity {
 		return $filename;
 	}
 
-	/** Function to retrive the information of the given recordid ,module
+	/** Function to retrieve the information of the given recordid
 	 * @param $record -- Id:: Type Integer
-	 * @param $module -- module:: Type varchar
-	 * This function retrives the information from the database and sets the value in the class columnfields array
+	 * @param $module -- module:: Type String
+	 * This function retrieves the information from the database and sets the value in the class column_fields array
 	 */
-	public function retrieve_entity_info($record, $module, $deleted = false) {
+	public function retrieve_entity_info($record, $module, $deleted = false, $from_wf = false) {
 		global $adb, $app_strings, $current_user;
 		$preFmt = '<br><br><center>';
 		$postFmt = '.</a></center>';
@@ -899,7 +895,7 @@ class CRMEntity {
 		$result = array();
 
 		//Here we check if user can see this record.
-		if (isPermitted($module, 'DetailView', $record) != 'yes') {
+		if (!$from_wf && isPermitted($module, 'DetailView', $record) != 'yes') {
 			$this->column_fields['record_id'] = $record;
 			$this->column_fields['record_module'] = $module;
 			return;
@@ -907,10 +903,10 @@ class CRMEntity {
 
 		foreach ($this->tab_name_index as $table_name => $index) {
 			$result[$table_name] = $adb->pquery("select * from $table_name where $index=?", array($record));
-			$isRecordDeleted = $adb->query_result($result['vtiger_crmentity'], 0, 'deleted');
-			if ($isRecordDeleted !== 0 && $isRecordDeleted !== '0' && !$deleted) {
-				die($preFmt . $app_strings['LBL_RECORD_DELETE'] . " $module: $record <a href='javascript:window.history.back()'>" . $i8nGoBack . $postFmt);
-			}
+		}
+		$isRecordDeleted = $adb->query_result($result['vtiger_crmentity'], 0, 'deleted');
+		if ($isRecordDeleted !== 0 && $isRecordDeleted !== '0' && !$deleted) {
+			die($preFmt . $app_strings['LBL_RECORD_DELETE'] . " $module: $record <a href='javascript:window.history.back()'>" . $i8nGoBack . $postFmt);
 		}
 
 		/* Block access to empty record */
@@ -967,36 +963,142 @@ class CRMEntity {
 				$fieldcolname = $fieldinfo['columnname'];
 				$tablename = $fieldinfo['tablename'];
 				$fieldname = $fieldinfo['fieldname'];
-				//Here we check if user have the paermission to access this field.
+				//Here we check if user has permissions to access this field.
 				//If it is allowed then it will get the actual value, otherwise it gets an empty string.
-				if (getFieldVisibilityPermission($module, $current_user->id, $fieldname) != '0') {
-					$this->column_fields[$fieldname] = '';
-					continue;
+				if (!isset($from_wf) || !$from_wf) {
+					if (getFieldVisibilityPermission($module, $current_user->id, $fieldname) != '0') {
+						$this->column_fields[$fieldname] = '';
+						continue;
+					}
 				}
 				// To avoid ADODB execption pick the entries that are in $tablename
-				// (ex. when we don't have attachment for troubletickets, $result[vtiger_attachments]
-				// will not be set so here we should not retrieve)
 				if (isset($result[$tablename])) {
 					$fld_value = $adb->query_result($result[$tablename], 0, $fieldcolname);
 				} else {
 					$adb->println("There is no entry for this entity $record ($module) in the table $tablename");
-					$fld_value = "";
+					$fld_value = '';
 				}
 				$this->column_fields[$fieldname] = $fld_value;
 			}
 		}
 		if ($module == 'Users') {
 			for ($i = 0; $i < $noofrows; $i++) {
-				$fieldcolname = $adb->query_result($result1, $i, "columnname");
-				$tablename = $adb->query_result($result1, $i, "tablename");
-				$fieldname = $adb->query_result($result1, $i, "fieldname");
+				$fieldcolname = $adb->query_result($result1, $i, 'columnname');
+				$tablename = $adb->query_result($result1, $i, 'tablename');
+				$fieldname = $adb->query_result($result1, $i, 'fieldname');
 				$fld_value = $adb->query_result($result[$tablename], 0, $fieldcolname);
 				$this->$fieldname = $fld_value;
 			}
 		}
 
-		$this->column_fields["record_id"] = $record;
-		$this->column_fields["record_module"] = $module;
+		$this->column_fields['record_id'] = $record;
+		$this->column_fields['record_module'] = $module;
+	}
+
+	/** Function to retrieve the information of the given recordidS
+	 * @param $records -- Array of CRMIds
+	 * @param $module -- String module
+	 * This function retrieves the information from the database and sets the value in the class fetched_records array
+	 */
+	public function retrieve_entities_info($records, $module, $from_wf = false) {
+		global $adb, $current_user;
+		$result = array();
+		$this->fetched_records = array();
+		foreach ($this->tab_name_index as $table_name => $index) {
+			$result[$table_name] = $adb->pquery("select * from $table_name where $index IN (" . generateQuestionMarks($records) . ') ', $records);
+		}
+
+		if (isset($this->table_name)) {
+			$mod_index_col = $this->tab_name_index[$this->table_name];
+		}
+
+		// Lookup in cache for information
+		$cachedModuleFields = VTCacheUtils::lookupFieldInfo_Module($module);
+
+		if ($cachedModuleFields === false) {
+			$tabid = getTabid($module);
+
+			// Let us pick up all the fields first so that we can cache information
+			$sql1 = 'SELECT fieldname, fieldid, fieldlabel, columnname, tablename, uitype, typeofdata, presence FROM vtiger_field WHERE tabid=?';
+
+			// NOTE: Need to skip in-active fields which we will be done later.
+			$result1 = $adb->pquery($sql1, array($tabid));
+			$noofrows = $adb->num_rows($result1);
+
+			if ($noofrows) {
+				while ($resultrow = $adb->fetch_array($result1)) {
+					// Update information to cache for re-use
+					VTCacheUtils::updateFieldInfo(
+						$tabid,
+						$resultrow['fieldname'],
+						$resultrow['fieldid'],
+						$resultrow['fieldlabel'],
+						$resultrow['columnname'],
+						$resultrow['tablename'],
+						$resultrow['uitype'],
+						$resultrow['typeofdata'],
+						$resultrow['presence']
+					);
+				}
+			}
+
+			// Get only active field information
+			$cachedModuleFields = VTCacheUtils::lookupFieldInfo_Module($module);
+		}
+
+		if ($cachedModuleFields) {
+			$cachedIDPermissions = array();
+			foreach ($cachedModuleFields as $fieldname => $fieldinfo) {
+				$fieldcolname = $fieldinfo['columnname'];
+				$tablename = $fieldinfo['tablename'];
+				$fieldname = $fieldinfo['fieldname'];
+				//Here we check if user has permissions to access this field.
+				//If it is allowed then it will get the actual value, otherwise it gets an empty string.
+				$setittoempty = false;
+				if (!$from_wf) {
+					$setittoempty = (getFieldVisibilityPermission($module, $current_user->id, $fieldname) != '0');
+				}
+				// To avoid ADODB execption pick the entries that are in $tablename
+				if (isset($result[$tablename]) && !$setittoempty) {
+					for ($cn = 0; $cn < $adb->num_rows($result[$tablename]); $cn++) {
+						$isRecordDeleted = $adb->query_result($result['vtiger_crmentity'], $cn, 'deleted');
+						if ($isRecordDeleted==0) {
+							$tempid = $adb->query_result($result['vtiger_crmentity'], $cn, 'crmid');
+							if (!$from_wf && !isset($cachedIDPermissions[$tempid])) {
+								$cachedIDPermissions[$tempid] = isPermitted($module, 'DetailView', $tempid);
+							}
+							//Here we check if user can see this record.
+							if (!$from_wf && $cachedIDPermissions[$tempid] != 'yes') {
+								continue;
+							}
+							$fld_value = $adb->query_result($result[$tablename], $cn, $fieldcolname);
+							$this->fetched_records[$tempid][$fieldname] = $fld_value;
+							if (!isset($this->fetched_records[$tempid]['record_id'])) {
+									$this->fetched_records[$tempid]['record_id'] = $tempid;
+									$this->fetched_records[$tempid]['record_module'] = $module;
+							}
+						}
+					}
+				} else {
+					for ($cn = 0; $cn < $adb->num_rows($result['vtiger_crmentity']); $cn++) {
+						$isRecordDeleted = $adb->query_result($result['vtiger_crmentity'], $cn, 'deleted');
+						if ($isRecordDeleted==0) {
+							$tempid = $adb->query_result($result['vtiger_crmentity'], $cn, 'crmid');
+							if (!$from_wf && !isset($cachedIDPermissions[$tempid])) {
+								$cachedIDPermissions[$tempid] = isPermitted($module, 'DetailView', $tempid);
+							}
+							//Here we check if user can see this record.
+							if (!$from_wf && $cachedIDPermissions[$tempid] != 'yes') {
+								continue;
+							}
+							$tempid = $adb->query_result($result['vtiger_crmentity'], $cn, 'crmid');
+							$fld_value = '';
+							$this->fetched_records[$tempid][$fieldname] = $fld_value;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/* Validate values trying to be saved.
@@ -1061,7 +1163,7 @@ class CRMEntity {
 		}
 
 		//Event triggering code
-		require_once "include/events/include.inc";
+		require_once 'include/events/include.inc';
 		global $adb;
 
 		$em = new VTEventsManager($adb);
@@ -1069,26 +1171,26 @@ class CRMEntity {
 		$em->initTriggerCache();
 		$entityData = VTEntityData::fromCRMEntity($this);
 
-		$em->triggerEvent("vtiger.entity.beforesave.modifiable", $entityData);
-		$em->triggerEvent("vtiger.entity.beforesave", $entityData);
-		$em->triggerEvent("vtiger.entity.beforesave.final", $entityData);
+		$em->triggerEvent('vtiger.entity.beforesave.modifiable', $entityData);
+		$em->triggerEvent('vtiger.entity.beforesave', $entityData);
+		$em->triggerEvent('vtiger.entity.beforesave.final', $entityData);
 		//Event triggering code ends
 		//GS Save entity being called with the modulename as parameter
 		$this->saveentity($module_name, $fileid);
 
 		//Event triggering code
-		$em->triggerEvent("vtiger.entity.aftersave.first", $entityData);
-		$em->triggerEvent("vtiger.entity.aftersave", $entityData);
-		$em->triggerEvent("vtiger.entity.aftersave.final", $entityData);
+		$em->triggerEvent('vtiger.entity.aftersave.first', $entityData);
+		$em->triggerEvent('vtiger.entity.aftersave', $entityData);
+		$em->triggerEvent('vtiger.entity.aftersave.final', $entityData);
 		//Event triggering code ends
 	}
 
 	/** Mark an item as deleted */
 	public function mark_deleted($id) {
 		global $current_user;
-		$date_var = date("Y-m-d H:i:s");
-		$query = "UPDATE vtiger_crmentity set deleted=1,modifiedtime=?,modifiedby=? where crmid=?";
-		$this->db->pquery($query, array($this->db->formatDate($date_var, true), $current_user->id, $id), true, "Error marking record deleted: ");
+		$date_var = date('Y-m-d H:i:s');
+		$query = 'UPDATE vtiger_crmentity set deleted=1,modifiedtime=?,modifiedby=? where crmid=?';
+		$this->db->pquery($query, array($this->db->formatDate($date_var, true), $current_user->id, $id), true, 'Error marking record deleted: ');
 	}
 
 	// this method is called during an import before inserting a bean
@@ -2474,8 +2576,7 @@ class CRMEntity {
 
 				// IN clause to avoid duplicate entries
 				$sel_result = $adb->pquery(
-					"select $id_field from $rel_table where $entity_id_field=? " .
-						" and $id_field not in (select $id_field from $rel_table where $entity_id_field=?)",
+					"select $id_field from $rel_table where $entity_id_field=? and $id_field not in (select $id_field from $rel_table where $entity_id_field=?)",
 					array($transferId,$entityId)
 				);
 				$res_cnt = $adb->num_rows($sel_result);
@@ -2764,27 +2865,25 @@ class CRMEntity {
 	public function getListViewSecurityParameter($module) {
 		global $current_user;
 		if ($current_user) {
-			require 'user_privileges/user_privileges_' . $current_user->id . '.php';
-			require 'user_privileges/sharing_privileges_' . $current_user->id . '.php';
+			$userprivs = $current_user->getPrivileges();
 		} else {
 			return '';
 		}
 		$sec_query = '';
 		$tabid = getTabid($module);
-		if ($is_admin==false && $profileGlobalPermission[1] == 1 && $profileGlobalPermission[2] == 1 && $defaultOrgSharingPermission[$tabid] == 3) {
+		if (!$userprivs->hasGlobalReadPermission() && !$userprivs->hasModuleReadSharing($tabid)) {
 			$sec_query .= " and (vtiger_crmentity.smownerid in ($current_user->id)
 				or
 				vtiger_crmentity.smownerid in (select vtiger_user2role.userid
 					from vtiger_user2role
 					inner join vtiger_users on vtiger_users.id=vtiger_user2role.userid
 					inner join vtiger_role on vtiger_role.roleid=vtiger_user2role.roleid
-					where vtiger_role.parentrole like '" . $current_user_parent_role_seq . "::%')
+					where vtiger_role.parentrole like '" . $userprivs->getParentRoleSequence() . "::%')
 				or
 				vtiger_crmentity.smownerid in (select shareduserid from vtiger_tmp_read_user_sharing_per where userid=" . $current_user->id . " and tabid=" . $tabid . ")
 				or (";
-
-			if (count($current_user_groups) > 0) {
-				$sec_query .= " vtiger_groups.groupid in (" . implode(",", $current_user_groups) . ") or ";
+			if ($userprivs->hasGroups()) {
+				$sec_query .= ' vtiger_groups.groupid in (' . implode(',', $userprivs->getGroups()) . ') or ';
 			}
 			$sec_query .= " vtiger_groups.groupid in (select vtiger_tmp_read_group_sharing_per.sharedgroupid
 				from vtiger_tmp_read_group_sharing_per
@@ -2802,19 +2901,18 @@ class CRMEntity {
 		$tabid = getTabid($module);
 		global $current_user;
 		if ($current_user) {
-			require 'user_privileges/user_privileges_' . $current_user->id . '.php';
-			require 'user_privileges/sharing_privileges_' . $current_user->id . '.php';
+			$userprivs = $current_user->getPrivileges();
 		}
 		$sec_query .= " and (vtiger_crmentity$module.smownerid in($current_user->id) or vtiger_crmentity$module.smownerid in ".
 			"(select vtiger_user2role.userid
 				from vtiger_user2role
 				inner join vtiger_users on vtiger_users.id=vtiger_user2role.userid
 				inner join vtiger_role on vtiger_role.roleid=vtiger_user2role.roleid
-				where vtiger_role.parentrole like '" . $current_user_parent_role_seq . "::%') or vtiger_crmentity$module.smownerid in ".
+				where vtiger_role.parentrole like '" . $userprivs->getParentRoleSequence() . "::%') or vtiger_crmentity$module.smownerid in ".
 					"(select shareduserid from vtiger_tmp_read_user_sharing_per where userid=" . $current_user->id . " and tabid=" . $tabid . ") or (";
 
-		if (count($current_user_groups) > 0) {
-			$sec_query .= " vtiger_groups$module.groupid in (" . implode(",", $current_user_groups) . ") or ";
+		if ($userprivs->hasGroups()) {
+			$sec_query .= " vtiger_groups$module.groupid in (" . implode(',', $userprivs->getGroups()) . ') or ';
 		}
 		$sec_query .= " vtiger_groups$module.groupid in ".
 			"(select vtiger_tmp_read_group_sharing_per.sharedgroupid
@@ -3072,10 +3170,9 @@ class CRMEntity {
 	 * @param <type> $user
 	 */
 	public function getNonAdminModuleAccessQuery($module, $user) {
-		require 'user_privileges/sharing_privileges_' . $user->id . '.php';
+		$userprivs = $user->getPrivileges();
 		$tabId = getTabid($module);
-		$sharingRuleInfoVariable = $module . '_share_read_permission';
-		$sharingRuleInfo = $$sharingRuleInfoVariable;
+		$sharingRuleInfo = $userprivs->getModuleSharingRules($module, 'read');
 		$query = '';
 		if (!empty($sharingRuleInfo) && (count($sharingRuleInfo['ROLE']) > 0 || count($sharingRuleInfo['GROUP']) > 0)) {
 			$query = " (SELECT shareduserid FROM vtiger_tmp_read_user_sharing_per " .
@@ -3115,18 +3212,12 @@ class CRMEntity {
 	 * @return String Access control Query for the user.
 	 */
 	public function getNonAdminAccessControlQuery($module, $user, $scope = '') {
-		require 'user_privileges/user_privileges_' . $user->id . '.php';
-		require 'user_privileges/sharing_privileges_' . $user->id . '.php';
+		$userprivs = $user->getPrivileges();
 		$query = ' ';
 		$tabId = getTabid($module);
-		if ($is_admin == false && $profileGlobalPermission[1] == 1 && $profileGlobalPermission[2] == 1 && isset($defaultOrgSharingPermission[$tabId]) && $defaultOrgSharingPermission[$tabId] == 3) {
+		if (!$userprivs->hasGlobalReadPermission() && !$userprivs->hasModuleReadSharing($tabId)) {
 			$tableName = 'vt_tmp_u' . $user->id;
-			$sharingRuleInfoVariable = $module . '_share_read_permission';
-			if (isset($$sharingRuleInfoVariable)) {
-				$sharingRuleInfo = $$sharingRuleInfoVariable;
-			} else {
-				$sharingRuleInfo = '';
-			}
+			$sharingRuleInfo = $userprivs->getModuleSharingRules($module, 'read');
 			$sharedTabId = null;
 			if (!empty($sharingRuleInfo) && (count($sharingRuleInfo['ROLE']) > 0 || count($sharingRuleInfo['GROUP']) > 0)) {
 				$tableName = $tableName . '_t' . $tabId;
@@ -3140,12 +3231,12 @@ class CRMEntity {
 			);
 			if ($typeOfPermissionOverride=='fullOverride') {
 				// create the default temporary table in case it is needed
-				$this->setupTemporaryTable($tableName, $sharedTabId, $user, $current_user_parent_role_seq, $current_user_groups);
+				$this->setupTemporaryTable($tableName, $sharedTabId, $user, $userprivs->getParentRoleSequence(), $userprivs->getGroups());
 				VTCacheUtils::updateCachedInformation('SpecialPermissionWithDuplicateRows', $SpecialPermissionMayHaveDuplicateRows);
 				return $tsSpecialAccessQuery;
 			}
 			if ($typeOfPermissionOverride=='none' || trim($tsSpecialAccessQuery)=='') {
-				$this->setupTemporaryTable($tableName, $sharedTabId, $user, $current_user_parent_role_seq, $current_user_groups);
+				$this->setupTemporaryTable($tableName, $sharedTabId, $user, $userprivs->getParentRoleSequence(), $userprivs->getGroups());
 				$query = " INNER JOIN $tableName $tableName$scope ON $tableName$scope.id = vtiger_crmentity$scope.smownerid ";
 			} else {
 				global $adb;
@@ -3153,7 +3244,7 @@ class CRMEntity {
 				$tsTableName = "tsolucio_tmp_u{$user->id}";
 				$adb->query("drop table if exists {$tsTableName}");
 				if ($typeOfPermissionOverride=='addToUserPermission') {
-					$query = $this->getNonAdminAccessQuery($module, $user, $current_user_parent_role_seq, $current_user_groups);
+					$query = $this->getNonAdminAccessQuery($module, $user, $userprivs->getParentRoleSequence(), $userprivs->getGroups());
 					$tsSpecialAccessQuery = "$query UNION ($tsSpecialAccessQuery) ";
 				}
 				$adb->query("create temporary table {$tsTableName} (id int primary key) as {$tsSpecialAccessQuery}");
@@ -3162,7 +3253,7 @@ class CRMEntity {
 				} elseif ($typeOfPermissionOverride=='showTheseRecords') {
 					$query = " INNER JOIN {$tsTableName} on {$tsTableName}.id=vtiger_crmentity.crmid ";
 				} elseif ($typeOfPermissionOverride=='SubstractFromUserPermission') {
-					$this->setupTemporaryTable($tableName, $sharedTabId, $user, $current_user_parent_role_seq, $current_user_groups);
+					$this->setupTemporaryTable($tableName, $sharedTabId, $user, $userprivs->getParentRoleSequence(), $userprivs->getGroups());
 					$query = " INNER JOIN $tableName $tableName$scope ON $tableName$scope.id = vtiger_crmentity$scope.smownerid ";
 					$query .= " INNER JOIN {$tsTableName} on {$tsTableName}.id=vtiger_crmentity.crmid ";
 				}
@@ -3221,7 +3312,7 @@ class CRMEntity {
 	public function getSortOrder() {
 		global $log,$currentModule;
 		$log->debug('> getSortOrder');
-		$sorder = $this->default_sort_order;
+		$sorder = strtoupper(GlobalVariable::getVariable('Application_ListView_Default_OrderDirection', $this->default_sort_order, $currentModule));
 		if (isset($_REQUEST['sorder'])) {
 			$sorder = $this->db->sql_escape_string($_REQUEST['sorder']);
 		} elseif (!empty($_SESSION[$currentModule.'_Sort_Order'])) {
@@ -3241,7 +3332,7 @@ class CRMEntity {
 
 		$order_by = '';
 		if (GlobalVariable::getVariable('Application_ListView_Default_Sorting', 0, $currentModule)) {
-			$order_by = $this->default_order_by;
+			$order_by = GlobalVariable::getVariable('Application_ListView_Default_OrderField', $this->default_order_by, $currentModule);
 		}
 
 		if (isset($_REQUEST['order_by'])) {

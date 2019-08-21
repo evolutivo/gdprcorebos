@@ -25,7 +25,8 @@ require_once 'include/utils/CommonUtils.php';
 					current: get file name from $_REQUEST['filename_hidden'] or $_FILES['filename']['name']
 					all: all files directly related with the crmid record, this is mostly only useful for email records
 					attReports: get file name from $_REQUEST['filename_hidden_pdf'] and $_REQUEST['filename_hidden_xls']
-					array of filenames or document IDs: array('themes/images/webcam.png','themes/images/Meetings.gif', 42525);
+					array of filenames or document IDs or array file name and path: array('themes/images/webcam.png','themes/images/Meetings.gif', 42525);
+					array of filenames as array of name and full path: array('fname'=> {basename}, 'fpath'=> {full path including base name})
 					array of direct content:
 						array(
 							'direct' => true,
@@ -107,44 +108,44 @@ function send_mail($module, $to_email, $from_name, $from_email, $subject, $conte
 		$from_email = $femail;
 	}
 
-	if ($module != 'Calendar') {
-		$contents = addSignature($contents, $from_name);
-	}
-
-	$mail = new PHPMailer();
-
 	// Add main HTML tags when missing
 	if (!preg_match('/^\s*<\!DOCTYPE/', $contents) && !preg_match('/^\s*<html/i', $contents)) {
 		$contents = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head><body>" . $contents . "</body></html>";
 	}
-
-	setMailerProperties($mail, $subject, $contents, $from_email, $from_name, trim($to_email, ','), $attachment, $emailid, $logo, $qrScan);
-
-	setCCAddress($mail, 'cc', $cc);
-	setCCAddress($mail, 'bcc', $bcc);
-	if (!empty($replyToEmail)) {
-		$mail->AddReplyTo($replyToEmail);
+	if ($module != 'Calendar') {
+		$contents = addSignature($contents, $from_name);
 	}
 
-	// mailscanner customization: If Support Reply To is defined use it.
-	$HELPDESK_SUPPORT_EMAIL_REPLY_ID = GlobalVariable::getVariable('HelpDesk_Support_Reply_EMail', $HELPDESK_SUPPORT_EMAIL_ID, 'HelpDesk');
-	if ($HELPDESK_SUPPORT_EMAIL_REPLY_ID && $HELPDESK_SUPPORT_EMAIL_ID != $HELPDESK_SUPPORT_EMAIL_REPLY_ID) {
-		$mail->AddReplyTo($HELPDESK_SUPPORT_EMAIL_REPLY_ID);
+	// always merge against user module
+	$rs = $adb->pquery('select id from vtiger_users where email1=? or email2=?', array($from_email, $from_email));
+	if ($adb->num_rows($rs) > 0) {
+		$subject = getMergedDescription($subject, $adb->query_result($rs, 0, 'id'), 'Users');
+		$contents = getMergedDescription($contents, $adb->query_result($rs, 0, 'id'), 'Users');
 	}
 
-	// Return immediately if Outgoing server not configured
-	if (empty($mail->Host)) {
-		return 0;
+	list($systemEmailClassName, $systemEmailClassPath) = cbEventHandler::do_filter('corebos.filter.systemEmailClass.getname', array('Emails', 'modules/Emails/Emails.php'));
+	require_once $systemEmailClassPath;
+	if (!call_user_func(array($systemEmailClassName, 'useEmailHook'))) {
+		$systemEmailClassName = 'Emails'; // default system method
 	}
-
-	$mail_status = MailSend($mail);
-	if ($mail_status != 1) {
-		$mail_error = getMailError($mail, $mail_status);
-	} else {
-		$mail_error = $mail_status;
-	}
-
-	return $mail_error;
+	return call_user_func_array(
+		array($systemEmailClassName, 'sendEMail'),
+		array(
+			$to_email,
+			$from_name,
+			$from_email,
+			$subject,
+			$contents,
+			$cc,
+			$bcc,
+			$attachment,
+			$emailid,
+			$logo,
+			$qrScan,
+			$replyto,
+			$replyToEmail
+		)
+	);
 }
 
 /** Function to get the user Email id based on column name and column value
@@ -153,7 +154,7 @@ function send_mail($module, $to_email, $from_name, $from_email, $subject, $conte
   */
 function getUserEmailId($name, $val) {
 	global $adb;
-	$adb->println("Inside the function getUserEmailId. --- ".$name." = '".$val."'");
+	$adb->println('> getUserEmailId '.$name.', '.$val);
 	if ($val != '') {
 		//done to resolve the PHP5 specific behaviour
 		$sql = "SELECT email1, email2, secondaryemail from vtiger_users WHERE status='Active' AND ". $adb->sql_escape_string($name).' = ?';
@@ -165,10 +166,10 @@ function getUserEmailId($name, $val) {
 				$email = $adb->query_result($res, 0, 'secondaryemail ');
 			}
 		}
-		$adb->println("Email id is selected => '".$email."'");
+		$adb->println('< getUserEmailId '.$email);
 		return $email;
 	} else {
-		$adb->println("User id is empty. so return value is ''");
+		$adb->println("< getUserEmailId User id is empty ''");
 		return '';
 	}
 }
@@ -179,15 +180,15 @@ function getUserEmailId($name, $val) {
   */
 function addSignature($contents, $fromname) {
 	global $adb, $default_charset, $current_user;
-	$adb->println("Inside the function addSignature");
+	$adb->println('> addSignature');
 	$signrs = $adb->pquery('select signature from vtiger_users where user_name=? or id=?', array($fromname, $current_user->id));
 	$sign = $adb->query_result($signrs, 0, 'signature');
 	if ($sign != '') {
 		$sign = html_entity_decode($sign, ENT_QUOTES, $default_charset);
 		$contents .= '<br>'.$sign;
-		$adb->println("Signature is added with the body => '.".$sign."'");
+		$adb->println('< addSignature '.$sign);
 	} else {
-		$adb->println("Signature is empty for the user => '".$fromname."'");
+		$adb->println('< addSignature is empty for user '.$fromname);
 	}
 	return $contents;
 }
@@ -200,13 +201,12 @@ function addSignature($contents, $fromname) {
   * $from_name	-- from name which will be displayed in the mail
   * $to_email	-- to email address  -- This can be an email in a single string, a comma separated
   * 		   list of emails or an array of email addresses
-  * $attachment	-- whether we want to attach the currently selected file or all files.
-				  [values = current,all] - optional
+  * $attachment	-- see sendmail explanation
   * $emailid	-- id of the email object which will be used to get the vtiger_attachments - optional
   */
 function setMailerProperties($mail, $subject, $contents, $from_email, $from_name, $to_email, $attachment = '', $emailid = '', $logo = '', $qrScan = '') {
 	global $adb;
-	$adb->println('Inside the function setMailerProperties');
+	$adb->println('> setMailerProperties');
 	if ($logo == 1) {
 		$cmp = retrieveCompanyDetails();
 		$mail->AddEmbeddedImage($cmp['companylogo'], 'logo', 'logo.jpg', 'base64', 'image/jpg');
@@ -289,7 +289,11 @@ function setMailerProperties($mail, $subject, $contents, $from_email, $from_name
 			}
 		} else {
 			foreach ($attachment as $file) {
-				addAttachment($mail, $file, $emailid);
+				if (is_array($file)) {
+					addAttachment($mail, $file['fname'], $emailid);
+				} else {
+					addAttachment($mail, $file, $emailid);
+				}
 			}
 		}
 	}
@@ -304,7 +308,7 @@ function setMailerProperties($mail, $subject, $contents, $from_email, $from_name
   */
 function setMailServerProperties($mail) {
 	global $adb,$default_charset;
-	$adb->println('Inside the function setMailServerProperties');
+	$adb->println('> setMailServerProperties');
 
 	$res = $adb->pquery('select * from vtiger_systems where server_type=?', array('email'));
 	if (isset($_REQUEST['server'])) {
@@ -374,7 +378,7 @@ function setMailServerProperties($mail) {
   */
 function addAttachment($mail, $filename, $record) {
 	global $adb, $root_directory;
-	$adb->println("Inside the function addAttachment. The file name is => '".$filename."'");
+	$adb->println('> addAttachment '.$filename);
 
 	//This is the file which has been selected in Email EditView
 	if (is_file($root_directory.$filename) && ($root_directory.$filename) != '') {
@@ -401,7 +405,7 @@ function addAttachment($mail, $filename, $record) {
   */
 function addStringAttachment($mail, $filename, $data) {
 	global $adb;
-	$adb->println("Inside the function addStringAttachment. The file name is => '".$filename."'");
+	$adb->println('> addStringAttachment '.$filename);
 	$mail->AddStringAttachment($data, $filename);
 }
 
@@ -411,7 +415,7 @@ function addStringAttachment($mail, $filename, $data) {
   */
 function addAllAttachments($mail, $record) {
 	global $adb, $root_directory;
-	$adb->println('Inside the function addAllAttachments');
+	$adb->println('> addAllAttachments');
 
 	//Retrieve the files from database where avoid the file which has been currently selected
 	$sql = 'select vtiger_attachments.*
@@ -436,6 +440,34 @@ function addAllAttachments($mail, $record) {
 	}
 }
 
+/** Function to get all the related files as attachments
+ * @param integer $record - email id: record id which is used to get all the related attachments
+ */
+function getAllAttachments($record) {
+	global $adb, $log, $root_directory;
+	$log->debug('> getAllAttachments');
+	$res = $adb->pquery(
+		'select vtiger_attachments.*
+			from vtiger_attachments
+			inner join vtiger_seattachmentsrel on vtiger_attachments.attachmentsid = vtiger_seattachmentsrel.attachmentsid
+			inner join vtiger_crmentity on vtiger_crmentity.crmid = vtiger_attachments.attachmentsid
+			where vtiger_crmentity.deleted=0 and vtiger_seattachmentsrel.crmid=?',
+		array($record)
+	);
+	$attachments = array();
+	while ($att = $adb->fetch_array($res)) {
+		$fileid = $att['attachmentsid'];
+		$filename = decode_html($att['name']);
+		$filepath = $att['path'];
+		$filewithpath = $root_directory.$filepath.$fileid.'_'.$filename;
+		if (is_file($filewithpath)) {
+			$attachments[]=array('fname'=>$filename,'fpath'=>$filewithpath);
+		}
+	}
+	$log->debug('< getAllAttachments');
+	return $attachments;
+}
+
 /** Function to set the CC or BCC addresses in the mail
   * $mail -- reference of the mail object
   * $cc_mod -- mode to set the address ie., cc or bcc
@@ -443,7 +475,7 @@ function addAllAttachments($mail, $record) {
   */
 function setCCAddress($mail, $cc_mod, $cc_val) {
 	global $adb;
-	$adb->println('Inside of setCCAddress');
+	$adb->println('> setCCAddress');
 
 	if ($cc_mod == 'cc') {
 		$method = 'AddCC';
@@ -489,7 +521,7 @@ function MailSend($mail) {
   */
 function getParentMailId($parentmodule, $parentid) {
 	global $adb;
-	$adb->println("Inside the function getParentMailId. \n parent module and id => ".$parentmodule.'&'.$parentid);
+	$adb->println('> getParentMailId '.$parentmodule.', '.$parentid);
 
 	if ($parentmodule == 'Contacts') {
 		$tablename = 'vtiger_contactdetails';
@@ -530,10 +562,10 @@ function getMailError($mail, $mail_status) {
 	*/
 
 	global $adb;
-	$adb->println('Inside the function getMailError');
+	$adb->println('> getMailError');
 
 	$msg = array_search($mail_status, $mail->getTranslations());
-	$adb->println('Error message ==> '.$msg);
+	$adb->println('Error message: '.$msg);
 
 	if ($msg == 'connect_host') {
 		$error_msg = $msg;
@@ -544,7 +576,7 @@ function getMailError($mail, $mail_status) {
 	} else {
 		$error_msg = 'Mail error is not connect_host, from_failed nor recipients_failed';
 	}
-	$adb->println('return error => '.$error_msg);
+	$adb->println('< getMailError '.$error_msg);
 	return $error_msg;
 }
 
@@ -554,7 +586,7 @@ function getMailError($mail, $mail_status) {
   */
 function getMailErrorString($mail_status_str) {
 	global $adb;
-	$adb->println("Inside getMailErrorString function.\nMail status string ==> ".$mail_status_str);
+	$adb->println('> getMailErrorString '.$mail_status_str);
 
 	$mail_status_str = trim($mail_status_str, '&&&');
 	$mail_status_array = explode('&&&', $mail_status_str);
@@ -567,7 +599,7 @@ function getMailErrorString($mail_status_str) {
 			$mail_error_str .= $list[0].'='.$list[1].'&&&';
 		}
 	}
-	$adb->println("Mail error string => '".$mail_error_str."'");
+	$adb->println('< getMailErrorString '.$mail_error_str);
 	if ($mail_error_str != '') {
 		$mail_error_str = 'mail_error='.base64_encode($mail_error_str);
 	}
@@ -580,7 +612,7 @@ function getMailErrorString($mail_status_str) {
   */
 function parseEmailErrorString($mail_error_str) {
 	global $adb;
-	$adb->println("Inside the parseEmailErrorString function.\n encoded mail error string ==> ".$mail_error_str);
+	$adb->println('> parseEmailErrorString '.$mail_error_str);
 
 	$mail_error = base64_decode($mail_error_str);
 	$adb->println('Original error string => '.$mail_error);
@@ -615,7 +647,7 @@ function parseEmailErrorString($mail_error_str) {
 			}
 		}
 	}
-	$adb->println('Return Error string => '.$errorstr);
+	$adb->println('< parseEmailErrorString '.$errorstr);
 	return $errorstr;
 }
 
@@ -653,12 +685,12 @@ function getDefaultAssigneeEmailIds($groupId) {
 				}
 				$emails[] = $email;
 			}
-			$adb->println("Email ids are selected => '".implode(',', $emails)."'");
+			//$adb->println("Email ids are selected => '".implode(',', $emails)."'");
 		} else {
-			$adb->println("No users found in Group id $groupId");
+			//$adb->println("No users found in Group id $groupId");
 		}
 	} else {
-		$adb->println('Group id is empty, so return value is empty');
+		//$adb->println('Group id is empty, so return value is empty');
 	}
 	return $emails;
 }
