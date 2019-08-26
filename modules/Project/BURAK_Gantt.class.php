@@ -309,9 +309,10 @@ class BURAK_Gantt {
 	*
 	* @param string $file File name
 	* @param integer $quality Image quality 0-100
+	* @param integer $gantt_type  1 for daily, 2 for weekly and 3 for monthly
 	*/
-	function outputGantt($file=null,$quality=90){
-		$this->drawGantt();
+	function outputGantt($file=null, $quality=90, $gantt_type){
+		$this->drawGantt($gantt_type);
 		if(!empty($file)){
 			imagejpeg($this->im,$file,$quality);
 		}else{
@@ -392,10 +393,10 @@ class BURAK_Gantt {
 	* Creates canvas
 	*
 	*/
-	function createCanvas(){
+	function createCanvas($gantt_type){
 		$this->n = $this->data_count["T"] + $this->data_count["M"] + ($this->data_count["G"]*2);
 		$this->calGroupRange();
-		$this->calRange();
+		$this->calRange($gantt_type);
 		// calculate the height of the gantt image
 		$this->gantt_height = ($this->n * $this->inc_y) + ($this->heights["month"]*2) + ($this->heights["day"]*2) + ($this->inc_y * 2);
 		// calculate the width of the  gantt image
@@ -417,7 +418,8 @@ class BURAK_Gantt {
 	* This function also extends the gantt chart depending on the grid type.
 	* The extra space is needed to allow for long labels.
 	*/
-	function calRange(){
+	function calRange($gantt_type){
+
 		// calculate min and max dates 
 		foreach($this->data_gantt as $k=>$v){
 			switch($v["type"]){
@@ -437,10 +439,21 @@ class BURAK_Gantt {
 		// pad max and min dates to have enough space for labels and complete weeks
 		$this->gantt_start = $this->date_min - ($s_offset[gmdate("w",$this->date_min)] * 86400);
 		$this->gantt_end = $this->date_max + ($e_offset[gmdate("w",$this->date_max)] * 86400) + (86400*6);
+		
 		// if grid type is not set
+		//$this->grid = 'week';
+
+		$this->grid = $gantt_type;
+
+		//echo $this->grid;
+
+		/*
 		if(strtoupper($this->grid) == "AUTO"){
 			// determine grid type
-			$dif = ceil(($this->gantt_end - $this->gantt_start)/86400);
+			//debug_to_console($this->gantt_start . '-' . $this->gantt_end);
+
+			$dif = ceil(($this->gantt_end - $this->gantt_start)/86400);			
+
 			if($dif <= 62){ // dif is less than  2 months
 				$this->grid = 1; //daily grid
 			}elseif($dif > 62 && $dif < 124){ // dif is 2 to 4 months
@@ -449,6 +462,8 @@ class BURAK_Gantt {
 				$this->grid = 3; //monthly grid
 			}
 		}
+		*/
+
 		switch($this->grid){
 			case 1:
 				$this->inc_x = 15;
@@ -610,8 +625,8 @@ class BURAK_Gantt {
 		$i++;
 	}
 	
-	function drawGantt(){
-		$this->createCanvas();
+	function drawGantt($gantt_type){
+		$this->createCanvas($gantt_type);
 		$this->createStartOrder();
 		$this->createSequence();
 		$this->drawGrid();
@@ -1003,6 +1018,15 @@ class BURAK_Gantt {
 					break;
 			}
 		}
+	}
+
+
+	function debug_to_console($data) {
+	    $output = $data;
+	    if (is_array($output))
+	        $output = implode(',', $output);
+
+	    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
 	}
 
 }

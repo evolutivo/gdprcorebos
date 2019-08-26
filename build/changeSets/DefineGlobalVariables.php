@@ -54,9 +54,9 @@ class DefineGlobalVariables extends cbupdaterWorker {
 				'Application_TrackerMaxHistory',
 				'Application_Announcement',
 				'Application_Display_World_Clock',
-				'Application_Display_Calculator',
 				'Application_Display_Mini_Calendar',
 				'Application_Use_RTE',
+				'Application_RTESpellcheck',
 				'Application_Default_Action',
 				'Application_Default_Module',
 				'Application_Allow_Exports',
@@ -126,6 +126,7 @@ class DefineGlobalVariables extends cbupdaterWorker {
 				'Mobile_UI_Enabled',
 
 				'Webservice_showUserAdvancedBlock',
+				'Webservice_PermitQueryOnInactiveUsers',
 				'Webservice_CORS_Enabled_Domains',
 				'Webservice_Enabled',
 				'WebService_Session_Life_Span',
@@ -193,6 +194,9 @@ class DefineGlobalVariables extends cbupdaterWorker {
 				'HomePage_Widget_Group_Size',
 				'Zero_Bounce_API_KEY',
 				'GenDoc_CopyLabelToClipboard',
+				'CobroPago_Invoice_Status_OnPaid',
+				'CobroPago_PurchaseOrder_Status_OnPaid',
+				'CobroPago_SalesOrder_Status_OnPaid',
 
 				'Report_Send_Scheduled_ifEmpty',
 				'Report_ListView_PageSize',
@@ -211,6 +215,7 @@ class DefineGlobalVariables extends cbupdaterWorker {
 				'CustomerPortal_PDFTemplate_SalesOrder',
 				'CustomerPortal_PDFTemplate_Invoice',
 				'CustomerPortal_PDFTemplate_PurchaseOrder',
+				'Gantt_Type',
 			);
 			$delete_these = array(
 				'preload_prototype',
@@ -219,6 +224,7 @@ class DefineGlobalVariables extends cbupdaterWorker {
 				'calendar_display',
 				'world_clock_display',
 				'calculator_display',
+				'Application_Display_Calculator',
 				'history_max_viewed',
 				'default_module',
 				'default_action',
