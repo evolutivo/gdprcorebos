@@ -668,8 +668,11 @@ function exportToCSV(columnHeaders, report, status){
         }
 
         download(csvContent, 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
+
     }else{
-        console.log("E' successo il seguente errore: ", status);
+        
+        console.log("Time Control Report Genearto con errore: ", status);
+        download('', 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
     }    
 }
 
