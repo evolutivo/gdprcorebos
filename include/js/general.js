@@ -50,7 +50,7 @@ function generatetimecontrol(annoRiferimento, projectID) {
             var generatedKey = MD5(challengeToken + userAccessKey);
             // console.log(generatedKey);
 
-            loginWS(endpointUrl, "login", username, generatedKey, annoRiferimento, projectID);
+            loginWS(columNames, endpointUrl, "login", username, generatedKey, annoRiferimento, projectID);
         })
 
         .catch(err => {
@@ -64,7 +64,7 @@ function generatetimecontrol(annoRiferimento, projectID) {
 
 
 
-function loginWS(endpoint, oper, usrname, accessKey, annoRiferimento, projectID) {
+function loginWS(columNames, endpoint, oper, usrname, accessKey, annoRiferimento, projectID) {
 
     var data = {
         operation: oper,
@@ -86,7 +86,7 @@ function loginWS(endpoint, oper, usrname, accessKey, annoRiferimento, projectID)
         })
         .then(data => {
             var sessionId = data.result["sessionName"];
-            getWP(endpoint, "query", sessionId, annoRiferimento, projectID);
+            getWP(columNames, endpoint, "query", sessionId, annoRiferimento, projectID);
         })
         .catch(err => {
             console.log(err);
@@ -97,7 +97,7 @@ function loginWS(endpoint, oper, usrname, accessKey, annoRiferimento, projectID)
 
 
 //============== REST CALL GET WORKING PACKAGES ==============================
-function getWP(endpoint, oper, sessionId, annoRiferimento, projectid) {
+function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid) {
 
     // var sql= " SELECT projecttasknumber, projecttaskname, startdate, enddate, cf_1743 " +
     //           " FROM ProjectTask ;" 
@@ -133,7 +133,7 @@ function getWP(endpoint, oper, sessionId, annoRiferimento, projectid) {
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"enddate":').join('"End time":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
 
-            getEMPxWP(endpoint, "query", sessionId, wpXMonth, annoRiferimento, projectid);
+            getEMPxWP(columNames, endpoint, "query", sessionId, wpXMonth, annoRiferimento, projectid);
         })
 
         .catch(err => {
@@ -144,7 +144,7 @@ function getWP(endpoint, oper, sessionId, annoRiferimento, projectid) {
 
 
 //============== REST CALL GET EMPLOYEE X WORKING PACKAGES ==============================
-function getEMPxWP(endpoint, oper, sessionId, wpXMonth, annoRiferimento, projectid) {
+function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferimento, projectid) {
 
     var sql = " SELECT contactrolename, ProjectTask.projecttasknumber, ProjectTask.projecttaskname, ProjectTask.startdate, ProjectTask.enddate, cf_1827, cf_1837, Employees.emp_organization FROM ContactRole " +
         " WHERE ProjectTask.projecttasknumber != '' AND projectid =" + projectid + " ;";
@@ -183,7 +183,7 @@ function getEMPxWP(endpoint, oper, sessionId, wpXMonth, annoRiferimento, project
 
             //console.log(empXwp);
 
-            getFeriePerEmp(endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid);
+            getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid);
 
         })
         .catch(err => {
@@ -194,7 +194,7 @@ function getEMPxWP(endpoint, oper, sessionId, wpXMonth, annoRiferimento, project
 
 
 //============== REST CALL GET FERIE X EMPLOYEE ==============================
-function getFeriePerEmp(endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid) {
+function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid) {
 
     var sql = " SELECT emp_organization, cf_1836 FROM Employees ;";
     var url = endpoint + "?operation=" + oper + "&sessionName=" + sessionId + "&query=" + sql;
@@ -231,7 +231,7 @@ function getFeriePerEmp(endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferim
             // console.log("EMP x Working Packages: ",  empXwp);
             // console.log("Ferie X Employee: ",  feriXMonthXEmp);
             
-            generateExcelReport(wpXMonth, empXwp, feriePerEmployee, annoRiferimento, projectid);
+            generateExcelReport(columNames, wpXMonth, empXwp, feriePerEmployee, annoRiferimento, projectid);
 
 
         })
@@ -241,7 +241,7 @@ function getFeriePerEmp(endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferim
         })
 }
 
-function generateExcelReport(WPxMonth, EMPxWP, feriePerMonthPerEmp, annoRiferimento, projectid) {
+function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, annoRiferimento, projectid) {
     
     // console.log("Working Packages: ",  WPxMonth);
     // console.log("EMP x Working Packages: ",  EMPxWP);
@@ -363,7 +363,7 @@ function generateExcelReport(WPxMonth, EMPxWP, feriePerMonthPerEmp, annoRiferime
 
     //Month of the Year
     const allmonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-    const fr_columNames = ['Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP','TotalHoursWP','TotaleWorkDaysWP','Day','Month','Year'];
+    //const fr_columNames = ['Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP','TotalHoursWP','TotaleWorkDaysWP','Day','Month','Year'];
     var priorRecords = 0;
 
     //============ EMP x WP =================                        
@@ -386,7 +386,7 @@ function generateExcelReport(WPxMonth, EMPxWP, feriePerMonthPerEmp, annoRiferime
     }
 
     //console.log("Time Controll Final Report: ", empXwp);
-    exportToCSV(fr_columNames, empXwp, "Success");
+    exportToCSV(columNames, empXwp, "Success");
 }
 
 
