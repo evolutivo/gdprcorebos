@@ -54,7 +54,7 @@ function generatetimecontrol(annoRiferimento, projectID) {
 
         .catch(err => {
             // Do something for an error here
-            console.log(err);            
+            //console.log(err);            
             exportToCSV(columNames, [], err);
         });
 }
@@ -88,7 +88,7 @@ function loginWS(columNames, endpoint, oper, usrname, accessKey, annoRiferimento
             getWP(columNames, endpoint, "query", sessionId, annoRiferimento, projectID);
         })
         .catch(err => {
-            console.log(err);
+            //console.log(err);
             exportToCSV(columNames, [], err);
         })
 }
@@ -136,7 +136,7 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
         })
 
         .catch(err => {
-            console.log(err);
+            //console.log(err);
             exportToCSV(columNames, [], err);
         })
 }
@@ -186,7 +186,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
 
         })
         .catch(err => {
-            console.log(err);
+            //console.log(err);
             exportToCSV(columNames, [], err);
         })
 }
@@ -235,7 +235,7 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
 
         })
         .catch(err => {
-            console.log(err);
+            //console.log(err);
             exportToCSV(columNames, [], err);
         })
 }
@@ -641,37 +641,9 @@ function exportToCSV(columnHeaders, report, status){
             dataString = infoArray.join(';');
             csvContent += index < dataNew.length ? dataString + '\n' : dataString;
         });
-
-
-        // The download function takes a CSV string, the filename and mimeType as parameters
-        // Scroll/look down at the bottom of this snippet to see how download is called
-        // var download = function(content, fileName, mimeType) {
-        //     var a = document.createElement('a');
-        //     mimeType = mimeType || 'application/octet-stream';
-
-        //     if (navigator.msSaveBlob) { // IE10
-        //         navigator.msSaveBlob(new Blob([content], {
-        //             type: mimeType
-        //         }), fileName);
-        //     } else if (URL && 'download' in a) { //html5 A[download]
-        //         a.href = URL.createObjectURL(new Blob([content], {
-        //         type: mimeType
-        //         }));
-
-        //         a.setAttribute('download', fileName);
-        //         document.body.appendChild(a);
-        //         a.click();
-        //         document.body.removeChild(a);
-        //     } else {
-        //         location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
-        //     }
-        // }
-
         download(csvContent, 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
-
-    }else{
-        
-        console.log("Time Control Report Genearto con errore: ", status);
+    }else{        
+        console.log("TimeControlReport GenerAto con errore: ", status);
         download('', 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
     }    
 }
