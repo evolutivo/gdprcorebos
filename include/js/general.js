@@ -645,27 +645,27 @@ function exportToCSV(columnHeaders, report, status){
 
         // The download function takes a CSV string, the filename and mimeType as parameters
         // Scroll/look down at the bottom of this snippet to see how download is called
-        var download = function(content, fileName, mimeType) {
-            var a = document.createElement('a');
-            mimeType = mimeType || 'application/octet-stream';
+        // var download = function(content, fileName, mimeType) {
+        //     var a = document.createElement('a');
+        //     mimeType = mimeType || 'application/octet-stream';
 
-            if (navigator.msSaveBlob) { // IE10
-                navigator.msSaveBlob(new Blob([content], {
-                    type: mimeType
-                }), fileName);
-            } else if (URL && 'download' in a) { //html5 A[download]
-                a.href = URL.createObjectURL(new Blob([content], {
-                type: mimeType
-                }));
+        //     if (navigator.msSaveBlob) { // IE10
+        //         navigator.msSaveBlob(new Blob([content], {
+        //             type: mimeType
+        //         }), fileName);
+        //     } else if (URL && 'download' in a) { //html5 A[download]
+        //         a.href = URL.createObjectURL(new Blob([content], {
+        //         type: mimeType
+        //         }));
 
-                a.setAttribute('download', fileName);
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-            } else {
-                location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
-            }
-        }
+        //         a.setAttribute('download', fileName);
+        //         document.body.appendChild(a);
+        //         a.click();
+        //         document.body.removeChild(a);
+        //     } else {
+        //         location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+        //     }
+        // }
 
         download(csvContent, 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
 
@@ -677,6 +677,29 @@ function exportToCSV(columnHeaders, report, status){
 }
 
 
+// The download function takes a CSV string, the filename and mimeType as parameters
+// Scroll/look down at the bottom of this snippet to see how download is called
+var download = function(content, fileName, mimeType) {
+    var a = document.createElement('a');
+    mimeType = mimeType || 'application/octet-stream';
+
+    if (navigator.msSaveBlob) { // IE10
+        navigator.msSaveBlob(new Blob([content], {
+            type: mimeType
+        }), fileName);
+    } else if (URL && 'download' in a) { //html5 A[download]
+        a.href = URL.createObjectURL(new Blob([content], {
+        type: mimeType
+        }));
+
+        a.setAttribute('download', fileName);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    } else {
+        location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+    }
+}
 
 function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear){
     var possibleDates = [];
