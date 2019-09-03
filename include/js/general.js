@@ -385,7 +385,7 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
     }
 
     //console.log("Time Controll Final Report: ", empXwp);
-    exportToCSV(columNames, empXwp, "Success");
+    exportToCSV(columNames, empXwp, "success");
 }
 
 
@@ -607,7 +607,7 @@ function exportToCSV(columnHeaders, report, status){
     dataNew.push([]);
 
 
-    if(status.trim().toLowerCase() === "success"){
+    if(status === "success"){
 
         for(var i = 0; i<=13; i++){
             dataNew[0].push(columnHeaders[i]);
