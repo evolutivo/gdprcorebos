@@ -18,7 +18,7 @@
  */
 
 
-function generatetimecontrol(annoRiferimento, projectID) {
+function generatetimecontrol(annoRiferimento, projectid) {
 
     //LOCALHOST ENDPOINT
     // var endpointUrl = "http://localhost:8080/coreBos/corebos/webservice.php";
@@ -49,13 +49,13 @@ function generatetimecontrol(annoRiferimento, projectID) {
             var generatedKey = MD5(challengeToken + userAccessKey);
             // console.log(generatedKey);
 
-            loginWS(columNames, endpointUrl, "login", username, generatedKey, annoRiferimento, projectID);
+            loginWS(columNames, endpointUrl, "login", username, generatedKey, annoRiferimento, projectid);
         })
 
         .catch(err => {
             // Do something for an error here
-            //console.log(err);            
-            exportToCSV(columNames, [], err);
+            console.log(err);            
+            //exportToCSV(columNames, [], err);
         });
 }
 
@@ -63,7 +63,7 @@ function generatetimecontrol(annoRiferimento, projectID) {
 
 
 
-function loginWS(columNames, endpoint, oper, usrname, accessKey, annoRiferimento, projectID) {
+function loginWS(columNames, endpoint, oper, usrname, accessKey, annoRiferimento, projectid) {
 
     var data = {
         operation: oper,
@@ -85,11 +85,17 @@ function loginWS(columNames, endpoint, oper, usrname, accessKey, annoRiferimento
         })
         .then(data => {
             var sessionId = data.result["sessionName"];
-            getWP(columNames, endpoint, "query", sessionId, annoRiferimento, projectID);
+
+            getWP(columNames, endpoint, "query", sessionId, annoRiferimento, projectid);
+
+            // getEMPxWP(columNames, endpoint, "query", sessionId, "", annoRiferimento, projectid);
+
+            // getFeriePerEmp(columNames, endpoint, "query", sessionId, "", "", annoRiferimento, projectid);
+            
         })
         .catch(err => {
-            //console.log(err);
-            exportToCSV(columNames, [], err);
+            console.log(err);
+            // exportToCSV(columNames, [], err);
         })
 }
 
@@ -132,12 +138,14 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"enddate":').join('"End time":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
 
+            // console.log(wpXMonth);
+
             getEMPxWP(columNames, endpoint, "query", sessionId, wpXMonth, annoRiferimento, projectid);
         })
 
         .catch(err => {
-            //console.log(err);
-            exportToCSV(columNames, [], err);
+            console.log(err);
+            // exportToCSV(columNames, [], err);
         })
 }
 
@@ -145,10 +153,22 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
 //============== REST CALL GET EMPLOYEE X WORKING PACKAGES ==============================
 function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferimento, projectid) {
 
-    var sql = " SELECT contactrolename, ProjectTask.projecttasknumber, ProjectTask.projecttaskname, ProjectTask.startdate, ProjectTask.enddate, cf_1827, cf_1837, Employees.emp_organization FROM ContactRole " +
-        " WHERE ProjectTask.projecttasknumber != '' AND projectid =" + projectid + " ;";
+    // var projectName = 'Analisi di Agile BI Argos Assistance S.r.l';
 
-    //var sql = " SELECT+contactrolename,ProjectTask.projecttasknumber,ProjectTask.projecttaskname,ProjectTask.startdate,ProjectTask.enddate,cf_1827+FROM+ContactRole+WHERE ProjectTask.projecttasknumber != '' ;";
+    var PID = projectid.split('x')[1];
+
+    // console.log(PID);
+
+    // var sql = " SELECT contactrolename, ProjectTask.projecttasknumber, ProjectTask.projecttaskname, ProjectTask.startdate, ProjectTask.enddate, cf_1827, cf_1837, Employees.emp_organization " +
+    //           " FROM ContactRole " +
+    //           " WHERE ProjectTask.projecttasknumber != '' AND ContactRole.cf_1833 =" + PID + " ;";
+
+    //select id,firstname,lastname from Contacts where (firstname LIKE '%''ele%'
+    
+    // var sql = "SELECT projecttasknumber,projecttaskname,startdate,enddate FROM ProjectTask WHERE (ProjectTask.projectid LIKE '%"+projectName+"%') ; ";
+
+
+    var sql = "SELECT contactrolename,ProjectTask.projecttasknumber,ProjectTask.projecttaskname,ProjectTask.startdate,ProjectTask.enddate,cf_1827,cf_1837 FROM ContactRole WHERE (ProjectTask.projectid = "+PID+") ; ";
 
     var url = endpoint + "?operation=" + oper + "&sessionName=" + sessionId + "&query=" + sql;
 
@@ -172,7 +192,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
                 empXwp[i]["projecttaskenddate"] = formatDate(projecttask__end_date);
             }
 
-            empXwp = JSON.parse(JSON.stringify(empXwp).split('"employeesemp_organization":').join('"Employee":'));
+            empXwp = JSON.parse(JSON.stringify(empXwp).split('"contactrolename":').join('"Employee":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskprojecttasknumber":').join('"WP Code":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskprojecttaskname":').join('"WP Name":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1827":').join('"Total Hours Worked":'));
@@ -180,14 +200,14 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskenddate":').join('"End Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1837":').join('"WorkingHour":'));
 
-            //console.log(empXwp);
+           
 
             getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid);
 
         })
         .catch(err => {
-            //console.log(err);
-            exportToCSV(columNames, [], err);
+            console.log(err);
+            // exportToCSV(columNames, [], err);
         })
 }
 
@@ -195,7 +215,15 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
 //============== REST CALL GET FERIE X EMPLOYEE ==============================
 function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid) {
 
-    var sql = " SELECT emp_organization, cf_1836 FROM Employees ;";
+    var PID = projectid.split('x')[1];
+
+    // var sql = " SELECT emp_organization, cf_1836 FROM Employees ;";
+        
+
+    //TODO Insert Group By
+    var sql = "SELECT contactrolename,cf_1836 FROM ContactRole WHERE ProjectTask.projectid = "+PID+" ;";
+    //var sql = "SELECT emp_organization,cf_1836 FROM Employees WHERE (ConctactRole.account = '2320');" ;
+
     var url = endpoint + "?operation=" + oper + "&sessionName=" + sessionId + "&query=" + sql;
 
     var myInit = {
@@ -211,21 +239,27 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
         })
         .then(data => {
             var feriXMonthXEmp = data.result;
+
             var feriePerEmployee = [];
-            feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"emp_organization":').join('"Employee":'));
-            feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"cf_1836":').join('"Date":'));
+            feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrolename":').join('"Employee":'));
+            feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"employeescf_1836":').join('"Date":'));
+
+            // console.log(feriXMonthXEmp);
 
             for (var i = 0; i < feriXMonthXEmp.length; i++) {
                 var daysOff = feriXMonthXEmp[i].Date.replace(/\s/g, "");
-                var res = daysOff.split("|");
+                var res = daysOff.split(";");
                 for (var j = 0; j < res.length; j++) {
                     var emp = {
                         'Employee': feriXMonthXEmp[i].Employee,
                         'Date': res[j]
-                    };
+                    };                    
                     feriePerEmployee.push(emp);
                 }
             }
+
+            // console.log(feriXMonthXEmp);
+
             // console.log("Working Packages: ",  wpXMonth);
             // console.log("EMP x Working Packages: ",  empXwp);
             // console.log("Ferie X Employee: ",  feriXMonthXEmp);
@@ -235,17 +269,17 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
 
         })
         .catch(err => {
-            //console.log(err);
-            exportToCSV(columNames, [], err);
+            console.log(err);
+            // exportToCSV(columNames, [], err);
         })
 }
 
 function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, annoRiferimento, projectid) {
     
-    // console.log("Working Packages: ",  WPxMonth);
-    // console.log("EMP x Working Packages: ",  EMPxWP);
-    // console.log("Ferie X Employee: ",  feriePerMonthPerEmp);
-    // console.log("Anno Di Riferimento: ", annoRiferimento);
+    console.log("Working Packages: ",  WPxMonth);
+    console.log("EMP x Working Packages: ",  EMPxWP);
+    console.log("Ferie X Employee: ",  feriePerMonthPerEmp);
+    console.log("Anno Di Riferimento: ", annoRiferimento);
     // console.log("Project ID: ", projectid);    
 
     var yearOfReference = annoRiferimento;
@@ -368,6 +402,8 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
     //============ EMP x WP =================                        
     empXwp = loadEMPXWPData(EMPxWP, WPxMonth, ferieXMonth, weekEndsForYear, feriePerMonthPerEmp, yearOfReference);
 
+    console.log(empXwp);
+
     for(var i = 0; i<empXwp.length; i++){
         var WorkingHour = empXwp[i].WorkingHour;
         var TotalHoursWP = empXwp[i].TotalHoursWP;
@@ -406,6 +442,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         r_data.push(emp_x_wp_worksheet[r]);
     }
 
+
     //Add Percentage column to data json array
     for (var z = 0; z < wpXMonth.length; z++) {
         var perc = 0;
@@ -416,6 +453,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         }
     }
 
+    
     for (var i = 0; i < r_data.length; i++) {
         if (!distEMP.includes(r_data[i].Employee)) {
             distEMP.push(r_data[i].Employee)
@@ -423,7 +461,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
     }
     // console.log('distinct employees', distEMP);
 
-    //for each employee
+//     //for each employee
 
     for (var e = 0; e < distEMP.length; e++) {
         for (var j = 0; j < r_data.length; j++) {
@@ -435,7 +473,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         newGroupedArray.push({ Employee: distEMP[e], PercentualeTot: percentSum });
     }
 
-    // console.log(newGroupedArray);
+//     // console.log(newGroupedArray);
 
     function sumPercentPerWP(employeeName, r_data) {
         var sumPercent = 0;
@@ -449,6 +487,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         return sumPercent;
     }
 
+    
+
 
     //Add Percentuale Total x Working Package
     for (var m = 0; m < r_data.length; m++) {
@@ -459,6 +499,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         }
     }
 
+    
 
     //Calculate in another varible (Percentuale/PercentualeTotaleWP) * Total Hours Worked: "1,134"
     for (var g = 0; g < r_data.length; g++) {
@@ -476,14 +517,17 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 
         var TotHourXWP = z * hours;
         r_data[g]['TotHoursXWP'] = Number((TotHourXWP).toFixed(3));
+        
+        //REMIND WorkingHour should not be empty or zero.
         var workingDays = parseFloat(Number(r_data[g].TotHoursXWP / r_data[g]["WorkingHour"]).toFixed(3));
+
         var workingDaysPiuUno = Math.floor(workingDays) + 1;
         // Math.round(8*(workingDays - Math.floor(workingDays)));
         r_data[g]['TotWDxWP'] = workingDaysPiuUno;
         // r_data[g]['TotWDxWP'] =Number(r_data[g].TotHoursXWP / r_data[g]["WorkingHour"]).toFixed(3);
     }
 
-    // console.log(r_data);
+    
 
     for (var f = 0; f < r_data.length; f++) {
         var x = r_data[f].TotWDxWP.toString().split(".")[0];
@@ -642,7 +686,8 @@ function exportToCSV(columnHeaders, report, status){
             csvContent += index < dataNew.length ? dataString + '\n' : dataString;
         });
         download(csvContent, 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
-    }else{        
+    }else{
+        
         console.log("TimeControlReport GenerAto con errore: ", status);
         download('', 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
     }    
