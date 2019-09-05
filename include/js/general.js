@@ -636,6 +636,8 @@ for (var r = 0; r < finalReport.length; r++) {
         }
     }
  }
+
+    console.log("Employee Calendar After Random Generation: ", employeeCalendars);
     //======= END ADD RANDOM DAY & MONTH TO FINAL REPORT ==================
     return output;
 }
