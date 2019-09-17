@@ -33,7 +33,7 @@
             <div id="editarea_contactrole_vacations" style="display:none;">
                 <a class="detailview_ajaxbutton ajax_save_detailview"
                    onclick="document.getElementById('dtlview_contactrole_vacations').value=document.getElementById('txtbox_contactrole_vacations').value;
-                   dtlViewAjaxSave('contactrole_vacations','Contacts', 1,'vtiger_contactdetails','contactrole_vacations','{$ID}');
+                   dtlViewAjaxSave('contactrole_vacations','ContactRole', 1,'vtiger_contactrole','contactrole_vacations','{$ID}');
                    fnhide('crmspanid');event.stopPropagation();">Save</a>
                 <a href="javascript:;"
                     onclick="document.getElementById('txtbox_contactrole_vacations').value = document.getElementById('dtlview_contactrole_vacations').value;
