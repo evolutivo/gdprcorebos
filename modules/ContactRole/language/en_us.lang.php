@@ -33,6 +33,8 @@ $mod_strings = array(
 	'Working Hours per Day' => 'Working Hours per Day',
 	'Project Related' => 'Project Related',
 	'ProjectTask' => 'ProjectTask',
-	'' => '',
+	'LBL_ContactRole_Vacation_Block' => 'Employee Vacation Dates',
+	'LBL_ContactRole_Vacation' => 'Ferie for Employee',
+	'LBL_ContactRole_Dates' => 'Select Holidays of Employee',
 );
 ?>
