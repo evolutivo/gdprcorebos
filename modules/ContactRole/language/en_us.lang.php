@@ -9,11 +9,11 @@
  ************************************************************************************/
 
 $mod_strings = array(
-	'ContactRole' => 'Employee Role',
-	'SINGLE_ContactRole' => 'Employee Role',
-	'ContactRole ID' => 'Employee Role ID',
+	'ContactRole' => 'Contact Role',
+	'SINGLE_ContactRole' => 'Contact Role',
+	'ContactRole ID' => 'Contact Role ID',
 	'LBL_CUSTOM_INFORMATION' => 'Custom Information',
-	'LBL_CONTACT_ROLE_INFORMATION' => 'Employee Role Information',
+	'LBL_CONTACT_ROLE_INFORMATION' => 'Contact Role Information',
 	'LBL_DESCRIPTION_INFORMATION' => 'Description',
 	'ModuleFieldLabel' => 'ModuleFieldLabel Text',
 	'Contact Role' => 'Contact Role',
@@ -25,5 +25,14 @@ $mod_strings = array(
 	'Created Time' => 'Created Time',
 	'Modified Time' => 'Modified Time',
 	'Description' => 'Description',
+	'Total Working Hours' => 'Total Working Hours',
+	'Hours Dedicated  R and D activity' => 'Hours Dedicated  R and D activity',
+	'Hourly Cost' => 'Hourly Cost',
+	'Total Cost per  R and D' => 'Total Cost per  R and D',
+	'Related Task' => 'Related Task',
+	'Working Hours per Day' => 'Working Hours per Day',
+	'Project Related' => 'Project Related',
+	'ProjectTask' => 'ProjectTask',
+	'' => '',
 );
 ?>
