@@ -6,7 +6,7 @@
 
 <tr style="height:50px" class="createview_field_row">
 
-    <td id="td_contactrole_vacations_desc" width="20%" class="dvtCellLabel" align="right"><font color="red"></font>{'LBL_ContactRole_Dates'|@getTranslatedString:'ContactRole'}</td>
+    <td id="td_contactrole_vacations_desc" width="20%" class="dvtCellLabel" align="right"><font color="red"></font>{'LBL_ContactRole_Vacation_Block'|@getTranslatedString:'ContactRole'}</td>
     <td id="mouseArea_contactrole_vacations"
         width="80%"
         align="left" class="dvtCellInfo"  onmouseout="fnhide('crmspanid');">
