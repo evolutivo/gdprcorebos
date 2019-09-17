@@ -1454,5 +1454,6 @@ $app_currency_strings = array(
 	'Malawi, kwacha'		=> 'Malawi, kwacha',
 	'Tunisian, Dinar'		=> 'Tunisian, Dinar',
 	'Moroccan, Dirham'		=> 'Moroccan, Dirham',
+	'LBL_ContactRole_Dates' => 'Select Employee Vacations',
 );
 ?>
