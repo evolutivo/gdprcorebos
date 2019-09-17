@@ -25,5 +25,8 @@ $mod_strings = array(
 	'Created Time' => 'Orario creazione',
 	'Modified Time' => 'Orario modifica',
 	'Description' => 'Descrizione',
+	'LBL_ContactRole_Vacation_Block' => 'Date Ferie Employee',
+	'LBL_ContactRole_Vacation' => 'Ferie per Employee',
+	'LBL_ContactRole_Dates' => 'Seleziona le ferie del Employee',
 );
 ?>

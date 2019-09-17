@@ -18,6 +18,9 @@ $mod_strings = array(
 	'LBL_DESCRIPTION_INFORMATION' => 'Description',
 
 	'ModuleFieldLabel' => 'ModuleFieldLabel Text',
+	'LBL_ContactRole_Vacation_Block' => 'Employee Vacation Dates',
+	'LBL_ContactRole_Vacation' => 'Ferie for Employee',
+	'LBL_ContactRole_Dates' => 'Select Holidays of Employee',
 );
 
 ?>
