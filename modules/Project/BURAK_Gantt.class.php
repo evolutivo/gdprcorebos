@@ -548,7 +548,7 @@ class BURAK_Gantt {
 		$type = array();
 		foreach($this->data_gantt as $k=>$v){			
 			$type[$k] = $k.$this->data_gantt[$k]['type'].$this->data_gantt[$k]['label'];
-			echo $type[$k] . "<br>" ;
+			//echo $type[$k] . "<br>" ;
 		}
 		asort($type,SORT_NUMERIC);
 		foreach($type as $k=>$v){

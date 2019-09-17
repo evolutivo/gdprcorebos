@@ -1,7 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updatesChangeLog>
 <changeSet>
         <author>loridacito</author>
         <description>add contact role module</description>
         <filename>build/changeSets/2019/addcontactrole.php</filename>
         <classname>Addcontactrole</classname>
         <systemupdate>1</systemupdate>
+	<perspective>false</perspective>
+        <continuous>false</continuous>
 </changeSet>
+</updatesChangeLog>
