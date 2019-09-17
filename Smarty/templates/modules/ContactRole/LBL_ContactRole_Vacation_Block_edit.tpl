@@ -3,7 +3,7 @@
 <script src="include/air-datepicker/js/i18n/datepicker.en.js"></script>
 
 <tr style="height:50px" class="createview_field_row">
-    <td id="td_othercountry" width="20%" class="dvtCellLabel" align="right"><font color="red"></font>{'$MOD.LBL_ContactRole_Dates'}</td>
+    <td id="td_othercountry" width="20%" class="dvtCellLabel" align="right"><font color="red"></font>{$MOD.LBL_ContactRole_Dates} {$module.name|@getTranslatedString}</td>
     <td id="mouseArea_contactrole_vacations"
         width="80%"
         align="left"
