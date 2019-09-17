@@ -8,7 +8,7 @@
  * All Rights Reserved.
  ************************************************************************************/
 
-$mod_strings = Array(
+$mod_strings = array(
 	'Employees' => 'Employees',
 	'Name' => 'Name',
 	'SINGLE_Employees' => 'Employee',
@@ -16,7 +16,7 @@ $mod_strings = Array(
 	'Last Name' => 'Last Name',
 	'Employee No' => 'Employee No',
 	'Title' => 'Title',
-	'Organization Name' => 'Organization Name',
+	'Organization Name' => 'Full Name',
 	'Department Name' => 'Department Name',
 	'OfficePhone' => 'OfficePhone',
 	'Mobile' => 'Mobile',
@@ -45,12 +45,22 @@ $mod_strings = Array(
 	'Date Change 2^ Department' => 'Date Change 2^ Department',
 	'Date Change 3^ Department' => 'Date Change 3^ Department',
 	'Date Change 4^ Department' => 'Date Change 4^ Department',
-
 	'LBL_EMPLOYEE_INFORMATION' => 'Employee Information',
 	'LBL_DEPARTMENT_INFORMATION' => 'Department Information',
 	'LBL_ADDRESS_INFORMATION' => 'Address Information',
 	'LBL_DESCRIPTION_INFORMATION' => 'Description',
-
+	'Assigned To' => 'Assigned To',
+	'Created Time' => 'Created Time',
+	'Modified Time' => 'Modified Time',
+	'Azienda collegata' => 'Azienda collegata',
+	'Description' => 'Description',
+	'Tipo' => 'Tipo',
+	'Total Hours Worked' => 'Total Hours Worked',
+	'Project Related' => 'Project Related',
+	'Courtesy Formula' => 'Courtesy Formula',
+	'Formula alternativa' => 'Formula alternativa',
+	'CF' => 'CF',
+	'Ferie for Employee' => 'Ferie for Employee',
+	'Timecontrol' => 'Timecontrol',
 );
-
 ?>
