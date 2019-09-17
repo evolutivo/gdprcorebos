@@ -44,7 +44,7 @@ class multiple_datepicker extends cbupdaterWorker {
 							'typeofdata'=>'V~M~LE~1000',
 							'uitype'=>'1',
 							'displaytype'=>'3',
-							'label'=>'emp_vacation_dates',
+							'label'=>'LBL_ContactRole_Dates',
 							'massedit' => 0,
                         ),
 					)
