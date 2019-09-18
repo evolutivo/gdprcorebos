@@ -240,7 +240,7 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
 
             for (var i = 0; i < feriXMonthXEmp.length; i++) {
                 var daysOff = feriXMonthXEmp[i].Date.replace(/\s/g, "");
-                var res = daysOff.split(";");
+                var res = daysOff.split(",");
                 for (var j = 0; j < res.length; j++) {
                     var emp = {
                         'Employee': feriXMonthXEmp[i].Employee,
