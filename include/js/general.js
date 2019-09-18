@@ -28,7 +28,7 @@ function generatetimecontrol(annoRiferimento, projectid) {
     var username = "admin";
     var userAccessKey = "o7NM12Xzxm6mYfB";
     var url = endpointUrl + "?operation=getchallenge&username=" + username;
-    const columNames = ['Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP','TotalHoursWP','TotaleWorkDaysWP','Day','Month','Year'];
+    const columNames = ['ProjectID', 'ProjectTaskID', 'Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP', 'TotalHoursWP', 'TotaleWorkDaysWP', 'Day', 'Month', 'Year'];
 
     fetch(url, {
             method: "GET",
@@ -100,7 +100,7 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
     //           " FROM ProjectTask ;" 
     //         //   " WHERE Project.projectid = 1830';";
 
-    var sql = " SELECT projecttasknumber, projecttaskname, startdate, enddate, cf_1743 FROM ProjectTask WHERE projectid =" + projectid + " ;";
+    var sql = " SELECT projectid, id, projecttasknumber, projecttaskname, startdate, enddate, cf_1743 FROM ProjectTask WHERE projectid =" + projectid + " ;";
     var url = endpoint + "?operation=" + oper + "&sessionName=" + sessionId + "&query=" + sql;
 
     var myInit = {
@@ -121,14 +121,18 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
                 var start_date = wpXMonth[i]["startdate"];
                 var end_date = wpXMonth[i]["enddate"];
                 wpXMonth[i]["startdate"] = formatDate(start_date);
-                wpXMonth[i]["enddate"] = formatDate(end_date);
+				wpXMonth[i]["enddate"] = formatDate(end_date);
+				wpXMonth[i]["id"] = wpXMonth[i]["id"].split('x')[1];
+                wpXMonth[i]["projectid"] = wpXMonth[i]["projectid"].split('x')[1];
             }
 
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projecttasknumber":').join('"Number":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projecttaskname":').join('"WP Name":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"startdate":').join('"Start time":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"enddate":').join('"End time":'));
-            wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
+			wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
+			wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projectid":').join('"ProjectID":'));
+            wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"id":').join('"ProjectTaskID":'));
 
             // console.log(wpXMonth);
 
@@ -439,8 +443,11 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         var perc = 0;
         for (var x = 0; x < r_data.length; x++) {
             if (r_data[x]["WP Code"] == wpXMonth[z]["Number"]) {
-                r_data[x]['Percentuale'] = wpXMonth[z]["Percentage"];
-            }
+				r_data[x]['Percentuale'] = wpXMonth[z]["Percentage"];
+				r_data[x]['ProjectTaskID'] = wpXMonth[z]["ProjectTaskID"];
+			}
+			
+			r_data[x]['ProjectID'] = wpXMonth[z]["ProjectID"];
         }
     }
 
@@ -600,9 +607,10 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 		var obj =
 
 			{
+				ProjectID: finalReport[r].ProjectID,
+            	ProjectTaskID: finalReport[r].ProjectTaskID,
 				Employee: finalReport[r].Employee,
 				WPCode: finalReport[r]["WP Code"],
-				// WPName: finalReport[r]["WP Name"],
 				WorkingHour: finalReport[r]["WorkingHour"],
 				RealWorkingHour: 0,
 				TotalHoursWorked: finalReport[r]["Total Hours Worked"],
@@ -644,7 +652,7 @@ function exportToCSV(columnHeaders, report, status){
 
     if(status === "success"){
 
-        for(var i = 0; i<=13; i++){
+        for(var i = 0; i<=columnHeaders.length; i++){
             dataNew[0].push(columnHeaders[i]);
         }
 
@@ -652,9 +660,10 @@ function exportToCSV(columnHeaders, report, status){
         //     "Employee", "WPCode", "WPName", "WorkingHour", "TotalHoursWorked", "DateStart", "DateEnd", "Percentage", "PercentageWP",
         //     "TotalHoursWP", "TotaleWorkDaysWP", "Day", "Month", "Year"
            dataNew.push([
+			   report[j].ProjectID, 
+			   report[j].ProjectTaskID, 
                report[j].Employee, 
                report[j].WPCode,
-            //    report[j].WPName,
                report[j].WorkingHour,
                report[j].RealWorkingHour,
                report[j].TotalHoursWorked,
@@ -666,7 +675,8 @@ function exportToCSV(columnHeaders, report, status){
                report[j].TotaleWorkDaysWP,
                report[j].Day,
                report[j].Month,
-               report[j].Year]);
+			   report[j].Year
+			]);
         }
 
         // Building the CSV from the Data two-dimensional array
