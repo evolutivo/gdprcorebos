@@ -393,7 +393,7 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
     //============ EMP x WP =================                        
     empXwp = loadEMPXWPData(EMPxWP, WPxMonth, ferieXMonth, weekEndsForYear, feriePerMonthPerEmp, yearOfReference);
 
-    // console.log(empXwp);
+    console.log(empXwp);
 
     for(var i = 0; i<empXwp.length; i++){
         var WorkingHour = empXwp[i].WorkingHour;
