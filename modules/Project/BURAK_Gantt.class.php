@@ -401,6 +401,8 @@ class BURAK_Gantt {
 		$this->gantt_height = ($this->n * $this->inc_y) + ($this->heights["month"]*2) + ($this->heights["day"]*2) + ($this->inc_y * 2);
 		// calculate the width of the  gantt image
 		$this->gantt_width = ((($this->gantt_end+1 - $this->gantt_start) / 86400) * $this->inc_x) + $this->inc_x +1;
+
+		echo $this->gantt_height .'-'. $this->gantt_width ;
 		// create image
 		$this->im = imagecreatetruecolor($this->gantt_width,$this->gantt_height);
 		// create colors
@@ -910,8 +912,7 @@ class BURAK_Gantt {
 	}
 	
 	function drawTask($id){
-		$pos = $this->data_gantt[$id]["pos"];
-		echo $pos["x1"] .'--->'. $pos["y1"] .'--->'. $pos["x2"] .'--->'. $pos["y2"];
+		$pos = $this->data_gantt[$id]["pos"];	
 		imagefilledrectangle($this->im,$pos["x1"],$pos["y1"],$pos["x2"],$pos["y2"], $this->colors["task"]);
 		$d = $this->data_gantt[$id]["label"];
 		imagestring($this->im,2,($pos["x1"]+5),($pos["y1"]-$this->heights["task"]-3),$d,$this->colors["font"]);
