@@ -18,21 +18,17 @@
  */
 
 
+ // =============== Begin Script for Report TimeControl generation ==============
+
+
 function generatetimecontrol(annoRiferimento, projectid) {
-
-    //LOCALHOST ENDPOINT
-    // var endpointUrl = "http://localhost:8080/coreBos/corebos/webservice.php";
-    // var username = "admin";
-    // var userAccessKey = "tOL601u7HL5TMRs1";
-    // var url = endpointUrl + "?operation=getchallenge&username=" + username ;
-
 
     //Remote ENDPOINT
     var endpointUrl = "http://63.251.233.101/gdprcorebos/webservice.php";
     var username = "admin";
     var userAccessKey = "o7NM12Xzxm6mYfB";
     var url = endpointUrl + "?operation=getchallenge&username=" + username;
-    const columNames = ['Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP','TotalHoursWP','TotaleWorkDaysWP','Day','Month','Year'];
+    const columNames = ['ProjectID', 'ProjectTaskID', 'Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP', 'TotalHoursWP', 'TotaleWorkDaysWP', 'Day', 'Month', 'Year'];
 
     fetch(url, {
             method: "GET",
@@ -58,9 +54,6 @@ function generatetimecontrol(annoRiferimento, projectid) {
             //exportToCSV(columNames, [], err);
         });
 }
-
-
-
 
 
 function loginWS(columNames, endpoint, oper, usrname, accessKey, annoRiferimento, projectid) {
@@ -100,7 +93,6 @@ function loginWS(columNames, endpoint, oper, usrname, accessKey, annoRiferimento
 }
 
 
-
 //============== REST CALL GET WORKING PACKAGES ==============================
 function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid) {
 
@@ -108,7 +100,7 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
     //           " FROM ProjectTask ;" 
     //         //   " WHERE Project.projectid = 1830';";
 
-    var sql = " SELECT projecttasknumber, projecttaskname, startdate, enddate, cf_1743 FROM ProjectTask WHERE projectid =" + projectid + " ;";
+    var sql = " SELECT projectid, id, projecttasknumber, projecttaskname, startdate, enddate, cf_1743 FROM ProjectTask WHERE projectid =" + projectid + " ;";
     var url = endpoint + "?operation=" + oper + "&sessionName=" + sessionId + "&query=" + sql;
 
     var myInit = {
@@ -129,14 +121,18 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
                 var start_date = wpXMonth[i]["startdate"];
                 var end_date = wpXMonth[i]["enddate"];
                 wpXMonth[i]["startdate"] = formatDate(start_date);
-                wpXMonth[i]["enddate"] = formatDate(end_date);
+				wpXMonth[i]["enddate"] = formatDate(end_date);
+				wpXMonth[i]["id"] = wpXMonth[i]["id"].split('x')[1];
+                wpXMonth[i]["projectid"] = wpXMonth[i]["projectid"].split('x')[1];
             }
 
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projecttasknumber":').join('"Number":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projecttaskname":').join('"WP Name":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"startdate":').join('"Start time":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"enddate":').join('"End time":'));
-            wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
+			wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
+			wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projectid":').join('"ProjectID":'));
+            wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"id":').join('"ProjectTaskID":'));
 
             // console.log(wpXMonth);
 
@@ -216,13 +212,10 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
 function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid) {
 
     var PID = projectid.split('x')[1];
-
-    // var sql = " SELECT emp_organization, cf_1836 FROM Employees ;";
-        
-
-    //TODO Insert Group By
-    var sql = "SELECT contactrolename,cf_1836 FROM ContactRole WHERE ProjectTask.projectid = "+PID+" ;";
-    //var sql = "SELECT emp_organization,cf_1836 FROM Employees WHERE (ConctactRole.account = '2320');" ;
+    
+	//var sql = "SELECT contactrolename,cf_1836 FROM ContactRole WHERE ProjectTask.projectid = "+PID+" ;";
+	
+    var sql = "SELECT contactrolename,contactrole_vacations FROM ContactRole WHERE cf_1843 = '1' AND ProjectTask.projectid = "+PID+" ;";
 
     var url = endpoint + "?operation=" + oper + "&sessionName=" + sessionId + "&query=" + sql;
 
@@ -241,14 +234,17 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
             var feriXMonthXEmp = data.result;
 
             var feriePerEmployee = [];
-            feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrolename":').join('"Employee":'));
-            feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"employeescf_1836":').join('"Date":'));
+			feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrolename":').join('"Employee":'));
+			feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrole_vacations":').join('"Date":'));
+
+
+            //feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"employeescf_1836":').join('"Date":'));
 
             // console.log(feriXMonthXEmp);
 
             for (var i = 0; i < feriXMonthXEmp.length; i++) {
                 var daysOff = feriXMonthXEmp[i].Date.replace(/\s/g, "");
-                var res = daysOff.split(";");
+                var res = daysOff.split(",");
                 for (var j = 0; j < res.length; j++) {
                     var emp = {
                         'Employee': feriXMonthXEmp[i].Employee,
@@ -256,9 +252,7 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
                     };                    
                     feriePerEmployee.push(emp);
                 }
-            }
-
-            // console.log(feriXMonthXEmp);
+            }            
 
             // console.log("Working Packages: ",  wpXMonth);
             // console.log("EMP x Working Packages: ",  empXwp);
@@ -273,6 +267,7 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
             // exportToCSV(columNames, [], err);
         })
 }
+
 
 function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, annoRiferimento, projectid) {
     
@@ -448,8 +443,11 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         var perc = 0;
         for (var x = 0; x < r_data.length; x++) {
             if (r_data[x]["WP Code"] == wpXMonth[z]["Number"]) {
-                r_data[x]['Percentuale'] = wpXMonth[z]["Percentage"];
-            }
+				r_data[x]['Percentuale'] = wpXMonth[z]["Percentage"];
+				r_data[x]['ProjectTaskID'] = wpXMonth[z]["ProjectTaskID"];
+			}
+			
+			r_data[x]['ProjectID'] = wpXMonth[z]["ProjectID"];
         }
     }
 
@@ -575,74 +573,73 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 
 
 
-// ======= BEGIN ADD RANDOM DAY & MONTH TO FINAL REPORT =========
-for (var r = 0; r < finalReport.length; r++) {
-    var randomMonth = [];
-    var otherRandomMonth = [];
-    var randomDay = [];
-    var copyRandomDay = [];
+	// ======= BEGIN ADD RANDOM DAY & MONTH TO FINAL REPORT =========
+	for (var r = 0; r < finalReport.length; r++) {
+		var randomMonth = [];
+		var otherRandomMonth = [];
+		var randomDay = [];
+		var copyRandomDay = [];
 
-    mesiLavorativi = getWorkingMonthsByDateStartDateEnd(finalReport[r]["Start Time"], finalReport[r]["End Time"], finalReport[r]["WP Code"], finalReport[r]["Employee"]);
-    // console.log("Mesi Lavorativi", mesiLavorativi);
-    randomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
-    // console.log("Mesi Lavorativi", randomMonth);
-    var month = randomMonth[Math.floor(Math.random() * randomMonth.length)];
-    // console.log("Mese Random", month);
-    // console.log("Before: ", employeeCalendars);
-    randomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], month, employeeCalendars);
-    var day = randomDay[Math.floor(Math.random() * randomDay.length)];
+		mesiLavorativi = getWorkingMonthsByDateStartDateEnd(finalReport[r]["Start Time"], finalReport[r]["End Time"], finalReport[r]["WP Code"], finalReport[r]["Employee"]);
+		// console.log("Mesi Lavorativi", mesiLavorativi);
+		randomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
+		// console.log("Mesi Lavorativi", randomMonth);
+		var month = randomMonth[Math.floor(Math.random() * randomMonth.length)];
+		// console.log("Mese Random", month);
+		// console.log("Before: ", employeeCalendars);
+		randomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], month, employeeCalendars);
+		var day = randomDay[Math.floor(Math.random() * randomDay.length)];
 
 
 
-    if (day == null || day.length === 0) {
-        otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
-        var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
-        copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
-        var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
-        // console.log(otherDay);
-        // while(otherDay == null || otherDay.length === 0 || otherDay  === "undefined"){
-        //     var filledDay = getRandomDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
-        // }
-        // console.log(otherDay);
-    }
-    // console.log(r + '-' + month+ '-' + day);
-    var obj =
+		if (day == null || day.length === 0) {
+			otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
+			var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
+			copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
+			var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
+			// console.log(otherDay);
+			// while(otherDay == null || otherDay.length === 0 || otherDay  === "undefined"){
+			//     var filledDay = getRandomDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
+			// }
+			// console.log(otherDay);
+		}
+		// console.log(r + '-' + month+ '-' + day);
+		var obj =
 
-        {
-            Employee: finalReport[r].Employee,
-            WPCode: finalReport[r]["WP Code"],
-            // WPName: finalReport[r]["WP Name"],
-            WorkingHour: finalReport[r]["WorkingHour"],
-            RealWorkingHour: 0,
-            TotalHoursWorked: finalReport[r]["Total Hours Worked"],
-            DateStart: finalReport[r]["Start Time"],
-            DateEnd: finalReport[r]["End Time"],
-            Percentage: finalReport[r].Percentuale,
-            PercentageWP: finalReport[r].PercentualeTotaleWP + '%',
-            TotalHoursWP: finalReport[r].TotHoursXWP,
-            TotaleWorkDaysWP: finalReport[r].TotWDxWP,
-            Day: (day == null || day.length === 0) ? otherDay : day,
-            Month: month,
-            Year: yearOfReference
-        }
+			{
+				ProjectID: finalReport[r].ProjectID,
+            	ProjectTaskID: finalReport[r].ProjectTaskID,
+				Employee: finalReport[r].Employee,
+				WPCode: finalReport[r]["WP Code"],
+				WorkingHour: finalReport[r]["WorkingHour"],
+				RealWorkingHour: 0,
+				TotalHoursWorked: finalReport[r]["Total Hours Worked"],
+				DateStart: finalReport[r]["Start Time"],
+				DateEnd: finalReport[r]["End Time"],
+				Percentage: finalReport[r].Percentuale,
+				PercentageWP: finalReport[r].PercentualeTotaleWP + '%',
+				TotalHoursWP: finalReport[r].TotHoursXWP,
+				TotaleWorkDaysWP: finalReport[r].TotWDxWP,
+				Day: (day == null || day.length === 0) ? otherDay : day,
+				Month: month,
+				Year: yearOfReference
+			}
 
-    output.push(obj);
+		output.push(obj);
 
-    //Remove Record from EmployeeCalendar
-    // removeDayOfMonthFromEmployeeCalendar(finalReport[r].Employee, month, day, employeeCalendars);
-    for (var v = 0; v < employeeCalendars.length; v++) {
-        if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == month && employeeCalendars[v].Giorno == day) {
-            employeeCalendars.splice(v, 1);
-        }
-    }
- }
+		//Remove Record from EmployeeCalendar
+		// removeDayOfMonthFromEmployeeCalendar(finalReport[r].Employee, month, day, employeeCalendars);
+		for (var v = 0; v < employeeCalendars.length; v++) {
+			if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == month && employeeCalendars[v].Giorno == day) {
+				employeeCalendars.splice(v, 1);
+			}
+		}
+	}
 
     console.log("Employee Calendar After Random Generation: ", employeeCalendars);
     //======= END ADD RANDOM DAY & MONTH TO FINAL REPORT ==================
     return output;
 }
-
-
 
 
 //========= EXPORT DATA TO CSV FILE ============
@@ -655,7 +652,7 @@ function exportToCSV(columnHeaders, report, status){
 
     if(status === "success"){
 
-        for(var i = 0; i<=13; i++){
+        for(var i = 0; i<=columnHeaders.length; i++){
             dataNew[0].push(columnHeaders[i]);
         }
 
@@ -663,9 +660,10 @@ function exportToCSV(columnHeaders, report, status){
         //     "Employee", "WPCode", "WPName", "WorkingHour", "TotalHoursWorked", "DateStart", "DateEnd", "Percentage", "PercentageWP",
         //     "TotalHoursWP", "TotaleWorkDaysWP", "Day", "Month", "Year"
            dataNew.push([
+			   report[j].ProjectID, 
+			   report[j].ProjectTaskID, 
                report[j].Employee, 
                report[j].WPCode,
-            //    report[j].WPName,
                report[j].WorkingHour,
                report[j].RealWorkingHour,
                report[j].TotalHoursWorked,
@@ -677,7 +675,8 @@ function exportToCSV(columnHeaders, report, status){
                report[j].TotaleWorkDaysWP,
                report[j].Day,
                report[j].Month,
-               report[j].Year]);
+			   report[j].Year
+			]);
         }
 
         // Building the CSV from the Data two-dimensional array
@@ -719,6 +718,7 @@ var download = function(content, fileName, mimeType) {
         location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
     }
 }
+
 
 function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear){
     var possibleDates = [];
@@ -765,7 +765,6 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear){
     // console.log("Ferie of Employee: ", weekEndsForYear);
     return giorniLavorativi;
 }
-
 
 
 function getWorkingMonthsByDateStartDateEnd(dateStart, dateEnd, wp_code, emp){
@@ -958,7 +957,7 @@ MD5 = function(e) {
     for (e = 0; e < f.length; e += 16) q = a, r = b, s = c, t = d, a = k(a, b, c, d, f[e + 0], 7, 3614090360), d = k(d, a, b, c, f[e + 1], 12, 3905402710), c = k(c, d, a, b, f[e + 2], 17, 606105819), b = k(b, c, d, a, f[e + 3], 22, 3250441966), a = k(a, b, c, d, f[e + 4], 7, 4118548399), d = k(d, a, b, c, f[e + 5], 12, 1200080426), c = k(c, d, a, b, f[e + 6], 17, 2821735955), b = k(b, c, d, a, f[e + 7], 22, 4249261313), a = k(a, b, c, d, f[e + 8], 7, 1770035416), d = k(d, a, b, c, f[e + 9], 12, 2336552879), c = k(c, d, a, b, f[e + 10], 17, 4294925233), b = k(b, c, d, a, f[e + 11], 22, 2304563134), a = k(a, b, c, d, f[e + 12], 7, 1804603682), d = k(d, a, b, c, f[e + 13], 12, 4254626195), c = k(c, d, a, b, f[e + 14], 17, 2792965006), b = k(b, c, d, a, f[e + 15], 22, 1236535329), a = l(a, b, c, d, f[e + 1], 5, 4129170786), d = l(d, a, b, c, f[e + 6], 9, 3225465664), c = l(c, d, a, b, f[e + 11], 14, 643717713), b = l(b, c, d, a, f[e + 0], 20, 3921069994), a = l(a, b, c, d, f[e + 5], 5, 3593408605), d = l(d, a, b, c, f[e + 10], 9, 38016083), c = l(c, d, a, b, f[e + 15], 14, 3634488961), b = l(b, c, d, a, f[e + 4], 20, 3889429448), a = l(a, b, c, d, f[e + 9], 5, 568446438), d = l(d, a, b, c, f[e + 14], 9, 3275163606), c = l(c, d, a, b, f[e + 3], 14, 4107603335), b = l(b, c, d, a, f[e + 8], 20, 1163531501), a = l(a, b, c, d, f[e + 13], 5, 2850285829), d = l(d, a, b, c, f[e + 2], 9, 4243563512), c = l(c, d, a, b, f[e + 7], 14, 1735328473), b = l(b, c, d, a, f[e + 12], 20, 2368359562), a = m(a, b, c, d, f[e + 5], 4, 4294588738), d = m(d, a, b, c, f[e + 8], 11, 2272392833), c = m(c, d, a, b, f[e + 11], 16, 1839030562), b = m(b, c, d, a, f[e + 14], 23, 4259657740), a = m(a, b, c, d, f[e + 1], 4, 2763975236), d = m(d, a, b, c, f[e + 4], 11, 1272893353), c = m(c, d, a, b, f[e + 7], 16, 4139469664), b = m(b, c, d, a, f[e + 10], 23, 3200236656), a = m(a, b, c, d, f[e + 13], 4, 681279174), d = m(d, a, b, c, f[e + 0], 11, 3936430074), c = m(c, d, a, b, f[e + 3], 16, 3572445317), b = m(b, c, d, a, f[e + 6], 23, 76029189), a = m(a, b, c, d, f[e + 9], 4, 3654602809), d = m(d, a, b, c, f[e + 12], 11, 3873151461), c = m(c, d, a, b, f[e + 15], 16, 530742520), b = m(b, c, d, a, f[e + 2], 23, 3299628645), a = n(a, b, c, d, f[e + 0], 6, 4096336452), d = n(d, a, b, c, f[e + 7], 10, 1126891415), c = n(c, d, a, b, f[e + 14], 15, 2878612391), b = n(b, c, d, a, f[e + 5], 21, 4237533241), a = n(a, b, c, d, f[e + 12], 6, 1700485571), d = n(d, a, b, c, f[e + 3], 10, 2399980690), c = n(c, d, a, b, f[e + 10], 15, 4293915773), b = n(b, c, d, a, f[e + 1], 21, 2240044497), a = n(a, b, c, d, f[e + 8], 6, 1873313359), d = n(d, a, b, c, f[e + 15], 10, 4264355552), c = n(c, d, a, b, f[e + 6], 15, 2734768916), b = n(b, c, d, a, f[e + 13], 21, 1309151649), a = n(a, b, c, d, f[e + 4], 6, 4149444226), d = n(d, a, b, c, f[e + 11], 10, 3174756917), c = n(c, d, a, b, f[e + 2], 15, 718787259), b = n(b, c, d, a, f[e + 9], 21, 3951481745), a = h(a, q), b = h(b, r), c = h(c, s), d = h(d, t);
     return (p(a) + p(b) + p(c) + p(d)).toLowerCase();
 };
-
+// =============== End Script for Report TimeControl generation ==============
 
 function getTagCloud(crmid) {
 	var obj = document.getElementById('tagfields');

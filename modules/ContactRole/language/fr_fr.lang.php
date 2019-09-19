@@ -20,7 +20,7 @@ $mod_strings = array(
 	'ModuleFieldLabel' => 'ModuleFieldLabel Text',
 	'LBL_ContactRole_Vacation_Block' => 'Employee Vacation Dates',
 	'LBL_ContactRole_Vacation' => 'Ferie for Employee',
-	'LBL_ContactRole_Dates' => 'Select Holidays of Employee',
+	'LBL_ContactRole_Dates' => 'Select Employee Vacations',
 );
 
 ?>
