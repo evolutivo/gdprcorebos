@@ -1,0 +1,153 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{Action}} {{translations['Evo Field']}} {{user.name}}</h3>
+</div>
+<div class="modal-body"> 
+    <table>
+        <tr>
+            <td> 
+                {{translations['Module Name']}}
+            </td>
+            <td>
+              <select class="form-control" ng-click="user.module_name=mod_sel.tablabel" ng-model="mod_sel" ng-options="opt.tabtrans for opt  in modules track by opt.tablabel"></select>
+            </td>
+        </tr>
+        <tr>
+            <td> 
+                {{translations['Evo Field']}}
+            </td> 
+            <td>
+                <input type="checkbox" ng-disabled="act=='edit_ng_field'" ng-model="user.existing"  />{{translations['existing_field']}}<br/>
+                <input class="form-control" type="text" ng-if="!user.existing" ng-model="user.fieldname" />
+                <select class="form-control" ng-disabled="act=='edit_ng_field'"  ng-if="user.existing" ng-click="user.pointing_field_name=pointing_field_name_sel.columnname" ng-model="pointing_field_name_sel" ng-options="opt.fieldlabel for opt  in  pointing_field | filter_source_fields:user track by opt.columnname"></select>
+             </td> 
+        </tr>
+        <tr ng-if="!user.existing">
+            <td > 
+                {{translations['Pointing Block']}}
+            </td> 
+            <td> 
+                <select class="form-control"  ng-click="user.pointing_block_name=pointing_block_name_sel.id" ng-model="pointing_block_name_sel" ng-options="opt.label2 for opt  in  blocks | filter_blocks:user  track by opt.label"></select>
+            </td> 
+        </tr>
+        <tr>
+            <td> 
+                {{translations.Type}}
+            </td> 
+            <td> 
+                <select class="form-control" ng-click="user.type=type.id" ng-model="type" ng-options="opt.name for opt  in  type_opt  track by opt.id"></select>
+             </td> 
+        </tr>
+        <tr>
+            <td> 
+                {{translations['Pointing Module']}}
+            </td> 
+            <td> 
+               <select class="form-control" ng-click="user.pointing_module_name=pointing_module_name_sel.tablabel;refresh_columns_shown();refresh_columns_search();refresh_br();" ng-model="pointing_module_name_sel" ng-options="opt.tabtrans for opt  in modules track by opt.tablabel"></select>
+            </td> 
+        </tr>
+        <tr>
+            <td> 
+                {{translations['pointing_shown']}}
+            </td> 
+            <td> 
+                <!--<input type="time" id="exampleInput" name="input" ng-model="value"
+       placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" required /> -->
+                <multi-select   
+                    input-model="columns_shown" 
+                    output-model="selected_values"
+                    button-label="fieldlabel"
+                    item-label="fieldlabel"
+                    tick-property="ticked" 
+                    on-item-click="functionClick_shown( data )">
+                </multi-select>
+
+                <input class="form-control" type="hidden" ng-model="user.columns_shown" />
+             </td>
+        </tr>
+        <tr>
+            <td> 
+                {{translations['pointing_search_in']}}
+            </td> 
+            <td> 
+                <!--<input type="time" id="exampleInput" name="input" ng-model="value"
+       placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" required /> -->
+                <multi-select   
+                    input-model="columns_search" 
+                    output-model="selected_values"
+                    button-label="fieldlabel"
+                    item-label="fieldlabel"
+                    tick-property="ticked" 
+                    on-item-click="functionClick_search( data )">
+                </multi-select>
+
+                <input class="form-control" type="hidden" ng-model="user.columns_search" />
+             </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="background-color:  #428bca;text-align: center"> 
+                <input type="checkbox" ng-model="autofill"  />
+                {{translations['autofill_source']}}
+                <img  ng-click="addsourcedest()" ng-show="autofill" src="themes/softed/images/select.gif" alt="Add" title="Add" >
+            </td> 
+        </tr>
+        <tr>
+            <td colspan="2" ng-show="autofill">
+                <table width="100%">
+                    <tr>
+                        <td style="text-align: center"> 
+                        </td>
+                        <td style="text-align: center"> 
+                            <b>{{translations['Source Field']}}</b>
+                        </td> 
+                        <td style="text-align: center"> 
+                           <b> {{translations['Destination Field']}}</b>
+                        </td> 
+                    </tr>
+                    <tr ng-repeat="src in source">
+                        <td> 
+                            <img width="20" height="20" ng-click="removesourcedest($index)" src="themes/images/delete.gif" />
+                        </td>
+                        <td> 
+                            <select class="form-control" ng-model="src.source_field_name" ng-options="opt.fieldlabel for opt  in  columns_search | filter_dest_fields:user track by opt.columnname"></select>
+                        </td>
+                        <td> 
+                            <select class="form-control" ng-model="src.dest_field_name" ng-options="opt.fieldlabel for opt  in  pointing_field | filter_source_fields:user track by opt.columnname" ></select>
+                         </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td> 
+                {{translations.Condition}}
+            </td>
+            <td>
+                <br/>
+                <table width="100%" border="0">
+                    <tr>
+                    <td>
+                        {{translations.br_query}}
+                    </td></tr>
+                    <tr>
+                        <td colspan="5">
+                            <input ng-model="user.br_id" type="hidden"  >  
+                            <multi-select   
+                                input-model="br_id" 
+                                output-model="selected_values_br"
+                                button-label="businessrules_name"
+                                item-label="businessrules_name"
+                                tick-property="ticked" 
+                                on-item-click="functionClick_br( data )">
+                            </multi-select>
+                        </td>
+                    </tr>
+                </table> 
+            </td>
+        </tr>
+        
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="setEditId(user)">{{translations.Save}}</button>
+    <button class="btn btn-warning" ng-click="cancel()">{{translations.Cancel}}</button>
+</div>

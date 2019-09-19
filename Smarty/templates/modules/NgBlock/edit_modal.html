@@ -1,0 +1,197 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{Action}} {{translations.NgBlock}} {{user.name}}</h3>
+</div>
+<div class="modal-body">    
+    <table>
+        <tr>
+            <td> 
+                {{translations.Name}}
+            </td> 
+            <td> 
+                <input class="form-control" type="text" ng-model="user.name"/>
+            </td> 
+        </tr>
+        <tr>
+            <td> 
+                {{translations['Module Name']}}
+            </td>
+            <td>
+              <select class="form-control" ng-click="user.module_name=mod_sel.tablabel" ng-model="mod_sel" ng-options="opt.tabtrans for opt  in modules track by opt.tablabel"></select>
+            </td>
+        </tr>
+        <tr>
+            <td> 
+                {{translations['Pointing Block']}}
+            </td> 
+            <td> 
+                <select class="form-control" ng-click="user.pointing_block_name=pointing_block_name_sel.label" ng-model="pointing_block_name_sel" ng-options="opt.label2 for opt  in  blocks | filter_blocks:user  track by opt.label"></select>
+            </td> 
+        </tr>
+        <tr>
+            <td> 
+                {{translations['Pointing Module']}}
+            </td> 
+            <td> 
+               <select class="form-control" ng-click="user.pointing_module_name=pointing_module_name_sel.tablabel;refresh_columns();refresh_br();" ng-model="pointing_module_name_sel" ng-options="opt.tabtrans for opt  in modules track by opt.tablabel"></select>
+            </td> 
+        </tr>
+        <tr>
+            <td> 
+                {{translations['Pointing Field']}}
+            </td> 
+            <td> 
+                <select class="form-control" ng-click="user.pointing_field_name=pointing_field_name_sel.columnname" ng-model="pointing_field_name_sel" ng-options="opt.fieldlabel for opt  in  pointing_field | filter_pointing_fields:user track by opt.columnname"></select>
+             </td> 
+        </tr>
+        <tr>
+            <td> 
+                {{translations['List Columns']}}
+            </td> 
+            <td> 
+                <!--<input type="time" id="exampleInput" name="input" ng-model="value"
+       placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" required /> -->
+                <multi-select   
+                    input-model="columns" 
+                    output-model="selected_values"
+                    button-label="fieldlabel"
+                    item-label="fieldlabel"
+                    tick-property="ticked" 
+                    on-item-click="functionClick( data )">
+                </multi-select>
+
+                <input class="form-control" type="hidden" ng-model="user.columns" />
+             </td>
+        </tr>
+        <tr>
+            <td> 
+                {{translations['EditView Columns']}}
+            </td> 
+            <td> 
+                <!--<input type="time" id="exampleInput" name="input" ng-model="value"
+       placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" required /> -->
+                <multi-select   
+                    input-model="createcol" 
+                    output-model="selected_values"
+                    button-label="businessrules_name"
+                    item-label="businessrules_name"
+                    tick-property="ticked" 
+                    on-item-click="functionClick_createcol( data )">
+                </multi-select>
+
+                <input class="form-control" type="hidden" ng-model="user.columns" />
+             </td>
+        </tr>
+        <tr>
+            <td> 
+                {{translations.Condition}}
+            </td>
+            <td>
+                <br/>
+                <table width="100%" border="0">
+                    <tr>
+                    <td>
+                        {{translations.br_where}}
+                    </td></tr>
+                    <tr>
+                        <td colspan="5">
+                            <input ng-model="user.br_id" type="hidden"  >  
+                            <multi-select   
+                                input-model="br_id" 
+                                output-model="selected_values_br"
+                                button-label="businessrules_name"
+                                item-label="businessrules_name"
+                                tick-property="ticked" 
+                                on-item-click="functionClick_br( data )">
+                            </multi-select>
+                        </td>
+                    </tr>
+                </table> 
+            </td>
+        </tr>
+        <tr>
+            <td> 
+               {{translations['Nr Page']}}
+               
+            </td> 
+            <td> 
+                <input type="text" ng-model="user.nr_page" style="width:50px"/>
+                &nbsp;{{translations['Paginate']}}<input type="checkbox"  ng-model="user.paginate"  />
+                &nbsp;{{translations['Add Record']}} <input type="checkbox"  ng-model="user.add_record" />
+                &nbsp;{{translations['Edit Record']}} <input type="checkbox"  ng-model="user.edit_record"  />
+                &nbsp;{{translations['Delete Record']}} <input type="checkbox" ng-model="user.delete_record" />
+            </td> 
+        </tr>
+        
+        <tr>
+            <td> 
+                {{translations['Sorting Records']}}
+            </td> 
+            <td> 
+                <select name="sort" id="sort"  ng-model="opt1" ng-options="opt1 as opt1.fieldlabel for opt1  in selected_values track by opt1.columnname" style="width:170px"></select>
+                <select id="order" ng-change="fill_sort(opt1.columnname,order)" ng-model="order" style="width:50px">
+                    <option value="Asc">{{translations.Asc}}</option>
+                    <option value="Desc">{{translations.Desc}}</option>
+                    <option value="None">{{translations.None}}</option>
+                </select>
+                <input class="form-control" type="hidden" ng-model="user.sort"/>
+            </td> 
+        </tr>
+        <tr>
+            <td> 
+                {{translations.Sequence}}
+            </td> 
+            <td> 
+                <input type="text" ng-model="user.sequence_ngblock" style="width:50px"/>
+            </td> 
+        </tr>
+        <tr>
+            <td> 
+                {{translations.Destination}}
+            </td> 
+            <td> 
+                <select id="destination"  ng-model="user.destination" style="width:170px"
+                        ng-options="opt for opt in destination_opt">
+                </select>
+                &nbsp;&nbsp;<input type="checkbox"  ng-model="user.top_widget" 
+                                   ng-if="user.destination=='DETAILVIEWWIDGET'" /><span ng-if="user.destination=='DETAILVIEWWIDGET'">{{translations['Top Widget']}}</span>
+                &nbsp;&nbsp;<input type="checkbox"  ng-model="user.opened"/>{{translations.Opened}}
+                <select id="related_tab"  ng-model="related_tab_sel" ng-click="user.related_tab=related_tab_sel.id" style="width:100px"
+                        ng-if="user.destination=='RELATEDVIEWWIDGET'" ng-options="opt.name for opt  in  tab_rl_opt | filter_tab_rl:user track by opt.id">
+                </select>
+            </td> 
+        </tr>
+        <tr>
+            <td> 
+                {{translations.Type}}
+            </td> 
+            <td> 
+                <select id="type"  ng-model="user.type" style="width:170px"
+                        ng-options="opt for opt in type_opt">
+                </select>
+                <input type="text" id="custom_widget_path"  ng-model="user.custom_widget_path" style="width:180px"
+                        ng-if="user.type=='Custom'" >
+                <table>
+                    <tr>
+                        <td>
+                            <select id="type"  ng-model="user.elastic_id" style="width:170px" ng-if="user.type=='Elastic'"
+                                    ng-options="opt for opt in get_elastic_indexes track by opt">
+                            </select>
+                        </td>
+                        <td>
+                            <select id="type"  ng-model="user.elastic_type" style="width:170px" ng-if="user.type=='Elastic'">
+                                <option value="import">import</option>
+                                <option value="norm">norm</option>
+                                <option value="denorm">denorm</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </td> 
+        </tr>
+        
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="setEditId(user)">{{translations.Save}}</button>
+    <button class="btn btn-warning" ng-click="cancel()">{{translations.Cancel}}</button>
+</div>

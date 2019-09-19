@@ -1,0 +1,35 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{Action}} {{translations['Related Tab']}}</h3>
+</div>
+<div class="modal-body">    
+    <table>
+        <tr>
+            <td> 
+                {{translations['Name']}}
+            </td> 
+            <td> 
+                <input class="form-control" type="text" ng-model="user.name"/>
+            </td> 
+        </tr>
+        <tr>
+            <td> 
+                {{translations['Module Name']}}
+            </td>
+            <td>
+              <select class="form-control" ng-model="mod_sel" ng-click="user.moduleid=mod_sel.tablabel" ng-options="opt.tabtrans for opt  in modules track by opt.tablabel"></select>
+            </td>
+        </tr>       
+        <tr>
+            <td> 
+                {{translations['Sequence of Related Tab']}}
+            </td> 
+            <td> 
+                <input type="text" ng-model="user.sequence" style="width:100px"/>
+            </td> 
+        </tr>
+            </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="setEditId(user)">{{translations['Save']}}</button>
+    <button class="btn btn-warning" ng-click="cancel()">{{translations['Cancel']}}</button>
+</div>
