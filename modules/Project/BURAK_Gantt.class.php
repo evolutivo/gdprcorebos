@@ -403,9 +403,7 @@ class BURAK_Gantt {
 		$this->gantt_width = ((($this->gantt_end+1 - $this->gantt_start) / 86400) * $this->inc_x) + $this->inc_x +1;
 
 		// create image
-		$this->im = imagecreatetruecolor(480, 480);
-		
-		//$this->im = imagecreatetruecolor($this->gantt_width,$this->gantt_height);
+		$this->im = imagecreatetruecolor($this->gantt_width,$this->gantt_height);
 
 		// create colors
 		foreach($this->colors as $k=>$v){
