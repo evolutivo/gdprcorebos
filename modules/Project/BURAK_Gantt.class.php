@@ -402,6 +402,8 @@ class BURAK_Gantt {
 		// calculate the width of the  gantt image
 		$this->gantt_width = ((($this->gantt_end+1 - $this->gantt_start) / 86400) * $this->inc_x) + $this->inc_x +1;
 
+		echo $this->gantt_start .'-'. $this->gantt_end .'-'. $this->inc_x ; 
+
 		// create image
 		$this->im = imagecreatetruecolor($this->gantt_width,$this->gantt_height);
 
