@@ -80,7 +80,7 @@ class ProjectTask extends CRMEntity {
 	);
 	public $search_fields_name = array(
 		/* Format: Field Label => fieldname */
-		'Project Name'=> 'projectname',
+		'Project Name'=> 'projectid',
 		'Project Task Name'=> 'projecttaskname',
 		'Start Date'=>'startdate',
 		'Type'=>'projecttasktype',
