@@ -690,6 +690,7 @@ $mod_strings = array(
 'LBL_MAIL_SCANNER'=>'Scanner de mensagem',
 'MailScanner' =>'Scanner de mensagem',
 'LBL_MAIL_SCANNER_DESCRIPTION'=>'Configure caixa correio para scanear',
+'Recommended frequency for MailScanner is 15 mins' => 'Recommended frequency for Mail Converter is 15 mins',
 'LBL_SCAN_NOW'=>'Escanear agora',
 'LBL_RULE'=>'Regra',
 'LBL_SETUP'=>'Configuração',
@@ -937,6 +938,7 @@ $mod_strings = array(
 'LBL_OPENSSL_SUPPORT' => 'Suporte OpenSSL',
 'LBL_IMAP_SUPPORT' => 'Suporte IMAP',
 'StorageSpaceUsage' => 'Uso do espaço de armazenamento',
+'Calculate storage disk space usage and save in database.' => 'Calculate storage disk space usage and save in database.',
 'wf_conditions_found' => 'Campo encontrado nas condições do workflow: ',
 'wf conditions' => 'Campo não encontrado em nenhuma condição de workflow.',
 'wf_tasks' => 'Campo não encontrado em nenhuma tareda de workflow.',
@@ -964,5 +966,6 @@ $mod_strings = array(
 'Site Maintenance' => 'CRM em manutenção',
 'SM_BeBackSoon' => 'Estaremos de volta em breve!',
 'SM_SorryInconvenience' => 'Estamos fazendo uma manutenção no momento. Estaremos de volta on-line o mais breve possível!',
+'LBL_CC' => 'CC',
 );
 ?>

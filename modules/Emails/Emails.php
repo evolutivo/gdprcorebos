@@ -26,6 +26,7 @@ class Emails extends CRMEntity {
 
 	/** Indicator if this is a custom module or standard module */
 	public $IsCustomModule = false;
+	public $moduleIcon = array('library' => 'standard', 'containerClass' => 'slds-icon_container slds-icon-standard-email', 'class' => 'slds-icon', 'icon'=>'email');
 
 	// added to check email save from plugin or not
 	public $plugin_save = false;
@@ -61,12 +62,31 @@ class Emails extends CRMEntity {
 		'Unsubscribe' => 'unsubscribe',
 		'Access Count' => 'access_count'
 	);
+	public $search_fields = array(
+		'Subject' => array('activity' => 'subject'),
+		'Related to' => array('seactivityrel' => 'parent_id'),
+		'Date Sent' => array('activity' => 'date_start'),
+		'Time Sent' => array('activity' => 'time_start'),
+		'Assigned To' => array('crmentity' => 'smownerid'),
+		'Delivered' => array('emaildetails' => 'delivered'),
+		'Open' => array('emaildetails' => 'open'),
+		'Clicked' => array('emaildetails' => 'clicked'),
+		'Bounce' => array('emaildetails' => 'bounce'),
+		'Unsubscribe' => array('emaildetails' => 'unsubscribe'),
+		'Access Count' => array('email_track' => 'access_count')
+	);
 	public $search_fields_name = array(
+		'Subject' => 'subject',
+		'Related to' => 'parent_id',
+		'Date Sent' => 'date_start',
+		'Time Sent' => 'time_start',
+		'Assigned To' => 'assigned_user_id',
 		'Delivered' => 'delivered',
 		'Open' => 'open',
 		'Clicked' => 'clicked',
 		'Bounce' => 'bounce',
 		'Unsubscribe' => 'unsubscribe',
+		'Access Count' => 'access_count'
 	);
 	public $list_link_field = 'subject';
 	public $sortby_fields = array('subject', 'date_start', 'saved_toid');
@@ -231,9 +251,10 @@ class Emails extends CRMEntity {
 	}
 
 	public static function emailServerCheck() {
-		global $adb;
-		$emailcfg = $adb->pquery('select 1 from vtiger_systems where server_type = ?', array('email'));
-		return ($adb->num_rows($emailcfg)>0);
+		global $adb, $current_user;
+		$user_og_server_config = $adb->pquery('select 1 from vtiger_mail_accounts where user_id = ? AND og_server_status=1', array($current_user->id));
+		$global_og_server_config = $adb->pquery('select 1 from vtiger_systems where server_type = ?', array('email'));
+		return ($adb->num_rows($global_og_server_config) > 0 || $adb->num_rows($user_og_server_config) > 0);
 	}
 
 	public static function useEmailHook() {
@@ -241,7 +262,6 @@ class Emails extends CRMEntity {
 	}
 
 	public static function sendEMail($to_email, $from_name, $from_email, $subject, $contents, $cc, $bcc, $attachment, $emailid, $logo, $qrScan, $replyto, $replyToEmail) {
-		global $adb;
 		$mail = new PHPMailer();
 		setMailerProperties($mail, $subject, $contents, $from_email, $from_name, trim($to_email, ','), $attachment, $emailid, $logo, $qrScan);
 		// Return immediately if Outgoing server not configured
@@ -375,43 +395,10 @@ class Emails extends CRMEntity {
 		return $return_value;
 	}
 
-	/** Returns the column name that needs to be sorted */
-	public function getSortOrder() {
-		global $log;
-		$log->debug('> getSortOrder');
-		if (isset($_REQUEST['sorder'])) {
-			$sorder = $this->db->sql_escape_string($_REQUEST['sorder']);
-		} else {
-			$sorder = (!empty($_SESSION['EMAILS_SORT_ORDER']) ? ($_SESSION['EMAILS_SORT_ORDER']) : ($this->default_sort_order));
-		}
-
-		$log->debug('< getSortOrder');
-		return $sorder;
-	}
-
-	/** Returns the order in which the records need to be sorted */
-	public function getOrderBy() {
-		global $log;
-		$log->debug('> getOrderBy');
-
-		$use_default_order_by = '';
-		if (GlobalVariable::getVariable('Application_ListView_Default_Sorting', 0)) {
-			$use_default_order_by = $this->default_order_by;
-		}
-
-		if (isset($_REQUEST['order_by'])) {
-			$order_by = $this->db->sql_escape_string($_REQUEST['order_by']);
-		} else {
-			$order_by = (!empty($_SESSION['EMAILS_ORDER_BY']) ? ($_SESSION['EMAILS_ORDER_BY']) : ($use_default_order_by));
-		}
-
-		$log->debug('< getOrderBy');
-		return $order_by;
-	}
 
 	/** Returns a list of the associated users */
 	public function get_users($id) {
-		global $log, $adb, $app_strings, $current_user;
+		global $log, $adb, $app_strings;
 		$log->debug('> get_users '.$id);
 
 		$id = $_REQUEST['record'];
@@ -563,13 +550,14 @@ class Emails extends CRMEntity {
 		return $list_buttons;
 	}
 
-	public static function sendEmailTemplate($templateName, $context, $module, $to_email, $par_id, $from_name = '', $from_email = '') {
+	public static function sendEmailTemplate($templateName, $context, $module, $to_email, $par_id, $from_name = '', $from_email = '', $desired_lang = null, $default_lang = null) {
 		require_once 'modules/Emails/mail.php';
 		global $adb, $default_charset;
-		$sql = fetchEmailTemplateInfo($templateName);
+		$sql = fetchEmailTemplateInfo($templateName, $desired_lang, $default_lang);
 		if ($sql && $adb->num_rows($sql)>0) {
 			$sub = $adb->query_result($sql, 0, 'subject');
 			$body = $adb->query_result($sql, 0, 'template');
+			$sub = html_entity_decode($sub, ENT_QUOTES, $default_charset);
 			$mail_body = html_entity_decode($body, ENT_QUOTES, $default_charset);
 			foreach ($context as $value => $val) {
 				$mail_body = str_replace($value, $val, $mail_body);

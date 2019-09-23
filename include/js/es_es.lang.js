@@ -286,6 +286,7 @@ var alert_arr = {
 	'Default': 'Defecto',
 	'Notebook': 'Bloc Notas',
 	'ReportCharts': 'Informe Gráfico',
+	'CustomWidget': 'Agregación Filtro',
 	'SPECIAL_CHARS':'\\ / < > + \' " ',
 
 	'BETWEEN': 'entre',
@@ -417,5 +418,6 @@ var alert_arr = {
 	'OF' : 'de',
 	'ERR_Massedit' : 'Error en Edición Masiva',
 	'ProcessFINISHED' : 'Proceso Terminado',
-	'duplicatednotallowed' : 'No se permiten módulos duplicados'
+	'duplicatednotallowed' : 'No se permiten módulos duplicados',
+	'HAS_THIS_AS_NTH_CHILD' : 'Tiene este niño como una'
 };

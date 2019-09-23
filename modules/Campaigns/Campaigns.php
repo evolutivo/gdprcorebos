@@ -24,6 +24,8 @@ class Campaigns extends CRMEntity {
 	/** Indicator if this is a custom module or standard module */
 	public $IsCustomModule = false;
 	public $HasDirectImageField = false;
+	public $moduleIcon = array('library' => 'standard', 'containerClass' => 'slds-icon_container slds-icon-standard-campaign', 'class' => 'slds-icon', 'icon'=>'campaign');
+
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
@@ -610,30 +612,25 @@ class Campaigns extends CRMEntity {
 	 */
 	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb,$log;
-		$log->debug("> transferRelatedRecords $module, $transferEntityIds, $entityId");
+		$log->debug('> transferRelatedRecords '.$module.','.print_r($transferEntityIds, true).','.$entityId);
 		parent::transferRelatedRecords($module, $transferEntityIds, $entityId);
 		$rel_table_arr = array(
 			'Contacts'=>'vtiger_campaigncontrel',
-			'Potentials'=>'vtiger_potential',
 			'Leads'=>'vtiger_campaignleadrel',
 			'Attachments'=>'vtiger_seattachmentsrel',
 			'Campaigns'=>'vtiger_campaignaccountrel',
-			'CobroPago'=>'vtiger_cobropago',
 		);
 		$tbl_field_arr = array(
 			'vtiger_campaigncontrel'=>'contactid',
-			'vtiger_potential'=>'potentialid',
 			'vtiger_campaignleadrel'=>'leadid',
 			'vtiger_seattachmentsrel'=>'attachmentsid',
-			'vtiger_campaignaccountrel'=>'accountid','vtiger_cobropago'=>'cobropagoid',
+			'vtiger_campaignaccountrel'=>'accountid',
 		);
 		$entity_tbl_field_arr = array(
 			'vtiger_campaigncontrel'=>'campaignid',
-			'vtiger_potential'=>'campaignid',
 			'vtiger_campaignleadrel'=>'campaignid',
 			'vtiger_seattachmentsrel'=>'crmid',
 			'vtiger_campaignaccountrel'=>'campaignid',
-			'vtiger_cobropago'=>'related_id',
 		);
 		foreach ($transferEntityIds as $transferId) {
 			foreach ($rel_table_arr as $rel_table) {

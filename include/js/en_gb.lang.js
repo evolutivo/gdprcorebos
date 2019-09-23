@@ -254,6 +254,7 @@ var alert_arr = {
 	'Default' : 'Default',
 	'Notebook' : 'Notebook',
 	'ReportCharts': 'Report Charts',
+	'CustomWidget': 'Aggregate Filter',
 	'SPECIAL_CHARS' : ' / < > + \' " ',
 	'BETWEEN' : 'between',
 	'BEFORE' : 'before',
@@ -383,5 +384,6 @@ var alert_arr = {
 	'OF' : 'of',
 	'ERR_Massedit' : 'Error on Mass Edit',
 	'ProcessFINISHED' : 'Process Finished',
-	'duplicatednotallowed' : 'Duplicated Modules Not Allowed'
+	'duplicatednotallowed' : 'Duplicated Modules Not Allowed',
+	'HAS_THIS_AS_NTH_CHILD' : 'Has this record as nth child'
 };

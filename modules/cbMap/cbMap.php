@@ -23,6 +23,8 @@ class cbMap extends CRMEntity {
 	/** Indicator if this is a custom module or standard module */
 	public $IsCustomModule = true;
 	public $HasDirectImageField = false;
+	public $moduleIcon = array('library' => 'custom', 'containerClass' => 'slds-icon_container slds-icon-custom-custom108', 'class' => 'slds-icon', 'icon'=>'custom108');
+
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
@@ -272,6 +274,8 @@ class cbMap extends CRMEntity {
 	public function getvtlib_open_popup_window_function($fieldname, $basemodule) {
 		if ($fieldname=='brmap' && $basemodule=='BusinessActions') {
 			return 'openBRMapInBA';
+		} elseif ($fieldname=='cbmapid' && $basemodule=='DiscountLine') {
+			return 'mapCaptureOncbMap';
 		} else {
 			return 'vtlib_open_popup_window';
 		}

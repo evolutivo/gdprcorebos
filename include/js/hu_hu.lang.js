@@ -267,6 +267,7 @@ var alert_arr = {
 	'Default' : 'Alapértelmezett',
 	'Notebook' : 'Jegyzetfüzet',
 	'ReportCharts': 'Jelentés Grafikonok',
+	'CustomWidget': 'Aggregate Filter',
 	'SPECIAL_CHARS' : '\\ / < > + \' " ',
 	'BETWEEN' : 'közte',
 	'BEFORE' : 'előtt',
@@ -397,5 +398,6 @@ var alert_arr = {
 	'OF' : 'of',
 	'ERR_Massedit' : 'Error on Mass Edit',
 	'ProcessFINISHED' : 'Process Finished',
-	'duplicatednotallowed' : 'Duplicated Modules Not Allowed'
+	'duplicatednotallowed' : 'Duplicated Modules Not Allowed',
+	'HAS_THIS_AS_NTH_CHILD' : 'Ez még egy másik gyermek'
 };

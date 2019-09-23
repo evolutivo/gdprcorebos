@@ -382,31 +382,32 @@ class Homestuff {
 				if (trim($r)===',') {
 					$r='-';
 				}
-				$list[$i][]=$cvid_ch;
-				$list[$i][]=$aggr.'('.$field_label.')';
+				$wlisturl = 'index.php?action=ListView&module='.$modname.'&viewname='.$cvid;
+				$list[$i][]='<a href="'.$wlisturl.'">'.getTranslatedString($cvid_ch, $modname).'</a>';
+				$list[$i][]='<a href="'.$wlisturl.'">'.getTranslatedString(strtoupper($aggr), 'Reports').'('.getTranslatedString($field_label, $modname).')</a>';
 				if ($isCurrencyField) {
 					$currencyField = new CurrencyField($r);
-					$list[$i][] = $currencyField->getDisplayValueWithSymbol($current_user);
+					$list[$i][] = '<a href="'.$wlisturl.'">'.$currencyField->getDisplayValueWithSymbol($current_user).'</a>';
 				} elseif (is_numeric($r)) {
 					$currencyField = new CurrencyField($r);
-					$list[$i][]= $currencyField->getDisplayValue($current_user);
+					$list[$i][]= '<a href="'.$wlisturl.'">'.$currencyField->getDisplayValue($current_user).'</a>';
 				} else {
-					$list[$i][]= $r;
+					$list[$i][]='<a href="'.$wlisturl.'">'.$r.'</a>' ;
 				}
 			} else {
-				echo "<font color='red'>Filter You have Selected is Not Found</font>";
+				echo "<font color='red'>getTranslatedString('LBL_FILTERSELECTEDNOTFOUND')</font>";
 			}
 		}
 		$header = array();
 		$header[]=getTranslatedString('LBL_HOME_METRICS', 'Home');
-		$header[]='Aggregate(Field)';
-		$header[]='Value';
+		$header[]=getTranslatedString('LBL_HOME_AGGREGATEFIELD');
+		$header[]=getTranslatedString('LBL_HOME_VALUE');
 		$return_value = array('ModuleName'=>'Home', 'cvid'=>0, 'Header'=>$header, 'Entries'=>$list);
 
 		if (count($header)!=0) {
 			 return $return_value;
 		} else {
-			echo 'Fields not found in Selected Filter';
+			echo getTranslatedString('LBL_FIELDINFILTERNOTFOUND');
 		}
 	}
 
@@ -527,11 +528,10 @@ class Homestuff {
 
 	public function getReportChartDetails($stuffId, $skipChart = '') {
 		global $adb;
-		$qry="select * from vtiger_homereportchart where stuffid=?";
-		$result=$adb->pquery($qry, array($stuffId));
-		$reportId=$adb->query_result($result, 0, "reportid");
-		$chartType=$adb->query_result($result, 0, "reportcharttype");
-		$reportDetails=array('ReportId'=>$reportId,'Chart'=>$chartType);
+		$result=$adb->pquery('select * from vtiger_homereportchart where stuffid=?', array($stuffId));
+		$reportId=$adb->query_result($result, 0, 'reportid');
+		$chartType=$adb->query_result($result, 0, 'reportcharttype');
+		$reportDetails=array('ReportId'=>$reportId, 'Chart'=>$chartType);
 		$this->reportdetails[$stuffId] = $reportDetails;
 		if ($skipChart == '') {
 			return $this->getDisplayReportChart($reportId, $chartType);
@@ -551,8 +551,7 @@ class Homestuff {
 	private function getDefaultDetails($dfid, $calCnt) {
 		global $adb;
 		$details = array('ModuleName'=>'','Title'=>'','Header'=>'','Entries'=>array(),'search_qry'=>'');
-		$qry="select * from vtiger_homedefault where stuffid=?";
-		$result=$adb->pquery($qry, array($dfid));
+		$result=$adb->pquery('select * from vtiger_homedefault where stuffid=?', array($dfid));
 		$maxval=$adb->query_result($result, 0, "maxentries");
 		$hometype=$adb->query_result($result, 0, "hometype");
 

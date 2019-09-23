@@ -28,6 +28,8 @@ class Potentials extends CRMEntity {
 	/** Indicator if this is a custom module or standard module */
 	public $IsCustomModule = false;
 	public $HasDirectImageField = false;
+	public $moduleIcon = array('library' => 'standard', 'containerClass' => 'slds-icon_container slds-icon-standard-opportunity', 'class' => 'slds-icon', 'icon'=>'opportunity');
+
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
@@ -111,8 +113,9 @@ class Potentials extends CRMEntity {
 	public function save($module, $fileid = '') {
 		global $adb;
 		if ($this->mode=='edit') {
-			$rs = $adb->pquery('select sales_stage from vtiger_potential where potentialid = ?', array($this->id));
+			$rs = $adb->pquery('select sales_stage,convertedfromlead from vtiger_potential where potentialid = ?', array($this->id));
 			$this->sales_stage = $adb->query_result($rs, 0, 'sales_stage');
+			$this->column_fields['convertedfromlead'] = $adb->query_result($rs, 0, 'convertedfromlead');
 		}
 		parent::save($module, $fileid);
 	}
@@ -510,28 +513,22 @@ class Potentials extends CRMEntity {
 	 */
 	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb,$log;
-		$log->debug("> transferRelatedRecords $module, $transferEntityIds, $entityId");
+		$log->debug('> transferRelatedRecords '.$module.','.print_r($transferEntityIds, true).','.$entityId);
 		parent::transferRelatedRecords($module, $transferEntityIds, $entityId);
 		$rel_table_arr = array(
 			'Contacts'=>'vtiger_contpotentialrel',
 			'Products'=>'vtiger_seproductsrel',
 			'Attachments'=>'vtiger_seattachmentsrel',
-			'Quotes'=>'vtiger_quotes',
-			'SalesOrder'=>'vtiger_salesorder',
 		);
 		$tbl_field_arr = array(
 			'vtiger_contpotentialrel'=>'contactid',
 			'vtiger_seproductsrel'=>'productid',
 			'vtiger_seattachmentsrel'=>'attachmentsid',
-			'vtiger_quotes'=>'quoteid',
-			'vtiger_salesorder'=>'salesorderid',
 		);
 		$entity_tbl_field_arr = array(
 			'vtiger_contpotentialrel'=>'potentialid',
 			'vtiger_seproductsrel'=>'crmid',
 			'vtiger_seattachmentsrel'=>'crmid',
-			'vtiger_quotes'=>'potentialid',
-			'vtiger_salesorder'=>'potentialid',
 		);
 		foreach ($transferEntityIds as $transferId) {
 			foreach ($rel_table_arr as $rel_table) {

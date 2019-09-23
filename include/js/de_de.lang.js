@@ -289,6 +289,7 @@ var alert_arr = {
 	'Default': 'Standard',
 	'Notebook': 'Notizblock',
 	'ReportCharts': 'Berichtsgrafiken',
+	'CustomWidget': 'Aggregate Filter',
 	'SPECIAL_CHARS':'\\ / < > + \' " ',
 
 	'BETWEEN': 'zwischen',
@@ -417,5 +418,6 @@ var alert_arr = {
 	'OF' : 'von',
 	'ERR_Massedit' : 'Fehler bei der Massenbearbeitung',
 	'ProcessFINISHED' : 'Prozess beendet',
-	'duplicatednotallowed' : 'Duplizierte Module sind nicht erlaubt'
+	'duplicatednotallowed' : 'Duplizierte Module sind nicht erlaubt',
+	'HAS_THIS_AS_NTH_CHILD' : 'Hat dieses als ein weiteres Kind'
 };

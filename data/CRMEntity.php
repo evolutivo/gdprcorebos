@@ -24,10 +24,10 @@ class CRMEntity {
 	public $linkmodemodule = '';
 	public $DirectImageFieldValues = array();
 	public $HasDirectImageField = false;
-	static protected $methods = array();
-	static protected $dbvalues = array();
-	static protected $todvalues = array();
-	public $moduleIcon = array('library' => 'utility', 'icon'=>'account');
+	protected static $methods = array();
+	protected static $dbvalues = array();
+	protected static $todvalues = array();
+	public $moduleIcon = array('library' => 'standard', 'containerClass' => 'slds-icon_container slds-icon-standard-recent', 'class' => 'slds-icon', 'icon'=>'entity');
 
 	public function __construct() {
 		global $log;
@@ -774,6 +774,8 @@ class CRMEntity {
 					if ($insertion_mode == 'edit') {
 						$fldvalue = $this->adjustCurrencyField($fieldname, $fldvalue, $tabid);
 					}
+				} elseif ($uitype == '69m' || $uitype == '69') {
+					$fldvalue = urldecode($this->column_fields[$fieldname]);
 				} else {
 					$fldvalue = $this->column_fields[$fieldname];
 				}
@@ -2144,22 +2146,29 @@ class CRMEntity {
 		$with_crmid = (array)$with_crmid;
 		foreach ($with_crmid as $relcrmid) {
 			if ($with_module == 'Documents') {
-				$checkpresence = $adb->pquery("SELECT crmid FROM vtiger_senotesrel WHERE crmid = ? AND notesid = ?", array($crmid, $relcrmid));
+				$checkpresence = $adb->pquery('SELECT 1 FROM vtiger_senotesrel WHERE crmid=? AND notesid=?', array($crmid, $relcrmid));
 				// Relation already exists? No need to add again
 				if ($checkpresence && $adb->num_rows($checkpresence)) {
 					continue;
 				}
-
-				$adb->pquery("INSERT INTO vtiger_senotesrel(crmid, notesid) VALUES(?,?)", array($crmid, $relcrmid));
+				$adb->pquery('INSERT INTO vtiger_senotesrel(crmid, notesid) VALUES(?,?)', array($crmid, $relcrmid));
+			} elseif ($with_module == 'Emails') {
+				$checkpresence = $adb->pquery('SELECT 1 FROM vtiger_seactivityrel WHERE crmid=? AND activityid=?', array($crmid, $relcrmid));
+				// Relation already exists? No need to add again
+				if ($checkpresence && $adb->num_rows($checkpresence)) {
+					continue;
+				}
+				$adb->pquery('INSERT INTO vtiger_seactivityrel(crmid, activityid) VALUES(?,?)', array($crmid, $relcrmid));
 			} else {
-				$checkpresence = $adb->pquery("SELECT crmid FROM vtiger_crmentityrel WHERE
-					crmid = ? AND module = ? AND relcrmid = ? AND relmodule = ?", array($crmid, $module, $relcrmid, $with_module));
+				$checkpresence = $adb->pquery(
+					'SELECT 1 FROM vtiger_crmentityrel WHERE crmid=? AND module=? AND relcrmid=? AND relmodule=?',
+					array($crmid, $module, $relcrmid, $with_module)
+				);
 				// Relation already exists? No need to add again
 				if ($checkpresence && $adb->num_rows($checkpresence)) {
 					continue;
 				}
-
-				$adb->pquery("INSERT INTO vtiger_crmentityrel(crmid, module, relcrmid, relmodule) VALUES(?,?,?,?)", array($crmid, $module, $relcrmid, $with_module));
+				$adb->pquery('INSERT INTO vtiger_crmentityrel(crmid, module, relcrmid, relmodule) VALUES(?,?,?,?)', array($crmid, $module, $relcrmid, $with_module));
 			}
 		}
 	}
@@ -2279,10 +2288,6 @@ class CRMEntity {
 		$query .= " LEFT JOIN vtiger_users ON vtiger_users.id = vtiger_crmentity.smownerid";
 		$query .= " LEFT JOIN vtiger_groups ON vtiger_groups.groupid = vtiger_crmentity.smownerid";
 		$query .= " WHERE vtiger_crmentity.deleted = 0 AND (vtiger_crmentityrel.crmid = $id OR vtiger_crmentityrel.relcrmid = $id)";
-
-		if (GlobalVariable::getVariable('Debug_RelatedList_Query', '0') == '1') {
-			echo '<br>'.$query.'<br>';
-		}
 
 		$return_value = GetRelatedList($currentModule, $related_module, $other, $query, $button, $returnset);
 
@@ -2562,12 +2567,18 @@ class CRMEntity {
 	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb, $log;
 		$log->debug('> transferRelatedRecords '.$module.','.print_r($transferEntityIds, true).','.$entityId);
-
+		include_once 'include/utils/duplicate.php';
 		$rel_table_arr = array('Activities'=>'vtiger_seactivityrel');
-
 		$tbl_field_arr = array('vtiger_seactivityrel'=>'activityid');
-
 		$entity_tbl_field_arr = array('vtiger_seactivityrel'=>'crmid');
+		$depmods = getUIType10DependentModules($module);
+		unset($depmods['ModComments']);
+		foreach ($depmods as $mod => $details) {
+			$rel_table_arr[$mod] = $details['tablename'];
+			$modobj = CRMEntity::getInstance($mod);
+			$tbl_field_arr[$details['tablename']] = $modobj->tab_name_index[$details['tablename']];
+			$entity_tbl_field_arr[$details['tablename']] = $details['columname'];
+		}
 
 		foreach ($transferEntityIds as $transferId) {
 			foreach ($rel_table_arr as $rel_table) {
@@ -2591,9 +2602,12 @@ class CRMEntity {
 				}
 			}
 
-			// Pick the records related to the entity to be transfered, but do not pick the once which are already related to the current entity.
-			$relatedRecords = $adb->pquery("SELECT relcrmid, relmodule FROM vtiger_crmentityrel WHERE crmid=? AND module=?" .
-					" AND relcrmid NOT IN (SELECT relcrmid FROM vtiger_crmentityrel WHERE crmid=? AND module=?)", array($transferId, $module, $entityId, $module));
+			// Pick the records related to the entity to be transfered, but do not pick the ones which are already related to the current entity.
+			$relatedRecords = $adb->pquery(
+				'SELECT relcrmid, relmodule FROM vtiger_crmentityrel WHERE crmid=? AND module=?'
+					.' AND relcrmid NOT IN (SELECT relcrmid FROM vtiger_crmentityrel WHERE crmid=? AND module=?)',
+				array($transferId, $module, $entityId, $module)
+			);
 			$numOfRecords = $adb->num_rows($relatedRecords);
 			for ($i = 0; $i < $numOfRecords; $i++) {
 				$relcrmid = $adb->query_result($relatedRecords, $i, 'relcrmid');
@@ -2604,7 +2618,7 @@ class CRMEntity {
 				);
 			}
 
-			// Pick the records to which the entity to be transfered is related, but do not pick the once to which current entity is already related.
+			// Pick the records to which the entity to be transfered is related, but do not pick the ones to which current entity is already related.
 			$parentRecords = $adb->pquery(
 				'SELECT crmid, module FROM vtiger_crmentityrel WHERE relcrmid=? AND relmodule=? AND crmid NOT IN
 					(SELECT crmid FROM vtiger_crmentityrel WHERE relcrmid=? AND relmodule=?)',
@@ -3310,13 +3324,14 @@ class CRMEntity {
 	 * return string $sorder    - sortorder string either 'ASC' or 'DESC'
 	 */
 	public function getSortOrder() {
-		global $log,$currentModule;
+		global $log;
+		$cmodule = get_class($this);
 		$log->debug('> getSortOrder');
-		$sorder = strtoupper(GlobalVariable::getVariable('Application_ListView_Default_OrderDirection', $this->default_sort_order, $currentModule));
+		$sorder = strtoupper(GlobalVariable::getVariable('Application_ListView_Default_OrderDirection', $this->default_sort_order, $cmodule));
 		if (isset($_REQUEST['sorder'])) {
 			$sorder = $this->db->sql_escape_string($_REQUEST['sorder']);
-		} elseif (!empty($_SESSION[$currentModule.'_Sort_Order'])) {
-			$sorder = $this->db->sql_escape_string($_SESSION[$currentModule.'_Sort_Order']);
+		} elseif (!empty($_SESSION[$cmodule.'_Sort_Order'])) {
+			$sorder = $this->db->sql_escape_string($_SESSION[$cmodule.'_Sort_Order']);
 		}
 		$log->debug('< getSortOrder');
 		return $sorder;
@@ -3327,18 +3342,18 @@ class CRMEntity {
 	 * return string $order_by    - fieldname(eg: 'accountname')
 	 */
 	public function getOrderBy() {
-		global $log, $currentModule;
+		global $log;
 		$log->debug('> getOrderBy');
-
+		$cmodule = get_class($this);
 		$order_by = '';
-		if (GlobalVariable::getVariable('Application_ListView_Default_Sorting', 0, $currentModule)) {
-			$order_by = GlobalVariable::getVariable('Application_ListView_Default_OrderField', $this->default_order_by, $currentModule);
+		if (GlobalVariable::getVariable('Application_ListView_Default_Sorting', 0, $cmodule)) {
+			$order_by = GlobalVariable::getVariable('Application_ListView_Default_OrderField', $this->default_order_by, $cmodule);
 		}
 
 		if (isset($_REQUEST['order_by'])) {
 			$order_by = $this->db->sql_escape_string($_REQUEST['order_by']);
-		} elseif (!empty($_SESSION[$currentModule.'_Order_By'])) {
-			$order_by = $this->db->sql_escape_string($_SESSION[$currentModule.'_Order_By']);
+		} elseif (!empty($_SESSION[$cmodule.'_Order_By'])) {
+			$order_by = $this->db->sql_escape_string($_SESSION[$cmodule.'_Order_By']);
 		}
 		$log->debug('< getOrderBy');
 		return $order_by;

@@ -149,7 +149,7 @@ class OpenDocument {
 	 * DOMNode of current node
 	 *
 	 * @var DOMNode
-	 * @access provate
+	 * @access private
 	 */
 	private $cursor;
 
@@ -163,7 +163,7 @@ class OpenDocument {
 	private $styles_array;
 	private $originGenDocStyles;
 
-		/**
+	/**
 	 * DOMNode contains fonts declarations
 	 *
 	 * @var DOMNode
@@ -306,7 +306,7 @@ class OpenDocument {
 	const FILE_MANIFEST = 'META-INF/manifest.xml';
 	const MANIFEST = 'urn:oasis:names:tc:opendocument:xmlns:manifest:1.0';
 
-		/**
+	/**
 	 * text namespace URL
 	 */
 	const NS_TEXT = 'urn:oasis:names:tc:opendocument:xmlns:text:1.0';
@@ -328,12 +328,12 @@ class OpenDocument {
 
 	private $NS_TABLE_attrib=array('align');
 
-		/**
+	/**
 	 * style namespace URL
 	 */
 	const NS_STYLE = 'urn:oasis:names:tc:opendocument:xmlns:style:1.0';
 
-		/**
+	/**
 	 * fo namespace URL
 	 */
 	const NS_FO = 'urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0';
@@ -343,9 +343,7 @@ class OpenDocument {
 								'padding-left','padding-right','padding-top','padding-bottom','break-before','line-height',
 								'font-variant','text-transform','text-shadow','letter-spacing','break-after','text-align-last'
 	);
-	private $NS_DRAW_attrib=array('luminance','contrast','red','green','blue','gamma','color-inversion','image-opacity',
-								  'color-mode','transparency','opacity'
-	);
+	private $NS_DRAW_attrib=array('luminance','contrast','red','green','blue','gamma','color-inversion','image-opacity','color-mode','transparency','opacity');
 	private $NS_XLINK_attrib=array('type','href','show','actuate'
 	);
 	private $NS_LISTSTYLE=array('num-format','num-suffix','font-name','num-prefix');
@@ -359,7 +357,7 @@ class OpenDocument {
 	private $saveContextoActual;
 	public $xmlout;
 
-		/**
+	/**
 	 * office namespace URL
 	 */
 	const NS_OFFICE = 'urn:oasis:names:tc:opendocument:xmlns:office:1.0';
@@ -378,7 +376,7 @@ class OpenDocument {
 	 */
 	const NS_DRAW = 'urn:oasis:names:tc:opendocument:xmlns:drawing:1.0';
 
-		/**
+	/**
 	 * Constructor
 	 *
 	 * @param string $filename optional
@@ -800,9 +798,11 @@ class OpenDocument {
 		'insertindexGD' => $insertindexGD,
 		);
 
-	  // Prepare include docs information
+		// Prepare include docs information
 		$xmlText = $this->contentDOM->saveXML();
-		if (preg_match_all('/\\'.$includeGD.'([\w\d]+)\}/', $xmlText, $matches)) {
+		$result = preg_match_all('/\\'.$includeGD.'([\w\d]+)\}/', $xmlText, $matches);
+		$this->debugmsg('Post processing: '.print_r(array($includeGD,$result, $matches), true));
+		if ($result) {
 			foreach ($matches[1] as $match) {
 				$sql = "select notesid from vtiger_notes where note_no='{$match}'";
 				$res = $adb->query($sql);
@@ -816,8 +816,7 @@ class OpenDocument {
 				$path = $adb->query_result($res, 0, 'path');
 				$prefix = $adb->query_result($res, 0, 'attachmentsid').'_';
 				$incFilename = $path.$prefix.$name;
-				$properties['match.'.$match] = escapeshellarg('file://'.$root_directory.$incFilename);
-				;
+				$properties['match.'.$match] = 'file://'.$root_directory.$incFilename;
 			}
 		}
 		$pFilename = tempnam('/tmp', 'gendoc-');
@@ -826,15 +825,16 @@ class OpenDocument {
 			fwrite($handle, "{$key} = {$value}\n");
 		}
 		fclose($handle);
-	  // Process and save
+		// Process and save
 		$filename = escapeshellarg($filename);
 		$command = "{$root_directory}modules/evvtgendoc/unoservice.sh {$pFilename} file://{$filename} file://{$filename}";
-	  //$command = "{$root_directory}modules/evvtgendoc/unoservice.sh {$pFilename} file://{$filename} file://{$filename} >>{$root_directory}/modules/evvtgendoc/unoservice.log 2>&1";
-	  //echo $command;
+		//$command = "{$root_directory}modules/evvtgendoc/unoservice.sh {$pFilename} file://{$filename} file://{$filename} >>{$root_directory}/modules/evvtgendoc/unoservice.log 2>&1";
+		//echo $command;
 		$status = exec($command);
+		$this->debugmsg('Post processing: '.print_r(array($command, $status), true));
 		$log->debug("unoservice.sh: {$status}");
 
-	  // Remove temp files
+		// Remove temp files
 		unlink($pFilename);
 	}
 
@@ -935,7 +935,7 @@ class OpenDocument {
 		$this->debugmsg("END GenDOC $endcompile s");
 	}
 
-		/**
+	/**
 	 * Generate OpenDocument combined document
 	 *
 	 * @param OpenDocument/ArrayObject $obj
@@ -945,7 +945,7 @@ class OpenDocument {
 		global $siincluir,$changedImage,$newImageAdded;
 		global $ramaparacada,$pcincluir,$tempincluir,$iter_modules,$rootmod;
 		global $repe,$log, $parentArray,$currentModule;
-		   //commands
+		//commands
 		if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language . '.php')) {
 			include 'modules/evvtgendoc/commands_'. OpenDocument::$compile_language . '.php';
 		} else {
@@ -977,8 +977,8 @@ class OpenDocument {
 					$condicionparacada=rtrim(trim(substr($texto_p, strlen($foreachGD))), '}');
 					$module_pcada = getModuleFromCondition($this->contextoParacada[$this->contextoActual-1]['condicion']);
 					$this->contextoParacada[$this->contextoActual]=array(  // guardo contexto modulos encontrados
-					  'condicion'=>$condicionparacada,
-					  'module'=>($module_pcada=='Organization' ? 'Accounts' : $module_pcada),
+						'condicion'=>$condicionparacada,
+						'module'=>($module_pcada=='Organization' ? 'cbCompany' : $module_pcada),
 					);
 				} elseif (strtolower(substr($texto_p, 0, strlen($foreachEndGD)))==$foreachEndGD) {
 					$this->contextoParacada[$this->contextoActual]['ramaparacada']=$ramaparacada; // guardo contexto modulos encontrados
@@ -993,9 +993,9 @@ class OpenDocument {
 							$repe[] = 0;
 							$last_repe = count($repe)-1;
 						for ($repe[$last_repe]=1; $repe[$last_repe]<=$num_iter; $repe[$last_repe]++) {
-							   $ramaparacada=$this->contextoParacada[0]['ramaparacada'];
-							   $this->contextoParacada[0]['repe'] = $repe[$last_repe];
-							   $this->toGenDoc($ramaparacada, $id, $module);
+							$ramaparacada=$this->contextoParacada[0]['ramaparacada'];
+							$this->contextoParacada[0]['repe'] = $repe[$last_repe];
+							$this->toGenDoc($ramaparacada, $id, $module);
 							pop_iter_modules();
 						}
 							array_pop($repe);
@@ -1031,7 +1031,7 @@ class OpenDocument {
 						} else {
 							array_push($siincluir, false);
 						}
-						continue;
+						continue 2;
 					}
 					if (strtolower(substr($texto_p, 0, strlen($ifnotexistsGD)))==$ifnotexistsGD) {
 						// obtener condición
@@ -1043,15 +1043,15 @@ class OpenDocument {
 						} else {
 							array_push($siincluir, false);
 						}
-						continue;
+						continue 2;
 					}
 					if (strtolower(substr($texto_p, 0, strlen($ifexistsEndGD)))==$ifexistsEndGD) {
 						array_pop($siincluir);
-						continue;
+						continue 2;
 					}
 					if (strtolower(substr($texto_p, 0, strlen($ifnotexistsEndGD)))==$ifnotexistsEndGD) {
 						array_pop($siincluir);
-						continue;
+						continue 2;
 					}
 					if (strtolower(substr($texto_p, 0, strlen($foreachGD)))==$foreachGD) {
 						$pcincluir=true;
@@ -1061,12 +1061,12 @@ class OpenDocument {
 						eval_paracada($condicionparacada, $id, $module);
 						$this->contextoActual=0;
 						$this->contextoParacada[0]=array(  // guardo contexto modulos encontrados
-						  'iter_modules'=>$iter_modules,
-						  'condicion'=>$condicionparacada,
-						  'module'=>($module == 'Organization' ? 'Accounts' : $module),
-						  'moduleid'=>$id
+							'iter_modules'=>$iter_modules,
+							'condicion'=>$condicionparacada,
+							'module'=>($module == 'Organization' ? 'cbCompany' : $module),
+							'moduleid'=>$id
 						);
-						continue;
+						continue 2;
 					}
 					if (strtolower(substr($texto_p, 0, 14))=='putforeachhere') {
 						$this->saveContextoActual['ramaparacada']=$ramaparacada;
@@ -1081,13 +1081,13 @@ class OpenDocument {
 						$repe[] = 0;
 						$last_repe = count($repe)-1;
 						for ($repe[$last_repe]=1; $repe[$last_repe]<=$num_iter; $repe[$last_repe]++) {
-							   $this->toGenDoc($ramaparacada, $modid, $ctxmodule);
-							   pop_iter_modules();
+							$this->toGenDoc($ramaparacada, $modid, $ctxmodule);
+							pop_iter_modules();
 						}
 						array_pop($repe);
 						$ramaparacada=$this->saveContextoActual['ramaparacada'];
 						$this->contextoActual--;
-						continue;
+						continue 2;
 					}
 					if (strtolower(substr($texto_p, 0, strlen($imageGD)))==$imageGD) {
 						$entidadimagen=rtrim(trim(substr($texto_p, strlen($imageGD))), '}');
@@ -1098,7 +1098,7 @@ class OpenDocument {
 						// } else {   // sustituimos imagen existente
 						//     $changedImage=eval_imagen($entidadimagen,$id,$module);
 						// }
-						continue;
+						continue 2;
 					}
 					if (strtolower(substr($texto_p, 0, strlen($includeGD)))==$includeGD) {
 						$entidadincluir = rtrim(trim(substr($texto_p, strlen($includeGD))), '}');
@@ -1163,7 +1163,7 @@ class OpenDocument {
 					}
 					break;
 				case 'OpenDocument_TextSoftPageBreak':
-					continue; // Me lo cargo y punto
+					continue 2; // Me lo cargo y punto
 				break;
 				default:
 					$domNode = $this->contentDOM->importNode($child, true);
@@ -1192,10 +1192,7 @@ class OpenDocument {
 	}
 
 	public function toGenHTML($obj, $id, $module) {
-		global $iter_modules;
-		global $siincluir;
-		global $ramaparacada,$pcincluir;
-		global $repe;
+		global $iter_modules, $siincluir, $ramaparacada, $pcincluir, $repe;
 		$html = '';
 		//commands
 		if (file_exists('modules/evvtgendoc/commands_'. OpenDocument::$compile_language . '.php')) {
@@ -1270,7 +1267,7 @@ class OpenDocument {
 						} else {
 							array_push($siincluir, false);
 						}
-						continue;
+						continue 2;
 					}
 					if (strtolower(substr($texto_p, 0, strlen($ifnotexistsGD)))==$ifnotexistsGD) {
 						// obtener condición
@@ -1282,15 +1279,15 @@ class OpenDocument {
 						} else {
 							array_push($siincluir, false);
 						}
-						continue;
+						continue 2;
 					}
 					if (strtolower(substr($texto_p, 0, strlen($ifexistsEndGD)))==$ifexistsEndGD) {
 						array_pop($siincluir);
-						continue;
+						continue 2;
 					}
 					if (strtolower(substr($texto_p, 0, strlen($ifnotexistsEndGD)))==$ifnotexistsEndGD) {
 						array_pop($siincluir);
-						continue;
+						continue 2;
 					}
 					if (strtolower(substr($texto_p, 0, strlen($foreachGD)))==$foreachGD) {
 						$pcincluir=true;
@@ -1298,7 +1295,7 @@ class OpenDocument {
 						// obtener condición
 						$condicionparacada=rtrim(substr($texto_p, strlen($foreachGD)), '}');
 						eval_paracada($condicionparacada, $id, $module);
-						continue;
+						continue 2;
 					}
 					$html .= '<p>';
 					$html .= $this->toGenHTML($child, $id, $module);
@@ -1444,7 +1441,7 @@ class OpenDocument {
 		return OpenDocument_ListItem::instance($this);
 	}
 
-		/********************* Styles ****************************/
+	/********************* Styles ****************************/
 
 	/**
 	 * Apply style information to object
@@ -1465,10 +1462,9 @@ class OpenDocument {
 		$nodes = $this->cursor->getElementsByTagName('*');
 		$style=null;
 		foreach ($nodes as $node) {
-			if ($node->hasAttributeNS(self::NS_TEXT, 'style-name')
-			 && $node->getAttributeNS(self::NS_TEXT, 'style-name') == $style_name) {
-				 $style=$node;
-				 break;
+			if ($node->hasAttributeNS(self::NS_TEXT, 'style-name') && $node->getAttributeNS(self::NS_TEXT, 'style-name') == $style_name) {
+				$style=$node;
+				break;
 			}
 		}
 
@@ -1501,18 +1497,18 @@ class OpenDocument {
 		}
 
 /*        $ReflectionClass = new ReflectionClass($object);
-        if ($ReflectionClass->getConstant('nodePrefix')=='table')
-          $nodes = $style->getElementsByTagNameNS(self::NS_STYLE, $ReflectionClass->getConstant('nodeName').'-properties');
-        elseif ($ReflectionClass->getConstant('nodePrefix')=='paragraph')
-          $nodes = $style->getElementsByTagNameNS(self::NS_STYLE, 'paragraph-properties');
-        else
-          $nodes = $style->getElementsByTagNameNS(self::NS_STYLE, 'text-properties');
-        /*
-        if (in_array($value,$this->NS_ENTITIES)) {
-            $nodes = $style->getElementsByTagNameNS(self::NS_STYLE, $value.'-properties');
-        } else {
-            $nodes = $style->getElementsByTagNameNS(self::NS_STYLE, 'text-properties');
-        }*/
+		if ($ReflectionClass->getConstant('nodePrefix')=='table')
+		  $nodes = $style->getElementsByTagNameNS(self::NS_STYLE, $ReflectionClass->getConstant('nodeName').'-properties');
+		elseif ($ReflectionClass->getConstant('nodePrefix')=='paragraph')
+		  $nodes = $style->getElementsByTagNameNS(self::NS_STYLE, 'paragraph-properties');
+		else
+		  $nodes = $style->getElementsByTagNameNS(self::NS_STYLE, 'text-properties');
+		/*
+		if (in_array($value,$this->NS_ENTITIES)) {
+			$nodes = $style->getElementsByTagNameNS(self::NS_STYLE, $value.'-properties');
+		} else {
+			$nodes = $style->getElementsByTagNameNS(self::NS_STYLE, 'text-properties');
+		}*/
 		if (empty($elemtype)) {
 			$elemtype='text';
 		}
@@ -1521,17 +1517,17 @@ class OpenDocument {
 			$text_properties = $nodes->item(0);
 		} else {
 			/*
-            if ($ReflectionClass->getConstant('nodePrefix')=='table')
-              $text_properties = $this->contentDOM->createElementNS(self::NS_STYLE, $ReflectionClass->getConstant('nodeName').'-properties');
-            elseif ($ReflectionClass->getConstant('nodePrefix')=='paragraph')
-              $text_properties = $this->contentDOM->createElementNS(self::NS_STYLE, 'paragraph-properties');
-            else
-              $text_properties = $this->contentDOM->createElementNS(self::NS_STYLE, 'text-properties');
-            if (in_array($value,$this->NS_ENTITIES)) {
-                $text_properties = $this->contentDOM->createElementNS(self::NS_STYLE, $value.'-properties');
-            } else {
-                $text_properties = $this->contentDOM->createElementNS(self::NS_STYLE, 'text-properties');
-            }*/
+			if ($ReflectionClass->getConstant('nodePrefix')=='table')
+			  $text_properties = $this->contentDOM->createElementNS(self::NS_STYLE, $ReflectionClass->getConstant('nodeName').'-properties');
+			elseif ($ReflectionClass->getConstant('nodePrefix')=='paragraph')
+			  $text_properties = $this->contentDOM->createElementNS(self::NS_STYLE, 'paragraph-properties');
+			else
+			  $text_properties = $this->contentDOM->createElementNS(self::NS_STYLE, 'text-properties');
+			if (in_array($value,$this->NS_ENTITIES)) {
+				$text_properties = $this->contentDOM->createElementNS(self::NS_STYLE, $value.'-properties');
+			} else {
+				$text_properties = $this->contentDOM->createElementNS(self::NS_STYLE, 'text-properties');
+			}*/
 			$text_properties = $this->contentDOM->createElementNS(self::NS_STYLE, (strpos($elemtype, 'properties') ? $elemtype : $elemtype.'-properties'));
 			$style->appendChild($text_properties);
 		}
@@ -1563,7 +1559,7 @@ class OpenDocument {
 		return $style->getAttributeNS(self::NS_STYLE, 'name');
 	}
 
-		/**
+	/**
 	 * Add array of style values
 	 *
 	 * @param string $style_name
@@ -1623,7 +1619,7 @@ class OpenDocument {
 		}
 	}
 
-		/**
+	/**
 	 * Add array of List style values
 	 *
 	 * @param string $style_name
@@ -1683,7 +1679,7 @@ class OpenDocument {
 		$this->styles->appendChild($style);
 	}
 
-		/**
+	/**
 	 * Add array of Date style values
 	 *
 	 */
@@ -1727,7 +1723,7 @@ class OpenDocument {
 		$this->styles->appendChild($style);
 	}
 
-		/**
+	/**
 	 * Get array of style values
 	 *
 	 * @param string $style_name
@@ -2154,12 +2150,12 @@ class OpenDocument {
 			$this->path = $filename;
 		}
 
-				// Remove file and create a new document to avoid problems
+		// Remove file and create a new document to avoid problems
 		if (file_exists($this->path)) {
 			unlink($this->path);
 		}
 
-				//write mimetype
+		//write mimetype
 		if (!ZipWrapper::write($this->path, self::FILE_MIMETYPE, $this->mimetype)) {
 			throw new OpenDocument_Exception(OpenDocument_Exception::WRITE_MIMETYPE_ERR);
 		}
@@ -2214,7 +2210,7 @@ class OpenDocument {
 		$doc->column_fields['docyear'] = date('Y');
 		$doc->column_fields['template'] = 0;
 		$doc->column_fields['filelocationtype'] = 'I';
-		$gdfolder = GlobalVariable::getVariable('GenDoc_Save_Document_Folder', '');
+		$gdfolder = GlobalVariable::getVariable('GenDoc_Save_Document_Folder', '', $module);
 		if ($gdfolder!='') {
 			$res = $adb->pquery('select folderid from vtiger_attachmentsfolder where foldername=?', array($gdfolder));
 			if ($adb->num_rows($res)==0) {
@@ -2361,32 +2357,32 @@ class OpenDocument {
 						case 'b':
 						case 'strong':
 							$elem=$topofarray->createSpan(html_entity_decode($childhtml->nodeValue, ENT_NOQUOTES, 'UTF-8'));
-							$elem->getNode()->setAttribute('text:style-name', "SIGPAC_BOLD");
+							$elem->getNode()->setAttribute('text:style-name', 'SIGPAC_BOLD');
 							break;
 						case 'i':
 						case 'em':
-							 $elem=$topofarray->createSpan(html_entity_decode($childhtml->nodeValue, ENT_NOQUOTES, 'UTF-8'));
-							 $elem->getNode()->setAttribute('text:style-name', "SIGPAC_ITALIC");
+							$elem=$topofarray->createSpan(html_entity_decode($childhtml->nodeValue, ENT_NOQUOTES, 'UTF-8'));
+							$elem->getNode()->setAttribute('text:style-name', 'SIGPAC_ITALIC');
 							break;
 						case 'u':
-							 $elem=$topofarray->createSpan(html_entity_decode($childhtml->nodeValue, ENT_NOQUOTES, 'UTF-8'));
-							 $elem->getNode()->setAttribute('text:style-name', "SIGPAC_UNDERLINE");
+							$elem=$topofarray->createSpan(html_entity_decode($childhtml->nodeValue, ENT_NOQUOTES, 'UTF-8'));
+							$elem->getNode()->setAttribute('text:style-name', 'SIGPAC_UNDERLINE');
 							break;
 						case 'span':
-							 array_pop($parentArray);
-							 $topofarray=$parentArray[count($parentArray)-1];
+							array_pop($parentArray);
+							$topofarray=$parentArray[count($parentArray)-1];
 							if ($childhtml->haschildNodes()) {
 								$elem=$topofarray->createParagraph();
 								$spanstyle = $childhtml->getAttribute('style');
 								if ($spanstyle) {
-									 $spanstyle = str_replace(' ', '', $spanstyle);
-									 $sselem = explode(':', $spanstyle);
+									$spanstyle = str_replace(' ', '', $spanstyle);
+									$sselem = explode(':', $spanstyle);
 									if ($sselem[0]=='text-align') {
-										 $justify = strtoupper(trim($sselem[1], ';'));
-										 $elem->getNode()->setAttribute('text:style-name', "SIGPAC_JUSTIFY_$justify");
+										$justify = strtoupper(trim($sselem[1], ';'));
+										$elem->getNode()->setAttribute('text:style-name', "SIGPAC_JUSTIFY_$justify");
 									}
 								}
-								   $spanstyle = $childhtml->getAttribute('estilo');
+								$spanstyle = $childhtml->getAttribute('estilo');
 								if ($spanstyle) {
 									$elem->getNode()->setAttribute('text:style-name', $spanstyle);
 								}
@@ -2430,12 +2426,12 @@ class OpenDocument {
 							}
 							break;
 						case 'br':
-							 $elem=$topofarray->createTextTab();  // para que la justificación completa funcione correctamente
-							 $elem=$topofarray->createTextLineBreak();
+							$elem=$topofarray->createTextTab();  // para que la justificación completa funcione correctamente
+							$elem=$topofarray->createTextLineBreak();
 							break;
 						default: //case '#text':
-							 $elem=$topofarray->createTextElement(html_entity_decode($childhtml->nodeValue, ENT_NOQUOTES, 'UTF-8'));
-							 OpenDocument::copyAttributes($child, $elem);
+							$elem=$topofarray->createTextElement(html_entity_decode($childhtml->nodeValue, ENT_NOQUOTES, 'UTF-8'));
+							OpenDocument::copyAttributes($child, $elem);
 							break;
 					}
 				}
@@ -2573,9 +2569,8 @@ class OpenDocument {
 			case 'OpenDocument_TextLineBreak':
 				$elem=$topofarray->createTextLineBreak();
 				break;
-			case 'OpenDocument_TextSoftPageBreak':
-				continue; // Me lo cargo y punto
-			break;
+			case 'OpenDocument_TextSoftPageBreak': // Me lo cargo y punto
+				break;
 			case 'OpenDocument_Frame':
 				$frm=$topofarray->createFrame($child->text, $child->anchortype, $child->width, $child->height, $child->zindex, $child->framename, $child->x, $child->y, $child->anchorpagenumber);
 				OpenDocument::copyAttributes($child, $frm);

@@ -124,6 +124,12 @@ class Workflow {
 	public function performTasks($entityData) {
 		global $adb,$logbg;
 		$logbg->debug('> PerformTasks for Workflow: '.$this->id);
+		$wflaunch = 0;
+		$wf = $adb->pquery('select execution_condition from com_vtiger_workflows where workflow_id=?', array($this->id));
+		if ($wf && $adb->num_rows($wf)>0) {
+			$wflaunch = $wf->fields['execution_condition'];
+		}
+		$entityData->WorkflowEvent = $wflaunch;
 		$data = $entityData->getData();
 		$util = new VTWorkflowUtils();
 		$user = $util->adminUser();
@@ -145,7 +151,7 @@ class Workflow {
 				} else {
 					$delay = 0;
 				}
-				if ($task->executeImmediately==true) {
+				if ($task->executeImmediately==true || $this->executionCondition==VTWorkflowManager::$MANUAL) {
 					// we permit update field delayed tasks even though some may not make sense
 					// for example a mathematical operation or a decision on a value of a field that
 					// may change during the delay. This is for some certain types of updates, generally
@@ -469,17 +475,17 @@ class Workflow {
 			array_push($params, $executioncondtionid);
 		}
 		if (!empty($desc_search)) {
-			$where .= " and summary like ? ";
-			array_push($params, "%" . $desc_search . "%");
+			$where .= ' and summary like ? ';
+			array_push($params, '%' . $desc_search . '%');
 		}
 		if (!empty($purpose_search)) {
-			$where .= " and purpose like ? ";
-			array_push($params, "%" . $purpose_search . "%");
+			$where .= ' and purpose like ? ';
+			array_push($params, '%' . $purpose_search . '%');
 		}
 		if ($sorder != '' && $order_by != '') {
 			$list_query = "Select * from com_vtiger_workflows $where order by $order_by $sorder";
 		} else {
-			$list_query = "Select * from com_vtiger_workflows $where order by ".$this->default_order_by." ".$this->default_sort_order;
+			$list_query = "Select * from com_vtiger_workflows $where order by ".$this->default_order_by.' '.$this->default_sort_order;
 		}
 		$rowsperpage = GlobalVariable::getVariable('Workflow_ListView_PageSize', 20);
 		$from = ($page-1)*$rowsperpage;

@@ -26,6 +26,7 @@ class Leads extends CRMEntity {
 	/** Indicator if this is a custom module or standard module */
 	public $IsCustomModule = false;
 	public $HasDirectImageField = false;
+	public $moduleIcon = array('library' => 'standard', 'containerClass' => 'slds-icon_container slds-icon-standard-lead', 'class' => 'slds-icon', 'icon'=>'lead');
 
 	public $tab_name = array('vtiger_crmentity','vtiger_leaddetails','vtiger_leadsubdetails','vtiger_leadaddress','vtiger_leadscf');
 	public $tab_name_index = array(
@@ -321,23 +322,20 @@ class Leads extends CRMEntity {
 	 */
 	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb,$log;
-		$log->debug("> transferRelatedRecords $module, $transferEntityIds, $entityId");
+		$log->debug('> transferRelatedRecords '.$module.','.print_r($transferEntityIds, true).','.$entityId);
 		parent::transferRelatedRecords($module, $transferEntityIds, $entityId);
 		$rel_table_arr = array(
 			'Attachments'=>'vtiger_seattachmentsrel',
-			'cbCalendar'=>'vtiger_activity',
 			'Products'=>'vtiger_seproductsrel',
 			'Campaigns'=>'vtiger_campaignleadrel',
 		);
 		$tbl_field_arr = array(
 			'vtiger_seattachmentsrel'=>'attachmentsid',
-			'vtiger_activity'=>'activityid',
 			'vtiger_seproductsrel'=>'productid',
 			'vtiger_campaignleadrel'=>'campaignid',
 		);
 		$entity_tbl_field_arr = array(
 			'vtiger_seattachmentsrel'=>'crmid',
-			'vtiger_activity'=>'rel_id',
 			'vtiger_seproductsrel'=>'crmid',
 			'vtiger_campaignleadrel'=>'leadid',
 		);
