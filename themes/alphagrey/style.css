@@ -1100,7 +1100,6 @@ ul li{
 }
 
 #locateMap{
-    width:120px;
     background-color:#CCCCCC;
     border:1px solid #DDDDDD;
     padding-top:5px;
@@ -2854,6 +2853,7 @@ a.allMnu:Hover{
 .listview_row_total, .listview_row_sigma {
 	font-weight: bold;
 	float: right;
+	padding-right:6px;
 }
 
 .listview_row_sigma {

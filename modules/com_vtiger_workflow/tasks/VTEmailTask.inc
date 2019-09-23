@@ -78,7 +78,7 @@ class VTEmailTask extends VTTask {
 		}
 	}
 	public function doTask(&$entity) {
-		global $logbg;
+		global $logbg,$adb;
 		$util = new VTWorkflowUtils();
 
 		$admin = $util->adminUser();
@@ -140,7 +140,6 @@ class VTEmailTask extends VTTask {
 		}
 		if (!empty($this->attfieldnames)) {
 			if (substr($this->attfieldnames, -24) == ' : (Documents) filename)') {
-				global $adb;
 				$this->attfieldnames = substr($this->attfieldnames, 1, strlen($this->attfieldnames)-25);
 				$rsfld = $adb->pquery(
 					'select 1 from vtiger_field
@@ -269,7 +268,7 @@ class VTEmailTask extends VTTask {
 				$etinfo = getEntityName('MsgTemplate', array($templateid));
 				$focus->column_fields['description'] = $etinfo[$templateid];
 			} else {
-				$focus->column_fields['description'] = "\n".getTranslatedString('Workflow', 'com_vtger_workflow').' '.getTranslatedString('Task').': '.$desc_name."\n\n";
+				$focus->column_fields['description'] = "\n".getTranslatedString('Workflow', 'com_vtiger_workflow').' '.getTranslatedString('Task').': '.$desc_name."\n\n";
 			}
 			$focus->column_fields['assigned_user_id'] = $current_user->id;
 			$focus->mode = '';

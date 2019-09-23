@@ -28,6 +28,7 @@ class Contacts extends CRMEntity {
 	/** Indicator if this is a custom module or standard module */
 	public $IsCustomModule = false;
 	public $HasDirectImageField = true;
+	public $moduleIcon = array('library' => 'standard', 'containerClass' => 'slds-icon_container slds-icon-standard-contact', 'class' => 'slds-icon', 'icon'=>'contact');
 
 	/**
 	 * Mandatory table for supporting custom fields.
@@ -927,6 +928,15 @@ class Contacts extends CRMEntity {
 		return $query;
 	}
 
+	public function save($module, $fileid = '') {
+		global $adb;
+		if ($this->mode=='edit') {
+			$rs = $adb->pquery('select convertedfromlead from vtiger_contactdetails where contactid = ?', array($this->id));
+			$this->column_fields['convertedfromlead'] = $adb->query_result($rs, 0, 'convertedfromlead');
+		}
+		parent::save($module, $fileid);
+	}
+
 	/** Function to handle module specific operations when saving a entity */
 	public function save_module($module) {
 		$this->insertIntoAttachment($this->id, $module);
@@ -974,46 +984,40 @@ class Contacts extends CRMEntity {
 	 */
 	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb, $log;
-		$log->debug("> transferRelatedRecords $module, $transferEntityIds, $entityId");
+		$log->debug('> transferRelatedRecords '.$module.','.print_r($transferEntityIds, true).','.$entityId);
 		parent::transferRelatedRecords($module, $transferEntityIds, $entityId);
 		$rel_table_arr = array(
 			'Potentials'=>'vtiger_contpotentialrel',
 			'Activities'=>'vtiger_cntactivityrel',
 			'Emails'=>'vtiger_seactivityrel',
-			'HelpDesk'=>'vtiger_troubletickets',
 			'Quotes'=>'vtiger_quotes',
 			'PurchaseOrder'=>'vtiger_purchaseorder',
 			'SalesOrder'=>'vtiger_salesorder',
 			'Products'=>'vtiger_seproductsrel',
 			'Attachments'=>'vtiger_seattachmentsrel',
 			'Campaigns'=>'vtiger_campaigncontrel',
-			'cbCalendar'=>'vtiger_activity',
 		);
 		$tbl_field_arr = array(
 			'vtiger_contpotentialrel'=>'potentialid',
 			'vtiger_cntactivityrel'=>'activityid',
 			'vtiger_seactivityrel'=>'activityid',
-			'vtiger_troubletickets'=>'ticketid',
 			'vtiger_quotes'=>'quoteid',
 			'vtiger_purchaseorder'=>'purchaseorderid',
 			'vtiger_salesorder'=>'salesorderid',
 			'vtiger_seproductsrel'=>'productid',
 			'vtiger_seattachmentsrel'=>'attachmentsid',
 			'vtiger_campaigncontrel'=>'campaignid',
-			'vtiger_activity'=>'activityid',
 		);
 		$entity_tbl_field_arr = array(
 			'vtiger_contpotentialrel'=>'contactid',
 			'vtiger_cntactivityrel'=>'contactid',
 			'vtiger_seactivityrel'=>'crmid',
-			'vtiger_troubletickets'=>'parent_id',
 			'vtiger_quotes'=>'contactid',
 			'vtiger_purchaseorder'=>'contactid',
 			'vtiger_salesorder'=>'contactid',
 			'vtiger_seproductsrel'=>'crmid',
 			'vtiger_seattachmentsrel'=>'crmid',
 			'vtiger_campaigncontrel'=>'contactid',
-			'vtiger_activity'=>'cto_id',
 		);
 		foreach ($transferEntityIds as $transferId) {
 			foreach ($rel_table_arr as $rel_table) {
@@ -1205,7 +1209,7 @@ class Contacts extends CRMEntity {
 
 		$result = $adb->pquery('SELECT subject,template FROM vtiger_msgtemplate WHERE reference=?', array('Customer Login Details'));
 		if ($result && $adb->num_rows($result)>0) {
-			$body=$adb->query_result($result, 0, 'body');
+			$body=$adb->query_result($result, 0, 'template');
 			$contents = html_entity_decode($body, ENT_QUOTES, $default_charset);
 			$contents = str_replace('$contact_name$', $entityData->get('firstname').' '.$entityData->get('lastname'), $contents);
 			$contents = str_replace('$login_name$', $entityData->get('email'), $contents);
@@ -1216,9 +1220,8 @@ class Contacts extends CRMEntity {
 			$contents = getMergedDescription($contents, $entityData->getId(), 'Contacts');
 
 			if ($type == 'LoginDetails') {
-				$temp=$contents;
 				$value['subject']=$adb->query_result($result, 0, 'subject');
-				$value['body']=$temp;
+				$value['body']=$contents;
 				return $value;
 			}
 		} else {

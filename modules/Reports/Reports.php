@@ -90,6 +90,7 @@ class Reports extends CRMEntity {
 	public $adv_rel_fields = array();
 
 	public $module_list = array();
+	public $moduleIcon = array('library' => 'standard', 'containerClass' => 'slds-icon_container slds-icon-standard-account', 'class' => 'slds-icon', 'icon'=>'report');
 
 	/** Function to set primodule,secmodule,reporttype,reportname,reportdescription,folderid for given vtiger_reportid
 	 *  This function accepts the vtiger_reportid as argument
@@ -1253,7 +1254,7 @@ class Reports extends CRMEntity {
 				$filters['label'][] = getTranslatedString($columntototalrow['tablabel'], $columntototalrow['tablabel']).' -'.getTranslatedString($columntototalrow['fieldlabel'], $columntototalrow['tablabel']);
 				if (isset($this->columnssummary)) {
 					$selectedcolumn = '';
-					$selectedcolumn1 = '';
+					$selectedcolumn1 = array();
 					for ($i=0; $i < count($this->columnssummary); $i++) {
 						$selectedcolumnarray = explode(':', $this->columnssummary[$i]);
 						$selectedcolumn = $selectedcolumnarray[1].':'.$selectedcolumnarray[2].':'.str_replace($escapedchars, '', $selectedcolumnarray[3]);

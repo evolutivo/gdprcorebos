@@ -21,6 +21,8 @@ class Vendors extends CRMEntity {
 	/** Indicator if this is a custom module or standard module */
 	public $IsCustomModule = true;
 	public $HasDirectImageField = false;
+	public $moduleIcon = array('library' => 'standard', 'containerClass' => 'slds-icon_container slds-icon-standard-person-account', 'class' => 'slds-icon', 'icon'=>'person_account');
+
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
@@ -246,22 +248,16 @@ class Vendors extends CRMEntity {
 	 */
 	public function transferRelatedRecords($module, $transferEntityIds, $entityId) {
 		global $adb,$log;
-		$log->debug("> transferRelatedRecords $module, $transferEntityIds, $entityId");
+		$log->debug('> transferRelatedRecords '.$module.','.print_r($transferEntityIds, true).','.$entityId);
 		parent::transferRelatedRecords($module, $transferEntityIds, $entityId);
 		$rel_table_arr = array(
-			'Products'=>'vtiger_products',
-			'PurchaseOrder'=>'vtiger_purchaseorder',
 			'Contacts'=>'vtiger_vendorcontactrel',
 		);
 		$tbl_field_arr = array(
-			'vtiger_products'=>'productid',
 			'vtiger_vendorcontactrel'=>'contactid',
-			'vtiger_purchaseorder'=>'purchaseorderid',
 		);
 		$entity_tbl_field_arr = array(
-			'vtiger_products'=>'vendor_id',
 			'vtiger_vendorcontactrel'=>'vendorid',
-			'vtiger_purchaseorder'=>'vendorid',
 		);
 		foreach ($transferEntityIds as $transferId) {
 			foreach ($rel_table_arr as $rel_table) {
