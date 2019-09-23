@@ -72,7 +72,7 @@ class ProjectTask extends CRMEntity {
 	public $search_fields = array(
 		/* Format: Field Label => array(tablename => columnname) */
 		// tablename should not have prefix 'vtiger_'
-		'Project Name'=> array('project' => 'projectname'),
+		'Project Name'=> array('projectid' => 'projecttask'),
 		'Project Task Name'=> array('projecttask' => 'projecttaskname'),
 		'Start Date'=> array('projecttask' => 'startdate'),
 		'Type'=>array('projecttask' => 'projecttasktype'),
