@@ -124,7 +124,8 @@ class BURAK_Gantt {
 		$this->heights["task"] = 12;
 		$this->heights["progress"] = 4;
 		$this->inc_y = $this->heights["task"] + 18;
-		$this->font = 2;
+		$this->font = 1;
+		$this->font['size'] = 23;
 		$this->colors["font"] = "000000";
 		$this->colors["gantt"] = "FFFFFF";
 		$this->colors["month"] = "F0F0F0";
