@@ -124,7 +124,7 @@ class BURAK_Gantt {
 		$this->heights["task"] = 12;
 		$this->heights["progress"] = 4;
 		$this->inc_y = $this->heights["task"] + 18;
-		$this->font = 2;		
+		$this->font = 1;	
 		$this->colors["font"] = "000000";
 		$this->colors["gantt"] = "FFFFFF";
 		$this->colors["month"] = "F0F0F0";
@@ -900,6 +900,7 @@ class BURAK_Gantt {
 	}
 	
 	function drawTask($id){
+		echo $this->data_gantt[$id];
 		$pos = $this->data_gantt[$id]["pos"];
 		imagefilledrectangle($this->im,$pos["x1"],$pos["y1"],$pos["x2"],$pos["y2"], $this->colors["task"]);
 		$d = $this->data_gantt[$id]["label"];
