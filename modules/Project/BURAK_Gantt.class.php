@@ -900,7 +900,6 @@ class BURAK_Gantt {
 	}
 	
 	function drawTask($id){
-		echo $this->data_gantt[$id];
 		$pos = $this->data_gantt[$id]["pos"];
 		imagefilledrectangle($this->im,$pos["x1"],$pos["y1"],$pos["x2"],$pos["y2"], $this->colors["task"]);
 		$d = $this->data_gantt[$id]["label"];
