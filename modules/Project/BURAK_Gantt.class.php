@@ -314,6 +314,7 @@ class BURAK_Gantt {
 	function outputGantt($file=null,$quality=90, $project_gantt_type){
 		$this->drawGantt($project_gantt_type);
 		if(!empty($file)){
+			echo $file;
 			imagejpeg($this->im,$file,$quality);
 		}else{
 			header("Content-type: image/jpeg");
