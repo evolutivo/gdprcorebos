@@ -903,7 +903,7 @@ class BURAK_Gantt {
 		$pos = $this->data_gantt[$id]["pos"];
 		imagefilledrectangle($this->im,$pos["x1"],$pos["y1"],$pos["x2"],$pos["y2"], $this->colors["task"]);
 		$d = $this->data_gantt[$id]["label"];
-		imagestring($this->im,3,($pos["x1"]+5),($pos["y1"]-$this->heights["task"]-3),$d,$this->colors["font"]);
+		imagestring($this->im,5,($pos["x1"]+5),($pos["y1"]-$this->heights["task"]-3),$d,$this->colors["font"]);
 		// border
 		imagerectangle($this->im,$pos["x1"],$pos["y1"],$pos["x2"],$pos["y2"],$this->colors["line"]);
 		// progress
@@ -932,7 +932,7 @@ class BURAK_Gantt {
 		imagefilledpolygon($this->im,$vertices,4,$this->colors["milestone"]);		
 		// imagestring($this->im,2,($pos["x3"]+5),($pos["y2"]-$this->heights["task"]-3),$this->data_gantt[$id]["label"],$this->colors["font"]);
 
-		imagestring($this->im,3,($pos["x3"]+5),($pos["y2"]-$this->heights["task"]-3),$this->data_gantt[$id]["label"],$this->colors["font"]);
+		imagestring($this->im,5,($pos["x3"]+5),($pos["y2"]-$this->heights["task"]-3),$this->data_gantt[$id]["label"],$this->colors["font"]);
 	}
 	
 	/**
