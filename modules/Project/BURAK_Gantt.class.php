@@ -121,9 +121,9 @@ class BURAK_Gantt {
 		$this->heights["month"] = 20;
 		$this->heights["day"] = 10;
 		$this->heights["group"] = 3;
-		$this->heights["task"] = 12;
+		$this->heights["task"] = 18;
 		$this->heights["progress"] = 4;
-		$this->inc_y = $this->heights["task"] + 28;
+		$this->inc_y = $this->heights["task"] + 18;
 		$this->font = 1;	
 		$this->colors["font"] = "000000";
 		$this->colors["gantt"] = "FFFFFF";
@@ -131,7 +131,7 @@ class BURAK_Gantt {
 		$this->colors["day"] = "E1E1E1";
 		$this->colors["day"] = "FFFFFF";
 		// $this->colors["weekend"] = "CFCFCF";
-		$this->colors["weekend"] = "EA7B16";
+		$this->colors["weekend"] = "e6e6e6";
 		$this->colors["today"] = "F7F5DC";
 		$this->colors["grid"] = "E6E6E6";
 		$this->colors["task"] = "B3CCFF";
