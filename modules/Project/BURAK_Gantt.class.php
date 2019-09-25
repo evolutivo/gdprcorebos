@@ -313,8 +313,7 @@ class BURAK_Gantt {
 	*/
 	function outputGantt($file=null,$quality=90, $project_gantt_type){
 		$this->drawGantt($project_gantt_type);
-		if(!empty($file)){
-			echo $file;
+		if(!empty($file)){		
 			imagejpeg($this->im,$file,$quality);
 		}else{
 			header("Content-type: image/jpeg");
@@ -931,6 +930,7 @@ class BURAK_Gantt {
 			$pos["y4"]
 		);
 		imagefilledpolygon($this->im,$vertices,4,$this->colors["milestone"]);
+		echo $this->im;
 		imagestring($this->im,2,($pos["x3"]+5),($pos["y2"]-$this->heights["task"]-3),$this->data_gantt[$id]["label"],$this->colors["font"]);
 	}
 	
