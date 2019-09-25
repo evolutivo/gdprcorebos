@@ -932,7 +932,7 @@ class BURAK_Gantt {
 		imagefilledpolygon($this->im,$vertices,4,$this->colors["milestone"]);		
 		// imagestring($this->im,2,($pos["x3"]+5),($pos["y2"]-$this->heights["task"]-3),$this->data_gantt[$id]["label"],$this->colors["font"]);
 
-		imagestring($this->im,2,($pos["x3"]+5),($pos["y2"]-$this->heights["task"]-3),$this->data_gantt[$id]["label"],"#002aff");
+		imagestring($this->im,2,($pos["x3"]+5),($pos["y2"]-$this->heights["task"]-3),$this->data_gantt[$id]["label"],"002aff");
 	}
 	
 	/**
