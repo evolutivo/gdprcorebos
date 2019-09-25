@@ -930,8 +930,6 @@ class BURAK_Gantt {
 			$pos["x4"],
 			$pos["y4"]
 		);
-
-		echo $pos["x1"] .'-'. 	$pos["y1"] .'-'. $pos["x2"] .'-'. $pos["y2"] .'-'. $pos["x3"] .'-'.$pos["y3"] .'-'. $pos["x4"] .'-'. $pos["y4"] ;
 		
 		imagefilledpolygon($this->im,$vertices,4,$this->colors["milestone"]);		
 		imagestring($this->im,5,($pos["x3"]+5),($pos["y2"]-$this->heights["task"]-3),$this->data_gantt[$id]["label"],$this->colors["font"]);
