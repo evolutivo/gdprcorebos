@@ -118,10 +118,10 @@ class BURAK_Gantt {
 		if(!in_array("gd",get_loaded_extensions())){
 			die("BURAK_Gantt requires the GD library.");
 		}
-		$this->heights["month"] = 40;
+		$this->heights["month"] = 20;
 		$this->heights["day"] = 10;
 		$this->heights["group"] = 3;
-		$this->heights["task"] = 12;
+		$this->heights["task"] = 40;
 		$this->heights["progress"] = 4;
 		$this->inc_y = $this->heights["task"] + 18;
 		$this->font = 1;
