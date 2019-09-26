@@ -879,7 +879,7 @@ class BURAK_Gantt {
 		imagefilledrectangle($this->im,$pos["x1"],$pos["y1"],$pos["x2"],$pos["y2"],$this->colors["group"]);
 		$d = $this->data_gantt[$id]["label"];
 		// append details to task name
-		imagestring($this->im,5,($pos["x1"]+5),($pos["y1"]-$this->heights["task"]-3),$d,$this->colors["font"]);
+		imagestring($this->im,2,($pos["x1"]+5),($pos["y1"]-$this->heights["task"]-3),$d,$this->colors["font"]);
 		// top left
 		$vertices = array($pos["x1"],$pos["y1"],$pos["x1"]+$this->heights["group"]+5,$pos["y1"],$pos["x1"],$pos["y1"]+$this->heights["group"]+5);
 		imagefilledpolygon($this->im,$vertices,3,$this->colors["group"]);
