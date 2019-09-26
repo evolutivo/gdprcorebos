@@ -780,16 +780,17 @@ class BURAK_Gantt {
 			$s += 86400;
 		}
 		if(!empty($months)){
+			echo $months;
 			$x_current = 0;
 			$y_current = 0;
 			foreach($months as $k=>$v){
 				$w = $this->inc_x*$v;
 				imagefilledrectangle($this->im,$x_current,$y_current,($x_current+$w),($y_current+$this->heights["month"]),$this->colors["month"]);
-				imagestring($this->im,3,$x_current+5,$y_current+3,$k,$this->colors["font"]);
+				imagestring($this->im,10,$x_current+5,$y_current+3,$k,$this->colors["font"]);
 				if($this->n > 5){
 					$y_current = $this->gantt_height - $this->heights["month"] - 1;
 					imagefilledrectangle($this->im,$x_current,$y_current,($x_current+$w),($y_current+$this->heights["month"]),$this->colors["month"]);
-					imagestring($this->im,3,$x_current+5,$y_current+3,$k,$this->colors["font"]);
+					imagestring($this->im,10,$x_current+5,$y_current+3,$k,$this->colors["font"]);
 					$y_current = 0;
 				}
 				$x_current += $w;
