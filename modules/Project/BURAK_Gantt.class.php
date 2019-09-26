@@ -456,8 +456,6 @@ class BURAK_Gantt {
 		}
 		*/
 
-		echo $this->grid;
-
 		switch($this->grid){
 			case 1:
 				$this->inc_x = 15;
