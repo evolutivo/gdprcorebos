@@ -126,6 +126,11 @@ switch ($functiontocall) {
 		}
 		die();
 		break;
+	case 'getWeekendDates':
+		$year = vtlib_purify($_REQUEST['year']);
+		$weekends = array();
+		$weekends =  DateTimeField::getWeekendDates($year);
+		break;
 	case 'ValidationLoad':
 		$valmod = vtlib_purify($_REQUEST['valmodule']);
 		include_once 'modules/cbMap/processmap/Validations.php';
@@ -315,7 +320,6 @@ switch ($functiontocall) {
 		$ret = array('isactive'=>$rdo);
 		break;
 }
-
 echo json_encode($ret);
 die();
 ?>

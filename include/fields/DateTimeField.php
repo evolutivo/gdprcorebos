@@ -493,4 +493,34 @@ class DateTimeField {
 		}
 		return $value;
 	}
+	/**
+	 * @param datetime $startFrom
+	 * @return datetime $endFrom
+	 * @return array Return an array of dates
+	 */
+	public static function getWeekendDates($startFrom, $endFrom, $format = 'Y-m-d') {
+		echo "Inside getWeekendDates function";
+		$weekdays = array();
+		// Variable that store the date interval of period 1 day
+		$interval = new DateInterval('P1D');
+
+		$startDate = new DateTime($startFrom);
+		$endDate = new DateTime($endFrom);
+
+		$realEnd = new DateTime($endFrom);
+	 	$realEnd->add($interval);
+
+	  $period = new DatePeriod(new DateTime($startFrom), $interval, $realEnd);
+
+		foreach ($period  as $date) {
+			//Check if $date is Saturday or Sunday
+			if(isWeekEnd($date)){
+				$array[] = $date->format($format);
+			}
+		}
+		return $weekdays;
+	}
+	private static function isWeekEnd($date){
+		return (date('N', strtotime($date)) >= 6);
+	}
 }
