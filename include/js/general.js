@@ -14,7 +14,7 @@
 /**
  * Author E.Vila
  * Data: 02/09/2019
- * Description: This is a javascript script used to generate time control report. 
+ * Description: This is a javascript script used to generate time control report.
  */
 
 
@@ -50,7 +50,7 @@ function generatetimecontrol(annoRiferimento, projectid) {
 
         .catch(err => {
             // Do something for an error here
-            console.log(err);            
+            console.log(err);
             //exportToCSV(columNames, [], err);
         });
 }
@@ -84,7 +84,7 @@ function loginWS(columNames, endpoint, oper, usrname, accessKey, annoRiferimento
             // getEMPxWP(columNames, endpoint, "query", sessionId, "", annoRiferimento, projectid);
 
             // getFeriePerEmp(columNames, endpoint, "query", sessionId, "", "", annoRiferimento, projectid);
-            
+
         })
         .catch(err => {
             console.log(err);
@@ -97,7 +97,7 @@ function loginWS(columNames, endpoint, oper, usrname, accessKey, annoRiferimento
 function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid) {
 
     // var sql= " SELECT projecttasknumber, projecttaskname, startdate, enddate, cf_1743 " +
-    //           " FROM ProjectTask ;" 
+    //           " FROM ProjectTask ;"
     //         //   " WHERE Project.projectid = 1830';";
 
     var sql = " SELECT projectid, id, projecttasknumber, projecttaskname, startdate, enddate, cf_1743 FROM ProjectTask WHERE projectid =" + projectid + " ;";
@@ -121,8 +121,8 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
                 var start_date = wpXMonth[i]["startdate"];
                 var end_date = wpXMonth[i]["enddate"];
                 wpXMonth[i]["startdate"] = formatDate(start_date);
-				wpXMonth[i]["enddate"] = formatDate(end_date);
-				wpXMonth[i]["id"] = wpXMonth[i]["id"].split('x')[1];
+				        wpXMonth[i]["enddate"] = formatDate(end_date);
+				        wpXMonth[i]["id"] = wpXMonth[i]["id"].split('x')[1];
                 wpXMonth[i]["projectid"] = wpXMonth[i]["projectid"].split('x')[1];
             }
 
@@ -130,8 +130,8 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projecttaskname":').join('"WP Name":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"startdate":').join('"Start time":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"enddate":').join('"End time":'));
-			wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
-			wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projectid":').join('"ProjectID":'));
+      			wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
+      			wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projectid":').join('"ProjectID":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"id":').join('"ProjectTaskID":'));
 
             // console.log(wpXMonth);
@@ -160,7 +160,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
     //           " WHERE ProjectTask.projecttasknumber != '' AND ContactRole.cf_1833 =" + PID + " ;";
 
     //select id,firstname,lastname from Contacts where (firstname LIKE '%''ele%'
-    
+
     // var sql = "SELECT projecttasknumber,projecttaskname,startdate,enddate FROM ProjectTask WHERE (ProjectTask.projectid LIKE '%"+projectName+"%') ; ";
 
 
@@ -196,7 +196,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskenddate":').join('"End Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1837":').join('"WorkingHour":'));
 
-           
+
 
             getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid);
 
@@ -212,9 +212,9 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
 function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid) {
 
     var PID = projectid.split('x')[1];
-    
+
 	//var sql = "SELECT contactrolename,cf_1836 FROM ContactRole WHERE ProjectTask.projectid = "+PID+" ;";
-	
+
     var sql = "SELECT contactrolename,contactrole_vacations FROM ContactRole WHERE cf_1843 = '1' AND ProjectTask.projectid = "+PID+" ;";
 
     var url = endpoint + "?operation=" + oper + "&sessionName=" + sessionId + "&query=" + sql;
@@ -232,10 +232,9 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
         })
         .then(data => {
             var feriXMonthXEmp = data.result;
-
             var feriePerEmployee = [];
-			feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrolename":').join('"Employee":'));
-			feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrole_vacations":').join('"Date":'));
+      			feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrolename":').join('"Employee":'));
+      			feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrole_vacations":').join('"Date":'));
 
 
             //feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"employeescf_1836":').join('"Date":'));
@@ -249,15 +248,15 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
                     var emp = {
                         'Employee': feriXMonthXEmp[i].Employee,
                         'Date': res[j]
-                    };                    
+                    };
                     feriePerEmployee.push(emp);
                 }
-            }            
+            }
 
             // console.log("Working Packages: ",  wpXMonth);
             // console.log("EMP x Working Packages: ",  empXwp);
             // console.log("Ferie X Employee: ",  feriXMonthXEmp);
-            
+
             generateExcelReport(columNames, wpXMonth, empXwp, feriePerEmployee, annoRiferimento, projectid);
 
 
@@ -270,132 +269,139 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
 
 
 function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, annoRiferimento, projectid) {
-    
+
     console.log("Working Packages: ",  WPxMonth);
     console.log("EMP x Working Packages: ",  EMPxWP);
     console.log("Ferie X Employee: ",  feriePerMonthPerEmp);
     console.log("Anno Di Riferimento: ", annoRiferimento);
-    // console.log("Project ID: ", projectid);    
+    // console.log("Project ID: ", projectid);
 
     var yearOfReference = annoRiferimento;
     var empXwp = [];
-    const ferieXMonth = ['01-01-2018', '02-04-2018', '01-05-2018', '15-08-2018', '01-11-2018', '25-12-2018', '26-12-2018'];    
-    //TODO 
+    const festivity = ['01-01-2018', '02-04-2018', '01-05-2018', '15-08-2018', '01-11-2018', '25-12-2018', '26-12-2018'];
+
+    //TO BE COMPLETED
+    //var festivity = getFestivityFromYear(yearOfReference);
+
+    var weekEndsForYear = getWeekendsFromYear(yearOfReference);
+
+    console.log(weekEndsForYear);
+
     // ===== Retrive these dates from corebose database
-    const weekEndsForYear = [
-        '06-01-2018',
-        '07-01-2018',
-        '13-01-2018',
-        '14-01-2018',
-        '20-01-2018',
-        '21-01-2018',
-        '27-01-2018',
-        '28-01-2018',
-        '03-02-2018',
-        '04-02-2018',
-        '10-02-2018',
-        '11-02-2018',
-        '17-02-2018',
-        '18-02-2018',
-        '24-02-2018',
-        '25-02-2018',
-        '03-03-2018',
-        '04-03-2018',
-        '10-03-2018',
-        '11-03-2018',
-        '17-03-2018',
-        '18-03-2018',
-        '24-03-2018',
-        '25-03-2018',
-        '31-03-2018',
-        '01-04-2018',
-        '07-04-2018',
-        '08-04-2018',
-        '14-04-2018',
-        '15-04-2018',
-        '21-04-2018',
-        '22-04-2018',
-        '28-04-2018',
-        '29-04-2018',
-        '05-05-2018',
-        '06-05-2018',
-        '12-05-2018',
-        '13-05-2018',
-        '19-05-2018',
-        '20-05-2018',
-        '26-05-2018',
-        '27-05-2018',
-        '02-06-2018',
-        '03-06-2018',
-        '09-06-2018',
-        '10-06-2018',
-        '16-06-2018',
-        '17-06-2018',
-        '23-06-2018',
-        '24-06-2018',
-        '30-06-2018',
-        '01-07-2018',
-        '07-07-2018',
-        '08-07-2018',
-        '14-07-2018',
-        '15-07-2018',
-        '21-07-2018',
-        '22-07-2018',
-        '28-07-2018',
-        '29-07-2018',
-        '04-08-2018',
-        '05-08-2018',
-        '11-08-2018',
-        '12-08-2018',
-        '18-08-2018',
-        '19-08-2018',
-        '25-08-2018',
-        '26-08-2018',
-        '01-09-2018',
-        '02-09-2018',
-        '08-09-2018',
-        '09-09-2018',
-        '15-09-2018',
-        '16-09-2018',
-        '22-09-2018',
-        '23-09-2018',
-        '29-09-2018',
-        '30-09-2018',
-        '06-10-2018',
-        '07-10-2018',
-        '13-10-2018',
-        '14-10-2018',
-        '20-10-2018',
-        '21-10-2018',
-        '27-10-2018',
-        '28-10-2018',
-        '03-11-2018',
-        '04-11-2018',
-        '10-11-2018',
-        '11-11-2018',
-        '17-11-2018',
-        '18-11-2018',
-        '24-11-2018',
-        '25-11-2018',
-        '01-12-2018',
-        '02-12-2018',
-        '08-12-2018',
-        '09-12-2018',
-        '15-12-2018',
-        '16-12-2018',
-        '22-12-2018',
-        '23-12-2018',
-        '29-12-2018',
-        '30-12-2018'
-        ]; 
+    // const weekEndsForYear = [
+    //     '06-01-2018',
+    //     '07-01-2018',
+    //     '13-01-2018',
+    //     '14-01-2018',
+    //     '20-01-2018',
+    //     '21-01-2018',
+    //     '27-01-2018',
+    //     '28-01-2018',
+    //     '03-02-2018',
+    //     '04-02-2018',
+    //     '10-02-2018',
+    //     '11-02-2018',
+    //     '17-02-2018',
+    //     '18-02-2018',
+    //     '24-02-2018',
+    //     '25-02-2018',
+    //     '03-03-2018',
+    //     '04-03-2018',
+    //     '10-03-2018',
+    //     '11-03-2018',
+    //     '17-03-2018',
+    //     '18-03-2018',
+    //     '24-03-2018',
+    //     '25-03-2018',
+    //     '31-03-2018',
+    //     '01-04-2018',
+    //     '07-04-2018',
+    //     '08-04-2018',
+    //     '14-04-2018',
+    //     '15-04-2018',
+    //     '21-04-2018',
+    //     '22-04-2018',
+    //     '28-04-2018',
+    //     '29-04-2018',
+    //     '05-05-2018',
+    //     '06-05-2018',
+    //     '12-05-2018',
+    //     '13-05-2018',
+    //     '19-05-2018',
+    //     '20-05-2018',
+    //     '26-05-2018',
+    //     '27-05-2018',
+    //     '02-06-2018',
+    //     '03-06-2018',
+    //     '09-06-2018',
+    //     '10-06-2018',
+    //     '16-06-2018',
+    //     '17-06-2018',
+    //     '23-06-2018',
+    //     '24-06-2018',
+    //     '30-06-2018',
+    //     '01-07-2018',
+    //     '07-07-2018',
+    //     '08-07-2018',
+    //     '14-07-2018',
+    //     '15-07-2018',
+    //     '21-07-2018',
+    //     '22-07-2018',
+    //     '28-07-2018',
+    //     '29-07-2018',
+    //     '04-08-2018',
+    //     '05-08-2018',
+    //     '11-08-2018',
+    //     '12-08-2018',
+    //     '18-08-2018',
+    //     '19-08-2018',
+    //     '25-08-2018',
+    //     '26-08-2018',
+    //     '01-09-2018',
+    //     '02-09-2018',
+    //     '08-09-2018',
+    //     '09-09-2018',
+    //     '15-09-2018',
+    //     '16-09-2018',
+    //     '22-09-2018',
+    //     '23-09-2018',
+    //     '29-09-2018',
+    //     '30-09-2018',
+    //     '06-10-2018',
+    //     '07-10-2018',
+    //     '13-10-2018',
+    //     '14-10-2018',
+    //     '20-10-2018',
+    //     '21-10-2018',
+    //     '27-10-2018',
+    //     '28-10-2018',
+    //     '03-11-2018',
+    //     '04-11-2018',
+    //     '10-11-2018',
+    //     '11-11-2018',
+    //     '17-11-2018',
+    //     '18-11-2018',
+    //     '24-11-2018',
+    //     '25-11-2018',
+    //     '01-12-2018',
+    //     '02-12-2018',
+    //     '08-12-2018',
+    //     '09-12-2018',
+    //     '15-12-2018',
+    //     '16-12-2018',
+    //     '22-12-2018',
+    //     '23-12-2018',
+    //     '29-12-2018',
+    //     '30-12-2018'
+    //     ];
 
     //Month of the Year
     const allmonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     //const fr_columNames = ['Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP','TotalHoursWP','TotaleWorkDaysWP','Day','Month','Year'];
     var priorRecords = 0;
 
-    //============ EMP x WP =================                        
-    empXwp = loadEMPXWPData(EMPxWP, WPxMonth, ferieXMonth, weekEndsForYear, feriePerMonthPerEmp, yearOfReference);
+    //============ EMP x WP =================
+    empXwp = loadEMPXWPData(EMPxWP, WPxMonth, festivity, weekEndsForYear, feriePerMonthPerEmp, yearOfReference);
 
     console.log(empXwp);
 
@@ -404,7 +410,7 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
         var TotalHoursWP = empXwp[i].TotalHoursWP;
         var giorniReali = parseFloat(Number(TotalHoursWP / WorkingHour).toFixed(3));
         var diff = giorniReali - Math.floor(giorniReali);
-        var lastIndex = (priorRecords + parseInt(empXwp[i].TotaleWorkDaysWP)) -1; 
+        var lastIndex = (priorRecords + parseInt(empXwp[i].TotaleWorkDaysWP)) -1;
 
         if(i == lastIndex){
             priorRecords = priorRecords + empXwp[i].TotaleWorkDaysWP;
@@ -446,12 +452,12 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 				r_data[x]['Percentuale'] = wpXMonth[z]["Percentage"];
 				r_data[x]['ProjectTaskID'] = wpXMonth[z]["ProjectTaskID"];
 			}
-			
+
 			r_data[x]['ProjectID'] = wpXMonth[z]["ProjectID"];
         }
     }
 
-    
+
     for (var i = 0; i < r_data.length; i++) {
         if (!distEMP.includes(r_data[i].Employee)) {
             distEMP.push(r_data[i].Employee)
@@ -485,7 +491,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         return sumPercent;
     }
 
-    
+
 
 
     //Add Percentuale Total x Working Package
@@ -497,7 +503,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         }
     }
 
-    
+
 
     //Calculate in another varible (Percentuale/PercentualeTotaleWP) * Total Hours Worked: "1,134"
     for (var g = 0; g < r_data.length; g++) {
@@ -515,7 +521,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 
         var TotHourXWP = z * hours;
         r_data[g]['TotHoursXWP'] = Number((TotHourXWP).toFixed(3));
-        
+
         //REMIND WorkingHour should not be empty or zero.
         var workingDays = parseFloat(Number(r_data[g].TotHoursXWP / r_data[g]["WorkingHour"]).toFixed(3));
 
@@ -525,7 +531,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         // r_data[g]['TotWDxWP'] =Number(r_data[g].TotHoursXWP / r_data[g]["WorkingHour"]).toFixed(3);
     }
 
-    
+
 
     for (var f = 0; f < r_data.length; f++) {
         var x = r_data[f].TotWDxWP.toString().split(".")[0];
@@ -660,9 +666,9 @@ function exportToCSV(columnHeaders, report, status){
         //     "Employee", "WPCode", "WPName", "WorkingHour", "TotalHoursWorked", "DateStart", "DateEnd", "Percentage", "PercentageWP",
         //     "TotalHoursWP", "TotaleWorkDaysWP", "Day", "Month", "Year"
            dataNew.push([
-			   report[j].ProjectID, 
-			   report[j].ProjectTaskID, 
-               report[j].Employee, 
+			   report[j].ProjectID,
+			   report[j].ProjectTaskID,
+               report[j].Employee,
                report[j].WPCode,
                report[j].WorkingHour,
                report[j].RealWorkingHour,
@@ -688,10 +694,10 @@ function exportToCSV(columnHeaders, report, status){
         });
         download(csvContent, 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
     }else{
-        
+
         console.log("TimeControlReport GenerAto con errore: ", status);
         download('', 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
-    }    
+    }
 }
 
 
@@ -790,7 +796,7 @@ function getMeseRandomPerWorkPackPerEMP(emp, wp_code, mesiLavorativi){
     var mesixWPxEMP = [];
     for (var i=0; i<mesiLavorativi.length; i++){
         if(mesiLavorativi[i].Employee == emp && mesiLavorativi[i].WpCode == wp_code){
-            mesixWPxEMP.push(mesiLavorativi[i].Mese);                  
+            mesixWPxEMP.push(mesiLavorativi[i].Mese);
         }
     }
     // console.log("Radom Array values: ", mesixWPxEMP);
@@ -831,7 +837,7 @@ function dateRange(startDate, endDate, wp_code, emp) {
     for(var i = startYear; i <= endYear; i++) {
         var endMonth = i != endYear ? 11 : parseInt(end[1]) - 1;
         var startMon = i === startYear ? parseInt(start[1])-1 : 0;
-        
+
         for(var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j+1) {
             var month = j+1;
             var displayMonth = month < 10 ? '0' + month : month;
@@ -851,7 +857,7 @@ function dateRange(startDate, endDate, wp_code, emp) {
 /**
 * Convert date to dd-mm-yyyy format
 */
-function formatDate (input) {    
+function formatDate (input) {
     var datePart = input.match(/\d+/g),
     year = datePart[0].substring(2), // get only two digits
     month = datePart[1], day = datePart[2];
@@ -879,7 +885,63 @@ function removeWeekendDays(allDates, weekEndsForYear) {
     return allDates;
 }
 
+/**
+ * Return all weenkend days of the year
+ */
+function getWeekendsFromYear(year) {
+    var i = 1;
+    var weekdays = [];
+    var current = new Date(year,0,1).format();
+    var endCount = days_of_a_year(year);
 
+    while(i <= endCount){
+        if(isWeekEnd(current)){
+            weekdays.push(current);
+        }
+        i++;
+        currentObj = new Date(current);
+        current = currentObj.addDays(1).format();
+    }
+    return weekdays;
+}
+
+
+function isWeekEnd(date){
+    dateObj = new Date(date);
+    if (dateObj.getDay() == 6 || dateObj.getDay() == 0) {
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function days_of_a_year(year){
+    return isLeapYear(year) ? 366 : 365;
+}
+
+function isLeapYear(year) {
+    return year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
+}
+
+//format date
+Date.prototype.format = function() {
+    var mm = this.getMonth() + 1;
+    var dd = this.getDate();
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    return this.getFullYear()+'-'+mm+'-'+dd;
+};
+
+// get next day
+Date.prototype.addDays = function(days) {
+    var dat = new Date(this.valueOf())
+    dat.setDate(dat.getDate() + days);
+    return dat;
+}
 
 MD5 = function(e) {
     function h(a, b) {
