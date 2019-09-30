@@ -919,7 +919,7 @@ function getWeekendsFromYear(year) {
       // console.log("KO", response);
       return [];
     }else{
-      // console.log("OK", response);
+      console.log("OK", response.replace("]null", "]"));
       return response.replace("]null", "]");
     }
 
