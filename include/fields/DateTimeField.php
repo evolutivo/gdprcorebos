@@ -521,7 +521,7 @@ class DateTimeField {
 		// 	}
 		// }
 		// return $weekdays;
-		return '2018-05-12';
+		return ['2018-05-12'];
 	}
 	private static function isWeekEnd($date){
 		return (date('N', strtotime($date)) >= 6);
