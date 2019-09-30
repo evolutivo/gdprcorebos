@@ -924,9 +924,10 @@ function getWeekendsFromYear(year) {
     const splitString = data.split(",");
     var results = splitString.replace("""", '"');
     console.log(splitString);
-
-    return splitString;
+    weekends = plitString;
   });
+
+  return weekends;
 }
 
 
