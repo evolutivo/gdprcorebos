@@ -521,7 +521,7 @@ class DateTimeField {
 		return $weekdays;
 	}
 
-	function isWeekend($date) {
+	private function isWeekend($date) {
 		return (date('N', strtotime($date)) >= 6);
 	}
 
