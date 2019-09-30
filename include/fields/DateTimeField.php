@@ -505,8 +505,8 @@ class DateTimeField {
 		$Variable1 = strtotime($startFrom);
 		$Variable2 = strtotime($endFrom);
 
-		Use for loop to store dates into array
-		86400 sec = 24 hrs = 60*60*24 = 1 day
+		// Use for loop to store dates into array
+		// 86400 sec = 24 hrs = 60*60*24 = 1 day
 		for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) {
 			$Store = date('Y-m-d', $currentDate);
 			//Check if $Store is Saturday or Sunday
