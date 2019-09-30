@@ -888,46 +888,46 @@ function removeWeekendDays(allDates, weekEndsForYear) {
 /**
  * Return all weenkend days of the year
  */
-// function getWeekendsFromYear(year) {
-//     var i = 1;
-//     var weekdays = [];
-//     var current = new Date(year,0,1).format();
-//     var endCount = days_of_a_year(year);
-//
-//     while(i <= endCount){
-//         if(isWeekEnd(current)){
-//             weekdays.push(current);
-//         }
-//         i++;
-//         currentObj = new Date(current);
-//         current = currentObj.addDays(1).format();
-//     }
-//     return weekdays;
-// }
-
-
 function getWeekendsFromYear(year) {
-  var startFrom  = year + '-' + '01-01';
-  var endFrom  = year + '-' + '12-31';
-  // var weekdays = [];
-  var weekdays = "";
-  var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom;
-  jQuery.ajax({
-    method: 'POST',
-    url: 'index.php?'+url
-  }).done(function (response) {
+    var i = 1;
+    var weekdays = [];
+    var current = new Date(year,0,1).format();
+    var endCount = days_of_a_year(year);
 
-    var data = response.replace('"[', '');
-    var data = response.replace(']null', '');
-
-    var results = data.split(",");
-
-    console.log(results);
-    weekdays = results;
-  });
-
-  return weekdays;
+    while(i <= endCount){
+        if(isWeekEnd(current)){
+            weekdays.push(current);
+        }
+        i++;
+        currentObj = new Date(current);
+        current = currentObj.addDays(1).format();
+    }
+    return weekdays;
 }
+
+
+// function getWeekendsFromYear(year) {
+//   var startFrom  = year + '-' + '01-01';
+//   var endFrom  = year + '-' + '12-31';
+//   // var weekdays = [];
+//   var weekdays = "";
+//   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom;
+//   jQuery.ajax({
+//     method: 'POST',
+//     url: 'index.php?'+url
+//   }).done(function (response) {
+//
+//     var data = response.replace('"[', '');
+//     var data = response.replace(']null', '');
+//
+//     var results = data.split(",");
+//
+//     console.log(results);
+//     weekdays = results;
+//   });
+//
+//   return weekdays;
+// }
 
 
 function isWeekEnd(date){
