@@ -910,12 +910,11 @@ function getWeekendsFromYear(year) {
   var startFrom  = year + '-' + '01-01';
   var endFrom  = year + '-' + '12-31';
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom;
-
   jQuery.ajax({
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
-    console.log(response);
+    // console.log(response);
   });
 }
 
