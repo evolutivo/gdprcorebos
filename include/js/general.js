@@ -923,9 +923,9 @@ function getWeekendsFromYear(year) {
       var data = response.replace("]null", "]");
 
       console.log(data);
-
-      for (var i = 0; i < data.length; i++) {
-        weekdays.push(data[i]);
+      while(data.length <= 0){
+        var data = data.split(',')[1];
+        weekdays.push(data);
       }
 
       console.log(weekdays);
