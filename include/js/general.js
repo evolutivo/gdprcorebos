@@ -910,29 +910,22 @@ function getWeekendsFromYear(year) {
   var startFrom  = year + '-' + '01-01';
   var endFrom  = year + '-' + '12-31';
   var weekdays = [];
+
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom;
   jQuery.ajax({
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
+    var i = 1;
+    var data = response.replace("]null", "]");
 
-    if(response == null || response.length === 0 || response  === "undefined"){
-      // console.log("KO", response);
-      return [];
-    }else{
-      var data = response.replace("]null", "]");
-
-      console.log(data);
-      while(data.length <= 0){
-        var data = data.split(',')[0];
-        console.log(data);
-        weekdays.push(data);
-      }
-
-      console.log(weekdays);
-      return data;
+    while(data.length >= 0){
+      var data = data.split(',')[0];
+      weekdays.push(data);
+      i++;
     }
-
+    console.log(weekdays);
+    return weekdays;
   });
 }
 
