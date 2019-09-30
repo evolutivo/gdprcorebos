@@ -514,11 +514,8 @@ class DateTimeField {
 				array_push($weekdays, $Store);
 			}
 		}
-		// Display the dates in array format
-		//print_r($weekdays);
-		$code_array = json_encode($weekdays);
 
-		//print_r($code_array);
+		$code_array = json_encode($weekdays);
 		return $code_array;
 	}
 

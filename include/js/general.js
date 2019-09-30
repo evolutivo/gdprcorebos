@@ -285,7 +285,7 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
 
     var weekEndsForYear = getWeekendsFromYear(yearOfReference);
 
-    // console.log(weekEndsForYear);
+    console.log(weekEndsForYear);
 
     // ===== Retrive these dates from corebose database
     // const weekEndsForYear = [
@@ -914,7 +914,13 @@ function getWeekendsFromYear(year) {
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
-    console.log(response);
+
+    if(response == null || response.length === 0 || response  === "undefined"){
+      return [];
+    }else{
+      return response;
+    }
+
   });
 }
 
