@@ -907,8 +907,8 @@ function removeWeekendDays(allDates, weekEndsForYear) {
 
 
 function getWeekendsFromYear(year) {
-  //var baseurl = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&year=' + year;
-  var url = 'module='+module+'&action='+module+'Ajax&file=ExecuteFunctions&functiontocall=getWeekendDates&year=' + year;
+  var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&year=' + year;
+  //var url = 'module='+module+'&action='+module+'Ajax&file=ExecuteFunctions&functiontocall=getWeekendDates&year=' + year;
   jQuery.ajax({
     method: 'POST',
     url: 'index.php?'+url
