@@ -514,11 +514,10 @@ class DateTimeField {
 				$weekdays[] = $Store;
 			}
 		}
-
 		// Display the dates in array format
-		print_r($weekdays);
-
+		//print_r($weekdays);
 		return $weekdays;
+		
 	}
 
 	/**
