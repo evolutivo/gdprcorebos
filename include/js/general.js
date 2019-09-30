@@ -916,7 +916,7 @@ function getWeekendsFromYear(year) {
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
-    var data = jQuery.parseJSON(response);
+    var data = JSON.stringify(response);
     console.log(data);
   });
 }
