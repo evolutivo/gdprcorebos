@@ -916,11 +916,15 @@ function getWeekendsFromYear(year) {
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
-    var i = 1;
-    var data = response.replace("]null", "]");
+    
+    var data = response.replace("[", "");
+    var data = response.replace("]null", "");
 
-    console.log("data", data);
-    return data;
+    // Split string by whitespace character
+    const splitString = data.split(",");
+    console.log(splitString);
+
+    return splitString;
   });
 }
 
