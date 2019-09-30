@@ -921,7 +921,7 @@ function getWeekendsFromYear(year) {
     //   console.log(response[i]);
     // }
     //weekends = JSON.parse(response);
-    console.log(response[0]);
+    console.log(response);
   });
 }
 
