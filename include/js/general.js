@@ -917,16 +917,17 @@ function getWeekendsFromYear(year) {
     url: 'index.php?'+url
   }).done(function (response) {
 
-    var data = response.replace('[', '');
+    var data = response.replace('"[', '');
     var data = response.replace(']null', '');
 
-    const results = data.split(",");
+    var results = data.split(",");
 
-    console.log(results);
-    weekends = results;
+    var dati = results.replace('""', '');
+    console.log(dati);
+    weekdays = dati;
   });
 
-  return weekends;
+  return weekdays;
 }
 
 
