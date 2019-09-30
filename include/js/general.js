@@ -920,7 +920,8 @@ function getWeekendsFromYear(year) {
     // for (var i = 0; i < 3; i++) {
     //   console.log(response[i]);
     // }
-    console.log(response);
+    weekends = JSON.parse(JSON_encode(response));
+    console.log(weekends);
   });
 }
 
