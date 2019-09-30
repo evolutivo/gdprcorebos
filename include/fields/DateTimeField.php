@@ -510,9 +510,11 @@ class DateTimeField {
 		for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) {
 			$Store = date('Y-m-d', $currentDate);
 			//Check if $Store is Saturday or Sunday
-			if($this->isWeekend($Store)){
-				$weekdays[] = $Store;
-			}
+			$weekdays[] = $Store;
+
+			// if($this->isWeekend($Store)){
+			// 	$weekdays[] = $Store;
+			// }
 		}
 
 		// Display the dates in array format
@@ -521,7 +523,7 @@ class DateTimeField {
 		return $weekdays;
 	}
 
-	private function isWeekend($date) {
+	private function isWeekend($date){
 		return (date('N', strtotime($date)) >= 6);
 	}
 
