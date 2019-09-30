@@ -521,6 +521,11 @@ class DateTimeField {
 		return $weekdays;
 	}
 
+	/**
+	* @param datetime date
+	* @return true if date is Saturday or Sunday
+	*/
+
 	public static function isWeekend($date){
 		return (date('N', strtotime($date)) >= 6);
 	}
