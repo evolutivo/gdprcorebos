@@ -516,11 +516,11 @@ class DateTimeField {
 			}
 		}
 		// print_r($weekdays);
-		// $code_array = json_encode($weekdays);
-		// print_r($code_array);
+		$code_array = json_encode($weekdays);
+		print_r($code_array);
 
-		return $weekdays;
-		
+		return $code_array;
+
 	}
 
 	/**
