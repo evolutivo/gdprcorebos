@@ -509,12 +509,18 @@ class DateTimeField {
 		// 86400 sec = 24 hrs = 60*60*24 = 1 day
 		for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) {
 			$Store = date('Y-m-d', $currentDate);
-			$weekdays[] = $Store;
+			//Check if $Store is Saturday or Sunday
+			if(isWeekEnd($Store)){
+				$weekdays[] = $Store;
+			}
 		}
 
-		//return $weekdays;
-		return ['2018-05-12'];
+		// Display the dates in array format
+		print_r($weekdays); 
+
+		return $weekdays;
 	}
+
 	private static function isWeekEnd($date){
 		return (date('N', strtotime($date)) >= 6);
 	}
