@@ -917,12 +917,12 @@ function getWeekendsFromYear(year) {
     url: 'index.php?'+url
   }).done(function (response) {
 
-    var data = response.replace("[", '');
-    var data = response.replace("]null", '');
+    var data = response.replace('[', '');
+    var data = response.replace(']null', '');
 
     // Split string by whitespace character
     const splitString = data.split(",");
-    var results = splitString.replace("""", '"');
+    var results = splitString.replace('""', '"');
     console.log(results);
     weekends = results;
   });
