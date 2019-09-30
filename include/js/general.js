@@ -917,7 +917,7 @@ function getWeekendsFromYear(year) {
     url: 'index.php?'+url
   }).done(function (response) {
     console.log(response);
-    var weekdays = JSON.parse(response);
+    //var weekdays = JSON.parse(response);
   });
 }
 

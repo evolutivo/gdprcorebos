@@ -500,13 +500,10 @@ class DateTimeField {
 	 */
 	public static function getWeekendDates($startFrom, $endFrom, $format = 'Y-m-d') {
 
-		echo "Inside getWeekendDates function" . '-' . $startFrom . '------' . $endFrom;
-
 		$weekdays = array();
 
 		$Variable1 = strtotime($startFrom);
 		$Variable2 = strtotime($endFrom);
-
 
 		// Use for loop to store dates into array
 		// 86400 sec = 24 hrs = 60*60*24 = 1 day
@@ -515,8 +512,8 @@ class DateTimeField {
 			$weekdays[] = $Store;
 		}
 
-		return $weekdays;
-		//return ['2018-05-12'];
+		//return $weekdays;
+		return ['2018-05-12'];
 	}
 	private static function isWeekEnd($date){
 		return (date('N', strtotime($date)) >= 6);
