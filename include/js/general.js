@@ -916,7 +916,7 @@ function getWeekendsFromYear(year) {
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
-    var jArray = <?php echo json_encode($phpArray ); ?>;
+    var jArray = json_encode(response);
     for(var i=0;i<12;i++){
        weekdays.push(jArray[i]);
    }
