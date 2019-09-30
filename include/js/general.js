@@ -919,10 +919,13 @@ function getWeekendsFromYear(year) {
     var i = 1;
     var data = response.replace("]null", "]");
 
-    var js_array = [<?php echo '"'.implode('","', $php_array).'"' ?>];
-
-    console.log(js_array);
-    return js_array;
+    while(i <= data.length){
+      var data = data.split(',')[0];
+      weekdays.push(data);
+      i++;
+    }
+    console.log(weekdays);
+    return weekdays;
   });
 }
 
