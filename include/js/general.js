@@ -920,9 +920,8 @@ function getWeekendsFromYear(year) {
     var data = response.replace('[', '');
     var data = response.replace(']null', '');
 
-    // Split string by whitespace character
-    const splitString = data.split(",");
-    var results = splitString.replace('""', '"');
+    const results = data.split(",");
+
     console.log(results);
     weekends = results;
   });
