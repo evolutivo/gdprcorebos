@@ -915,13 +915,13 @@ function getWeekendsFromYear(year) {
     url: 'index.php?'+url
   }).done(function (response) {
     console.log(response);
-    // if(response == null || response.length === 0 || response  === "undefined"){
-    //   // console.log("KO", response);
-    //   return [];
-    // }else{
-    //   // console.log("OK", response);
-    //   return response;
-    // }
+    if(response == null || response.length === 0 || response  === "undefined"){
+      // console.log("KO", response);
+      return [];
+    }else{
+      // console.log("OK", response);
+      return response.replace("]null", "]");
+    }
 
   });
 }
