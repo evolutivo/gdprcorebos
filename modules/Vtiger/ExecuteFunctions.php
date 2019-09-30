@@ -131,7 +131,7 @@ switch ($functiontocall) {
 		$endDate = vtlib_purify($_REQUEST['endFrom']);
 		$format = 'Y-m-d';
 		$results =  DateTimeField::getWeekendDates($startDate, $endDate, $format);
-		echo "";
+		echo $results;
 		break;
 	case 'ValidationLoad':
 		$valmod = vtlib_purify($_REQUEST['valmodule']);
