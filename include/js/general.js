@@ -916,8 +916,10 @@ function getWeekendsFromYear(year) {
   }).done(function (response) {
 
     if(response == null || response.length === 0 || response  === "undefined"){
+      console.log("KO", response);
       return [];
     }else{
+      console.log("OK", response);
       return response;
     }
 
