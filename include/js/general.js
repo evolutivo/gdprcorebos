@@ -916,11 +916,12 @@ function getWeekendsFromYear(year) {
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
-    var jArray = json_encode(response);
-    for(var i=0;i<12;i++){
-       weekdays.push(jArray[i]);
-   }
-  console.log(weekdays);
+    console.log(response);
+  //   var jArray = json_encode(response);
+  //   for(var i=0;i<12;i++){
+  //      weekdays.push(jArray[i]);
+  //  }
+  // console.log(weekdays);
   return weekdays;
   });
 }
