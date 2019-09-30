@@ -922,6 +922,7 @@ function getWeekendsFromYear(year) {
 
     // Split string by whitespace character
     const splitString = data.split(",");
+    var results = splitString.replace("""", '"');
     console.log(splitString);
 
     return splitString;
