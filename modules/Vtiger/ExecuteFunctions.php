@@ -128,8 +128,7 @@ switch ($functiontocall) {
 		break;
 	case 'getWeekendDates':
 		$startFrom = vtlib_purify($_REQUEST['startFrom']);
-		$endFrom = vtlib_purify($_REQUEST['endFrom']);
-		$weekends = array();
+		$endFrom = vtlib_purify($_REQUEST['endFrom']);		
 		$weekends =  DateTimeField::getWeekendDates($startFrom, $endFrom);
 
 		break;
