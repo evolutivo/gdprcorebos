@@ -919,7 +919,7 @@ function getWeekendsFromYear(year) {
     var i = 1;
     var data = response.replace("]null", "]");
 
-
+    console.log("data", data);
     return data;
   });
 }
