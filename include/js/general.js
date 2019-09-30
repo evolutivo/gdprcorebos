@@ -888,34 +888,35 @@ function removeWeekendDays(allDates, weekEndsForYear) {
 /**
  * Return all weenkend days of the year
  */
-function getWeekendsFromYear(year) {
-    var i = 1;
-    var weekdays = [];
-    var current = new Date(year,0,1).format();
-    var endCount = days_of_a_year(year);
-
-    while(i <= endCount){
-        if(isWeekEnd(current)){
-            weekdays.push(current);
-        }
-        i++;
-        currentObj = new Date(current);
-        current = currentObj.addDays(1).format();
-    }
-    return weekdays;
-}
-
-
 // function getWeekendsFromYear(year) {
-//   var baseurl = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&year=' + year;
-//   jQuery.ajax({
-//     method: 'POST',
-//     url: 'index.php?'+baseurl
-//   }).done(function (response) {
-//     console.log(response);
-//     var weekdays = JSON.parse(response);
-//   });
+//     var i = 1;
+//     var weekdays = [];
+//     var current = new Date(year,0,1).format();
+//     var endCount = days_of_a_year(year);
+//
+//     while(i <= endCount){
+//         if(isWeekEnd(current)){
+//             weekdays.push(current);
+//         }
+//         i++;
+//         currentObj = new Date(current);
+//         current = currentObj.addDays(1).format();
+//     }
+//     return weekdays;
 // }
+
+
+function getWeekendsFromYear(year) {
+  //var baseurl = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&year=' + year;
+  var url = 'module='+module+'&action='+module+'Ajax&file=ExecuteFunctions&functiontocall=getWeekendDates&year=' + year;
+  jQuery.ajax({
+    method: 'POST',
+    url: 'index.php?'+url
+  }).done(function (response) {
+    console.log(response);
+    var weekdays = JSON.parse(response);
+  });
+}
 
 
 function isWeekEnd(date){
