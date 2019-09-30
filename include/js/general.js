@@ -920,13 +920,15 @@ function getWeekendsFromYear(year) {
       // console.log("KO", response);
       return [];
     }else{
+
       var data = response.replace("]null", "]");
+      console.log(data);
 
-      for (var i = 0; i < data.length; i++) {
-        weekdays.push(data[i]);
-      }
-
-      console.log(weekdays);
+      // for (var i = 0; i < data.length; i++) {
+      //   weekdays.push(data[i]);
+      // }
+      //
+      // console.log(weekdays);
       return data;
     }
 
