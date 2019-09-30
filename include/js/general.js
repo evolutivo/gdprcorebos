@@ -916,9 +916,9 @@ function getWeekendsFromYear(year) {
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
-    
-    var data = response.replace("[", "");
-    var data = response.replace("]null", "");
+
+    var data = response.replace("[", '');
+    var data = response.replace("]null", '');
 
     // Split string by whitespace character
     const splitString = data.split(",");
