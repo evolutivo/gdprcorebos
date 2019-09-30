@@ -499,7 +499,7 @@ class DateTimeField {
 	 * @return array Return an array of dates
 	 */
 	public static function getWeekendDates($startFrom, $endFrom, $format = 'Y-m-d') {
-		echo "Inside getWeekendDates function";
+		echo "Inside getWeekendDates function" + '-' + $startFrom + '------' + $endFrom;
 		$weekdays = array();
 		// Variable that store the date interval of period 1 day
 		$interval = new DateInterval('P1D');
