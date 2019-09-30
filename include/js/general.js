@@ -915,12 +915,12 @@ function getWeekendsFromYear(year) {
   jQuery.ajax({
     method: 'POST',
     url: 'index.php?'+url
-  }).done(function (res => res.json()) {
-    console.log(res);
+  }).done(function (response) {
     // var data = jQuery.parseJSON(JSON.stringify(response));
     // for (var i = 0; i < data.length; i++) {
     //   console.log(data[i]);
     // }
+    console.log("Ok");
   });
 }
 
