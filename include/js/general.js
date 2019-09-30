@@ -919,11 +919,8 @@ function getWeekendsFromYear(year) {
     var i = 1;
     var data = response.replace("]null", "]");
 
-    var myJSON = JSON.stringify(data);
 
-
-    console.log(myJSON);
-    return weekdays;
+    return data;
   });
 }
 
