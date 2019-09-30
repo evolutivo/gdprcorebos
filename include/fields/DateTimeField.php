@@ -512,15 +512,17 @@ class DateTimeField {
 			$Store = date('Y-m-d', $currentDate);
 			//Check if $Store is Saturday or Sunday
 			if(self::isWeekend($Store)){
-				// array_push($weekdays, $Store);
-				$weekdays[] = $Store;
+				array_push($weekdays, $Store);
+				//$weekdays[] = $Store;
 			}
 		}
 
-		print_r($weekdays);
+		// print_r($weekdays);
 
 		$code_array = json_encode($weekdays);
-		//print_r($code_array);
+
+		print_r($code_array);
+
 		return $code_array;
 	}
 
