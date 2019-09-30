@@ -505,15 +505,16 @@ class DateTimeField {
 		$Variable1 = strtotime($startFrom);
 		$Variable2 = strtotime($endFrom);
 
-		// Use for loop to store dates into array
-		// 86400 sec = 24 hrs = 60*60*24 = 1 day
-		// for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) {
-		// 	$Store = date('Y-m-d', $currentDate);
-		// 	//Check if $Store is Saturday or Sunday
-		// 	if(self::isWeekend($Store)){
-		// 		array_push($weekdays, $Store);
-		// 	}
-		// }
+		Use for loop to store dates into array
+		86400 sec = 24 hrs = 60*60*24 = 1 day
+		for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) {
+			$Store = date('Y-m-d', $currentDate);
+			//Check if $Store is Saturday or Sunday
+			if(self::isWeekend($Store)){
+				// array_push($weekdays, $Store);
+				$weekdays[] = $Store;
+			}
+		}
 
 		print_r($weekdays);
 
