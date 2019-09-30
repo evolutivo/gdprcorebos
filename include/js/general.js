@@ -907,8 +907,9 @@ function removeWeekendDays(allDates, weekEndsForYear) {
 
 
 function getWeekendsFromYear(year) {
-  var startFrom  = new Date(year, '0', '01');
-  var endFrom  = new Date(year, '12', '31');
+  var startFrom  = year + '-' + '01-01';
+  var endFrom  = year + '-' + '12-31';
+
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom;
 
   jQuery.ajax({
