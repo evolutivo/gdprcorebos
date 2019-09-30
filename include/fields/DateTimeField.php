@@ -500,7 +500,8 @@ class DateTimeField {
 	 */
 	public static function getWeekendDates($startFrom, $endFrom, $format = 'Y-m-d') {
 
-		$weekdays = array();
+		//$weekdays = array();
+		$weekdays = [];
 
 		$Variable1 = strtotime($startFrom);
 		$Variable2 = strtotime($endFrom);
@@ -511,8 +512,8 @@ class DateTimeField {
 			$Store = date('Y-m-d', $currentDate);
 			//Check if $Store is Saturday or Sunday
 			if(self::isWeekend($Store)){
-				// array_push($weekdays, $Store);
-				$weekdays[] = $Store;
+				array_push($weekdays, $Store);
+				// $weekdays[] = $Store;
 			}
 		}
 
