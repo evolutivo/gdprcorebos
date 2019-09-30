@@ -916,16 +916,12 @@ function getWeekendsFromYear(year) {
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
-    var i = 1;
-    var data = response.replace("]null", "]");
-
-    while(i <= data.length){
-      var data = data.split(',')[0];
-      weekdays.push(data);
-      i++;
-    }
-    console.log(weekdays);
-    return weekdays;
+    var jArray = <?php echo json_encode($phpArray ); ?>;
+    for(var i=0;i<12;i++){
+       weekdays.push(jArray[i]);
+   }
+  console.log(weekdays);
+  return weekdays;
   });
 }
 
