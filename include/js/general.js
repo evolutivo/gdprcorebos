@@ -928,8 +928,10 @@ function getWeekendsFromYear(year) {
     for(var i = 0; i<result.length; i++){
       weekends.push(result[i]);
     }
-    console.log(weekends);
-    return weekends;
+
+    doSomethingWithArray(resp)
+
+    
   })
   .fail(function(){
     console.log("error generating weekend dates");
@@ -937,6 +939,11 @@ function getWeekendsFromYear(year) {
 
 }
 
+function doSomethingWithApiData(arr){
+  console.log(arr);
+
+  return arr;
+}
 
 function isWeekEnd(date){
     dateObj = new Date(date);
