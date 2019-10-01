@@ -929,10 +929,8 @@ function getWeekendsFromYear(year) {
       weekends.push(result[i]);
     }
     console.log(weekends);
-  });
-  console.log(weekends);
-
-  return weekends;
+    return weekends;
+  });  
 }
 
 
