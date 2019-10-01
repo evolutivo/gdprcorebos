@@ -285,7 +285,7 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
 
     var weekEndsForYear = getWeekendsFromYear(yearOfReference);
 
-    console.log(weekEndsForYear);
+    // console.log(weekEndsForYear);
 
     // ===== Retrive these dates from corebose database
     // const weekEndsForYear = [
@@ -867,7 +867,7 @@ function formatDate (input) {
 
 //====== Remove weekend days from array that contains all possibles days
 function removeWeekendDays(allDates, weekEndsForYear) {
-    console.log("All possible dates ", allDates);
+    // console.log("All possible dates ", allDates);
     for (var i = 0; i < allDates.length; i++) {
         var giorno = allDates[i].Giorno;
         var mese = allDates[i].Mese;
@@ -881,59 +881,13 @@ function removeWeekendDays(allDates, weekEndsForYear) {
             }
         }
     }
-    console.log("All days without weekend days: ", allDates);
+    // console.log("All days without weekend days: ", allDates);
     return allDates;
 }
 
 /**
  * Return all weenkend days of the year
  */
-// function getWeekendsFromYear(year) {
-//     var i = 1;
-//     var weekdays = [];
-//     var current = new Date(year,0,1).format();
-//     var endCount = days_of_a_year(year);
-//
-//     while(i <= endCount){
-//         if(isWeekEnd(current)){
-//             weekdays.push(current);
-//         }
-//         i++;
-//         currentObj = new Date(current);
-
-//         current = currentObj.addDays(1).format();
-//     }
-//     return weekdays;
-// }
-
-
-// function getWeekendsFromYear(year) {
-//
-//   var startFrom  = year + '-' + '01-01';
-//   var endFrom  = year + '-' + '12-31';
-//   var dateFormat = 'Y-m-d';
-//   var weekends = [];
-//
-//   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
-//   jQuery.ajax({
-//     method: 'POST',
-//     url: 'index.php?'+url
-//   }).done(function (response) {
-//
-//     var d1 = response.replace("[", "");
-//     var d2 = d1.replace("]", "");
-//     var newData = d2.replace(/"/g, '');
-//     var result = newData.split(',');
-//
-//     for(var i = 0; i<result.length; i++){
-//       weekends.push(result[i]);
-//     }
-//     console.log(weekends);
-//   })
-//
-//   return weenkends;
-// }
-
 function getWeekendsFromYear(year){
   var startFrom  = year + '-' + '01-01';
   var endFrom  = year + '-' + '12-31';
@@ -948,47 +902,7 @@ function getWeekendsFromYear(year){
     async: false
   });
 
-
-  // console.log(result.responseJSON);
   return result.responseJSON;
-}
-
-
-function isWeekEnd(date){
-    dateObj = new Date(date);
-    if (dateObj.getDay() == 6 || dateObj.getDay() == 0) {
-        return true;
-    }else{
-        return false;
-    }
-}
-
-function days_of_a_year(year){
-    return isLeapYear(year) ? 366 : 365;
-}
-
-function isLeapYear(year) {
-    return year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
-}
-
-//format date
-Date.prototype.format = function() {
-    var mm = this.getMonth() + 1;
-    var dd = this.getDate();
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-    if (dd < 10) {
-        dd = '0' + dd;
-    }
-    return this.getFullYear()+'-'+mm+'-'+dd;
-};
-
-// get next day
-Date.prototype.addDays = function(days) {
-    var dat = new Date(this.valueOf())
-    dat.setDate(dat.getDate() + days);
-    return dat;
 }
 
 MD5 = function(e) {
