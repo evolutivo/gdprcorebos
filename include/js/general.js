@@ -867,7 +867,7 @@ function formatDate (input) {
 
 //====== Remove weekend days from array that contains all possibles days
 function removeWeekendDays(allDates, weekEndsForYear) {
-    //console.log("All possible dates ", allDates);
+    console.log("All possible dates ", allDates);
     for (var i = 0; i < allDates.length; i++) {
         var giorno = allDates[i].Giorno;
         var mese = allDates[i].Mese;
