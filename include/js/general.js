@@ -727,8 +727,6 @@ var download = function(content, fileName, mimeType) {
 
 
 function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear){
-    console.log(ferieXMonth);
-    console.log(weekEndsForYear);
     var possibleDates = [];
     var alldates = [];
     var giorniLavorativi = [];
@@ -883,7 +881,7 @@ function removeWeekendDays(allDates, weekEndsForYear) {
             }
         }
     }
-    // console.log("All days without weekend days: ", allDates);
+    console.log("All days without weekend days: ", allDates);
     return allDates;
 }
 
