@@ -934,34 +934,28 @@ function removeWeekendDays(allDates, weekEndsForYear) {
 //   return weenkends;
 // }
 
-async function getWeekendsFromYear(year){
+function getWeekendsFromYear(year){
+
   var startFrom  = year + '-' + '01-01';
   var endFrom  = year + '-' + '12-31';
   var dateFormat = 'Y-m-d';
   var weekends = [];
-
-
-  var result = await getWeekendDates(startFrom, endFrom, dateFormat);
-  console.log(result);
-
-
-  return result;
-}
-
-
-function getWeekendDates(startFrom, endFrom, dateFormat) {
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
+
   jQuery.ajax({
       url: 'index.php?'+url,
       type: 'POST',
       dataType: 'json',
-      success: function(response) {
-        // console.log(response);
-        return response;
-      }
+      success: successCallBack
   });
+
 }
 
+
+function successCallBack(response){
+  console.log(response);
+  return response;
+}
 
 function isWeekEnd(date){
     dateObj = new Date(date);
