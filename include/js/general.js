@@ -926,14 +926,12 @@ function getWeekendsFromYear(year) {
     var result = newData.split(',');
 
     for(var i = 0; i<result.length; i++){
-      console.log(result[i]);
-      weekends[i] = result[i];
+      weekends.push(result[i]);
     }
-
-
+    console.log(weekends);
   });
-
   console.log(weekends);
+
   return weekends;
 }
 
