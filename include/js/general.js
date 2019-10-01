@@ -913,6 +913,7 @@ function getWeekendsFromYear(year) {
   var endFrom  = year + '-' + '12-31';
   var dateFormat = 'Y-m-d';
   var weekends = [];
+  var result = "";
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
   jQuery.ajax({
     method: 'POST',
@@ -922,13 +923,14 @@ function getWeekendsFromYear(year) {
     var d1 = response.replace("[", "");
     var d2 = d1.replace("]", "");
     var newData = d2.replace(/"/g, '');
-    var dates = newData.split(',');
-    for(var i = 0; i<dates.length; i++){
-      weekends.push(dates[i]);
-    }
+    result = newData.split(',');
+
 
   });
 
+  for(var i = 0; i<result.length; i++){
+    weekends.push(result[i]);
+  }
   console.log(weekends);
   return weekends;
 }
