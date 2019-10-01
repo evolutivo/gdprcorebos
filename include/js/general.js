@@ -912,24 +912,19 @@ function getWeekendsFromYear(year) {
   var startFrom  = year + '-' + '01-01';
   var endFrom  = year + '-' + '12-31';
   var dateFormat = 'Y-m-d';
-  var weekends = "";
+  var weekends = [];
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
   jQuery.ajax({
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
-    console.log(response);
-    weekends = response;
-    // var data = response.replace("]null", "");
-    // var data = response.replace("[", "");
-    // var i = 1;
-    // while(data.leng != 0){
-    //   var date = dat.split(",")[0];
-    //   weekends.psuh(date)
-    // }
-    // // weekends = data.split(",");
-    // weekend  = data;
-    // console.log(weekends);
+
+    var data = response.replace("[", "");
+    var newData = data.replace(/"/g, '');
+    weekends = newData.split(',');
+    console.log(weekends);
+
+
   });
 
   return weekends;
