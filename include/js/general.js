@@ -943,19 +943,20 @@ function getWeekendsFromYear(year){
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
 
   var result = jQuery.ajax({
-      url: 'index.php?'+url,
-      type: 'POST',
-      dataType: 'json',
-      success: successCallBack
+    url: 'index.php?'+url,
+    type: 'POST',
+    dataType: 'json',
+    success: successCallBack
   });
-  console.log(result["responseJSON"]);
+
+  console.log(result.status);
 
   return result;
 }
 
 
 function successCallBack(response){
-  console.log(response);
+  // console.log(response);
   return response;
 }
 
