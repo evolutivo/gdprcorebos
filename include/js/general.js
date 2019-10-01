@@ -941,7 +941,7 @@ async function getWeekendsFromYear(year){
   var weekends = [];
 
 
-  var result = await getWeekendDates(startFrom, endFrom);
+  var result = await getWeekendDates(startFrom, endFrom, dateFormat);
   console.log(result);
 
 
@@ -949,7 +949,7 @@ async function getWeekendsFromYear(year){
 }
 
 
-function getWeekendDates(startFrom, endFrom) {
+function getWeekendDates(startFrom, endFrom, dateFormat) {
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
   jQuery.ajax({
       url: 'index.php?'+url,
