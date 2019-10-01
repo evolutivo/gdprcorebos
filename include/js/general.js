@@ -944,17 +944,18 @@ function getWeekendsFromYear(year){
   var result = jQuery.ajax({
     url: 'index.php?'+url,
     type: 'POST',
+    dataType: 'json',
     success: successCallBack
   });
 
-  console.log(result);
+  console.log(result[status]);
   return result;
 }
 
 
 function successCallBack(response){
-  // console.log(response);
-  return response.responseText;
+  console.log(response.responseText);
+  return response;
 }
 
 function isWeekEnd(date){
