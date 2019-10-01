@@ -928,6 +928,8 @@ function getWeekendsFromYear(year) {
 
   });
 
+  console.log(result);
+
   for(var i = 0; i<result.length; i++){
     weekends.push(result[i]);
   }
