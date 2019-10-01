@@ -919,8 +919,9 @@ function getWeekendsFromYear(year) {
     url: 'index.php?'+url
   }).done(function (response) {
 
-    var data = response.replace("[", "");
-    var newData = data.replace(/"/g, '');
+    var d1 = response.replace("[", "");
+    var d2 = d1.replace("]", "");
+    var newData = d2.replace(/"/g, '');
     weekends = newData.split(',');
     console.log(weekends);
 
