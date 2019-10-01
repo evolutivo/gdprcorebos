@@ -949,7 +949,7 @@ function getWeekendsFromYear(year){
     success: successCallBack
   });
 
-  console.log(result.status);
+  console.log(result['status']);
 
   return result;
 }
