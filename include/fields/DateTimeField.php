@@ -519,7 +519,7 @@ class DateTimeField {
 		return $code_array;
 	}
 
-	
+
 
 	/**
 	* @param datetime date
