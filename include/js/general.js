@@ -285,6 +285,7 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
 
     var weekEndsForYear = getWeekendsFromYear(yearOfReference);
 
+    console.log(weekEndsForYear);
 
     // ===== Retrive these dates from corebose database
     // const weekEndsForYear = [
@@ -726,6 +727,8 @@ var download = function(content, fileName, mimeType) {
 
 
 function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear){
+    console.log(ferieXMonth);
+    console.log(weekEndsForYear);
     var possibleDates = [];
     var alldates = [];
     var giorniLavorativi = [];
@@ -866,11 +869,11 @@ function formatDate (input) {
 
 //====== Remove weekend days from array that contains all possibles days
 function removeWeekendDays(allDates, weekEndsForYear) {
-    // console.log("All possible dates ", allDates);
+    //console.log("All possible dates ", allDates);
     for (var i = 0; i < allDates.length; i++) {
         var giorno = allDates[i].Giorno;
         var mese = allDates[i].Mese;
-        var anno = 2018;
+        //var anno = 2018;
         for (var j = 0; j < weekEndsForYear.length; j++) {
             var day = weekEndsForYear[j].substring(0, 2);
             var month = weekEndsForYear[j].substring(3, 5);
