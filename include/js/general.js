@@ -929,8 +929,10 @@ function getWeekendsFromYear(year) {
       weekends.push(result[i]);
     }
     console.log(weekends);
-    return ["2018-01-06","2018-01-07"];
   });
+
+  return ["2018-01-06","2018-01-07"];
+
 }
 
 
