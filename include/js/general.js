@@ -928,11 +928,12 @@ function getWeekendsFromYear(year) {
     for(var i = 0; i<result.length; i++){
       weekends.push(result[i]);
     }
-    // console.log(weekends);
+    console.log(weekends);
+    return weekends;
+  })
+  .fail(function(){
+    console.log("error generating weekend dates");
   });
-
-  console.log(weekends);
-  return weekends;
 
 }
 
