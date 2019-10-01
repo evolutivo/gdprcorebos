@@ -515,7 +515,7 @@ class DateTimeField {
 		// print_r($weekdays);
 		$code_array = json_encode($weekdays);
 
-		print_r($code_array);
+		// print_r($code_array);
 
 		return $code_array;
 	}
