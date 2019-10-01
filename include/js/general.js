@@ -928,10 +928,11 @@ function getWeekendsFromYear(year) {
     for(var i = 0; i<result.length; i++){
       weekends.push(result[i]);
     }
-    console.log(weekends);
+    // console.log(weekends);
   });
 
-  return ["2018-01-06","2018-01-07"];
+  console.log(weekends);
+  return weekends;
 
 }
 
