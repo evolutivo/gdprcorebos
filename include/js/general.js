@@ -614,7 +614,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 
 			{
 				ProjectID: finalReport[r].ProjectID,
-            	ProjectTaskID: finalReport[r].ProjectTaskID,
+      	ProjectTaskID: finalReport[r].ProjectTaskID,
 				Employee: finalReport[r].Employee,
 				WPCode: finalReport[r]["WP Code"],
 				WorkingHour: finalReport[r]["WorkingHour"],
@@ -666,8 +666,8 @@ function exportToCSV(columnHeaders, report, status){
         //     "Employee", "WPCode", "WPName", "WorkingHour", "TotalHoursWorked", "DateStart", "DateEnd", "Percentage", "PercentageWP",
         //     "TotalHoursWP", "TotaleWorkDaysWP", "Day", "Month", "Year"
            dataNew.push([
-			   report[j].ProjectID,
-			   report[j].ProjectTaskID,
+			         report[j].ProjectID,
+			         report[j].ProjectTaskID,
                report[j].Employee,
                report[j].WPCode,
                report[j].WorkingHour,
@@ -681,8 +681,8 @@ function exportToCSV(columnHeaders, report, status){
                report[j].TotaleWorkDaysWP,
                report[j].Day,
                report[j].Month,
-			   report[j].Year
-			]);
+			         report[j].Year
+			      ]);
         }
 
         // Building the CSV from the Data two-dimensional array
@@ -916,6 +916,7 @@ function getWeekendsFromYear(year) {
 
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
   jQuery.ajax({
+    async: false,
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
@@ -928,22 +929,12 @@ function getWeekendsFromYear(year) {
     for(var i = 0; i<result.length; i++){
       weekends.push(result[i]);
     }
-
-    doSomethingWithArray(resp)
-
-    
+    console.log(weekends);
   })
-  .fail(function(){
-    console.log("error generating weekend dates");
-  });
 
+  return weenkends;
 }
 
-function doSomethingWithApiData(arr){
-  console.log(arr);
-
-  return arr;
-}
 
 function isWeekEnd(date){
     dateObj = new Date(date);
