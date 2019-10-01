@@ -129,10 +129,8 @@ switch ($functiontocall) {
 	case 'getWeekendDates':
 		$startDate = vtlib_purify($_REQUEST['startFrom']);
 		$endDate = vtlib_purify($_REQUEST['endFrom']);
-		include_once 'modules/cbMap/processmap/Validations.php';
 		$format = 'Y-m-d';
-		$results = "";
-		$results =  DateTimeField::getWeekendDates($startDate, $endDate, $format);
+		$ret =  DateTimeField::getWeekendDates($startDate, $endDate, $format);
 		break;
 	case 'ValidationLoad':
 		$valmod = vtlib_purify($_REQUEST['valmodule']);
