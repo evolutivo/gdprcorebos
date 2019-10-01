@@ -499,9 +499,7 @@ class DateTimeField {
 	 * @return array Return an array of dates
 	 */
 	public static function getWeekendDates($startFrom, $endFrom, $format = 'Y-m-d') {
-
 		$weekdays = array();
-		//$weekdays = [];
 		$Variable1 = strtotime($startFrom);
 		$Variable2 = strtotime($endFrom);
 
@@ -511,23 +509,22 @@ class DateTimeField {
 			$Store = date('Y-m-d', $currentDate);
 			//Check if $Store is Saturday or Sunday
 			if(self::isWeekend($Store)){
-				//array_push($weekdays, $Store);
 				$weekdays[] = $Store;
 			}
 		}
 		// print_r($weekdays);
 		$code_array = json_encode($weekdays);
-		print_r($code_array);
+		// print_r($code_array);
 
 		return $code_array;
-
 	}
+
+	
 
 	/**
 	* @param datetime date
 	* @return true if date is Saturday or Sunday
 	*/
-
 	public static function isWeekend($date){
 		return (date('N', strtotime($date)) >= 6);
 	}

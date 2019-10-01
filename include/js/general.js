@@ -900,6 +900,7 @@ function removeWeekendDays(allDates, weekEndsForYear) {
 //         }
 //         i++;
 //         currentObj = new Date(current);
+
 //         current = currentObj.addDays(1).format();
 //     }
 //     return weekdays;
@@ -917,11 +918,17 @@ function getWeekendsFromYear(year) {
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
-    var data = response.replace("]null", "]");
+    console.log(response);
+    // var data = response.replace("]null", "");
     // var data = response.replace("[", "");
-    // weekends = data.split(",");
-    weekend  = data;
-    console.log(weekends);
+    // var i = 1;
+    // while(data.leng != 0){
+    //   var date = dat.split(",")[0];
+    //   weekends.psuh(date)
+    // }
+    // // weekends = data.split(",");
+    // weekend  = data;
+    // console.log(weekends);
   });
 
   return weekends;
