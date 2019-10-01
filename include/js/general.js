@@ -946,8 +946,8 @@ function getWeekendsFromYear(year){
     type: 'POST',
     dataType: 'json'
   }).done(function (response) {
-		console.log(response.responseJSON);
-    return response.responseJSON;
+		console.log(response);
+    return response;
 	});
 }
 
