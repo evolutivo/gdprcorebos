@@ -947,16 +947,16 @@ function getWeekendsFromYear(year){
       dataType: 'json',
       success: function(response) {
         console.log(response);
-        var d1 = response.replace("[", "");
-        var d2 = d1.replace("]", "");
-        var newData = d2.replace(/"/g, '');
-        var result = newData.split(',');
-
-        for(var i = 0; i<result.length; i++){
-          weekends.push(result[i]);
-        }
-        console.log(weekends);
-        return weekends;
+        // var d1 = response.replace("[", "");
+        // var d2 = d1.replace("]", "");
+        // var newData = d2.replace(/"/g, '');
+        // var result = newData.split(',');
+        //
+        // for(var i = 0; i<result.length; i++){
+        //   weekends.push(result[i]);
+        // }
+        // console.log(weekends);
+        return response;
       },
       error: function() {
          return "Error on getWeekendsFromYear method!!";
