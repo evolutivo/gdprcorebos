@@ -511,8 +511,11 @@ class DateTimeField {
 			if(self::isWeekend($Store)){
 				$weekdays[] = $Store;
 			}
+			echo "aaaa" . $Store;
 		}
+
 		print_r($weekdays);
+
 		$code_array = json_encode($weekdays);
 
 		// print_r($code_array);
