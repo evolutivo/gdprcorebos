@@ -512,14 +512,12 @@ class DateTimeField {
 				$weekdays[] = $Store;
 			}
 		}
-
-		print_r($weekdays);
-
-		echo "bbbbbb";;
+		// print_r($weekdays);
 
 		$code_array = json_encode($weekdays);
 
-		// print_r($code_array);
+		print_r($code_array);
+		echo "ccc";
 
 		return $code_array;
 	}
