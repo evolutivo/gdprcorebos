@@ -493,12 +493,14 @@ class DateTimeField {
 		}
 		return $value;
 	}
+
 	/**
 	 * @param datetime $startFrom
 	 * @return datetime $endFrom
-	 * @return array Return an array of dates
+	 * @return array Return an array with all weekend dates between $startFrom and $endFrom
 	 */
-	public static function getWeekendDates($startFrom, $endFrom, $format = 'Y-m-d') {
+	//// TODO: Remove for and use math operations in order to find weekend days
+	public static function getWeekendDates($startFrom, $endFrom, $format) {
 		$weekdays = array();
 		$Variable1 = strtotime($startFrom);
 		$Variable2 = strtotime($endFrom);
@@ -506,19 +508,14 @@ class DateTimeField {
 		// Use for loop to store dates into array
 		// 86400 sec = 24 hrs = 60*60*24 = 1 day
 		for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) {
-			$Store = date('Y-m-d', $currentDate);
+			$Store = date($format, $currentDate);
 			//Check if $Store is Saturday or Sunday
 			if(self::isWeekend($Store)){
 				$weekdays[] = $Store;
 			}
 		}
-		// print_r($weekdays);
-		$code_array = json_encode($weekdays);
-		// print_r($code_array);
-		// return $code_array;
 		return $weekdays;
 	}
-
 
 
 	/**
