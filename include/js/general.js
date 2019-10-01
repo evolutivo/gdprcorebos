@@ -939,9 +939,10 @@ function getWeekendsFromYear(year){
   var endFrom  = year + '-' + '12-31';
   var dateFormat = 'Y-m-d';
   var weekends = [];
+  var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
 
   jQuery.ajax({
-      url: 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat,
+      url: 'index.php?'+url,
       type: 'POST',
       dataType: 'json',
       success: function(data) {
