@@ -942,7 +942,7 @@ function getWeekendsFromYear(year){
 
   jQuery.ajax({
       url: 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
-      type: 'post',
+      type: 'POST',
       dataType: 'json',
       success: function(data) {
         var d1 = response.replace("[", "");
