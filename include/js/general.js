@@ -922,14 +922,13 @@ function getWeekendsFromYear(year) {
     var d1 = response.replace("[", "");
     var d2 = d1.replace("]", "");
     var newData = d2.replace(/"/g, '');
-    weekends = newData.split(',');
+    var dates = newData.split(',');
+    for(var i = 0; i<dates.length; i++){
+      weekends.push(dates[i]);
+    }
     console.log(weekends);
-
-
   });
-
   return weekends;
-
 }
 
 
