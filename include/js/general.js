@@ -935,7 +935,6 @@ function removeWeekendDays(allDates, weekEndsForYear) {
 // }
 
 function getWeekendsFromYear(year){
-
   var startFrom  = year + '-' + '01-01';
   var endFrom  = year + '-' + '12-31';
   var dateFormat = 'Y-m-d';
@@ -949,8 +948,7 @@ function getWeekendsFromYear(year){
     success: successCallBack
   });
 
-  console.log(result['status']);
-
+  console.log(result[responseJSON]);
   return result;
 }
 
