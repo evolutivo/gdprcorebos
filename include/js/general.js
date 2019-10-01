@@ -941,22 +941,16 @@ function getWeekendsFromYear(year){
   var weekends = [];
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
 
-  var result = jQuery.ajax({
+  jQuery.ajax({
     url: 'index.php?'+url,
     type: 'POST',
-    dataType: 'json',
-    success: successCallBack
-  });
-
-  console.log(result.responseJSON);
-  return result;
+    dataType: 'json'
+  }).done(function (response) {
+		console.log(response.responseJSON);
+    return response.responseJSON;
+	});
 }
 
-
-function successCallBack(response){
-  console.log(response.responseJSON);
-  return response;
-}
 
 function isWeekEnd(date){
     dateObj = new Date(date);
