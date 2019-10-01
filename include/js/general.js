@@ -944,7 +944,6 @@ function getWeekendsFromYear(year){
   var result = jQuery.ajax({
     url: 'index.php?'+url,
     type: 'POST',
-    dataType: 'json',
     success: successCallBack
   });
 
