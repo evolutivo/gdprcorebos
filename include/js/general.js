@@ -909,21 +909,19 @@ function removeWeekendDays(allDates, weekEndsForYear) {
 function getWeekendsFromYear(year) {
   var startFrom  = year + '-' + '01-01';
   var endFrom  = year + '-' + '12-31';
-  var weekdays = [];
-  // var weekdays = "";
+  // var weekdays = [];
+  var weekdays = "";
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom;
   jQuery.ajax({
     method: 'POST',
     url: 'index.php?'+url
   }).done(function (response) {
-
-    var data = response.replace("");
-
-    console.log(response[0]);
+    var data = response.replace("]null", "]");
+    console.log(data;
 
     // var results = data.split(",");
 
-    // weekdays = results;
+    weekdays = data;
   });
 
   return weekdays;
