@@ -941,16 +941,15 @@ function getWeekendsFromYear(year){
   var weekends;
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
 
-  jQuery.ajax({
+  var result = jQuery.ajax({
     url: 'index.php?'+url,
     type: 'POST',
-    dataType: 'json'
-  }).done(function (response) {
-		console.log(response);
-    weekends =  response;
-	});
+    dataType: 'json',
+    async: false
+  });
 
-  return weekends;
+  console.log(result.responseJSON);
+  return result.responseJSON;
 }
 
 
