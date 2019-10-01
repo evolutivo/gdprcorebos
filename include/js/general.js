@@ -947,14 +947,14 @@ function getWeekendsFromYear(year){
     success: successCallBack
   });
 
-  console.log(result[status]);
+  console.log(result);
   return result;
 }
 
 
 function successCallBack(response){
   // console.log(response);
-  return response;
+  return response.responseText;
 }
 
 function isWeekEnd(date){
