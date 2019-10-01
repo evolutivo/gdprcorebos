@@ -948,7 +948,7 @@ function getWeekendsFromYear(year){
     success: successCallBack
   });
 
-  console.log(result[responseJSON]);
+  console.log(result[status]);
   return result;
 }
 
