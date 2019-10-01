@@ -907,32 +907,59 @@ function removeWeekendDays(allDates, weekEndsForYear) {
 // }
 
 
-function getWeekendsFromYear(year) {
+// function getWeekendsFromYear(year) {
+//
+//   var startFrom  = year + '-' + '01-01';
+//   var endFrom  = year + '-' + '12-31';
+//   var dateFormat = 'Y-m-d';
+//   var weekends = [];
+//
+//   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
+//   jQuery.ajax({
+//     method: 'POST',
+//     url: 'index.php?'+url
+//   }).done(function (response) {
+//
+//     var d1 = response.replace("[", "");
+//     var d2 = d1.replace("]", "");
+//     var newData = d2.replace(/"/g, '');
+//     var result = newData.split(',');
+//
+//     for(var i = 0; i<result.length; i++){
+//       weekends.push(result[i]);
+//     }
+//     console.log(weekends);
+//   })
+//
+//   return weenkends;
+// }
 
+function getWeekendsFromYear(year){
   var startFrom  = year + '-' + '01-01';
   var endFrom  = year + '-' + '12-31';
   var dateFormat = 'Y-m-d';
   var weekends = [];
 
-  var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
   jQuery.ajax({
-    async: false,
-    method: 'POST',
-    url: 'index.php?'+url
-  }).done(function (response) {
+      url: 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
+      type: 'post',
+      dataType: 'json',
+      success: function(data) {
+        var d1 = response.replace("[", "");
+        var d2 = d1.replace("]", "");
+        var newData = d2.replace(/"/g, '');
+        var result = newData.split(',');
 
-    var d1 = response.replace("[", "");
-    var d2 = d1.replace("]", "");
-    var newData = d2.replace(/"/g, '');
-    var result = newData.split(',');
-
-    for(var i = 0; i<result.length; i++){
-      weekends.push(result[i]);
-    }
-    console.log(weekends);
-  })
-
-  return weenkends;
+        for(var i = 0; i<result.length; i++){
+          weekends.push(result[i]);
+        }
+        console.log(weekends);
+        return weekends;
+      },
+      error: function() {
+         return "Error on getWeekendsFromYear method!!";
+      }
+  });
 }
 
 
