@@ -942,13 +942,13 @@ function getWeekendsFromYear(year){
   var weekends = [];
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
 
-  jQuery.ajax({
+  var result = jQuery.ajax({
       url: 'index.php?'+url,
       type: 'POST',
       dataType: 'json',
       success: successCallBack
   });
-
+  console.log(result);
 }
 
 
