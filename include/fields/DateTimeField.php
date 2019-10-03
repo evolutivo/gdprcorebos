@@ -534,16 +534,16 @@ class DateTimeField {
 		$end_time = strtotime($endFrom);
 
 		if (strtotime($startFrom) > strtotime($endFrom)){
-			echo $startDate->format($format). " is bigger than " . $endDate->format($format);
+			// echo $startDate->format($format). " is bigger than " . $endDate->format($format);
 			$weekendDates = [];
 		}else{
-			echo $startDate->format($format). " is smaller or equal to " . $endDate->format($format) . "\n";
+			// echo $startDate->format($format). " is smaller or equal to " . $endDate->format($format) . "\n";
 			$dt1 = strtotime($startDate->format($format));
 	 		$dt2 = date("l", $dt1);
 	 		$dt3 = strtolower($dt2);
 
 			if($dt3 == "saturday"){
-				echo $startDate->format($format). " is saturday " . "\n";
+				// echo $startDate->format($format). " is saturday " . "\n";
 				while($start_time <= $end_time){
 					//Add Saturday
 					$weekendDates[] = $startDate->format($format);
@@ -560,7 +560,7 @@ class DateTimeField {
 					$start_time = $current_time;
 				}
 			}else if($dt3 == "sunday"){
-				echo $startDate->format($format). " is sunday " . "\n";
+				// echo $startDate->format($format). " is sunday " . "\n";
 				while($start_time <= $end_time){
 					//Add Sunday
 					$weekendDates[] = $startDate->format($format);
