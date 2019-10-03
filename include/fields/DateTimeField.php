@@ -494,36 +494,110 @@ class DateTimeField {
 		return $value;
 	}
 
-	/**
-	 * @param datetime $startFrom
-	 * @return datetime $endFrom
-	 * @return array Return an array with all weekend dates between $startFrom and $endFrom
-	 */
-	//// TODO: Remove for and use math operations in order to find weekend days
-	public static function getWeekendDates($startFrom, $endFrom, $format) {
-		$weekdays = array();
-		$Variable1 = strtotime($startFrom);
-		$Variable2 = strtotime($endFrom);
+	// /**
+	//  * @param datetime $startFrom
+	//  * @param datetime $endFrom
+	//  * @param string $format
+	//  * @return array Return an array with all weekend dates between $startFrom and $endFrom
+	//  */
+	// public static function getWeekendDates($startFrom, $endFrom, $format) {
+	// 	$weekdays = array();
+	// 	$Variable1 = strtotime($startFrom);
+	// 	$Variable2 = strtotime($endFrom);
+	//
+	// 	// Use for loop to store dates into array
+	// 	// 86400 sec = 24 hrs = 60*60*24 = 1 day
+	// 	for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) {
+	// 		$Store = date($format, $currentDate);
+	// 		//Check if $Store is Saturday or Sunday
+	// 		if(self::isWeekend($Store)){
+	// 			$weekdays[] = $Store;
+	// 		}
+	// 	}
+	// 	return $weekdays;
+	// }
 
-		// Use for loop to store dates into array
-		// 86400 sec = 24 hrs = 60*60*24 = 1 day
-		for ($currentDate = $Variable1; $currentDate <= $Variable2; $currentDate += (86400)) {
-			$Store = date($format, $currentDate);
-			//Check if $Store is Saturday or Sunday
-			if(self::isWeekend($Store)){
-				$weekdays[] = $Store;
+
+	/**
+	* @param datetime $startFrom
+	* @param datetime $endFrom
+	* @param string $format of the date
+	* @return array Return an array with all weekend dates between $startFrom and $endFrom
+	*/
+	public static function getWeekendDates($startFrom, $endFrom, $format) {
+		$weekendDates = array();
+    $interval = new DateInterval('P1D');
+		$startDate = new DateTime($startFrom);
+		$endDate = new DateTime($endFrom);
+		$start_time = strtotime($startFrom);
+		$end_time = strtotime($endFrom);
+
+		if (strtotime($startFrom) > strtotime($endFrom)){
+			echo $startDate->format($format). " is bigger than " . $endDate->format($format);
+			$weekendDates = [];
+		}else{
+			echo $startDate->format($format). " is smaller or equal to " . $endDate->format($format) . "\n";
+			$dt1 = strtotime($startDate->format($format));
+	 		$dt2 = date("l", $dt1);
+	 		$dt3 = strtolower($dt2);
+
+			if($dt3 == "saturday"){
+				echo $startDate->format($format). " is saturday " . "\n";
+				while($start_time <= $end_time){
+					//Add Saturday
+					$weekendDates[] = $startDate->format($format);
+					//Increment of 1 day
+					$startDate->add(new DateInterval('P1D'));
+					$current_time = strtotime($startDate->format($format));
+					if($current_time <= $end_time){
+						//Add Sunday
+						$weekendDates[] = $startDate->format($format);
+						//Increment of 6 days
+						$startDate->add(new DateInterval('P6D'));
+						$current_time = strtotime($startDate->format($format));
+					}
+					$start_time = $current_time;
+				}
+			}else if($dt3 == "sunday"){
+				echo $startDate->format($format). " is sunday " . "\n";
+				while($start_time <= $end_time){
+					//Add Sunday
+					$weekendDates[] = $startDate->format($format);
+					//Increment of 6 day
+					$startDate->add(new DateInterval('P6D'));
+					$current_time = strtotime($startDate->format($format));
+					if($current_time <= $end_time){
+						//Add next Saturday
+						$weekendDates[] = $startDate->format($format);
+						//Increment of 6 days
+						$startDate->add(new DateInterval('P1D'));
+						$current_time = strtotime($startDate->format($format));
+					}
+					$start_time = $current_time;
+				}
+			}
+			else{
+				$date = $startDate->modify('next Saturday');
+				while ($start_time <= $end_time) {
+					$start = strtotime($date->format($format));
+					if ($start <= $end_time){
+						//Add Saturday
+						$weekendDates[] = $date->format($format);
+						//Incremento by one day
+						$date->add($interval);
+						$start = strtotime($date->format($format));
+						if ($start <= $end_time){
+							//Add Sunday
+							$weekendDates[] = $date->format($format);
+							//Increment by 6 days
+							$date->add(new DateInterval('P6D'));
+						}
+					}
+					$start_time = $start;
+				}
 			}
 		}
-		return $weekdays;
-	}
-
-
-	/**
-	* @param datetime date
-	* @return true if date is Saturday or Sunday
-	*/
-	public static function isWeekend($date){
-		return (date('N', strtotime($date)) >= 6);
+		return $weekendDates;
 	}
 
 }
