@@ -14,7 +14,7 @@
             type="text"
             id="txtbox_contactrole_vacations"
             name ="contactrole_vacations"
-            data-multiple-dates="30"
+            data-multiple-dates="60"
             data-multiple-dates-separator=","
             data-position="top left"
             data-date-format="dd/mm/yyyy"
@@ -30,19 +30,19 @@
 
 <script>
     $(document).ready(function(){
-        
+
         var datepicker = $('#txtbox_contactrole_vacations').datepicker().data('datepicker'),
             selectedValues = "{$FIELDS.contactrole_vacations}",
             selected_dates = [];
 
         var res = selectedValues.split(",");
-        
+
         for(var j=0; j<res.length; j++){
             var parts =res[j].split('/');
             var mydate = new Date(parts[2], parts[1] - 1, parts[0]);
             selected_dates.push(mydate);
         }
-        
+
         if({$FIELDS.contactrole_vacations}){
             for(var i = 0; i<selected_dates.length; i++){
                 datepicker.selectDate(selected_dates[i])
