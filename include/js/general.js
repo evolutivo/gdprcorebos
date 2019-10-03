@@ -292,13 +292,8 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
       festivity = [];
     }
 
-
-    //// TODO:
-    //var festivity = getFestivityFromYear(yearOfReference);
-
     var weekEndsForYear = getWeekendsFromYear(yearOfReference);
-
-    // console.log(weekEndsForYear);
+    console.log(weekEndsForYear);
 
     //Month of the Year
     const allmonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
