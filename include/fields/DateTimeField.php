@@ -526,7 +526,8 @@ class DateTimeField {
 	*/
 	public static function getWeekendDates($startFrom, $endFrom, $format) {
 		$weekendDates = array();
-    $interval = new DateInterval('P1D');
+    $interval_d1 = new DateInterval('P1D');
+		$interval_d6 = new DateInterval('P6D');
 		$startDate = new DateTime($startFrom);
 		$endDate = new DateTime($endFrom);
 		$start_time = strtotime($startFrom);
@@ -547,13 +548,13 @@ class DateTimeField {
 					//Add Saturday
 					$weekendDates[] = $startDate->format($format);
 					//Increment of 1 day
-					$startDate->add(new DateInterval('P1D'));
+					$startDate->add($interval_d1);
 					$current_time = strtotime($startDate->format($format));
 					if($current_time <= $end_time){
 						//Add Sunday
 						$weekendDates[] = $startDate->format($format);
 						//Increment of 6 days
-						$startDate->add(new DateInterval('P6D'));
+						$startDate->add($interval_d6);
 						$current_time = strtotime($startDate->format($format));
 					}
 					$start_time = $current_time;
@@ -564,13 +565,13 @@ class DateTimeField {
 					//Add Sunday
 					$weekendDates[] = $startDate->format($format);
 					//Increment of 6 day
-					$startDate->add(new DateInterval('P6D'));
+					$startDate->add($interval_d6);
 					$current_time = strtotime($startDate->format($format));
 					if($current_time <= $end_time){
 						//Add next Saturday
 						$weekendDates[] = $startDate->format($format);
 						//Increment of 6 days
-						$startDate->add(new DateInterval('P1D'));
+						$startDate->add($interval_d1);
 						$current_time = strtotime($startDate->format($format));
 					}
 					$start_time = $current_time;
@@ -584,13 +585,13 @@ class DateTimeField {
 						//Add Saturday
 						$weekendDates[] = $date->format($format);
 						//Incremento by one day
-						$date->add($interval);
+						$date->add($interval_d1);
 						$start = strtotime($date->format($format));
 						if ($start <= $end_time){
 							//Add Sunday
 							$weekendDates[] = $date->format($format);
 							//Increment by 6 days
-							$date->add(new DateInterval('P6D'));
+							$date->add($interval_d6);
 						}
 					}
 					$start_time = $start;
