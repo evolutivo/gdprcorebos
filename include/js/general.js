@@ -25,7 +25,7 @@ function generatetimecontrol(annoRiferimento, projectid) {
 
   //Remote ENDPOINT
   var endpointUrl="http://63.251.233.101/gdprcorebos/webservice.php";
-  var username="admin"; 
+  var username="admin";
   var userAccessKey = "o7NM12Xzxm6mYfB";
   var url = endpointUrl + "?operation=getchallenge&username=" + username;
   const columNames = ['ProjectID', 'ProjectTaskID', 'Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP', 'TotalHoursWP', 'TotaleWorkDaysWP', 'Day', 'Month', 'Year'];
@@ -791,7 +791,7 @@ function getWeekendsFromYear(year){
   // var startFrom  = year + '-' + '01' + '-' + '01';
   // var endFrom  = year + '-' + '12' + '-' + '31';
   var startFrom  = '01' + '-' + '01' + '-' + year;
-  var endFrom  = '31' + '-' + '14' + '-' + year;
+  var endFrom  = '31' + '-' + '12' + '-' + year;
 
   var dateFormat = 'd-m-Y';
   var weekends;
