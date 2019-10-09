@@ -23,36 +23,36 @@
 
 function generatetimecontrol(annoRiferimento, projectid) {
 
-    //Remote ENDPOINT
-    var endpointUrl = "http://63.251.233.101/gdprcorebos/webservice.php";
-    var username = "admin";
-    var userAccessKey = "o7NM12Xzxm6mYfB";
-    var url = endpointUrl + "?operation=getchallenge&username=" + username;
-    const columNames = ['ProjectID', 'ProjectTaskID', 'Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP', 'TotalHoursWP', 'TotaleWorkDaysWP', 'Day', 'Month', 'Year'];
+  //Remote ENDPOINT
+  var endpointUrl="http://63.251.233.101/gdprcorebos/webservice.php";
+  var username="admin"; 
+  var userAccessKey = "o7NM12Xzxm6mYfB";
+  var url = endpointUrl + "?operation=getchallenge&username=" + username;
+  const columNames = ['ProjectID', 'ProjectTaskID', 'Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP', 'TotalHoursWP', 'TotaleWorkDaysWP', 'Day', 'Month', 'Year'];
 
-    fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            // console.log(data.result["token"]);
-            var challengeToken = data.result["token"];
-            var generatedKey = MD5(challengeToken + userAccessKey);
-            // console.log(generatedKey);
+  fetch(url, {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json"
+          }
+      })
+      .then(response => {
+          return response.json();
+      })
+      .then(data => {
+          // console.log(data.result["token"]);
+          var challengeToken = data.result["token"];
+          var generatedKey = MD5(challengeToken + userAccessKey);
+          // console.log(generatedKey);
 
-            loginWS(columNames, endpointUrl, "login", username, generatedKey, annoRiferimento, projectid);
-        })
+          loginWS(columNames, endpointUrl, "login", username, generatedKey, annoRiferimento, projectid);
+      })
 
-        .catch(err => {
-            // Do something for an error here
-            console.log(err);
-            //exportToCSV(columNames, [], err);
-        });
+      .catch(err => {
+          // Do something for an error here
+          console.log(err);
+          //exportToCSV(columNames, [], err);
+      });
 }
 
 
@@ -511,25 +511,24 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 		}
 		// console.log(r + '-' + month+ '-' + day);
 		var obj =
-
-			{
-				ProjectID: finalReport[r].ProjectID,
-      	ProjectTaskID: finalReport[r].ProjectTaskID,
-				Employee: finalReport[r].Employee,
-				WPCode: finalReport[r]["WP Code"],
-				WorkingHour: finalReport[r]["WorkingHour"],
-				RealWorkingHour: 0,
-				TotalHoursWorked: finalReport[r]["Total Hours Worked"],
-				DateStart: finalReport[r]["Start Time"],
-				DateEnd: finalReport[r]["End Time"],
-				Percentage: finalReport[r].Percentuale,
-				PercentageWP: finalReport[r].PercentualeTotaleWP + '%',
-				TotalHoursWP: finalReport[r].TotHoursXWP,
-				TotaleWorkDaysWP: finalReport[r].TotWDxWP,
-				Day: (day == null || day.length === 0) ? otherDay : day,
-				Month: month,
-				Year: yearOfReference
-			}
+		{
+			ProjectID: finalReport[r].ProjectID,
+    	ProjectTaskID: finalReport[r].ProjectTaskID,
+			Employee: finalReport[r].Employee,
+			WPCode: finalReport[r]["WP Code"],
+			WorkingHour: finalReport[r]["WorkingHour"],
+			RealWorkingHour: 0,
+			TotalHoursWorked: finalReport[r]["Total Hours Worked"],
+			DateStart: finalReport[r]["Start Time"],
+			DateEnd: finalReport[r]["End Time"],
+			Percentage: finalReport[r].Percentuale,
+			PercentageWP: finalReport[r].PercentualeTotaleWP + '%',
+			TotalHoursWP: finalReport[r].TotHoursXWP,
+			TotaleWorkDaysWP: finalReport[r].TotWDxWP,
+			Day: (day == null || day.length === 0) ? otherDay : day,
+			Month: month,
+			Year: yearOfReference
+		}
 
 		output.push(obj);
 
