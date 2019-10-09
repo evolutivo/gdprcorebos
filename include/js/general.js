@@ -789,8 +789,11 @@ function removeWeekendDays(allDates, weekEndsForYear) {
  * Return all weenkend days of the year
  */
 function getWeekendsFromYear(year){
-  var startFrom  = year + '-' + '01-01';
-  var endFrom  = year + '-' + '12-31';
+  // var startFrom  = year + '-' + '01' + '-' + '01';
+  // var endFrom  = year + '-' + '12' + '-' + '31';
+  var startFrom  = '01' + '-' + '01' + '-' + year;
+  var endFrom  = '31' + '-' + '14' + '-' + year;
+
   var dateFormat = 'd-m-Y';
   var weekends;
   var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
