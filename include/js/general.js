@@ -155,7 +155,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
 
     // console.log(PID);
 
-    // var sql = " SELECT contactrolename, ProjectTask.projecttasknumber, ProjectTask.projecttaskname, ProjectTask.startdate, ProjectTask.enddate, cf_1827, cf_1837, Employees.emp_organization " +
+    // var sql = " SELECT contactrolename, ProjectTask.projecttasknumber, ProjectTask.projecttaskname, ProjectTask.startdate, ProjectTask.enddate, cf_1828, cf_1837, Employees.emp_organization " +
     //           " FROM ContactRole " +
     //           " WHERE ProjectTask.projecttasknumber != '' AND ContactRole.cf_1833 =" + PID + " ;";
 
@@ -164,7 +164,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
     // var sql = "SELECT projecttasknumber,projecttaskname,startdate,enddate FROM ProjectTask WHERE (ProjectTask.projectid LIKE '%"+projectName+"%') ; ";
 
 
-    var sql = "SELECT contactrolename,ProjectTask.projecttasknumber,ProjectTask.projecttaskname,ProjectTask.startdate,ProjectTask.enddate,cf_1827,cf_1837 FROM ContactRole WHERE (ProjectTask.projectid = "+PID+") ; ";
+    var sql = "SELECT contactrolename,ProjectTask.projecttasknumber,ProjectTask.projecttaskname,ProjectTask.startdate,ProjectTask.enddate,cf_1828,cf_1837 FROM ContactRole WHERE (ProjectTask.projectid = "+PID+") ; ";
 
     var url = endpoint + "?operation=" + oper + "&sessionName=" + sessionId + "&query=" + sql;
 
@@ -191,7 +191,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"contactrolename":').join('"Employee":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskprojecttasknumber":').join('"WP Code":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskprojecttaskname":').join('"WP Name":'));
-            empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1827":').join('"Total Hours Worked":'));
+            empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1828":').join('"Total Hours Worked":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskstartdate":').join('"Start Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskenddate":').join('"End Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1837":').join('"WorkingHour":'));
