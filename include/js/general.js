@@ -481,7 +481,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 
 	// ======= BEGIN ADD RANDOM DAY & MONTH TO FINAL REPORT =========
 	for (var r = 0; r < finalReport.length; r++) {
-		var randomMonth = [];
+	    var randomMonth = [];
 		var otherRandomMonth = [];
 		var randomDay = [];
 		var copyRandomDay = [];
@@ -497,23 +497,23 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 		var day = randomDay[Math.floor(Math.random() * randomDay.length)];
 
 
-
 		if (day == null || day.length === 0) {
-			otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
+		    for (var i = 0; i < mesiLavorativi.length; i++) {
+		        if (mesiLavorativi[i].Mese == month) {
+		            mesiLavorativi.splice(i,1);
+		        }
+		    }
+
+            otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
 			var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
 			copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
 			var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
-			// console.log(otherDay);
-			// while(otherDay == null || otherDay.length === 0 || otherDay  === "undefined"){
-			//     var filledDay = getRandomDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
-			// }
-			// console.log(otherDay);
 		}
 		// console.log(r + '-' + month+ '-' + day);
 		var obj =
 		{
 			ProjectID: finalReport[r].ProjectID,
-    	ProjectTaskID: finalReport[r].ProjectTaskID,
+    	    ProjectTaskID: finalReport[r].ProjectTaskID,
 			Employee: finalReport[r].Employee,
 			WPCode: finalReport[r]["WP Code"],
 			WorkingHour: finalReport[r]["WorkingHour"],
