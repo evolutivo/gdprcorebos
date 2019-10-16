@@ -461,15 +461,18 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             employeeCalendars.push(empCalendar);
         }
     }
-    // console.log(employeeCalendars);
+    console.log(employeeCalendars);
 
+    console.log(feriXMonthXEmp);
     //========== BEGIN  Remove ferie x EMPLOYEEE ==========
     for (var e = 0; e < employeeCalendars.length; e++) {
         for (var g = 0; g < feriXMonthXEmp.length; g++) {
             var day = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(0, 2);
             var month = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(3, 5);
             var year = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(6, 10);
+
             // console.log(employeeCalendars[e].EMP);
+
             console.log(employeeCalendars[e].EMP +"-"+ feriXMonthXEmp[g].Employee.replace(/\s/g, '') +"-"+ employeeCalendars[e].Mese +"-"+ month +"-"+ employeeCalendars[e].Giorno +"-"+ day);
 
             if (employeeCalendars[e].EMP == feriXMonthXEmp[g].Employee.replace(/\s/g, '') && employeeCalendars[e].Mese == month && employeeCalendars[e].Giorno == day) {
@@ -478,7 +481,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             }
         }
     }
-    // console.log("Employeee Calendar: ", employeeCalendars);
+    console.log("Employeee Calendar: ", employeeCalendars);
     //========== END  Remove ferie x EMPLOYEEE ==========
 
 
