@@ -15,7 +15,7 @@
             type="text"
             id="txtbox_contactrole_vacations"
             name ="contactrole_vacations"
-            data-multiple-dates="60"
+            data-multiple-dates="100"
             data-multiple-dates-separator=","
             data-position="top left"
             data-date-format="dd/mm/yyyy"
