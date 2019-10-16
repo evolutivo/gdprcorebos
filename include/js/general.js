@@ -23,9 +23,9 @@
 
 function generatetimecontrol(projectid) {
 
-    let annoRiferimento = document.getElementById('dtlview_cf_1841').innerText;
+    var annoRiferimento = document.getElementById('dtlview_cf_1841').innerText;
 
-    console.log(annoRiferimento);
+    //console.log(annoRiferimento);
 
     //Remote ENDPOINT
     var endpointUrl="http://63.251.233.101/gdprcorebos/webservice.php";
@@ -47,8 +47,6 @@ function generatetimecontrol(projectid) {
           // console.log(data.result["token"]);
           var challengeToken = data.result["token"];
           var generatedKey = MD5(challengeToken + userAccessKey);
-          // console.log(generatedKey);
-
           loginWS(columNames, endpointUrl, "login", username, generatedKey, annoRiferimento, projectid);
       })
 
@@ -82,13 +80,7 @@ function loginWS(columNames, endpoint, oper, usrname, accessKey, annoRiferimento
         })
         .then(data => {
             var sessionId = data.result["sessionName"];
-
             getWP(columNames, endpoint, "query", sessionId, annoRiferimento, projectid);
-
-            // getEMPxWP(columNames, endpoint, "query", sessionId, "", annoRiferimento, projectid);
-
-            // getFeriePerEmp(columNames, endpoint, "query", sessionId, "", "", annoRiferimento, projectid);
-
         })
         .catch(err => {
             console.log(err);
@@ -138,8 +130,6 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
       		wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projectid":').join('"ProjectID":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"id":').join('"ProjectTaskID":'));
 
-            // console.log(wpXMonth);
-
             getEMPxWP(columNames, endpoint, "query", sessionId, wpXMonth, annoRiferimento, projectid);
 
         })
@@ -154,25 +144,18 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
 //============== REST CALL GET EMPLOYEE X WORKING PACKAGES ==============================
 function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferimento, projectid) {
 
-    // var projectName = 'Analisi di Agile BI Argos Assistance S.r.l';
-
     var PID = projectid.split('x')[1];
-
-    // console.log(PID);
 
     // var sql = " SELECT contactrolename, ProjectTask.projecttasknumber, ProjectTask.projecttaskname, ProjectTask.startdate, ProjectTask.enddate, cf_1828, cf_1837, Employees.emp_organization " +
     //           " FROM ContactRole " +
     //           " WHERE ProjectTask.projecttasknumber != '' AND ContactRole.cf_1833 =" + PID + " ;";
 
     //select id,firstname,lastname from Contacts where (firstname LIKE '%''ele%'
-
     // var sql = "SELECT projecttasknumber,projecttaskname,startdate,enddate FROM ProjectTask WHERE (ProjectTask.projectid LIKE '%"+projectName+"%') ; ";
 
 
     var sql = "SELECT contactrolename,ProjectTask.projecttasknumber,ProjectTask.projecttaskname,ProjectTask.startdate,ProjectTask.enddate,cf_1828,cf_1837 FROM ContactRole WHERE (ProjectTask.projectid = "+PID+") ; ";
-
     var url = endpoint + "?operation=" + oper + "&sessionName=" + sessionId + "&query=" + sql;
-
     var myInit = {
         method: 'GET',
         headers: {
@@ -201,8 +184,6 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskenddate":').join('"End Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1837":').join('"WorkingHour":'));
 
-
-
             getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid);
 
         })
@@ -221,9 +202,7 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
 	//var sql = "SELECT contactrolename,cf_1836 FROM ContactRole WHERE ProjectTask.projectid = "+PID+" ;";
 
     var sql = "SELECT contactrolename,contactrole_vacations FROM ContactRole WHERE cf_1843 = '1' AND ProjectTask.projectid = "+PID+" ;";
-
     var url = endpoint + "?operation=" + oper + "&sessionName=" + sessionId + "&query=" + sql;
-
     var myInit = {
         method: 'GET',
         headers: {
@@ -476,6 +455,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             if (employeeCalendars[e].EMP.toLowerCase().replace(/\s/g, '') == feriXMonthXEmp[g].Employee.toLowerCase().replace(/\s/g, '') &&
                 employeeCalendars[e].Mese == month &&
                 employeeCalendars[e].Giorno == day) {
+                console.log("Remove ferie x employee");
                 employeeCalendars.splice(e, 1);
             }
         }
