@@ -130,13 +130,14 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projecttaskname":').join('"WP Name":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"startdate":').join('"Start time":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"enddate":').join('"End time":'));
-      			wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
-      			wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projectid":').join('"ProjectID":'));
+            wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
+      		wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projectid":').join('"ProjectID":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"id":').join('"ProjectTaskID":'));
 
             // console.log(wpXMonth);
 
             getEMPxWP(columNames, endpoint, "query", sessionId, wpXMonth, annoRiferimento, projectid);
+
         })
 
         .catch(err => {
@@ -239,7 +240,7 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
 
             //feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"employeescf_1836":').join('"Date":'));
 
-            // console.log(feriXMonthXEmp);
+            console.log(feriXMonthXEmp);
 
             for (var i = 0; i < feriXMonthXEmp.length; i++) {
                 var daysOff = feriXMonthXEmp[i].Date.replace(/\s/g, "");
@@ -329,7 +330,6 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
 
 //=========== Load Employee Per Working Package Data ==============
 function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYear, feriXMonthXEmp, yearOfReference) {
-
     var r_data = [],
         finalReport = [],
         employeeCalendars = [],
@@ -441,7 +441,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
     }
 
     //TODO weekEndsForYear
-    randomDatesXMonth = getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear);
+    randomDatesXMonth = getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference);
 
     // console.log("Working Days: ", randomDatesXMonth);
     //Add workingDaysxMonth
@@ -549,24 +549,21 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 
 //========= EXPORT DATA TO CSV FILE ============
 function exportToCSV(columnHeaders, report, status){
-
     // console.log("columnHeaders ", columnHeaders);
     var dataNew = [];
     dataNew.push([]);
 
-
     if(status === "success"){
-
         for(var i = 0; i<=columnHeaders.length; i++){
             dataNew[0].push(columnHeaders[i]);
         }
 
-        for(j = 0; j<report.length; j++){
+        for(var j = 0; j<report.length; j++){
         //     "Employee", "WPCode", "WPName", "WorkingHour", "TotalHoursWorked", "DateStart", "DateEnd", "Percentage", "PercentageWP",
         //     "TotalHoursWP", "TotaleWorkDaysWP", "Day", "Month", "Year"
            dataNew.push([
-			         report[j].ProjectID,
-			         report[j].ProjectTaskID,
+               report[j].ProjectID,
+               report[j].ProjectTaskID,
                report[j].Employee,
                report[j].WPCode,
                report[j].WorkingHour,
@@ -580,8 +577,8 @@ function exportToCSV(columnHeaders, report, status){
                report[j].TotaleWorkDaysWP,
                report[j].Day,
                report[j].Month,
-			         report[j].Year
-			      ]);
+               report[j].Year
+           ]);
         }
 
         // Building the CSV from the Data two-dimensional array
@@ -625,21 +622,60 @@ var download = function(content, fileName, mimeType) {
 }
 
 
-function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear){
+function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference){
     var possibleDates = [];
     var alldates = [];
     var giorniLavorativi = [];
 
-    for(var j=1; j<=12; j++){
-        for(var i=1; i<31; i++){
-            var obj = {
-                Mese:   j < 10 ? '0' + j : j,
-                Giorno: i < 10 ? '0' + i : i,
-                WeekEnd: 0
+    var leapYear = ((yearOfReference % 4 == 0) && (yearOfReference % 100 != 0)) || (yearOfReference % 400 == 0);
+
+    if(leapYear){
+        for(var j=1; j<=12; j++){
+            if(j=2){
+                for(var i=1; i<=29; i++){
+                    var obj = {
+                        Mese:   j < 10 ? '0' + j : j,
+                        Giorno: i < 10 ? '0' + i : i,
+                        WeekEnd: 0
+                    }
+                    alldates.push(obj);
+                }
+            }else{
+                for(var i=1; i<31; i++){
+                    var obj = {
+                        Mese:   j < 10 ? '0' + j : j,
+                        Giorno: i < 10 ? '0' + i : i,
+                        WeekEnd: 0
+                    }
+                    alldates.push(obj);
+                }
             }
-            alldates.push(obj);
+        }
+    }else{
+        for(var j=1; j<=12; j++){
+            if(j == 2){
+                for(var i=1; i<=28; i++){
+                    var obj = {
+                        Mese:   j < 10 ? '0' + j : j,
+                        Giorno: i < 10 ? '0' + i : i,
+                        WeekEnd: 0
+                    }
+                    alldates.push(obj);
+                }
+            }else{
+                for(var i=1; i<31; i++){
+                    var obj = {
+                        Mese:   j < 10 ? '0' + j : j,
+                        Giorno: i < 10 ? '0' + i : i,
+                        WeekEnd: 0
+                    }
+                    alldates.push(obj);
+                }
+            }
         }
     }
+
+
 
     //Remove giorni di ferie
     for(var k=0; k<alldates.length; k++){
@@ -670,7 +706,6 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear){
     // console.log("Ferie of Employee: ", weekEndsForYear);
     return giorniLavorativi;
 }
-
 
 function getWorkingMonthsByDateStartDateEnd(dateStart, dateEnd, wp_code, emp){
 
