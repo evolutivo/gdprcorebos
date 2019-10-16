@@ -23,7 +23,7 @@
 
 function generatetimecontrol(annoRiferimento, projectid) {
 
-    const annoRif = document.getElementById('dtlview_cf_1841').value;
+    const annoRif = document.getElementById('dtlview_cf_1841').innerText;
 
     console.log(annoRif);
 
