@@ -330,6 +330,8 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
 
 //=========== Load Employee Per Working Package Data ==============
 function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYear, feriXMonthXEmp, yearOfReference) {
+
+    console.log(feriXMonthXEmp);
     var r_data = [],
         finalReport = [],
         employeeCalendars = [],
@@ -460,7 +462,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             employeeCalendars.push(empCalendar);
         }
     }
-    console.log(employeeCalendars);
+    // console.log(employeeCalendars);
 
     //========== BEGIN  Remove ferie x EMPLOYEEE ==========
     for (var e = 0; e < employeeCalendars.length; e++) {
