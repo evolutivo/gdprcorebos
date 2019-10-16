@@ -653,7 +653,7 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
                     alldates.push(obj);
                 }
             }else{
-                for(var i=1; i<31; i++){
+                for(var i=1; i<=31; i++){
                     var obj = {
                         Mese:   j < 10 ? '0' + j : j,
                         Giorno: i < 10 ? '0' + i : i,
