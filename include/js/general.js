@@ -451,10 +451,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             var day = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(0, 2);
             var month = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(3, 5);
             var year = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(6, 10);
-
-            if (employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase() == feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase() &&
-                employeeCalendars[e].Mese == month &&
-                employeeCalendars[e].Giorno == day) {
+            if (employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase() === "antoniocreti" && employeeCalendars[e].Mese == month && employeeCalendars[e].Giorno == day) {
+            // if (employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase() == feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase() && employeeCalendars[e].Mese == month && employeeCalendars[e].Giorno == day) {
                 employeeCalendars.splice(e, 1);
             }
         }
