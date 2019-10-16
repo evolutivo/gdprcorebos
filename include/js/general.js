@@ -470,11 +470,12 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             var year = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(6, 10);
             // console.log(employeeCalendars[e].EMP);
             if (employeeCalendars[e].EMP == feriXMonthXEmp[g].Employee.replace(/\s/g, '') && employeeCalendars[e].Mese == month && employeeCalendars[e].Giorno == day) {
+                console.log("remove from calendar");
                 employeeCalendars.splice(e, 1);
             }
         }
     }
-    console.log("Employeee Calendar: ", employeeCalendars);
+    // console.log("Employeee Calendar: ", employeeCalendars);
     //========== END  Remove ferie x EMPLOYEEE ==========
 
 
