@@ -21,9 +21,9 @@
  // =============== Begin Script for Report TimeControl generation ==============
 
 
-function generatetimecontrol(annoRiferimento, projectid) {
+function generatetimecontrol(projectid) {
 
-    const annoRif = document.getElementById('dtlview_cf_1841').innerText;
+    let annoRiferimento = document.getElementById('dtlview_cf_1841').innerText;
 
     console.log(annoRif);
 
