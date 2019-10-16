@@ -25,7 +25,7 @@ function generatetimecontrol(projectid) {
 
     let annoRiferimento = document.getElementById('dtlview_cf_1841').innerText;
 
-    console.log(annoRif);
+    console.log(annoRiferimento);
 
     //Remote ENDPOINT
     var endpointUrl="http://63.251.233.101/gdprcorebos/webservice.php";
