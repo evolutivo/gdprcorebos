@@ -23,18 +23,22 @@
 
 function generatetimecontrol(annoRiferimento, projectid) {
 
-  //Remote ENDPOINT
-  var endpointUrl="http://63.251.233.101/gdprcorebos/webservice.php";
-  var username="admin";
-  var userAccessKey = "o7NM12Xzxm6mYfB";
-  var url = endpointUrl + "?operation=getchallenge&username=" + username;
-  const columNames = ['ProjectID', 'ProjectTaskID', 'Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP', 'TotalHoursWP', 'TotaleWorkDaysWP', 'Day', 'Month', 'Year'];
+    const annoRif = document.getElementById('dtlview_cf_1841');
 
-  fetch(url, {
-          method: "GET",
-          headers: {
-              "Content-Type": "application/json"
-          }
+    console.log(annoRif);
+    
+    //Remote ENDPOINT
+    var endpointUrl="http://63.251.233.101/gdprcorebos/webservice.php";
+    var username="admin";
+    var userAccessKey = "o7NM12Xzxm6mYfB";
+    var url = endpointUrl + "?operation=getchallenge&username=" + username;
+    const columNames = ['ProjectID', 'ProjectTaskID', 'Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP', 'TotalHoursWP', 'TotaleWorkDaysWP', 'Day', 'Month', 'Year'];
+
+    fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+            }
       })
       .then(response => {
           return response.json();
