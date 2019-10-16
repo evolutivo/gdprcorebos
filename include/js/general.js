@@ -331,7 +331,6 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
 //=========== Load Employee Per Working Package Data ==============
 function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYear, feriXMonthXEmp, yearOfReference) {
 
-    console.log(feriXMonthXEmp);
     var r_data = [],
         finalReport = [],
         employeeCalendars = [],
@@ -471,6 +470,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             var month = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(3, 5);
             var year = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(6, 10);
             // console.log(employeeCalendars[e].EMP);
+            console.log(employeeCalendars[e].EMP +"-"+ feriXMonthXEmp[g].Employee.replace(/\s/g, '') +"-"+ employeeCalendars[e].Mese +"-"+ month +"-"+ employeeCalendars[e].Giorno +"-"+ day);
+
             if (employeeCalendars[e].EMP == feriXMonthXEmp[g].Employee.replace(/\s/g, '') && employeeCalendars[e].Mese == month && employeeCalendars[e].Giorno == day) {
                 console.log("remove from calendar");
                 employeeCalendars.splice(e, 1);
