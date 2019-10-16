@@ -460,7 +460,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             employeeCalendars.push(empCalendar);
         }
     }
-    // console.log(employeeCalendars);
+    console.log(employeeCalendars);
 
     //========== BEGIN  Remove ferie x EMPLOYEEE ==========
     for (var e = 0; e < employeeCalendars.length; e++) {
