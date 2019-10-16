@@ -470,7 +470,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             var year = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(6, 10);
 
 
-            console.log(employeeCalendars[e].EMP.toLowerCase().replace(/\s/g, '') + " - " + feriXMonthXEmp[g].Employee.toLowerCase().replace(/\s/g, '') + " - " + employeeCalendars[e].Mese + " - " + month + " - " + employeeCalendars[e].Giorno + "-" + day);
+            // console.log(employeeCalendars[e].EMP.toLowerCase().replace(/\s/g, '') + " - " + feriXMonthXEmp[g].Employee.toLowerCase().replace(/\s/g, '') + " - " + employeeCalendars[e].Mese + " - " + month + " - " + employeeCalendars[e].Giorno + "-" + day);
 
             if (employeeCalendars[e].EMP.toLowerCase().replace(/\s/g, '') == feriXMonthXEmp[g].Employee.toLowerCase().replace(/\s/g, '') &&
                 employeeCalendars[e].Mese.replace(/\s/g, '') == month &&
