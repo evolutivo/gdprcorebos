@@ -121,8 +121,8 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
                 var start_date = wpXMonth[i]["startdate"];
                 var end_date = wpXMonth[i]["enddate"];
                 wpXMonth[i]["startdate"] = formatDate(start_date);
-				        wpXMonth[i]["enddate"] = formatDate(end_date);
-				        wpXMonth[i]["id"] = wpXMonth[i]["id"].split('x')[1];
+                wpXMonth[i]["enddate"] = formatDate(end_date);
+				wpXMonth[i]["id"] = wpXMonth[i]["id"].split('x')[1];
                 wpXMonth[i]["projectid"] = wpXMonth[i]["projectid"].split('x')[1];
             }
 
@@ -234,8 +234,8 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
         .then(data => {
             var feriXMonthXEmp = data.result;
             var feriePerEmployee = [];
-      			feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrolename":').join('"Employee":'));
-      			feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrole_vacations":').join('"Date":'));
+            feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrolename":').join('"Employee":'));
+      		feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrole_vacations":').join('"Date":'));
 
 
             //feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"employeescf_1836":').join('"Date":'));
@@ -383,7 +383,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
     function sumPercentPerWP(employeeName, r_data) {
         var sumPercent = 0;
         for (var k = 0; k < r_data.length; k++) {
-            if ((r_data[k].Employee == employeeName)) {
+            if ((r_data[k].Employee.toLowerCase().replace(/\s/g, '') == employeeName.toLowerCase().replace(/\s/g, ''))) {
                 var percentuale = r_data[k].Percentuale.slice(0, -1);
                 // console.log(percentuale);
                 sumPercent += parseInt(percentuale);
@@ -398,7 +398,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
     //Add Percentuale Total x Working Package
     for (var m = 0; m < r_data.length; m++) {
         for (var n = 0; n < newGroupedArray.length; n++) {
-            if (r_data[m].Employee == newGroupedArray[n].Employee) {
+            if (r_data[m].Employee.toLowerCase().replace(/\s/g, '') == newGroupedArray[n].Employee.toLowerCase().replace(/\s/g, '')) {
                 r_data[m]['PercentualeTotaleWP'] = newGroupedArray[n].PercentualeTot;
             }
         }
@@ -469,18 +469,14 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             var month = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(3, 5);
             var year = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(6, 10);
 
-
-            // console.log(employeeCalendars[e].EMP.toLowerCase().replace(/\s/g, '') + " - " + feriXMonthXEmp[g].Employee.toLowerCase().replace(/\s/g, '') + " - " + employeeCalendars[e].Mese + " - " + month + " - " + employeeCalendars[e].Giorno + "-" + day);
-
             if (employeeCalendars[e].EMP.toLowerCase().replace(/\s/g, '') == feriXMonthXEmp[g].Employee.toLowerCase().replace(/\s/g, '') &&
                 employeeCalendars[e].Mese == month &&
                 employeeCalendars[e].Giorno == day) {
-                console.log("remove from calendar");
                 employeeCalendars.splice(e, 1);
             }
         }
     }
-    console.log("Employeee Calendar: ", employeeCalendars);
+    // console.log("Employeee Calendar: ", employeeCalendars);
     //========== END  Remove ferie x EMPLOYEEE ==========
 
 
@@ -515,7 +511,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 			copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
 			var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 		}
-		// console.log(r + '-' + month+ '-' + day);
+
 		var obj =
 		{
 			ProjectID: finalReport[r].ProjectID,
@@ -541,7 +537,9 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 		//Remove Record from EmployeeCalendar
 		// removeDayOfMonthFromEmployeeCalendar(finalReport[r].Employee, month, day, employeeCalendars);
 		for (var v = 0; v < employeeCalendars.length; v++) {
-			if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == month && employeeCalendars[v].Giorno == day) {
+			if (employeeCalendars[v].EMP.toLowerCase().replace(/\s/g, '') == finalReport[r].Employee.toLowerCase().replace(/\s/g, '') &&
+                employeeCalendars[v].Mese == month &&
+                employeeCalendars[v].Giorno == day) {
 				employeeCalendars.splice(v, 1);
 			}
 		}
@@ -597,7 +595,7 @@ function exportToCSV(columnHeaders, report, status){
         download(csvContent, 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
     }else{
 
-        console.log("TimeControlReport GenerAto con errore: ", status);
+        console.log("TimeControlReport Generato con errore: ", status);
         download('', 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
     }
 }
@@ -696,9 +694,7 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
 
 
             if(month == alldates[k].Mese && day == alldates[k].Giorno) {
-                // possibleDates.push(alldates[k]);
                 alldates.splice(k, 1);
-                // alldates[k].Flag = 1;
             }
         }
     }
@@ -735,7 +731,7 @@ function getMeseRandomPerWorkPackPerEMP(emp, wp_code, mesiLavorativi){
     // console.log("Mesi Lavorativi:", mesiLavorativi);
     var mesixWPxEMP = [];
     for (var i=0; i<mesiLavorativi.length; i++){
-        if(mesiLavorativi[i].Employee == emp && mesiLavorativi[i].WpCode == wp_code){
+        if(mesiLavorativi[i].Employee.toLowerCase().replace(/\s/g, '') == emp.toLowerCase().replace(/\s/g, '') && mesiLavorativi[i].WpCode == wp_code){
             mesixWPxEMP.push(mesiLavorativi[i].Mese);
         }
     }
@@ -755,7 +751,7 @@ function getRandomDayPerMonthPerWPPerEMP(emp, month, employeeCalendars){
     var giorniPerMesePerEMP = [];
 
     for (var i=0; i<employeeCalendars.length; i++){
-        if(employeeCalendars[i].EMP == emp && employeeCalendars[i].Mese == month){
+        if(employeeCalendars[i].EMP.toLowerCase().replace(/\s/g, '') == emp.toLowerCase().replace(/\s/g, '') && employeeCalendars[i].Mese == month){
             giorniPerMesePerEMP.push(employeeCalendars[i].Giorno);
         }
     }
@@ -829,23 +825,23 @@ function removeWeekendDays(allDates, weekEndsForYear) {
  * Return all weenkend days of the year
  */
 function getWeekendsFromYear(year){
-  // var startFrom  = year + '-' + '01' + '-' + '01';
-  // var endFrom  = year + '-' + '12' + '-' + '31';
-  var startFrom  = '01' + '-' + '01' + '-' + year;
-  var endFrom  = '31' + '-' + '12' + '-' + year;
+    // var startFrom  = year + '-' + '01' + '-' + '01';
+    // var endFrom  = year + '-' + '12' + '-' + '31';
+    var startFrom  = '01' + '-' + '01' + '-' + year;
+    var endFrom  = '31' + '-' + '12' + '-' + year;
 
-  var dateFormat = 'd-m-Y';
-  var weekends;
-  var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
+    var dateFormat = 'd-m-Y';
+    var weekends;
+    var url = 'module=Utilities&action=UtilitiesAjax&file=ExecuteFunctions&functiontocall=getWeekendDates&startFrom=' + startFrom + '&endFrom=' + endFrom + '&dateFormat=' + dateFormat;
 
-  var result = jQuery.ajax({
-    url: 'index.php?'+url,
-    type: 'POST',
-    dataType: 'json',
-    async: false
-  });
+    var result = jQuery.ajax({
+        url: 'index.php?'+url,
+        type: 'POST',
+        dataType: 'json',
+        async: false
+    });
 
-  return result.responseJSON;
+    return result.responseJSON;
 }
 
 MD5 = function(e) {
