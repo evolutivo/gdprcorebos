@@ -612,6 +612,7 @@ var download = function(content, fileName, mimeType) {
 
 
 function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference){
+
     var possibleDates = [];
     var alldates = [];
     var giorniLavorativi = [];
@@ -665,7 +666,6 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
     }
 
 
-
     //Remove giorni di ferie
     for(var k=0; k<alldates.length; k++){
         var giorno = alldates[k].Giorno;
@@ -691,6 +691,8 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
     // console.log("Possible Dates: ", possibleDates);
 
     // console.log("Ferie of Employee: ", weekEndsForYear);
+
+    console.log("GiorniLavorativi", giorniLavorativi);
     return giorniLavorativi;
 }
 
