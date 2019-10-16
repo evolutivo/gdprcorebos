@@ -366,7 +366,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
     function sumPercentPerWP(employeeName, r_data) {
         var sumPercent = 0;
         for (var k = 0; k < r_data.length; k++) {
-            if ((r_data[k].Employee.toLowerCase().replace(/\s/g, '') == employeeName.toLowerCase().replace(/\s/g, ''))) {
+            if ((r_data[k].Employee == employeeName)) {
                 var percentuale = r_data[k].Percentuale.slice(0, -1);
                 // console.log(percentuale);
                 sumPercent += parseInt(percentuale);
@@ -381,7 +381,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
     //Add Percentuale Total x Working Package
     for (var m = 0; m < r_data.length; m++) {
         for (var n = 0; n < newGroupedArray.length; n++) {
-            if (r_data[m].Employee.toLowerCase().replace(/\s/g, '') == newGroupedArray[n].Employee.toLowerCase().replace(/\s/g, '')) {
+            if (r_data[m].Employee == newGroupedArray[n].Employee) {
                 r_data[m]['PercentualeTotaleWP'] = newGroupedArray[n].PercentualeTot;
             }
         }
@@ -455,7 +455,6 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             if (employeeCalendars[e].EMP.toLowerCase().replace(/\s/g, '') == feriXMonthXEmp[g].Employee.toLowerCase().replace(/\s/g, '') &&
                 employeeCalendars[e].Mese == month &&
                 employeeCalendars[e].Giorno == day) {
-                console.log("Remove ferie x employee");
                 employeeCalendars.splice(e, 1);
             }
         }
@@ -521,9 +520,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 		//Remove Record from EmployeeCalendar
 		// removeDayOfMonthFromEmployeeCalendar(finalReport[r].Employee, month, day, employeeCalendars);
 		for (var v = 0; v < employeeCalendars.length; v++) {
-			if (employeeCalendars[v].EMP.toLowerCase().replace(/\s/g, '') == finalReport[r].Employee.toLowerCase().replace(/\s/g, '') &&
-                employeeCalendars[v].Mese == month &&
-                employeeCalendars[v].Giorno == day) {
+			if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == month && employeeCalendars[v].Giorno == day) {
 				employeeCalendars.splice(v, 1);
 			}
 		}
@@ -715,7 +712,7 @@ function getMeseRandomPerWorkPackPerEMP(emp, wp_code, mesiLavorativi){
     // console.log("Mesi Lavorativi:", mesiLavorativi);
     var mesixWPxEMP = [];
     for (var i=0; i<mesiLavorativi.length; i++){
-        if(mesiLavorativi[i].Employee.toLowerCase().replace(/\s/g, '') == emp.toLowerCase().replace(/\s/g, '') && mesiLavorativi[i].WpCode == wp_code){
+        if(mesiLavorativi[i].Employee == emp && mesiLavorativi[i].WpCode == wp_code){
             mesixWPxEMP.push(mesiLavorativi[i].Mese);
         }
     }
@@ -735,7 +732,7 @@ function getRandomDayPerMonthPerWPPerEMP(emp, month, employeeCalendars){
     var giorniPerMesePerEMP = [];
 
     for (var i=0; i<employeeCalendars.length; i++){
-        if(employeeCalendars[i].EMP.toLowerCase().replace(/\s/g, '') == emp.toLowerCase().replace(/\s/g, '') && employeeCalendars[i].Mese == month){
+        if(employeeCalendars[i].EMP == emp && employeeCalendars[i].Mese == month){
             giorniPerMesePerEMP.push(employeeCalendars[i].Giorno);
         }
     }
