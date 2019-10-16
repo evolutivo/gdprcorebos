@@ -445,6 +445,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         }
     }
 
+    console.log("EMP-CALENDAR", employeeCalendars);
+
     //========== BEGIN  Remove ferie x EMPLOYEEE ==========
     for (var e = 0; e < employeeCalendars.length; e++) {
         for (var g = 0; g < feriXMonthXEmp.length; g++) {
