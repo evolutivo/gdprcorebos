@@ -474,7 +474,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             }
         }
     }
-    //console.log("Employeee Calendar: ", employeeCalendars);
+    console.log("Employeee Calendar: ", employeeCalendars);
     //========== END  Remove ferie x EMPLOYEEE ==========
 
 
