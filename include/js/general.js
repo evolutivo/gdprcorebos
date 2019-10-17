@@ -704,12 +704,12 @@ function getWorkingMonthsByDateStartDateEnd(dateStart, dateEnd, wp_code, emp){
     var startDay   = dateStart.substring(0,2);
     var startMonth = dateStart.substring(3,5);
     var startYear  = dateStart.substring(6,10);
-    // console.log("Starting Date:" + startDay, startMonth, startYear);
+    console.log("Starting Date:" + startDay, startMonth, startYear);
 
     var endDay = dateEnd.substring(0,2);
     var endMonth = dateEnd.substring(3,5);
     var endYear = dateEnd.substring(6,10);
-    // console.log("Ending Date:" + endDay, endMonth, endYear);
+    console.log("Ending Date:" + endDay, endMonth, endYear);
     return  dateRange(startYear + "-" + startMonth + "-" + startDay, endYear + "-" + endMonth + "-" + endDay, wp_code, emp);
 }
 
