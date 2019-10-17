@@ -319,7 +319,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         distEMP = [],
         newGroupedArray = [],
         percentSum = 0,
-        finalWorkingDays = [],
+        finalWorkingDays,
         output = [];
 
     for (var r = 0; r < emp_x_wp_worksheet.length; r++) {
@@ -416,7 +416,6 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         }
     }
 
-    //randomDatesXMonth
     finalWorkingDays = getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference);
 
     console.log("Working Days: ", finalWorkingDays);
