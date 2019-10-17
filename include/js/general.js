@@ -446,18 +446,19 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             var month = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(3, 5);
             var year = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(6, 10);
 
-            var empNameFromCalendar = employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase();
-            var empNameFromFerie = feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase();
+/*            var empNameFromCalendar = employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase();
+            var empNameFromFerie = feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase();*/
 
-            var empNameFromCalendar = employeeCalendars[e].EMP.trim().toLowerCase();
-            var empNameFromFerie = feriXMonthXEmp[g].Employee.trim().toLowerCase();
+            var empNameFromCalendar = employeeCalendars[e].EMP.toLowerCase().trim();
+            var empNameFromFerie = feriXMonthXEmp[g].Employee.toLowerCase().trim();
 
             if (empNameFromCalendar == empNameFromFerie && employeeCalendars[e].Giorno == day && employeeCalendars[e].Mese == month) {
                 console.log("remove");
                 employeeCalendars.splice(e, 1);
-            }else{
-                console.log(empNameFromFerie + "-" + day + "-" + month);
             }
+            /*else{
+                console.log(empNameFromFerie + "-" + day + "-" + month);
+            }*/
         }
     }
     console.log("Employee Calendar After Removing Ferie: ", employeeCalendars);
