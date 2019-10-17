@@ -441,7 +441,6 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
                 Mese: randomDatesXMonth[h].Mese,
                 Giorno: randomDatesXMonth[h].Giorno
             }
-            console.log(empCalendar);
             employeeCalendars.push(empCalendar);
         }
     }
@@ -697,7 +696,7 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
         }
     }
 
-    giorniLavorativi = removeWeekendDays(alldates, weekEndsForYear);
+    giorniLavorativi = removeWeekendDays(alldates, weekEndsForYear, yearOfReference);
 
     // console.log("Ferie x Month: ", ferieXMonth);
     // console.log("All Dates: ", alldates);
@@ -802,8 +801,11 @@ function formatDate (input) {
 
 
 //====== Remove weekend days from array that contains all possibles days
-function removeWeekendDays(allDates, weekEndsForYear) {
-    // console.log("All possible dates ", allDates);
+function removeWeekendDays(allDates, weekEndsForYear, yearOfReference) {
+
+    console.log("All possible dates ", allDates);
+    console.log("WeekEndsForYear: ",  weekEndsForYear);
+
     for (var i = 0; i < allDates.length; i++) {
         var giorno = allDates[i].Giorno;
         var mese = allDates[i].Mese;
