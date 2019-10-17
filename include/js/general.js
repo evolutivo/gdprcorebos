@@ -107,7 +107,7 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
         })
         .then(data => {
             var wpXMonth = data.result;
-            console.log(wpXMonth);
+
             for (var i = 0; i < wpXMonth.length; i++) {
                 var start_date = wpXMonth[i]["startdate"];
                 var end_date = wpXMonth[i]["enddate"];
@@ -117,6 +117,8 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
                 wpXMonth[i]["projectid"] = wpXMonth[i]["projectid"].split('x')[1];
             }
 
+
+
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projecttasknumber":').join('"Number":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projecttaskname":').join('"WP Name":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"startdate":').join('"Start time":'));
@@ -124,6 +126,8 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
       		wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projectid":').join('"ProjectID":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"id":').join('"ProjectTaskID":'));
+
+            console.log(wpXMonth);
 
             getEMPxWP(columNames, endpoint, "query", sessionId, wpXMonth, annoRiferimento, projectid);
 
