@@ -449,6 +449,9 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             var empNameFromCalendar = employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase();
             var empNameFromFerie = feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase();
 
+            var empNameFromCalendar = employeeCalendars[e].EMP.trim().toLowerCase();
+            var empNameFromFerie = feriXMonthXEmp[g].Employee.trim().toLowerCase();
+
             if (empNameFromCalendar == empNameFromFerie && employeeCalendars[e].Giorno == day && employeeCalendars[e].Mese == month) {
                 console.log("remove");
                 employeeCalendars.splice(e, 1);
