@@ -618,7 +618,7 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
     var alldates = [];
     var giorniLavorativi = [];
 
-    var leapYear = ((yearOfReference % 4 == 0) && (yearOfReference % 100 != 0)) || (yearOfReference % 400 == 0);
+    /*var leapYear = ((yearOfReference % 4 == 0) && (yearOfReference % 100 != 0)) || (yearOfReference % 400 == 0);
 
     if(leapYear){
         for(var j=1; j<=12; j++){
@@ -664,7 +664,19 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
                 }
             }
         }
+    }*/
+
+    for(var j=1; j<=12; j++){
+        for(var i=1; i<31; i++){
+            var obj = {
+                Mese:   j < 10 ? '0' + j : j,
+                Giorno: i < 10 ? '0' + i : i,
+                WeekEnd: 0
+            }
+            alldates.push(obj);
+        }
     }
+
 
 
     //Remove giorni di ferie
