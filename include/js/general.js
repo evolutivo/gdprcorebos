@@ -420,7 +420,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 
     console.log("Working Days: ", finalWorkingDays);
     //Add workingDaysxMonth
-    // console.log("Report Data: ", r_data);
+    console.log("Report Data: ", r_data);
 
 
     for (var l = 0; l < distEMP.length; l++) {
