@@ -17,9 +17,7 @@
  * Description: This is a javascript script used to generate time control report.
  */
 
-
  // =============== Begin Script for Report TimeControl generation ==============
-
 
 function generatetimecontrol(projectid) {
 
@@ -308,8 +306,7 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
 
 
 //=========== Load Employee Per Working Package Data ==============
-function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYear, feriXMonthXEmp, yearOfReference) {
-
+function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear, feriXMonthXEmp, yearOfReference) {
     var r_data = [],
         finalReport = [],
         employeeCalendars = [],
@@ -414,7 +411,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         }
     }
 
-    finalWorkingDays = getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference);
+    finalWorkingDays = getFinalWorkingDaysXMonth(festivity, weekEndsForYear, yearOfReference);
 
     console.log("Working Days: ", finalWorkingDays);
     //Add workingDaysxMonth
@@ -475,7 +472,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 		var day = randomDay[Math.floor(Math.random() * randomDay.length)];
 
 
-		if (day == null || day.length === 0) {
+/*		if (day == null || day.length === 0) {
 		    for (var i = 0; i < mesiLavorativi.length; i++) {
 		        if (mesiLavorativi[i].Mese == month) {
 		            mesiLavorativi.splice(i,1);
@@ -486,7 +483,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 			var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
 			copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
 			var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
-		}
+		}*/
 
 		var obj =
 		{
@@ -600,7 +597,7 @@ var download = function(content, fileName, mimeType) {
 }
 
 
-function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference){
+function getFinalWorkingDaysXMonth(festivity, weekEndsForYear, yearOfReference){
 
     var possibleDates = [];
     var alldates = [];
@@ -672,11 +669,11 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
         var giorno = alldates[k].Giorno;
         var mese = alldates[k].Mese;
 
-        for(var m = 0; m<ferieXMonth.length; m++){
+        for(var m = 0; m<festivity.length; m++){
 
-            var day   = ferieXMonth[m].substring(0,2);
-            var month = ferieXMonth[m].substring(3,5);
-            var year  = ferieXMonth[m].substring(6,10);
+            var day   = festivity[m].substring(0,2);
+            var month = festivity[m].substring(3,5);
+            var year  = festivity[m].substring(6,10);
 
 
             if(day == alldates[k].Giorno && month == alldates[k].Mese &&  year == alldates[k].Anno) {
@@ -687,7 +684,7 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
 
     giorniLavorativi = removeWeekendDays(alldates, weekEndsForYear, yearOfReference);
 
-    // console.log("Ferie x Month: ", ferieXMonth);
+    console.log("Ferie x Month: ", festivity);
     // console.log("All Dates: ", alldates);
     // console.log("Possible Dates: ", possibleDates);
 
