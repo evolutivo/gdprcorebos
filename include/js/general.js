@@ -455,6 +455,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             if (empNameFromCalendar == empNameFromFerie && employeeCalendars[e].Giorno == day && employeeCalendars[e].Mese == month) {
                 console.log("remove");
                 employeeCalendars.splice(e, 1);
+            }else{
+                console.log(empNameFromFerie + "-" + day + "-" + month);
             }
         }
     }
