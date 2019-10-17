@@ -245,11 +245,14 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
 
 function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, annoRiferimento, projectid) {
 
+/*    //====================== DEBUG APP ================
     console.log("Working Packages: ",  WPxMonth);
     console.log("EMP x Working Packages: ",  EMPxWP);
     console.log("Ferie X Employee: ",  feriePerMonthPerEmp);
     console.log("Anno Di Riferimento: ", annoRiferimento);
     // console.log("Project ID: ", projectid);
+
+    //====================== DEBUG APP ================*/
 
     var yearOfReference = annoRiferimento;
     var empXwp = [];
@@ -410,9 +413,9 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
     finalWorkingDays = getFinalWorkingDaysXMonth(festivity, weekEndsForYear, yearOfReference);
 
-    console.log("Working Days: ", finalWorkingDays);
+    // console.log("Working Days: ", finalWorkingDays);
     //Add workingDaysxMonth
-    console.log("Report Data: ", r_data);
+    // console.log("Report Data: ", r_data);
 
 
     for (var l = 0; l < distEMP.length; l++) {
@@ -428,9 +431,9 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
         }
     }
 
-    // console.log("EMP-CALENDAR", employeeCalendars);
+    console.log("EMP-CALENDAR", employeeCalendars);
 
-    //========== BEGIN  Remove ferie x EMPLOYEEE ==========
+    //========== BEGIN REMOVE FERIE X EMPLOYEE ==========
     for (var e = 0; e < employeeCalendars.length; e++) {
         for (var g = 0; g < feriXMonthXEmp.length; g++) {
             var day = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(0, 2);
@@ -447,7 +450,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
         }
     }
     console.log("Employee Calendar After Removing Ferie: ", employeeCalendars);
-    //========== END  Remove ferie x EMPLOYEEE ==========
+    //========== END REMOVE FERIE X EMPLOYEE ==========
 
 
 
@@ -564,7 +567,7 @@ function exportToCSV(columnHeaders, report, status){
         download(csvContent, 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
     }else{
 
-        console.log("TimeControlReport Generato con errore: ", status);
+        console.log("TimeControlReport Generato con Errore: ", status);
         download('', 'TimeControlReport.csv', 'text/csv;encoding:utf-8');
     }
 }
