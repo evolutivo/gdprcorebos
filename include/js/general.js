@@ -414,7 +414,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
     finalWorkingDays = getFinalWorkingDaysXMonth(festivity, weekEndsForYear, yearOfReference);
 
     // console.log("Working Days: ", finalWorkingDays);
-    //Add workingDaysxMonth
+    // Add workingDaysxMonth
     // console.log("Report Data: ", r_data);
 
 
@@ -431,7 +431,13 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
         }
     }
 
+    console.log("EMP-CALENDAR AFTER REMOVING FESTIVITY", finalWorkingDays);
+
+
     console.log("EMP-CALENDAR", employeeCalendars);
+
+    console.log("FERIE X EMP", feriXMonthXEmp);
+
 
     //========== BEGIN REMOVE FERIE X EMPLOYEE ==========
     for (var e = 0; e < employeeCalendars.length; e++) {
@@ -670,11 +676,9 @@ function getFinalWorkingDaysXMonth(festivity, weekEndsForYear, yearOfReference){
         var mese = alldates[k].Mese;
 
         for(var m = 0; m<festivity.length; m++){
-
             var day   = festivity[m].substring(0,2);
             var month = festivity[m].substring(3,5);
             var year  = festivity[m].substring(6,10);
-
 
             if(day == alldates[k].Giorno && month == alldates[k].Mese &&  year == alldates[k].Anno) {
                 alldates.splice(k, 1);
