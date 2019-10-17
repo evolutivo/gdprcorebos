@@ -278,7 +278,7 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
     // console.log("Weekend For Years: ", weekEndsForYear);
 
     //Month of the Year
-    const allmonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    // const allmonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     //const fr_columNames = ['Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP','TotalHoursWP','TotaleWorkDaysWP','Day','Month','Year'];
     var priorRecords = 0;
 
@@ -448,13 +448,13 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             var empNameFromCalendar = employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase();
             var empNameFromFerie = feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase();
 
-            if (empNameFromCalendar == empNameFromFerie  && employeeCalendars[e].Mese == month && employeeCalendars[e].Giorno == day) {
+            if (empNameFromCalendar == empNameFromFerie && employeeCalendars[e].Giorno == day && employeeCalendars[e].Mese == month) {
                 console.log("remove");
                 employeeCalendars.splice(e, 1);
             }
         }
     }
-    // console.log("Employeee Calendar: ", employeeCalendars);
+    console.log("Employee Calendar After Removing Ferie: ", employeeCalendars);
     //========== END  Remove ferie x EMPLOYEEE ==========
 
 
@@ -704,12 +704,12 @@ function getWorkingMonthsByDateStartDateEnd(dateStart, dateEnd, wp_code, emp){
     var startDay   = dateStart.substring(0,2);
     var startMonth = dateStart.substring(3,5);
     var startYear  = dateStart.substring(6,10);
-    console.log("Starting Date:" + startDay, startMonth, startYear);
+    // console.log("Starting Date:" + startDay, startMonth, startYear);
 
     var endDay = dateEnd.substring(0,2);
     var endMonth = dateEnd.substring(3,5);
     var endYear = dateEnd.substring(6,10);
-    console.log("Ending Date:" + endDay, endMonth, endYear);
+    // console.log("Ending Date:" + endDay, endMonth, endYear);
     return  dateRange(startYear + "-" + startMonth + "-" + startDay, endYear + "-" + endMonth + "-" + endDay, wp_code, emp);
 }
 
