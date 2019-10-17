@@ -450,7 +450,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
             var empNameFromCalendar = employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase();
             var empNameFromFerie = feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase();
-            
+
             if (empNameFromCalendar == empNameFromFerie && employeeCalendars[e].Giorno == day && employeeCalendars[e].Mese == month && employeeCalendars[e].Anno == year) {
                 // console.log(empNameFromFerie + "-" + day + "-" + month + "-" + year);
                 employeeCalendars.splice(e, 1);
@@ -470,9 +470,11 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 		var copyRandomDay = [];
 
 		mesiLavorativi = getWorkingMonthsByDateStartDateEnd(finalReport[r]["Start Time"], finalReport[r]["End Time"], finalReport[r]["WP Code"], finalReport[r]["Employee"]);
-		// console.log("Mesi Lavorativi", mesiLavorativi);
+		console.log("Mesi Lavorativi: ", mesiLavorativi);
+
 		randomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
-		// console.log("Mesi Lavorativi", randomMonth);
+		console.log("Random Month: ", randomMonth);
+
 		var month = randomMonth[Math.floor(Math.random() * randomMonth.length)];
 		// console.log("Mese Random", month);
 		// console.log("Before: ", employeeCalendars);
