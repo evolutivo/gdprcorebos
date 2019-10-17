@@ -10,7 +10,6 @@
 //Utility Functions
 
 
-
 /**
  * Author E.Vila
  * Data: 02/09/2019
@@ -22,8 +21,6 @@
 function generatetimecontrol(projectid) {
 
     var annoRiferimento = document.getElementById('dtlview_cf_1841').innerText;
-
-    //console.log("Anno Riferimento: ", annoRiferimento);
 
     //Remote ENDPOINT
     var endpointUrl="http://63.251.233.101/gdprcorebos/webservice.php";
@@ -110,7 +107,7 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
         })
         .then(data => {
             var wpXMonth = data.result;
-
+            console.log(wpXMonth);
             for (var i = 0; i < wpXMonth.length; i++) {
                 var start_date = wpXMonth[i]["startdate"];
                 var end_date = wpXMonth[i]["enddate"];
