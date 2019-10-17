@@ -275,7 +275,7 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
     }
 
     var weekEndsForYear = getWeekendsFromYear(yearOfReference);
-    console.log(weekEndsForYear);
+    // console.log("Weekend For Years: ", weekEndsForYear);
 
     //Month of the Year
     const allmonths = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -696,7 +696,7 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
 
     // console.log("Ferie of Employee: ", weekEndsForYear);
 
-    console.log("GiorniLavorativi", giorniLavorativi);
+    // console.log("GiorniLavorativi", giorniLavorativi);
     return giorniLavorativi;
 }
 
