@@ -25,7 +25,7 @@ function generatetimecontrol(projectid) {
 
     var annoRiferimento = document.getElementById('dtlview_cf_1841').innerText;
 
-    //console.log(annoRiferimento);
+    //console.log("Anno Riferimento: ", annoRiferimento);
 
     //Remote ENDPOINT
     var endpointUrl="http://63.251.233.101/gdprcorebos/webservice.php";
@@ -223,7 +223,7 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
 
             //feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"employeescf_1836":').join('"Date":'));
 
-            console.log(feriXMonthXEmp);
+            console.log("FERIE X MONTH X EMP: ", feriXMonthXEmp);
 
             for (var i = 0; i < feriXMonthXEmp.length; i++) {
                 var daysOff = feriXMonthXEmp[i].Date.replace(/\s/g, "");
@@ -236,13 +236,11 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
                     feriePerEmployee.push(emp);
                 }
             }
-
             // console.log("Working Packages: ",  wpXMonth);
             // console.log("EMP x Working Packages: ",  empXwp);
             // console.log("Ferie X Employee: ",  feriXMonthXEmp);
 
             generateExcelReport(columNames, wpXMonth, empXwp, feriePerEmployee, annoRiferimento, projectid);
-
 
         })
         .catch(err => {
