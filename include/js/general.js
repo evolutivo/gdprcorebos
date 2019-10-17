@@ -411,7 +411,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
         }
     }
 
-    finalWorkingDays = getFinalWorkingDaysXMonth(festivity, weekEndsForYear, yearOfReference);
+    finalWorkingDays = getFinalWorkingDaysXMonth(festivity, weekEndsForYear, );
 
     // console.log("Working Days: ", finalWorkingDays);
     // Add workingDaysxMonth
@@ -424,8 +424,10 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             // console.log(finalWorkingDays[h]);
             var empCalendar = {
                 EMP: distEMP[l],
+                Giorno: finalWorkingDays[h].Giorno,
                 Mese: finalWorkingDays[h].Mese,
-                Giorno: finalWorkingDays[h].Giorno
+                Anno: yearOfReference
+
             }
             employeeCalendars.push(empCalendar);
         }
@@ -446,14 +448,14 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             var month = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(3, 5);
             var year = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(6, 10);
 
-/*            var empNameFromCalendar = employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase();
-            var empNameFromFerie = feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase();*/
+            var empNameFromCalendar = employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase();
+            var empNameFromFerie = feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase();
 
-            var empNameFromCalendar = employeeCalendars[e].EMP.toLowerCase().trim();
-            var empNameFromFerie = feriXMonthXEmp[g].Employee.toLowerCase().trim();
+            /*var empNameFromFerie = feriXMonthXEmp[g].Employee.toLowerCase().trim();
+            var empNameFromCalendar = employeeCalendars[e].EMP.toLowerCase().trim();*/
 
-            if (empNameFromCalendar == empNameFromFerie && employeeCalendars[e].Giorno == day && employeeCalendars[e].Mese == month) {
-                console.log(empNameFromFerie + "-" + day + "-" + month);
+            if (empNameFromCalendar == empNameFromFerie && employeeCalendars[e].Giorno == day && employeeCalendars[e].Mese == month && employeeCalendars[e].Anno == year) {
+                console.log(empNameFromFerie + "-" + day + "-" + month + "-" + year);
                 employeeCalendars.splice(e, 1);
             }
             /*else{
