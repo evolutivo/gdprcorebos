@@ -666,9 +666,9 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
     for(var j=1; j<=12; j++){
         for(var i=1; i<31; i++){
             var obj = {
-                Mese:   j < 10 ? '0' + j : j,
                 Giorno: i < 10 ? '0' + i : i,
-                WeekEnd: 0
+                Mese:   j < 10 ? '0' + j : j,
+                Anno: yearOfReference
             }
             alldates.push(obj);
         }
@@ -688,7 +688,7 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
             var year  = ferieXMonth[m].substring(6,10);
 
 
-            if(month == alldates[k].Mese && day == alldates[k].Giorno) {
+            if(day == alldates[k].Giorno && month == alldates[k].Mese &&  year == alldates[k].Anno) {
                 alldates.splice(k, 1);
             }
         }
@@ -817,6 +817,9 @@ function removeWeekendDays(allDates, weekEndsForYear, yearOfReference) {
             }
         }
     }
+
+
+
     console.log("All days without weekend days: ", allDates);
     return allDates;
 }
