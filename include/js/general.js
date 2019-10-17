@@ -435,7 +435,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
     for (var l = 0; l < distEMP.length; l++) {
         // console.log(distEMP[l]);
         for (var h = 0; h < randomDatesXMonth.length; h++) {
-            // console.log(randomDatesXMonth[h]);
+            console.log(randomDatesXMonth[h]);
             var empCalendar = {
                 EMP: distEMP[l],
                 Mese: randomDatesXMonth[h].Mese,
@@ -692,7 +692,7 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
 
     // console.log("Ferie of Employee: ", weekEndsForYear);
 
-    console.log("GiorniLavorativi", giorniLavorativi);
+    // console.log("GiorniLavorativi", giorniLavorativi);
     return giorniLavorativi;
 }
 
