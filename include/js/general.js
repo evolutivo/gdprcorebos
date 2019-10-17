@@ -809,7 +809,7 @@ function removeWeekendDays(allDates, weekEndsForYear, yearOfReference) {
     for (var i = 0; i < allDates.length; i++) {
         var giorno = allDates[i].Giorno;
         var mese = allDates[i].Mese;
-        //var anno = 2018;
+
         for (var j = 0; j < weekEndsForYear.length; j++) {
             var day = weekEndsForYear[j].substring(0, 2);
             var month = weekEndsForYear[j].substring(3, 5);
@@ -819,7 +819,7 @@ function removeWeekendDays(allDates, weekEndsForYear, yearOfReference) {
             }
         }
     }
-    // console.log("All days without weekend days: ", allDates);
+    console.log("All days without weekend days: ", allDates);
     return allDates;
 }
 
