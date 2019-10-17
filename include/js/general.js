@@ -500,7 +500,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 			PercentageWP: finalReport[r].PercentualeTotaleWP + '%',
 			TotalHoursWP: finalReport[r].TotHoursXWP,
 			TotaleWorkDaysWP: finalReport[r].TotWDxWP,
-			Day: (day == null || day.length === 0) ? otherDay : day,
+			//Day: (day == null || day.length === 0) ? otherDay : day,
+            Day: (day == null || day.length === 0) ? '' : day,
 			Month: month,
 			Year: yearOfReference
 		}
