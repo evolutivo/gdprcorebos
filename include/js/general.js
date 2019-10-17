@@ -117,8 +117,6 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
                 wpXMonth[i]["projectid"] = wpXMonth[i]["projectid"].split('x')[1];
             }
 
-
-
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projecttasknumber":').join('"Number":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projecttaskname":').join('"WP Name":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"startdate":').join('"Start time":'));
@@ -126,8 +124,6 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
       		wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projectid":').join('"ProjectID":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"id":').join('"ProjectTaskID":'));
-
-            console.log(wpXMonth);
 
             getEMPxWP(columNames, endpoint, "query", sessionId, wpXMonth, annoRiferimento, projectid);
 
@@ -235,7 +231,7 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
             }
             // console.log("Working Packages: ",  wpXMonth);
             // console.log("EMP x Working Packages: ",  empXwp);
-            console.log("Ferie X Employee: ",  feriXMonthXEmp);
+            // console.log("Ferie X Employee: ",  feriXMonthXEmp);
 
             generateExcelReport(columNames, wpXMonth, empXwp, feriePerEmployee, annoRiferimento, projectid);
 
@@ -282,7 +278,7 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
     //============ EMP x WP =================
     empXwp = loadEMPXWPData(EMPxWP, WPxMonth, festivity, weekEndsForYear, feriePerMonthPerEmp, yearOfReference);
 
-    console.log(empXwp);
+    // console.log(empXwp);
 
     for(var i = 0; i<empXwp.length; i++){
         var WorkingHour = empXwp[i].WorkingHour;
@@ -665,8 +661,7 @@ function getFinalWorkingDaysXMonth(festivity, weekEndsForYear, yearOfReference){
     }
 
 
-
-    //Remove giorni di ferie
+    //=============== REMOVE FESTIVITY ==================
     for(var k=0; k<alldates.length; k++){
         var giorno = alldates[k].Giorno;
         var mese = alldates[k].Mese;
@@ -683,16 +678,18 @@ function getFinalWorkingDaysXMonth(festivity, weekEndsForYear, yearOfReference){
             }
         }
     }
+    //=============== REMOVE FESTIVITY ==================
 
-    giorniLavorativi = removeWeekendDays(alldates, weekEndsForYear, yearOfReference);
+    giorniLavorativi = removeWeekendDays(alldates, weekEndsForYear);
 
-    console.log("Ferie x Month: ", festivity);
+    // console.log("Ferie x Month: ", festivity);
     // console.log("All Dates: ", alldates);
     // console.log("Possible Dates: ", possibleDates);
 
     // console.log("Ferie of Employee: ", weekEndsForYear);
 
-    // console.log("GiorniLavorativi", giorniLavorativi);
+    console.log("GiorniLavorativi", giorniLavorativi);
+
     return giorniLavorativi;
 }
 
@@ -788,11 +785,11 @@ function formatDate (input) {
 }
 
 
-//====== Remove weekend days from array that contains all possibles days
-function removeWeekendDays(allDates, weekEndsForYear, yearOfReference) {
+// =========== REMOVE WEEKEND DAYS =====================
+function removeWeekendDays(allDates, weekEndsForYear) {
 
-    console.log("All possible dates ", allDates);
-    console.log("WeekEndsForYear: ",  weekEndsForYear);
+/*    console.log("All possible dates ", allDates);
+    console.log("WeekEndsForYear: ",  weekEndsForYear);*/
 
     for (var i = 0; i < allDates.length; i++) {
         var giorno = allDates[i].Giorno;
@@ -808,11 +805,10 @@ function removeWeekendDays(allDates, weekEndsForYear, yearOfReference) {
         }
     }
 
-
-
-    console.log("All days without weekend days: ", allDates);
+    // console.log("All days without weekend days: ", allDates);
     return allDates;
 }
+// =========== REMOVE WEEKEND DAYS =====================
 
 /**
  * Return all weenkend days of the year
@@ -914,6 +910,9 @@ MD5 = function(e) {
     return (p(a) + p(b) + p(c) + p(d)).toLowerCase();
 };
 // =============== End Script for Report TimeControl generation ==============
+
+
+
 
 function getTagCloud(crmid) {
 	var obj = document.getElementById('tagfields');
