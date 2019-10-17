@@ -319,6 +319,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         distEMP = [],
         newGroupedArray = [],
         percentSum = 0,
+        finalWorkingDays = [],
         output = [];
 
     for (var r = 0; r < emp_x_wp_worksheet.length; r++) {
@@ -347,8 +348,6 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
     }
     // console.log('distinct employees', distEMP);
 
-//     //for each employee
-
     for (var e = 0; e < distEMP.length; e++) {
         for (var j = 0; j < r_data.length; j++) {
             percentSum = sumPercentPerWP(distEMP[e], r_data);
@@ -373,9 +372,6 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         return sumPercent;
     }
 
-
-
-
     //Add Percentuale Total x Working Package
     for (var m = 0; m < r_data.length; m++) {
         for (var n = 0; n < newGroupedArray.length; n++) {
@@ -384,8 +380,6 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
             }
         }
     }
-
-
 
     //Calculate in another varible (Percentuale/PercentualeTotaleWP) * Total Hours Worked: "1,134"
     for (var g = 0; g < r_data.length; g++) {
@@ -422,22 +416,22 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         }
     }
 
-    //TODO weekEndsForYear
-    randomDatesXMonth = getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference);
+    //randomDatesXMonth
+    finalWorkingDays = getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference);
 
-    // console.log("Working Days: ", randomDatesXMonth);
+    console.log("Working Days: ", finalWorkingDays);
     //Add workingDaysxMonth
     // console.log("Report Data: ", r_data);
 
 
     for (var l = 0; l < distEMP.length; l++) {
         // console.log(distEMP[l]);
-        for (var h = 0; h < randomDatesXMonth.length; h++) {
-            // console.log(randomDatesXMonth[h]);
+        for (var h = 0; h < finalWorkingDays.length; h++) {
+            // console.log(finalWorkingDays[h]);
             var empCalendar = {
                 EMP: distEMP[l],
-                Mese: randomDatesXMonth[h].Mese,
-                Giorno: randomDatesXMonth[h].Giorno
+                Mese: finalWorkingDays[h].Mese,
+                Giorno: finalWorkingDays[h].Giorno
             }
             employeeCalendars.push(empCalendar);
         }
