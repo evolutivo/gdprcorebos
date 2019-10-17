@@ -487,11 +487,11 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 
 
 		if (day == null || day.length === 0) {
-		    for (var i = 0; i < mesiLavorativi.length; i++) {
+		    /*for (var i = 0; i < mesiLavorativi.length; i++) {
 		        if (mesiLavorativi[i].Mese == month) {
 		            mesiLavorativi.splice(i,1);
 		        }
-		    }
+		    }*/
 
             otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
 			var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
@@ -704,7 +704,7 @@ function getFinalWorkingDaysXMonth(ferieXMonth, weekEndsForYear, yearOfReference
 
     // console.log("Ferie of Employee: ", weekEndsForYear);
 
-    // console.log("GiorniLavorativi", giorniLavorativi);
+    console.log("GiorniLavorativi", giorniLavorativi);
     return giorniLavorativi;
 }
 
