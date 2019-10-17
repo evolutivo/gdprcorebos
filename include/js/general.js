@@ -220,10 +220,8 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
             feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrolename":').join('"Employee":'));
       		feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrole_vacations":').join('"Date":'));
 
-
             //feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"employeescf_1836":').join('"Date":'));
 
-            console.log("FERIE X MONTH X EMP: ", feriXMonthXEmp);
 
             for (var i = 0; i < feriXMonthXEmp.length; i++) {
                 var daysOff = feriXMonthXEmp[i].Date.replace(/\s/g, "");
@@ -238,7 +236,7 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
             }
             // console.log("Working Packages: ",  wpXMonth);
             // console.log("EMP x Working Packages: ",  empXwp);
-            // console.log("Ferie X Employee: ",  feriXMonthXEmp);
+            console.log("Ferie X Employee: ",  feriXMonthXEmp);
 
             generateExcelReport(columNames, wpXMonth, empXwp, feriePerEmployee, annoRiferimento, projectid);
 
@@ -266,9 +264,9 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
       festivity = ['01-01-2017', '06-01-2017', '17-04-2017', '25-04-2017', '01-05-2017', '02-06-2017','15-08-2017', '01-11-2017','08-12-2017', '25-12-2017', '26-12-2017'];
     }else if(annoRiferimento == "2018"){
       festivity = ['01-01-2018', '06-01-2018', '01-04-2018', '02-04-2018', '25-04-2018', '01-05-2018', '02-06-2018','15-08-2018', '01-11-2018','08-12-2018', '25-12-2018', '26-12-2018'];
-    }else if(annoRiferimento = "2019"){
+    }else if(annoRiferimento == "2019"){
       festivity = ['01-01-2019', '06-01-2019', '21-04-2019', '22-04-2019', '25-04-2019', '01-05-2019', '02-06-2019','15-08-2019', '01-11-2019','08-12-2019', '25-12-2019', '26-12-2019'];
-    }else if(annoRiferimento = "2020"){
+    }else if(annoRiferimento == "2020"){
       festivity = ['01-01-2020', '06-01-2020', '12-04-2020', '13-04-2020', '25-04-2020', '01-05-2020', '02-06-2020','15-08-2020', '01-11-2020','08-12-2020', '25-12-2020', '26-12-2020'];
     }else{
       festivity = [];
@@ -358,7 +356,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         newGroupedArray.push({ Employee: distEMP[e], PercentualeTot: percentSum });
     }
 
-//     // console.log(newGroupedArray);
+    // console.log(newGroupedArray);
 
     function sumPercentPerWP(employeeName, r_data) {
         var sumPercent = 0;
@@ -436,7 +434,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
         }
     }
 
-    console.log("EMP-CALENDAR", employeeCalendars);
+    // console.log("EMP-CALENDAR", employeeCalendars);
 
     //========== BEGIN  Remove ferie x EMPLOYEEE ==========
     for (var e = 0; e < employeeCalendars.length; e++) {
@@ -478,11 +476,11 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, ferieXMonth, weekEndsForYe
 
 
 		if (day == null || day.length === 0) {
-		    /*for (var i = 0; i < mesiLavorativi.length; i++) {
+		    for (var i = 0; i < mesiLavorativi.length; i++) {
 		        if (mesiLavorativi[i].Mese == month) {
 		            mesiLavorativi.splice(i,1);
 		        }
-		    }*/
+		    }
 
             otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
 			var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
