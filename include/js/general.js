@@ -497,7 +497,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 3- Remove day from calendar
             ***************************************/
             console.log("First Time: ", day);
-
+            var anotherDay = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
 
             while(anotherDay == null){
                 var anotherDay = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
