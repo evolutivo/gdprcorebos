@@ -492,7 +492,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
             var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];*/
 
-            console.log("First Time: ", day + "-" + month + "- " + finalReport[r]["Employee"]);
+            //ONE
+            //console.log("First Time: ", day + "-" + month + "- " + finalReport[r]["Employee"]);
 
             var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
@@ -510,7 +511,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
                 //Check if there are days availabele for that month
                 if (Array.isArray(copyRandomDay) && copyRandomDay.length){
-                    console.log("Before: ", copyRandomDay);
+                    //TWO
+                    //console.log("Before: ", copyRandomDay);
 
                     var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
@@ -527,8 +529,9 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                         }
                     }
 
-                    console.log("Second Time: ", otherOtherDay + "-" + otherMonth +"-"+  finalReport[r]["Employee"]);
-                    console.log("After: ", copyRandomDay);
+                    //THREE
+               /*     console.log("Second Time: ", otherOtherDay + "-" + otherMonth +"-"+  finalReport[r]["Employee"]);
+                    console.log("After: ", copyRandomDay);*/
 
                 }else{
                     for( var mm = 0; mm < mesiLavorativi.length; mm++){
