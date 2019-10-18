@@ -496,13 +496,19 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
             var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
-            while(otherDay == null){
+            var checkAgain =  false;
+
+            if(otherDay == null){
+                checkAgain = true;
+            }
+
+            while(checkAgain){
                 otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
                 var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
                 copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
                 var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
-                otherDay = otherOtherDay;
+                checkAgain = false;
             }
 
             /*var otherDayAndMonth = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
