@@ -501,8 +501,9 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
             while(anotherDay == null){
                 var anotherDay = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
+                break;
             }
-            
+
             console.log("Second Time: ", anotherDay);
 
 		}
