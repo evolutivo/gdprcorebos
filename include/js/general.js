@@ -498,7 +498,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 2- Generate anotherDay
                 3- Remove day from calendar
             ***************************************/
-            console.log("First Time: ", day);
+            console.log("First Time: ", day + "-" + month + "- " + finalReport[r]["Employee"]);
 
             var otherDayAndMonth = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
 
@@ -507,7 +507,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
             // console.log(otherDay +"--"+ otherMonth);
 
-            console.log("Second Time: ", otherDay + "-" + otherMonth);
+            console.log("Second Time: ", otherDay + "-" + otherMonth +"-"+ finalReport[r]["Employee"]);
 
 
             /*while(otherDay == null){
