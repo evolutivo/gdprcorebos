@@ -527,7 +527,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                         }
                     }
 
-                    console.log("Second Time: ", otherOtherDay + "-" +  finalReport[r]["Employee"]);
+                    console.log("Second Time: ", otherOtherDay + "-" + otherMonth +"-"+  finalReport[r]["Employee"]);
                     console.log("After: ", copyRandomDay);
 
                 }else{
