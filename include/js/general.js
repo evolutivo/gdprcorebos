@@ -497,11 +497,34 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 3- Remove day from calendar
             ***************************************/
             console.log("First Time: ", day);
-            var anotherDay = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
+           /* var anotherDay = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
 
             while(anotherDay == null){
                 var anotherDay = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
                 break;
+            }*/
+
+
+            otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
+            var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
+            copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
+            var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
+
+            while(anotherDay == null){
+                otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
+                var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
+                copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
+                var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
+
+                break;
+            }
+
+
+
+            for (var v = 0; v < employeeCalendars.length; v++) {
+                if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == otherMonth && employeeCalendars[v].Giorno == otherDay) {
+                    employeeCalendars.splice(v, 1);
+                }
             }
 
             console.log("Second Time: ", anotherDay);
