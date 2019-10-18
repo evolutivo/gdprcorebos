@@ -514,7 +514,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                     var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
                     for (var dd = 0; dd < employeeCalendars.length; dd++) {
-                        if (employeeCalendars[dd].EMP == finalReport[dd].Employee && employeeCalendars[dd].Mese == otherMonth && employeeCalendars[dd].Giorno == otherOtherDay) {
+                        if (employeeCalendars[dd].EMP == finalReport[r].Employee && employeeCalendars[dd].Mese == otherMonth && employeeCalendars[dd].Giorno == otherOtherDay) {
                             employeeCalendars.splice(dd, 1);
                         }
                     }
