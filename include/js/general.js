@@ -499,14 +499,16 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             var checkAgain =  false;
 
             if(otherDay == null){
+                console.log("empty again");
                 checkAgain = true;
             }
 
-            while(checkAgain){
+            while(checkAgain === true){
                 otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
                 var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
                 copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
                 var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
+                console.log("Second Time: ", otherDay + "-" +  finalReport[r]["Employee"]);
 
                 checkAgain = false;
             }
@@ -516,7 +518,6 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             var otherMonth =   otherDayAndMonth.split('-')[1];
             console.log(otherDay +"--"+ otherMonth);*/
 
-            console.log("Second Time: ", otherDay + "-" +  finalReport[r]["Employee"]);
 		}
 
         var obj =
