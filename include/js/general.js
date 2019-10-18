@@ -481,6 +481,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
 
 		if (day == null) {
+
 		    /*for (var i = 0; i < mesiLavorativi.length; i++) {
 		        if (mesiLavorativi[i].Mese == month) {
 		            mesiLavorativi.splice(i,1);
@@ -497,7 +498,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 2- Generate anotherDay
                 3- Remove day from calendar
             ***************************************/
-            // console.log("First Time: ", day);
+            console.log("First Time: ", day);
 
             var otherDayAndMonth = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
 
@@ -506,24 +507,17 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
             // console.log(otherDay +"--"+ otherMonth);
 
+            console.log("Second Time: ", otherDay + "-" + otherMonth);
 
-            while(otherDay == null){
 
-                /*for (var v = 0; v < employeeCalendars.length; v++) {
-                    if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == otherMonth && employeeCalendars[v].Giorno == otherDay) {
-                        employeeCalendars.splice(v, 1);
-                    }
-                }*/
-
+            /*while(otherDay == null){
                 var otherDayAndMonth = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
                 var otherDay =   otherDayAndMonth.substring(0, otherDayAndMonth.indexOf("-"));
                 var otherMonth =   otherDayAndMonth.split('-')[1];
 
                 console.log("Second Time: ", otherDay + "-" + otherMonth);
-
                 break;
-            }
-
+            }*/
 		}
 
         var obj =
