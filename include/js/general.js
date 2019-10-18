@@ -494,14 +494,14 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
             console.log("First Time: ", day + "-" + month + "- " + finalReport[r]["Employee"]);
 
-            var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
+            // var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
-            var checkAgain =  false;
+            var checkAgain =  true;
 
-            if(otherDay == null){
-                console.log("empty again");
-                checkAgain = true;
-            }
+            // if(otherDay == null){
+            //     console.log("empty again");
+            //     checkAgain = true;
+            // }
 
             while(checkAgain === true){
                 otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
