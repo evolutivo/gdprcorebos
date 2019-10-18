@@ -513,7 +513,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
                 var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
-                if(otherDay != null || otherDay.length != 0){
+                if(otherDay != null){
                     generateAnotherDay = false;
                 }
 
