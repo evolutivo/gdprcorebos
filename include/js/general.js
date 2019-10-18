@@ -481,16 +481,6 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
 
 		if (day == null) {
-
-            var d = {
-                Employee: finalReport[r]["Employee"],
-                Day: '',
-                Month: month
-            }
-
-            randomNullDays.push(d);
-
-
 		    /*for (var i = 0; i < mesiLavorativi.length; i++) {
 		        if (mesiLavorativi[i].Mese == month) {
 		            mesiLavorativi.splice(i,1);
@@ -509,7 +499,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             ***************************************/
             // console.log("First Time: ", day);
 
-           /* var otherDayAndMonth = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
+            var otherDayAndMonth = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
 
             var otherDay =   otherDayAndMonth.substring(0, otherDayAndMonth.indexOf("-"));
             var otherMonth =   otherDayAndMonth.split('-')[1];
@@ -519,12 +509,11 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
             while(otherDay == null){
 
-
-                for (var v = 0; v < employeeCalendars.length; v++) {
+                /*for (var v = 0; v < employeeCalendars.length; v++) {
                     if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == otherMonth && employeeCalendars[v].Giorno == otherDay) {
                         employeeCalendars.splice(v, 1);
                     }
-                }
+                }*/
 
                 var otherDayAndMonth = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
                 var otherDay =   otherDayAndMonth.substring(0, otherDayAndMonth.indexOf("-"));
@@ -533,70 +522,49 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 console.log("Second Time: ", otherDay + "-" + otherMonth);
 
                 break;
-            }*/
+            }
 
+		}
 
+        var obj =
+            {
+                ProjectID: finalReport[r].ProjectID,
+                ProjectTaskID: finalReport[r].ProjectTaskID,
+                Employee: finalReport[r].Employee,
+                WPCode: finalReport[r]["WP Code"],
+                WorkingHour: finalReport[r]["WorkingHour"],
+                RealWorkingHour: 0,
+                TotalHoursWorked: finalReport[r]["Total Hours Worked"],
+                DateStart: finalReport[r]["Start Time"],
+                DateEnd: finalReport[r]["End Time"],
+                Percentage: finalReport[r].Percentuale,
+                PercentageWP: finalReport[r].PercentualeTotaleWP + '%',
+                TotalHoursWP: finalReport[r].TotHoursXWP,
+                TotaleWorkDaysWP: finalReport[r].TotWDxWP,
+                Day: (day == null || day.length === 0) ? otherDay : day,
+                Month: (day == null || day.length === 0) ? otherMonth : month,
+                Year: yearOfReference
+            }
 
+        output.push(obj);
 
+        //Remove Record from EmployeeCalendar
+        // removeDayOfMonthFromEmployeeCalendar(finalReport[r].Employee, month, day, employeeCalendars);
 
-            var obj =
-                {
-                    ProjectID: finalReport[r].ProjectID,
-                    ProjectTaskID: finalReport[r].ProjectTaskID,
-                    Employee: finalReport[r].Employee,
-                    WPCode: finalReport[r]["WP Code"],
-                    WorkingHour: finalReport[r]["WorkingHour"],
-                    RealWorkingHour: 0,
-                    TotalHoursWorked: finalReport[r]["Total Hours Worked"],
-                    DateStart: finalReport[r]["Start Time"],
-                    DateEnd: finalReport[r]["End Time"],
-                    Percentage: finalReport[r].Percentuale,
-                    PercentageWP: finalReport[r].PercentualeTotaleWP + '%',
-                    TotalHoursWP: finalReport[r].TotHoursXWP,
-                    TotaleWorkDaysWP: finalReport[r].TotWDxWP,
-                    Day: (day == null || day.length === 0) ? ' ' : day,
-                    //Day: otherDay,
-                    Month: month,
-                    Year: yearOfReference
+        if(day == null){
+            for (var v = 0; v < employeeCalendars.length; v++) {
+                if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == otherMonth && employeeCalendars[v].Giorno == otherDay) {
+                    employeeCalendars.splice(v, 1);
                 }
-
-            output.push(obj);
-
-            console.log(randomNullDays);
-
-		}else{
-
-            var obj =
-                {
-                    ProjectID: finalReport[r].ProjectID,
-                    ProjectTaskID: finalReport[r].ProjectTaskID,
-                    Employee: finalReport[r].Employee,
-                    WPCode: finalReport[r]["WP Code"],
-                    WorkingHour: finalReport[r]["WorkingHour"],
-                    RealWorkingHour: 0,
-                    TotalHoursWorked: finalReport[r]["Total Hours Worked"],
-                    DateStart: finalReport[r]["Start Time"],
-                    DateEnd: finalReport[r]["End Time"],
-                    Percentage: finalReport[r].Percentuale,
-                    PercentageWP: finalReport[r].PercentualeTotaleWP + '%',
-                    TotalHoursWP: finalReport[r].TotHoursXWP,
-                    TotaleWorkDaysWP: finalReport[r].TotWDxWP,
-                    //Day: (day == null || day.length === 0) ? otherDay : day,
-                    Day: day,
-                    Month: month,
-                    Year: yearOfReference
-                }
-
-            output.push(obj);
-
-            //Remove Record from EmployeeCalendar
-            // removeDayOfMonthFromEmployeeCalendar(finalReport[r].Employee, month, day, employeeCalendars);
+            }
+        }else{
             for (var v = 0; v < employeeCalendars.length; v++) {
                 if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == month && employeeCalendars[v].Giorno == day) {
                     employeeCalendars.splice(v, 1);
                 }
             }
         }
+
 
 
 	}
