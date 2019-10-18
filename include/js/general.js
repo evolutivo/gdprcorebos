@@ -562,6 +562,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
             output.push(obj);
 
+            console.log(randomNullDays);
+
 		}else{
 
             var obj =
