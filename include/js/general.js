@@ -411,7 +411,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
         }
     }
 
-    finalWorkingDays = getFinalWorkingDaysXMonth(festivity, weekEndsForYear, );
+    finalWorkingDays = getFinalWorkingDaysXMonth(festivity, weekEndsForYear, yearOfReference);
 
     // console.log("Working Days: ", finalWorkingDays);
     // Add workingDaysxMonth
