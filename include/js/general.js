@@ -513,7 +513,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                     console.log(copyRandomDay);
                     var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
                 }else{
-                    for( var d = 0; dd < mesiLavorativi.length; dd++){
+                    for( var dd = 0; dd < mesiLavorativi.length; dd++){
                         if ( arr[dd] === otherMonth) {
                             mesiLavorativi.splice(dd, 1);
                         }
