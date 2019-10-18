@@ -497,7 +497,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 3- Remove day from calendar
             ***************************************/
             console.log("First Time: ", day);
-            let anotherDay = randomDay[Math.floor(Math.random() * randomDay.length)];
+            var anotherDay = randomDay[Math.floor(Math.random() * randomDay.length)];
             console.log("Second Time: ", anotherDay);
 
 		}
