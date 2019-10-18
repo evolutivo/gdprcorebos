@@ -498,26 +498,21 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 2- Generate anotherDay
                 3- Remove day from calendar
             ***************************************/
-            console.log("First Time: ", day + "-" + month + "- " + finalReport[r]["Employee"]);
-
+            /*console.log("First Time: ", day + "-" + month + "- " + finalReport[r]["Employee"]);
             var otherDayAndMonth = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
-
             var otherDay =   otherDayAndMonth.substring(0, otherDayAndMonth.indexOf("-"));
             var otherMonth =   otherDayAndMonth.split('-')[1];
-
-            // console.log(otherDay +"--"+ otherMonth);
-
-            console.log("Second Time: ", otherDay + "-" + otherMonth +"-"+ finalReport[r]["Employee"]);
+            console.log(otherDay +"--"+ otherMonth);
+            console.log("Second Time: ", otherDay + "-" +  finalReport[r]["Employee"]);*/
 
 
-            /*while(otherDay == null){
-                var otherDayAndMonth = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
-                var otherDay =   otherDayAndMonth.substring(0, otherDayAndMonth.indexOf("-"));
-                var otherMonth =   otherDayAndMonth.split('-')[1];
+            console.log("First Time: ", day + "-" + month + "- " + finalReport[r]["Employee"]);
 
-                console.log("Second Time: ", otherDay + "-" + otherMonth);
-                break;
-            }*/
+            var otherDay = randomDay[Math.floor(Math.random() * randomDay.length)];
+
+            if(otherDay != null){
+                console.log("Second Time: ", otherDay + "-" +  finalReport[r]["Employee"]);
+            }
 		}
 
         var obj =
