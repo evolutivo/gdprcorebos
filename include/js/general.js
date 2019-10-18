@@ -479,6 +479,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 		var day = randomDay[Math.floor(Math.random() * randomDay.length)];
 
 
+
 		if (day == null || day.length === 0) {
 		    /*for (var i = 0; i < mesiLavorativi.length; i++) {
 		        if (mesiLavorativi[i].Mese == month) {
@@ -527,7 +528,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 }
             }
 
-            console.log("Second Time: ", anotherDay);
+            console.log("Second Time: ", otherDay);
 
 		}
 
@@ -546,7 +547,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 			PercentageWP: finalReport[r].PercentualeTotaleWP + '%',
 			TotalHoursWP: finalReport[r].TotHoursXWP,
 			TotaleWorkDaysWP: finalReport[r].TotWDxWP,
-			Day: (day == null || day.length === 0) ? anotherDay : day,
+			Day: (day == null || day.length === 0) ? otherDay : day,
             // Day: (day == null || day.length === 0) ? '' : day,
 			Month: month,
 			Year: yearOfReference
