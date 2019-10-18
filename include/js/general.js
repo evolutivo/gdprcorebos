@@ -514,7 +514,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                     var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
                 }else{
                     for( var dd = 0; dd < mesiLavorativi.length; dd++){
-                        if ( arr[dd] === otherMonth) {
+                        if ( mesiLavorativi[dd] === otherMonth) {
                             mesiLavorativi.splice(dd, 1);
                         }
                     }
