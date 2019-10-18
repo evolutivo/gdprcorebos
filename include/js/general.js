@@ -562,7 +562,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
             output.push(obj);
 
-
+            console.log(randomNullDays);
 
 		}else{
 
@@ -600,7 +600,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
 
 	}
-    console.log(randomNullDays);
+
     console.log("Employee Calendar After Random Generation: ", employeeCalendars);
     //======= END ADD RANDOM DAY & MONTH TO FINAL REPORT ==================
     return output;
