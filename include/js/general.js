@@ -531,7 +531,9 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 TotalHoursWP: finalReport[r].TotHoursXWP,
                 TotaleWorkDaysWP: finalReport[r].TotWDxWP,
                 Day: (day == null || day.length === 0) ? otherDay : day,
-                Month: (day == null || day.length === 0) ? otherMonth : month,
+                //Month: (day == null || day.length === 0) ? otherMonth : month,
+                Month: month,
+
                 Year: yearOfReference
             }
 
