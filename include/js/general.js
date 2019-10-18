@@ -498,14 +498,25 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 3- Remove day from calendar
             ***************************************/
             console.log("First Time: ", day);
-           /* var anotherDay = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
+            var otherDayAndMonth = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
 
-            while(anotherDay == null){
-                var anotherDay = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
+            var otherDay =   otherDayAndMonth.substring(0, otherDayAndMonth.indexOf("-"));
+            var otherMonth =   otherDayAndMonth.split('-')[1];
+
+            console.log(otherDay +"--"+ otherMonth);
+
+            while(otherDay == null){
+                var otherDay = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
+                var otherDay =   otherDayAndMonth.substring(0, otherDayAndMonth.indexOf("-"));
+                var otherMonth =   otherDayAndMonth.split('-')[1];
+
+                console.log(otherDay +"--"+ otherMonth);
+
                 break;
-            }*/
+            }
 
-            var generateAnotherDay = true;
+            /*var generateAnotherDay = true;
+
 
             while(generateAnotherDay){
                 otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
@@ -517,7 +528,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                     generateAnotherDay = false;
                 }
                 break;
-            }
+            }*/
 
             console.log("Second Time: ", otherDay);
 
@@ -604,7 +615,7 @@ function generateAnotherDay(employee, wpcode, mesiLavorativi, employeeCalendars)
     let otherMonth = mesixWPxEMP[Math.floor(Math.random() * mesixWPxEMP.length)];
     let copyRandomDay = getRandomDayPerMonthPerWPPerEMP(employee, otherMonth, employeeCalendars);
 
-    return copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];;
+    return copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)] + "-" + otherMonth;
 }
 
 
