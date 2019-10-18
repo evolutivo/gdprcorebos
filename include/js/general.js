@@ -510,6 +510,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
             var otherDay = randomDay[Math.floor(Math.random() * randomDay.length)];
 
+            console.log(otherDay);
+
             if(otherDay != null){
                 console.log("Second Time: ", otherDay + "-" +  finalReport[r]["Employee"]);
             }
