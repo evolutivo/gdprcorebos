@@ -477,7 +477,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
 		randomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], month, employeeCalendars);
 		var day = randomDay[Math.floor(Math.random() * randomDay.length)];
-        console.log("First Time: ", day);
+
 
 		if (day == null || day.length === 0) {
 		    /*for (var i = 0; i < mesiLavorativi.length; i++) {
@@ -496,8 +496,9 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 2- Generate anotherDay
                 3- Remove day from calendar
             ***************************************/
-            var anotherDay = randomDay[Math.floor(Math.random() * randomDay.length)];
-            console.log("First Time: ", anotherDay);
+            console.log("First Time: ", day);
+            let anotherDay = randomDay[Math.floor(Math.random() * randomDay.length)];
+            console.log("Second Time: ", anotherDay);
 
 		}
 
