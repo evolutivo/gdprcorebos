@@ -512,7 +512,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 var otherDay =   otherDayAndMonth.substring(0, otherDayAndMonth.indexOf("-"));
                 var otherMonth =   otherDayAndMonth.split('-')[1];
 
-                console.log(otherDay +"--"+ otherMonth);
+                console.log("Second Time: ", otherDay + "-" + otherMonth);
 
                 break;
             }
@@ -532,7 +532,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 break;
             }*/
 
-            console.log("Second Time: ", otherDay);
+
 
             var obj =
                 {
