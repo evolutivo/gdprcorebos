@@ -507,6 +507,14 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
                 var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
                 copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
+                if(copyRandomDay.length == 0){
+
+                }
+                if (Array.isArray(copyRandomDay) && copyRandomDay.length){
+                    console.log(copyRandomDay);
+                }else{
+                    console.log("NE ", copyRandomDay);
+                }
                 var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
                 console.log("Second Time: ", otherOtherDay + "-" +  finalReport[r]["Employee"]);
 
