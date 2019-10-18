@@ -510,21 +510,26 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
                 //Check if there are days availabele for that month
                 if (Array.isArray(copyRandomDay) && copyRandomDay.length){
-                    console.log(copyRandomDay);
+                    console.log("Before: ", copyRandomDay);
 
                     var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
-                   /* for (var dd = 0; dd < employeeCalendars.length; dd++) {
-                        if (employeeCalendars[dd].EMP == finalReport[r].Employee && employeeCalendars[dd].Mese == otherMonth && employeeCalendars[dd].Giorno == otherOtherDay) {
-                            employeeCalendars.splice(dd, 1);
-                        }
-                    }*/
+
+                    /* for (var dd = 0; dd < employeeCalendars.length; dd++) {
+                         if (employeeCalendars[dd].EMP == finalReport[r].Employee && employeeCalendars[dd].Mese == otherMonth && employeeCalendars[dd].Giorno == otherOtherDay) {
+                             employeeCalendars.splice(dd, 1);
+                         }
+                     }*/
 
                     for( var dd = 0; dd < copyRandomDay.length; dd++){
                         if ( copyRandomDay[dd] === otherOtherDay) {
                             copyRandomDay.splice(dd, 1);
                         }
                     }
+
+                    console.log("Second Time: ", otherOtherDay + "-" +  finalReport[r]["Employee"]);
+                    console.log("After: ", copyRandomDay);
+
                 }else{
                     for( var mm = 0; mm < mesiLavorativi.length; mm++){
                         if ( mesiLavorativi[mm] === otherMonth) {
@@ -533,7 +538,6 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                     }
                 }
 
-                console.log("Second Time: ", otherOtherDay + "-" +  finalReport[r]["Employee"]);
 
                 checkAgain = false;
             }
