@@ -516,7 +516,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 if(otherDay != null){
                     generateAnotherDay = false;
                 }
-
+                break;
             }
 
             console.log("Second Time: ", otherDay);
