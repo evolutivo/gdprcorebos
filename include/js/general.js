@@ -482,46 +482,35 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
 		if (day == null) {
 
-		    /*for (var i = 0; i < mesiLavorativi.length; i++) {
-		        if (mesiLavorativi[i].Mese == month) {
-		            mesiLavorativi.splice(i,1);
-		        }
-		    }
-
-            otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
-			var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
-			copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
-			var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];*/
-
-		    /*************************************
-		        1- Generate anotherMonth
-                2- Generate anotherDay
-                3- Remove day from calendar
-            ***************************************/
-            /*console.log("First Time: ", day + "-" + month + "- " + finalReport[r]["Employee"]);
-            var otherDayAndMonth = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
-            var otherDay =   otherDayAndMonth.substring(0, otherDayAndMonth.indexOf("-"));
-            var otherMonth =   otherDayAndMonth.split('-')[1];
-            console.log(otherDay +"--"+ otherMonth);
-            console.log("Second Time: ", otherDay + "-" +  finalReport[r]["Employee"]);*/
-
+            /*************************************
+             1- Generate anotherMonth
+             2- Generate anotherDay
+             3- Remove day from calendar
+             ***************************************/
+            /*otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
+            var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
+            copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
+            var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];*/
 
             console.log("First Time: ", day + "-" + month + "- " + finalReport[r]["Employee"]);
 
-            var otherDay = randomDay[Math.floor(Math.random() * randomDay.length)];
+            var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
-            console.log(otherDay);
-
-            if(otherDay == null){
-                console.log(month);
-                console.log(mesiLavorativi);
-
-                /*var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
+            while(otherDay == null){
+                otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
+                var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
                 copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
                 var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
-                console.log("Second Time: ", otherOtherDay + "-" +  finalReport[r]["Employee"]);*/
+                break;
             }
+
+            /*var otherDayAndMonth = generateAnotherDay(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi, employeeCalendars);
+            var otherDay =   otherDayAndMonth.substring(0, otherDayAndMonth.indexOf("-"));
+            var otherMonth =   otherDayAndMonth.split('-')[1];
+            console.log(otherDay +"--"+ otherMonth);*/
+
+            console.log("Second Time: ", otherDay + "-" +  finalReport[r]["Employee"]);
 		}
 
         var obj =
@@ -539,10 +528,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 PercentageWP: finalReport[r].PercentualeTotaleWP + '%',
                 TotalHoursWP: finalReport[r].TotHoursXWP,
                 TotaleWorkDaysWP: finalReport[r].TotWDxWP,
-                Day: (day == null || day.length === 0) ? otherDay : day,
-                //Month: (day == null || day.length === 0) ? otherMonth : month,
-                Month: month,
-
+                Day: (day == null || day.length === 0) ? otherOtherDay : day,
+                Month: (day == null || day.length === 0) ? otherMonth : month,
                 Year: yearOfReference
             }
 
@@ -551,16 +538,9 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
         //Remove Record from EmployeeCalendar
         // removeDayOfMonthFromEmployeeCalendar(finalReport[r].Employee, month, day, employeeCalendars);
 
-        for (var v = 0; v < employeeCalendars.length; v++) {
-            if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == month && employeeCalendars[v].Giorno == day) {
-                employeeCalendars.splice(v, 1);
-            }
-        }
-
-
-       /* if(day == null){
+        if(day == null){
             for (var v = 0; v < employeeCalendars.length; v++) {
-                if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == otherMonth && employeeCalendars[v].Giorno == otherDay) {
+                if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == otherMonth && employeeCalendars[v].Giorno == otherOtherDay) {
                     employeeCalendars.splice(v, 1);
                 }
             }
@@ -570,7 +550,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                     employeeCalendars.splice(v, 1);
                 }
             }
-        }*/
+        }
 
 
 
