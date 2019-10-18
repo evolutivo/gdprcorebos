@@ -513,11 +513,17 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                     console.log(copyRandomDay);
                     var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
-                    for( var dd = 0; dd < copyRandomDay.length; dd++){
+                    for (var dd = 0; dd < employeeCalendars.length; dd++) {
+                        if (employeeCalendars[dd].EMP == finalReport[dd].Employee && employeeCalendars[v].Mese == otherMonth && employeeCalendars[v].Giorno == otherOtherDay) {
+                            employeeCalendars.splice(v, 1);
+                        }
+                    }
+
+                    /*for( var dd = 0; dd < copyRandomDay.length; dd++){
                         if ( copyRandomDay[dd] === otherOtherDay) {
                             copyRandomDay.splice(dd, 1);
                         }
-                    }
+                    }*/
                 }else{
                     for( var mm = 0; mm < mesiLavorativi.length; mm++){
                         if ( mesiLavorativi[mm] === otherMonth) {
