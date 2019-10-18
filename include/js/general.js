@@ -512,8 +512,12 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
             console.log(otherDay);
 
-            if(otherDay != null){
-                console.log("Second Time: ", otherDay + "-" +  finalReport[r]["Employee"]);
+            if(otherDay == null){
+                var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
+                copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
+                var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
+
+                console.log("Second Time: ", otherOtherDay + "-" +  finalReport[r]["Employee"]);
             }
 		}
 
@@ -532,7 +536,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 PercentageWP: finalReport[r].PercentualeTotaleWP + '%',
                 TotalHoursWP: finalReport[r].TotHoursXWP,
                 TotaleWorkDaysWP: finalReport[r].TotWDxWP,
-                Day: (day == null || day.length === 0) ? otherDay : day,
+                Day: (day == null || day.length === 0) ? otherOtherDay : day,
                 //Month: (day == null || day.length === 0) ? otherMonth : month,
                 Month: month,
 
