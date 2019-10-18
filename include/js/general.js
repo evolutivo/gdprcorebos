@@ -508,7 +508,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
                 copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
                 var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
-                console.log("Second Time: ", otherDay + "-" +  finalReport[r]["Employee"]);
+                console.log("Second Time: ", otherOtherDay + "-" +  finalReport[r]["Employee"]);
 
                 checkAgain = false;
             }
