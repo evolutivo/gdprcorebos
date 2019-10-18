@@ -482,11 +482,11 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 		if (day == null || day.length == 0) {
 		    console.log(day + "-" + month);
 
-		    for (let i = 0; i < mesiLavorativi.length; i++) {
+		   /* for (let i = 0; i < mesiLavorativi.length; i++) {
 		        if (mesiLavorativi[i].Mese == month) {
 		            mesiLavorativi.splice(i,1);
 		        }
-		    }
+		    }*/
 		    /*************************************
 		        1- Generate anotherMonth
                 2- Generate anotherDay
