@@ -484,8 +484,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
             var d = {
                 Employee: finalReport[r]["Employee"],
-                Day: otherDay,
-                Month: otherMonth
+                Day: '',
+                Month: month
             }
 
             randomNullDays.push(d);
@@ -556,7 +556,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                     TotaleWorkDaysWP: finalReport[r].TotWDxWP,
                     Day: (day == null || day.length === 0) ? ' ' : day,
                     //Day: otherDay,
-                    Month: otherMonth,
+                    Month: month,
                     Year: yearOfReference
                 }
 
