@@ -540,7 +540,14 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
         //Remove Record from EmployeeCalendar
         // removeDayOfMonthFromEmployeeCalendar(finalReport[r].Employee, month, day, employeeCalendars);
 
-        if(day == null){
+        for (var v = 0; v < employeeCalendars.length; v++) {
+            if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == month && employeeCalendars[v].Giorno == day) {
+                employeeCalendars.splice(v, 1);
+            }
+        }
+
+
+       /* if(day == null){
             for (var v = 0; v < employeeCalendars.length; v++) {
                 if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == otherMonth && employeeCalendars[v].Giorno == otherDay) {
                     employeeCalendars.splice(v, 1);
@@ -552,7 +559,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                     employeeCalendars.splice(v, 1);
                 }
             }
-        }
+        }*/
 
 
 
