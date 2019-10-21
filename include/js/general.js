@@ -878,11 +878,22 @@ function dateRange(startDate, endDate, wp_code, emp) {
 */
 function formatDate (input) {
 
-    console.log(input);
+/*    console.log(input);
     var datePart = input.match(/\d+/g),
     year = datePart[0].substring(2), // get only two digits
     month = datePart[1], day = datePart[2];
+    return day+'-'+month+'-'+year;*/
+
+
+
+
+    var year = input.substring(0, 4);
+    var month = input.substring(5, 7);
+    var day = input.substring(7, 9);
+    console.log(day+'-'+month+'-'+year);
+
     return day+'-'+month+'-'+year;
+
 }
 
 
