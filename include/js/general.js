@@ -27,7 +27,7 @@ function generatetimecontrol(projectid) {
     var username="admin";
     var userAccessKey = "o7NM12Xzxm6mYfB";
     var url = endpointUrl + "?operation=getchallenge&username=" + username;
-    const columNames = ['ProjectID', 'ProjectTaskID', 'Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP', 'TotalHoursWP', 'TotaleWorkDaysWP', 'Day', 'Month', 'Year'];
+    const columNames = ['ProjectID', 'ProjectTaskID', 'EmployeeID', 'Employee', 'WPCode',  'WorkingHour', 'RealWorkingHour', 'TotalHoursWorked', 'DateStart', 'DateEnd', 'Percentage', 'PercentageWP', 'TotalHoursWP', 'TotaleWorkDaysWP', 'Day', 'Month', 'Year'];
 
     fetch(url, {
         method: "GET",
@@ -150,7 +150,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
     // var sql = "SELECT projecttasknumber,projecttaskname,startdate,enddate FROM ProjectTask WHERE (ProjectTask.projectid LIKE '%"+projectName+"%') ; ";
 
 
-    var sql = "SELECT contactrolename,ProjectTask.projecttasknumber,ProjectTask.projecttaskname,ProjectTask.startdate,ProjectTask.enddate,cf_1828,cf_1837 FROM ContactRole WHERE (ProjectTask.projectid = "+PID+") ; ";
+    var sql = "SELECT contactrolename,ProjectTask.projecttasknumber,ProjectTask.projecttaskname,ProjectTask.startdate,ProjectTask.enddate,cf_1828,cf_1837, contactroleid FROM ContactRole WHERE (ProjectTask.projectid = "+PID+") ; ";
     var url = endpoint + "?operation=" + oper + "&sessionName=" + sessionId + "&query=" + sql;
     var myInit = {
         method: 'GET',
@@ -173,6 +173,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
 
                 empXwp[i]["projecttaskstartdate"] = formatDate(projecttask_start_date);
                 empXwp[i]["projecttaskenddate"] = formatDate(projecttask__end_date);
+
             }
 
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"contactrolename":').join('"Employee":'));
@@ -182,6 +183,8 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskstartdate":').join('"Start Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskenddate":').join('"End Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1837":').join('"WorkingHour":'));
+
+            empXwp = JSON.parse(JSON.stringify(empXwp).split('"contactroleid":').join('"EmployeeID":'));
 
             getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid);
 
@@ -638,6 +641,7 @@ function exportToCSV(columnHeaders, report, status){
            dataNew.push([
                report[j].ProjectID,
                report[j].ProjectTaskID,
+               report[j].EmployeeID,
                report[j].Employee,
                report[j].WPCode,
                report[j].WorkingHour,
