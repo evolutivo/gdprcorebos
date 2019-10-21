@@ -165,6 +165,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
         })
         .then(data => {
             var empXwp = data.result;
+            console.log(empXwp);
             for (var i = 0; i < empXwp.length; i++) {
                 var projecttask_start_date = empXwp[i]["projecttaskstartdate"];
                 var projecttask__end_date = empXwp[i]["projecttaskenddate"];
