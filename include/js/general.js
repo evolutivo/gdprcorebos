@@ -165,7 +165,6 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
         })
         .then(data => {
             var empXwp = data.result;
-            console.log(empXwp);
             for (var i = 0; i < empXwp.length; i++) {
                 var projecttask_start_date = empXwp[i]["projecttaskstartdate"];
                 var projecttask__end_date = empXwp[i]["projecttaskenddate"];
@@ -184,8 +183,6 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskstartdate":').join('"Start Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskenddate":').join('"End Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1837":').join('"WorkingHour":'));
-
-            //var contactroleid = projectid.split('x')[1];
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"id":').join('"EmployeeID":'));
 
             getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid);
@@ -566,6 +563,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             {
                 ProjectID: finalReport[r].ProjectID,
                 ProjectTaskID: finalReport[r].ProjectTaskID,
+                EmployeeID: finalReport[r].EmployeeID.split('x')[1],
                 Employee: finalReport[r].Employee,
                 WPCode: finalReport[r]["WP Code"],
                 WorkingHour: finalReport[r]["WorkingHour"],
