@@ -114,7 +114,6 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
 
                 wpXMonth[i]["startdate"] = formatDate(start_date);
                 wpXMonth[i]["enddate"] = formatDate(end_date);
-                console.log(start_date + '-' + end_date);
 				wpXMonth[i]["id"] = wpXMonth[i]["id"].split('x')[1];
                 wpXMonth[i]["projectid"] = wpXMonth[i]["projectid"].split('x')[1];
             }
@@ -126,8 +125,6 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
       		wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projectid":').join('"ProjectID":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"id":').join('"ProjectTaskID":'));
-
-            console.log(wpXMonth);
 
             getEMPxWP(columNames, endpoint, "query", sessionId, wpXMonth, annoRiferimento, projectid);
 
@@ -171,6 +168,9 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
             for (var i = 0; i < empXwp.length; i++) {
                 var projecttask_start_date = empXwp[i]["projecttaskstartdate"];
                 var projecttask__end_date = empXwp[i]["projecttaskenddate"];
+
+                console.log(projecttask_start_date + '-' + projecttask__end_date);
+
                 empXwp[i]["projecttaskstartdate"] = formatDate(projecttask_start_date);
                 empXwp[i]["projecttaskenddate"] = formatDate(projecttask__end_date);
             }
@@ -183,6 +183,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskenddate":').join('"End Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1837":').join('"WorkingHour":'));
 
+            console.log(empXwp);
             getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid);
 
         })
@@ -884,13 +885,10 @@ function formatDate (input) {
     month = datePart[1], day = datePart[2];
     return day+'-'+month+'-'+year;*/
 
-
-
-
     var year = input.substring(0, 4);
     var month = input.substring(5, 7);
     var day = input.substring(8, 10);
-    console.log(day+'-'+month+'-'+year);
+    // console.log(day+'-'+month+'-'+year);
 
     return day+'-'+month+'-'+year;
 
