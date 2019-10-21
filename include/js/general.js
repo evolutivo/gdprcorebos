@@ -169,7 +169,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
                 var projecttask_start_date = empXwp[i]["projecttaskstartdate"];
                 var projecttask__end_date = empXwp[i]["projecttaskenddate"];
 
-                console.log(projecttask_start_date + '-' + projecttask__end_date);
+                // console.log(projecttask_start_date + '-' + projecttask__end_date);
 
                 empXwp[i]["projecttaskstartdate"] = formatDate(projecttask_start_date);
                 empXwp[i]["projecttaskenddate"] = formatDate(projecttask__end_date);
@@ -183,7 +183,6 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskenddate":').join('"End Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1837":').join('"WorkingHour":'));
 
-            console.log(empXwp);
             getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid);
 
         })
