@@ -111,7 +111,7 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
             for (var i = 0; i < wpXMonth.length; i++) {
                 var start_date = wpXMonth[i]["startdate"];
                 var end_date = wpXMonth[i]["enddate"];
-                console.log(start_date +'-'+ end_date);
+
                 wpXMonth[i]["startdate"] = formatDate(start_date);
                 wpXMonth[i]["enddate"] = formatDate(end_date);
 				wpXMonth[i]["id"] = wpXMonth[i]["id"].split('x')[1];
@@ -125,6 +125,8 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"cf_1743":').join('"Percentage":'));
       		wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"projectid":').join('"ProjectID":'));
             wpXMonth = JSON.parse(JSON.stringify(wpXMonth).split('"id":').join('"ProjectTaskID":'));
+
+            console.log(wpXMonth);
 
             getEMPxWP(columNames, endpoint, "query", sessionId, wpXMonth, annoRiferimento, projectid);
 
