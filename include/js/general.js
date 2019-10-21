@@ -112,8 +112,8 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
                 var start_date = wpXMonth[i]["startdate"];
                 var end_date = wpXMonth[i]["enddate"];
 
-                /*wpXMonth[i]["startdate"] = formatDate(start_date);
-                wpXMonth[i]["enddate"] = formatDate(end_date);*/
+                wpXMonth[i]["startdate"] = formatDate(start_date);
+                wpXMonth[i]["enddate"] = formatDate(end_date);
                 console.log(start_date + '-' + end_date);
 				wpXMonth[i]["id"] = wpXMonth[i]["id"].split('x')[1];
                 wpXMonth[i]["projectid"] = wpXMonth[i]["projectid"].split('x')[1];
@@ -877,6 +877,8 @@ function dateRange(startDate, endDate, wp_code, emp) {
 * Convert date to dd-mm-yyyy format
 */
 function formatDate (input) {
+
+    console.log(input);
     var datePart = input.match(/\d+/g),
     year = datePart[0].substring(2), // get only two digits
     month = datePart[1], day = datePart[2];
