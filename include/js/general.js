@@ -889,7 +889,7 @@ function formatDate (input) {
 
     var year = input.substring(0, 4);
     var month = input.substring(5, 7);
-    var day = input.substring(7, 9);
+    var day = input.substring(8, 10);
     console.log(day+'-'+month+'-'+year);
 
     return day+'-'+month+'-'+year;
