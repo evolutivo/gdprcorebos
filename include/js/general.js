@@ -150,7 +150,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
     // var sql = "SELECT projecttasknumber,projecttaskname,startdate,enddate FROM ProjectTask WHERE (ProjectTask.projectid LIKE '%"+projectName+"%') ; ";
 
 
-    var sql = "SELECT contactrolename,ProjectTask.projecttasknumber,ProjectTask.projecttaskname,ProjectTask.startdate,ProjectTask.enddate,cf_1828,cf_1837, contactroleid FROM ContactRole WHERE (ProjectTask.projectid = "+PID+") ; ";
+    var sql = "SELECT contactrolename,ProjectTask.projecttasknumber,ProjectTask.projecttaskname,ProjectTask.startdate,ProjectTask.enddate,cf_1828,cf_1837,contactroleid FROM ContactRole WHERE (ProjectTask.projectid = "+PID+") ; ";
     var url = endpoint + "?operation=" + oper + "&sessionName=" + sessionId + "&query=" + sql;
     var myInit = {
         method: 'GET',
