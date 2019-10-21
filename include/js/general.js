@@ -111,6 +111,7 @@ function getWP(columNames, endpoint, oper, sessionId, annoRiferimento, projectid
             for (var i = 0; i < wpXMonth.length; i++) {
                 var start_date = wpXMonth[i]["startdate"];
                 var end_date = wpXMonth[i]["enddate"];
+                console.log(start_date +'-'+ end_date);
                 wpXMonth[i]["startdate"] = formatDate(start_date);
                 wpXMonth[i]["enddate"] = formatDate(end_date);
 				wpXMonth[i]["id"] = wpXMonth[i]["id"].split('x')[1];
