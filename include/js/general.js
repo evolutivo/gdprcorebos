@@ -185,7 +185,8 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskenddate":').join('"End Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1837":').join('"WorkingHour":'));
 
-            empXwp = JSON.parse(JSON.stringify(empXwp).split('"contactroleid":').join('"EmployeeID":'));
+            //var contactroleid = projectid.split('x')[1];
+            empXwp = JSON.parse(JSON.stringify(empXwp).split('"id":').join('"EmployeeID":'));
 
             getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid);
 
