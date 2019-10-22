@@ -895,8 +895,8 @@ function formatDate (input) {
 // =========== REMOVE WEEKEND DAYS =====================
 function removeWeekendDays(allDates, weekEndsForYear) {
 
-/*    console.log("All possible dates ", allDates);
-    console.log("WeekEndsForYear: ",  weekEndsForYear);*/
+    console.log("All possible dates ", allDates);
+    console.log("WeekEndsForYear: ",  weekEndsForYear);
 
     for (var i = 0; i < allDates.length; i++) {
         var giorno = allDates[i].Giorno;
