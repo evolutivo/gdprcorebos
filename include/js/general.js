@@ -906,7 +906,7 @@ function removeWeekendDays(allDates, weekEndsForYear) {
             var day = weekEndsForYear[j].substring(0, 2);
             var month = weekEndsForYear[j].substring(3, 5);
             var year = weekEndsForYear[j].substring(6, 10);
-            if (month == allDates[i].Mese && day == allDates[i].Giorno) {
+            if (month == mese && day == giorno) {
                 allDates.splice(i, 1);
             }
         }
