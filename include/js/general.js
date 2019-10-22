@@ -449,6 +449,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
     //========== BEGIN REMOVE FERIE X EMPLOYEE ==========
     for (var e = 0; e < employeeCalendars.length; e++) {
+        console.log(e + '-' + employeeCalendars[e]);
         for (var g = 0; g < feriXMonthXEmp.length; g++) {
             var day = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(0, 2);
             var month = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(3, 5);
@@ -457,7 +458,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             var empNameFromCalendar = employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase();
             var empNameFromFerie = feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase();
 
-            console.log(empNameFromCalendar +'-' + empNameFromFerie);
+            // console.log(empNameFromCalendar +'-' + empNameFromFerie);
 
             if (empNameFromCalendar == empNameFromFerie && employeeCalendars[e].Giorno == day && employeeCalendars[e].Mese == month && employeeCalendars[e].Anno == year) {
                 // console.log(empNameFromFerie + "-" + day + "-" + month + "-" + year);
