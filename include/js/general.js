@@ -435,6 +435,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 Anno: yearOfReference
 
             }
+            console.log(empCalendar);
             employeeCalendars.push(empCalendar);
         }
     }
@@ -449,7 +450,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
     //========== BEGIN REMOVE FERIE X EMPLOYEE ==========
     for (var e = 0; e < employeeCalendars.length; e++) {
-        console.log(e + '-' + employeeCalendars[e].EMP);
+        // console.log(e + '-' + employeeCalendars[e].EMP);
         for (var g = 0; g < feriXMonthXEmp.length; g++) {
             var day = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(0, 2);
             var month = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(3, 5);
