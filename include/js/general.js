@@ -435,7 +435,6 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 Anno: yearOfReference
 
             }
-            console.log(empCalendar);
             employeeCalendars.push(empCalendar);
         }
     }
@@ -456,15 +455,22 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             var month = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(3, 5);
             var year = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(6, 10);
 
-            var empNameFromCalendar = employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase();
-            var empNameFromFerie = feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase();
+            if(employeeCalendars[e].EMP !=null && feriXMonthXEmp[g].Employee != null){
+                console.log("hello");
+                var empNameFromCalendar = employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase();
+                var empNameFromFerie = feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase();
 
-            // console.log(empNameFromCalendar +'-' + empNameFromFerie);
+                // console.log(empNameFromCalendar +'-' + empNameFromFerie);
 
-            if (empNameFromCalendar == empNameFromFerie && employeeCalendars[e].Giorno == day && employeeCalendars[e].Mese == month && employeeCalendars[e].Anno == year) {
-                // console.log(empNameFromFerie + "-" + day + "-" + month + "-" + year);
-                employeeCalendars.splice(e, 1);
+                if (empNameFromCalendar == empNameFromFerie && employeeCalendars[e].Giorno == day && employeeCalendars[e].Mese == month && employeeCalendars[e].Anno == year) {
+                    // console.log(empNameFromFerie + "-" + day + "-" + month + "-" + year);
+                    employeeCalendars.splice(e, 1);
+                }
             }
+
+
+
+
         }
     }
     console.log("Employee Calendar After Removing Ferie: ", employeeCalendars);
