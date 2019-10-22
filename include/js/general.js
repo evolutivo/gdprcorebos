@@ -424,12 +424,12 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
     // console.log("Report Data: ", r_data);
 
 
-    for (var l = 0; l < distEMP.length; l++) {
-        // console.log(distEMP[l]);
+    for (var ll = 0; ll < distEMP.length; ll++) {
+        // console.log(distEMP[ll]);
         for (var h = 0; h < finalWorkingDays.length; h++) {
             // console.log(finalWorkingDays[h]);
             var empCalendar = {
-                EMP: distEMP[l],
+                EMP: distEMP[ll],
                 Giorno: finalWorkingDays[h].Giorno,
                 Mese: finalWorkingDays[h].Mese,
                 Anno: yearOfReference
@@ -440,30 +440,27 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
     }
 
     console.log("EMP-CALENDAR AFTER REMOVING FESTIVITY", finalWorkingDays);
-
-
     console.log("EMP-CALENDAR", employeeCalendars);
-
     console.log("FERIE X EMP", feriXMonthXEmp);
 
 
     //========== BEGIN REMOVE FERIE X EMPLOYEE ==========
-    for (var e = 0; e < employeeCalendars.length; e++) {
-        // console.log(e + '-' + employeeCalendars[e].EMP);
-        for (var g = 0; g < feriXMonthXEmp.length; g++) {
-            var day = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(0, 2);
-            var month = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(3, 5);
-            var year = feriXMonthXEmp[g].Date.replace(/\s/g, '').substring(6, 10);
+    for (var kk = 0; kk < employeeCalendars.length; kk++) {
+        // console.log(kk + '-' + employeeCalendars[kk].EMP);
+        for (var gg = 0; gg < feriXMonthXEmp.length; gg++) {
+            var day = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(0, 2);
+            var month = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(3, 5);
+            var year = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(6, 10);
 
 
-            var empNameFromCalendar = employeeCalendars[e].EMP.replace(/\s/g, '').toLowerCase();
-            var empNameFromFerie = feriXMonthXEmp[g].Employee.replace(/\s/g, '').toLowerCase();
+            var empNameFromCalendar = employeeCalendars[kk].EMP.replace(/\s/g, '').toLowerCase();
+            var empNameFromFerie = feriXMonthXEmp[gg].Employee.replace(/\s/g, '').toLowerCase();
 
             // console.log(empNameFromCalendar +'-' + empNameFromFerie);
 
-            if (empNameFromCalendar == empNameFromFerie && employeeCalendars[e].Giorno == day && employeeCalendars[e].Mese == month && employeeCalendars[e].Anno == year) {
+            if (empNameFromCalendar == empNameFromFerie && employeeCalendars[kk].Giorno == day && employeeCalendars[kk].Mese == month && employeeCalendars[kk].Anno == year) {
                 // console.log(empNameFromFerie + "-" + day + "-" + month + "-" + year);
-                employeeCalendars.splice(e, 1);
+                employeeCalendars.splice(kk, 1);
             }
         }
     }
@@ -473,19 +470,19 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
 
 	// ======= BEGIN ADD RANDOM DAY & MONTH TO FINAL REPORT =========
-	for (var r = 0; r < finalReport.length; r++) {
+	for (var rr = 0; rr < finalReport.length; rr++) {
 	    var randomMonth = [];
 		var otherRandomMonth = [];
 		var randomDay = [];
 		var copyRandomDay = [];
 		var randomNullDays = [];
 
-		mesiLavorativi = getWorkingMonthsByDateStartDateEnd(finalReport[r]["Start Time"], finalReport[r]["End Time"], finalReport[r]["WP Code"], finalReport[r]["Employee"]);
+		mesiLavorativi = getWorkingMonthsByDateStartDateEnd(finalReport[rr]["Start Time"], finalReport[rr]["End Time"], finalReport[rr]["WP Code"], finalReport[rr]["Employee"]);
 
-		randomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
+		randomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[rr]["Employee"], finalReport[rr]["WP Code"], mesiLavorativi);
 		var month = randomMonth[Math.floor(Math.random() * randomMonth.length)];
 
-		randomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], month, employeeCalendars);
+		randomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[rr]["Employee"], month, employeeCalendars);
 		var day = randomDay[Math.floor(Math.random() * randomDay.length)];
 
 
@@ -506,18 +503,14 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             //console.log("First Time: ", day + "-" + month + "- " + finalReport[r]["Employee"]);
 
             var otherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
-
             var checkAgain =  false;
-
             if(otherDay == null){
                 checkAgain = true;
             }
-
             do {
-
-                otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
+                otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[rr]["Employee"], finalReport[rr]["WP Code"], mesiLavorativi);
                 var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
-                copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
+                copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[rr]["Employee"], otherMonth, employeeCalendars);
 
                 //Check if there are days availabele for that month
                 if (Array.isArray(copyRandomDay) && copyRandomDay.length){
@@ -565,20 +558,20 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
         var obj =
             {
-                ProjectID: finalReport[r].ProjectID,
-                ProjectTaskID: finalReport[r].ProjectTaskID,
-                EmployeeID: finalReport[r].EmployeeID.split('x')[1],
-                Employee: finalReport[r].Employee,
-                WPCode: finalReport[r]["WP Code"],
-                WorkingHour: finalReport[r]["WorkingHour"],
+                ProjectID: finalReport[rr].ProjectID,
+                ProjectTaskID: finalReport[rr].ProjectTaskID,
+                EmployeeID: finalReport[rr].EmployeeID.split('x')[1],
+                Employee: finalReport[rr].Employee,
+                WPCode: finalReport[rr]["WP Code"],
+                WorkingHour: finalReport[rr]["WorkingHour"],
                 RealWorkingHour: 0,
-                TotalHoursWorked: finalReport[r]["Total Hours Worked"],
-                DateStart: finalReport[r]["Start Time"],
-                DateEnd: finalReport[r]["End Time"],
-                Percentage: finalReport[r].Percentuale,
-                PercentageWP: finalReport[r].PercentualeTotaleWP + '%',
-                TotalHoursWP: finalReport[r].TotHoursXWP,
-                TotaleWorkDaysWP: finalReport[r].TotWDxWP,
+                TotalHoursWorked: finalReport[rr]["Total Hours Worked"],
+                DateStart: finalReport[rr]["Start Time"],
+                DateEnd: finalReport[rr]["End Time"],
+                Percentage: finalReport[rr].Percentuale,
+                PercentageWP: finalReport[rr].PercentualeTotaleWP + '%',
+                TotalHoursWP: finalReport[rr].TotHoursXWP,
+                TotaleWorkDaysWP: finalReport[rr].TotWDxWP,
                 Day: (day == null || day.length === 0) ? otherOtherDay : day,
                 Month: (day == null || day.length === 0) ? otherMonth : month,
                 Year: yearOfReference
@@ -591,20 +584,17 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
         if(day == null){
             for (var v = 0; v < employeeCalendars.length; v++) {
-                if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == otherMonth && employeeCalendars[v].Giorno == otherOtherDay) {
+                if (employeeCalendars[v].EMP == finalReport[rr].Employee && employeeCalendars[v].Mese == otherMonth && employeeCalendars[v].Giorno == otherOtherDay) {
                     employeeCalendars.splice(v, 1);
                 }
             }
         }else{
             for (var v = 0; v < employeeCalendars.length; v++) {
-                if (employeeCalendars[v].EMP == finalReport[r].Employee && employeeCalendars[v].Mese == month && employeeCalendars[v].Giorno == day) {
+                if (employeeCalendars[v].EMP == finalReport[rr].Employee && employeeCalendars[v].Mese == month && employeeCalendars[v].Giorno == day) {
                     employeeCalendars.splice(v, 1);
                 }
             }
         }
-
-
-
 	}
 
     console.log("Employee Calendar After Random Generation: ", employeeCalendars);
