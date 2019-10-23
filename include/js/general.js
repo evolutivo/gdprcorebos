@@ -515,14 +515,14 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 //Check if there are days availabele for that month
                 if (Array.isArray(copyRandomDay) && copyRandomDay.length){
                     //TWO
-                    //console.log("Before: ", copyRandomDay);
+                    console.log("Before: ", copyRandomDay);
 
                     var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
 
                      for (var cal = 0; cal < employeeCalendars.length; cal++) {
                          if (employeeCalendars[cal].EMP == finalReport[r].Employee && employeeCalendars[cal].Mese == otherMonth && employeeCalendars[cal].Giorno == otherOtherDay) {
-                             console.log(employeeCalendars[cal].Giorno +'-'+ employeeCalendars[cal].Mese);
+                             console.log(employeeCalendars[cal].EMP +'-'+employeeCalendars[cal].Giorno +'-'+ employeeCalendars[cal].Mese);
                              employeeCalendars.splice(dd, 1);
                          }
                      }
@@ -535,8 +535,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
 
                     //THREE
-               /*     console.log("Second Time: ", otherOtherDay + "-" + otherMonth +"-"+  finalReport[r]["Employee"]);
-                    console.log("After: ", copyRandomDay);*/
+               /*     console.log("Second Time: ", otherOtherDay + "-" + otherMonth +"-"+  finalReport[r]["Employee"]);*/
+                    console.log("After: ", copyRandomDay);
 
                 }else{
                     for( var mm = 0; mm < mesiLavorativi.length; mm++){
