@@ -535,7 +535,7 @@ function generateFinalReport(finalReport, employeeCalendars, yearOfReference){
                     let otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
                      for (let j = 0; j < employeeCalendars.length; j++) {
-                         if (employeeCalendars[j].EMP == finalReport[j].Employee && employeeCalendars[j].Mese == otherMonth && employeeCalendars[j].Giorno == otherOtherDay) {
+                         if (employeeCalendars[j].EMP == finalReport[i].Employee && employeeCalendars[j].Mese == otherMonth && employeeCalendars[j].Giorno == otherOtherDay) {
                              console.log(employeeCalendars[j].EMP +'-'+employeeCalendars[j].Giorno +'-'+ employeeCalendars[j].Mese);
                              employeeCalendars.splice(j, 1);
                          }
