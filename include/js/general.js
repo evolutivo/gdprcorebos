@@ -900,7 +900,7 @@ function removeWeekendDays(allDates, weekEndsForYear) {
     console.log("All possible dates ", allDates);
     console.log("WeekEndsForYear: ",  weekEndsForYear);
 
-    for (var i = 0; i < allDates.length; i++) {
+/*    for (var i = 0; i < allDates.length; i++) {
         var giorno = allDates[i].Giorno;
         var mese = allDates[i].Mese;
         var anno = allDates[i].Anno;
@@ -914,7 +914,28 @@ function removeWeekendDays(allDates, weekEndsForYear) {
                 allDates.splice(i, 1);
             }
         }
+    }*/
+
+    for(var i = 0; i<weekEndsForYear.length; i++){
+        var day = weekEndsForYear[i].substring(0, 2);
+        var month = weekEndsForYear[i].substring(3, 5);
+        var year = weekEndsForYear[i].substring(6, 10);
+
+        for(var j=0; j<allDates.length; j++){
+            var giorno = allDates[j].Giorno;
+            var mese = allDates[j].Mese;
+            var anno = allDates[j].Anno;
+
+            if((day == giorno) && (month == mese) && (anno == year)){
+                console.log(giorno + '-' + mese + '-' + anno);
+                allDates.splice(j, 1);
+            }
+        }
     }
+
+
+
+
 
     console.log("All days without weekend days: ", allDates);
     return allDates;
