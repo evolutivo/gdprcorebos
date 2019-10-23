@@ -434,9 +434,9 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 Mese: finalWorkingDays[h].Mese,
                 Anno: yearOfReference
 
-                console.log(h);
-
        }
+
+       console.log(h);
 
        employeeCalendars.push(empCalendar);
    }
