@@ -526,11 +526,11 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                          }
                      }
 
-                    /*for( var dd = 0; dd < copyRandomDay.length; dd++){
+                    for( var dd = 0; dd < copyRandomDay.length; dd++){
                         if ( copyRandomDay[dd] === otherOtherDay) {
                             copyRandomDay.splice(dd, 1);
                         }
-                    }*/
+                    }
 
 
                     //THREE
