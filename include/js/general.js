@@ -469,7 +469,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
     output = generateFinalReport(finalReport, employeeCalendars, yearOfReference)
 
-    console.log("FINAL REPORT: ", output);
+    // console.log("FINAL REPORT: ", output);
 
     return output;
 }
