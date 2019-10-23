@@ -477,8 +477,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
 function generateFinalReport(finalReport, employeeCalendars, yearOfReference){
 
-console.log(finalReport);
-console.log(employeeCalendars);
+/*console.log(finalReport);
+console.log(employeeCalendars);*/
 
 let randomMonth = [],
    otherRandomMonth = [],
