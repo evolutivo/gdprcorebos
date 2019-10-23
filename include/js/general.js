@@ -471,11 +471,11 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
 	// ======= BEGIN ADD RANDOM DAY & MONTH TO FINAL REPORT =========
 	for (var rr = 0; rr < finalReport.length; rr++) {
-	    var randomMonth = [];
-		var otherRandomMonth = [];
-		var randomDay = [];
-		var copyRandomDay = [];
-		var randomNullDays = [];
+	    var randomMonth = [],
+            otherRandomMonth = [],
+            randomDay = [],
+            copyRandomDay = [],
+            randomNullDays = [];
 
 		mesiLavorativi = getWorkingMonthsByDateStartDateEnd(finalReport[rr]["Start Time"], finalReport[rr]["End Time"], finalReport[rr]["WP Code"], finalReport[rr]["Employee"]);
 
@@ -546,6 +546,13 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
 
                 checkAgain = false;
+
+
+                for (var cc = 0; cc < employeeCalendars.length; cc++) {
+                    if (employeeCalendars[cc].EMP == finalReport[rr].Employee && employeeCalendars[cc].Mese == otherMonth && employeeCalendars[cc].Giorno == otherOtherDay) {
+                        employeeCalendars.splice(cc, 1);
+                    }
+                }
             }
             while(checkAgain === true);
 
@@ -582,7 +589,9 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
         //Remove Record from EmployeeCalendar
         // removeDayOfMonthFromEmployeeCalendar(finalReport[r].Employee, month, day, employeeCalendars);
 
-        if(day == null){
+
+
+/*        if(day == null){
             for (var v = 0; v < employeeCalendars.length; v++) {
                 if (employeeCalendars[v].EMP == finalReport[rr].Employee && employeeCalendars[v].Mese == otherMonth && employeeCalendars[v].Giorno == otherOtherDay) {
                     employeeCalendars.splice(v, 1);
@@ -593,6 +602,13 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 if (employeeCalendars[v].EMP == finalReport[rr].Employee && employeeCalendars[v].Mese == month && employeeCalendars[v].Giorno == day) {
                     employeeCalendars.splice(v, 1);
                 }
+            }
+        }*/
+
+
+        for (var v = 0; v < employeeCalendars.length; v++) {
+            if (employeeCalendars[v].EMP == finalReport[rr].Employee && employeeCalendars[v].Mese == month && employeeCalendars[v].Giorno == day) {
+                employeeCalendars.splice(v, 1);
             }
         }
 	}
