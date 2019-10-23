@@ -445,16 +445,16 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
 
     //========== BEGIN REMOVE FERIE X EMPLOYEE ==========
-    for (var kk = 0; kk < employeeCalendars.length; kk++) {
+    for (let kk = 0; kk < employeeCalendars.length; kk++) {
         // console.log(kk + '-' + employeeCalendars[kk].EMP);
-        for (var gg = 0; gg < feriXMonthXEmp.length; gg++) {
-            var day = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(0, 2);
-            var month = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(3, 5);
-            var year = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(6, 10);
+        for (let gg = 0; gg < feriXMonthXEmp.length; gg++) {
+            let day = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(0, 2);
+            let month = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(3, 5);
+            let year = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(6, 10);
 
 
-            var empNameFromCalendar = employeeCalendars[kk].EMP.replace(/\s/g, '').toLowerCase();
-            var empNameFromFerie = feriXMonthXEmp[gg].Employee.replace(/\s/g, '').toLowerCase();
+            let empNameFromCalendar = employeeCalendars[kk].EMP.replace(/\s/g, '').toLowerCase();
+            let empNameFromFerie = feriXMonthXEmp[gg].Employee.replace(/\s/g, '').toLowerCase();
 
             // console.log(empNameFromCalendar +'-' + empNameFromFerie);
 
