@@ -543,7 +543,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                     for (var cal = 0; cal < employeeCalendars.length; cal++) {
                         if (employeeCalendars[cal].EMP == finalReport[r].Employee && employeeCalendars[cal].Mese == otherMonth && employeeCalendars[cal].Giorno == otherOtherDay) {
                             console.log(employeeCalendars[cal].EMP +'-'+employeeCalendars[cal].Giorno +'-'+ employeeCalendars[cal].Mese);
-                            employeeCalendars.splice(dd, 1);
+                            employeeCalendars.splice(cal, 1);
                         }
                     }
 
