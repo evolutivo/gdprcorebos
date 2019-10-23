@@ -480,17 +480,16 @@ function generateFinalReport(finalReport, employeeCalendars, yearOfReference){
     console.log(finalReport);
     console.log(employeeCalendars);
 
+    let randomMonth = [],
+        otherRandomMonth = [],
+        randomDay = [],
+        copyRandomDay = [],
+        mesiLavorativi = [],
+        // randomNullDays = [],
+        output = [];
 
     // ======= BEGIN ADD RANDOM DAY & MONTH TO FINAL REPORT =========
     for (let i = 0; i < finalReport.length; i++) {
-
-        let randomMonth = [],
-            otherRandomMonth = [],
-            randomDay = [],
-            copyRandomDay = [],
-            mesiLavorativi = [],
-            // randomNullDays = [],
-            output = [];
 
         mesiLavorativi = getWorkingMonthsByDateStartDateEnd(finalReport[i]["Start Time"], finalReport[i]["End Time"], finalReport[i]["WP Code"], finalReport[i]["Employee"]);
         randomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[i]["Employee"], finalReport[i]["WP Code"], mesiLavorativi);
