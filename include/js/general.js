@@ -490,7 +490,7 @@ function generateFinalReport(finalReport, employeeCalendars, yearOfReference){
             copyRandomDay = [],
             mesiLavorativi = [],
             // randomNullDays = [],
-            finalReport = [];
+            output = [];
 
         mesiLavorativi = getWorkingMonthsByDateStartDateEnd(finalReport[i]["Start Time"], finalReport[i]["End Time"], finalReport[i]["WP Code"], finalReport[i]["Employee"]);
         randomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[i]["Employee"], finalReport[i]["WP Code"], mesiLavorativi);
@@ -570,7 +570,7 @@ function generateFinalReport(finalReport, employeeCalendars, yearOfReference){
                             Year: yearOfReference
                         }
 
-                    finalReport.push(obj);
+                    output.push(obj);
 
                     //THREE
                     // console.log("Second Time: ", otherOtherDay + "-" + otherMonth +"-"+  finalReport[r]["Employee"]);
@@ -611,7 +611,7 @@ function generateFinalReport(finalReport, employeeCalendars, yearOfReference){
                 Year: yearOfReference
             }
 
-        finalReport.push(obj);
+        output.push(obj);
 
 
         //Remove Record from EmployeeCalendar
@@ -625,7 +625,7 @@ function generateFinalReport(finalReport, employeeCalendars, yearOfReference){
     console.log("Employee Calendar After Random Generation: ", employeeCalendars);
     //======= END ADD RANDOM DAY & MONTH TO FINAL REPORT ==================
 
-    return finalReport;
+    return output;
 }
 
 function generateAnotherDay(employee, wpcode, mesiLavorativi, employeeCalendars){
