@@ -418,94 +418,95 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
     finalWorkingDays = getFinalWorkingDaysXMonth(festivity, weekEndsForYear, yearOfReference);
 
-    console.log("Working Days: ", finalWorkingDays);
+    // console.log("Working Days: ", finalWorkingDays);
     // Add workingDaysxMonth
     // console.log("Report Data: ", r_data);
 
 
     for (var ll = 0; ll < distEMP.length; ll++) {
-        console.log(distEMP[ll]);
+        // console.log(distEMP[ll]);
         for (var h = 0; h < finalWorkingDays.length; h++) {
             // console.log(finalWorkingDays[h]);
             var empCalendar = {
-                EMP: distEMP[ll],
+                // EMP: distEMP[ll],
+                EMP: (distEMP[ll] == null) ? 'aaa' : distEMP[ll],
                 Giorno: finalWorkingDays[h].Giorno,
                 Mese: finalWorkingDays[h].Mese,
                 Anno: yearOfReference
 
-            }
-            employeeCalendars.push(empCalendar);
-        }
-    }
+       }
+       employeeCalendars.push(empCalendar);
+   }
+}
 
-    console.log("EMP-CALENDAR AFTER REMOVING FESTIVITY", finalWorkingDays);
-    console.log("EMP-CALENDAR", employeeCalendars);
-    console.log("FERIE X EMP", feriXMonthXEmp);
-
-
-    //========== BEGIN REMOVE FERIE X EMPLOYEE ==========
-    for (let kk = 0; kk < employeeCalendars.length; kk++) {
-        // console.log(kk + '-' + employeeCalendars[kk].EMP);
-        for (let gg = 0; gg < feriXMonthXEmp.length; gg++) {
-            let day = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(0, 2);
-            let month = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(3, 5);
-            let year = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(6, 10);
+console.log("EMP-CALENDAR AFTER REMOVING FESTIVITY", finalWorkingDays);
+console.log("EMP-CALENDAR", employeeCalendars);
+console.log("FERIE X EMP", feriXMonthXEmp);
 
 
-            let empNameFromCalendar = employeeCalendars[kk].EMP.replace(/\s/g, '').toLowerCase();
-            let empNameFromFerie = feriXMonthXEmp[gg].Employee.replace(/\s/g, '').toLowerCase();
+//========== BEGIN REMOVE FERIE X EMPLOYEE ==========
+for (let kk = 0; kk < employeeCalendars.length; kk++) {
+   // console.log(kk + '-' + employeeCalendars[kk].EMP);
+   for (let gg = 0; gg < feriXMonthXEmp.length; gg++) {
+       let day = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(0, 2);
+       let month = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(3, 5);
+       let year = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(6, 10);
 
-            // console.log(empNameFromCalendar +'-' + empNameFromFerie);
 
-            if (empNameFromCalendar == empNameFromFerie && employeeCalendars[kk].Giorno == day && employeeCalendars[kk].Mese == month && employeeCalendars[kk].Anno == year) {
-                // console.log(empNameFromFerie + "-" + day + "-" + month + "-" + year);
-                employeeCalendars.splice(kk, 1);
-            }
-        }
-    }
-    console.log("Employee Calendar After Removing Ferie: ", employeeCalendars);
-    //========== END REMOVE FERIE X EMPLOYEE ==========
+       let empNameFromCalendar = employeeCalendars[kk].EMP.replace(/\s/g, '').toLowerCase();
+       let empNameFromFerie = feriXMonthXEmp[gg].Employee.replace(/\s/g, '').toLowerCase();
 
-    output = generateFinalReport(finalReport, employeeCalendars, yearOfReference)
+       // console.log(empNameFromCalendar +'-' + empNameFromFerie);
 
-    console.log("FINAL REPORT: ", output);
+       if (empNameFromCalendar == empNameFromFerie && employeeCalendars[kk].Giorno == day && employeeCalendars[kk].Mese == month && employeeCalendars[kk].Anno == year) {
+           // console.log(empNameFromFerie + "-" + day + "-" + month + "-" + year);
+           employeeCalendars.splice(kk, 1);
+       }
+   }
+}
+console.log("Employee Calendar After Removing Ferie: ", employeeCalendars);
+//========== END REMOVE FERIE X EMPLOYEE ==========
 
-    return output;
+output = generateFinalReport(finalReport, employeeCalendars, yearOfReference)
+
+console.log("FINAL REPORT: ", output);
+
+return output;
 }
 
 
 function generateFinalReport(finalReport, employeeCalendars, yearOfReference){
 
-    console.log(finalReport);
-    console.log(employeeCalendars);
+console.log(finalReport);
+console.log(employeeCalendars);
 
-    let randomMonth = [],
-        otherRandomMonth = [],
-        randomDay = [],
-        copyRandomDay = [],
-        mesiLavorativi = [],
-        // randomNullDays = [],
-        output = [];
+let randomMonth = [],
+   otherRandomMonth = [],
+   randomDay = [],
+   copyRandomDay = [],
+   mesiLavorativi = [],
+   // randomNullDays = [],
+   output = [];
 
-    // ======= BEGIN ADD RANDOM DAY & MONTH TO FINAL REPORT =========
-    for (let i = 0; i < finalReport.length; i++) {
+// ======= BEGIN ADD RANDOM DAY & MONTH TO FINAL REPORT =========
+for (let i = 0; i < finalReport.length; i++) {
 
-        mesiLavorativi = getWorkingMonthsByDateStartDateEnd(finalReport[i]["Start Time"], finalReport[i]["End Time"], finalReport[i]["WP Code"], finalReport[i]["Employee"]);
-        randomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[i]["Employee"], finalReport[i]["WP Code"], mesiLavorativi);
-        let month = randomMonth[Math.floor(Math.random() * randomMonth.length)];
+   mesiLavorativi = getWorkingMonthsByDateStartDateEnd(finalReport[i]["Start Time"], finalReport[i]["End Time"], finalReport[i]["WP Code"], finalReport[i]["Employee"]);
+   randomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[i]["Employee"], finalReport[i]["WP Code"], mesiLavorativi);
+   let month = randomMonth[Math.floor(Math.random() * randomMonth.length)];
 
-        randomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[i]["Employee"], month, employeeCalendars);
-        let day = randomDay[Math.floor(Math.random() * randomDay.length)];
+   randomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[i]["Employee"], month, employeeCalendars);
+   let day = randomDay[Math.floor(Math.random() * randomDay.length)];
 
 
 
-        if (day == null) {
+   if (day == null) {
 
-            /*************************************
-             1- Generate anotherMonth
-             2- Generate anotherDay
-             3- Remove day from calendar
-             ***************************************/
+       /*************************************
+        1- Generate anotherMonth
+        2- Generate anotherDay
+        3- Remove day from calendar
+        ***************************************/
             /*otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[r]["Employee"], finalReport[r]["WP Code"], mesiLavorativi);
             var otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
             copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[r]["Employee"], otherMonth, employeeCalendars);
