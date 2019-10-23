@@ -897,8 +897,8 @@ function formatDate (input) {
 // =========== REMOVE WEEKEND DAYS =====================
 function removeWeekendDays(allDates, weekEndsForYear) {
 
-    console.log("All possible dates ", allDates);
-    console.log("WeekEndsForYear: ",  weekEndsForYear);
+/*    console.log("All possible dates ", allDates);
+    console.log("WeekEndsForYear: ",  weekEndsForYear);*/
 
 /*    for (var i = 0; i < allDates.length; i++) {
         var giorno = allDates[i].Giorno;
@@ -927,17 +927,13 @@ function removeWeekendDays(allDates, weekEndsForYear) {
             var anno = allDates[j].Anno;
 
             if((day == giorno) && (month == mese) && (anno == year)){
-                console.log(giorno + '-' + mese + '-' + anno);
+                // console.log(giorno + '-' + mese + '-' + anno);
                 allDates.splice(j, 1);
             }
         }
     }
 
-
-
-
-
-    console.log("All days without weekend days: ", allDates);
+    // console.log("All days without weekend days: ", allDates);
     return allDates;
 
 }
