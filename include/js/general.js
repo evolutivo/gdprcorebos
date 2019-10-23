@@ -435,6 +435,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 Anno: yearOfReference
 
        }
+       console.log(h);
        employeeCalendars.push(empCalendar);
    }
 }
