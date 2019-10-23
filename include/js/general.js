@@ -903,12 +903,14 @@ function removeWeekendDays(allDates, weekEndsForYear) {
     for (var i = 0; i < allDates.length; i++) {
         var giorno = allDates[i].Giorno;
         var mese = allDates[i].Mese;
+        var anno = allDates[i].Anno;
 
         for (var j = 0; j < weekEndsForYear.length; j++) {
             var day = weekEndsForYear[j].substring(0, 2);
             var month = weekEndsForYear[j].substring(3, 5);
             var year = weekEndsForYear[j].substring(6, 10);
-            if (month == mese && day == giorno) {
+            if (month === mese && day === giorno && anno === year) {
+                console.log(giorno + '-' + mese + '-' + anno);
                 allDates.splice(i, 1);
             }
         }
