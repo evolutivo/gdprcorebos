@@ -433,48 +433,45 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 Giorno: finalWorkingDays[h].Giorno,
                 Mese: finalWorkingDays[h].Mese,
                 Anno: yearOfReference
+            }
+            employeeCalendars.push(empCalendar);
+        }
+    }
 
+    console.log("EMP-CALENDAR AFTER REMOVING FESTIVITY", finalWorkingDays);
+    console.log("EMP-CALENDAR", employeeCalendars);
+    console.log("FERIE X EMP", feriXMonthXEmp);
+
+
+    //========== BEGIN REMOVE FERIE X EMPLOYEE ==========
+    for (let kk = 0; kk < employeeCalendars.length; kk++) {
+       console.log(kk + '-' + employeeCalendars[kk].EMP);
+       for (let gg = 0; gg < feriXMonthXEmp.length; gg++) {
+           let day = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(0, 2);
+           let month = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(3, 5);
+           let year = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(6, 10);
+
+
+           let empNameFromCalendar = employeeCalendars[kk].EMP.replace(/\s/g, '').toLowerCase();
+           let empNameFromFerie = feriXMonthXEmp[gg].Employee.replace(/\s/g, '').toLowerCase();
+
+           // console.log(empNameFromCalendar +'-' + empNameFromFerie);
+
+           if (empNameFromCalendar == empNameFromFerie && employeeCalendars[kk].Giorno == day && employeeCalendars[kk].Mese == month && employeeCalendars[kk].Anno == year) {
+               // console.log(empNameFromFerie + "-" + day + "-" + month + "-" + year);
+               employeeCalendars.splice(kk, 1);
+           }
        }
+    }
 
-       console.log(h);
+    console.log("Employee Calendar After Removing Ferie: ", employeeCalendars);
+    //========== END REMOVE FERIE X EMPLOYEE ==========
 
-       employeeCalendars.push(empCalendar);
-   }
-}
+    output = generateFinalReport(finalReport, employeeCalendars, yearOfReference)
 
-console.log("EMP-CALENDAR AFTER REMOVING FESTIVITY", finalWorkingDays);
-console.log("EMP-CALENDAR", employeeCalendars);
-console.log("FERIE X EMP", feriXMonthXEmp);
+    console.log("FINAL REPORT: ", output);
 
-
-//========== BEGIN REMOVE FERIE X EMPLOYEE ==========
-for (let kk = 0; kk < employeeCalendars.length; kk++) {
-   // console.log(kk + '-' + employeeCalendars[kk].EMP);
-   for (let gg = 0; gg < feriXMonthXEmp.length; gg++) {
-       let day = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(0, 2);
-       let month = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(3, 5);
-       let year = feriXMonthXEmp[gg].Date.replace(/\s/g, '').substring(6, 10);
-
-
-       let empNameFromCalendar = employeeCalendars[kk].EMP.replace(/\s/g, '').toLowerCase();
-       let empNameFromFerie = feriXMonthXEmp[gg].Employee.replace(/\s/g, '').toLowerCase();
-
-       // console.log(empNameFromCalendar +'-' + empNameFromFerie);
-
-       if (empNameFromCalendar == empNameFromFerie && employeeCalendars[kk].Giorno == day && employeeCalendars[kk].Mese == month && employeeCalendars[kk].Anno == year) {
-           // console.log(empNameFromFerie + "-" + day + "-" + month + "-" + year);
-           employeeCalendars.splice(kk, 1);
-       }
-   }
-}
-console.log("Employee Calendar After Removing Ferie: ", employeeCalendars);
-//========== END REMOVE FERIE X EMPLOYEE ==========
-
-output = generateFinalReport(finalReport, employeeCalendars, yearOfReference)
-
-console.log("FINAL REPORT: ", output);
-
-return output;
+    return output;
 }
 
 
