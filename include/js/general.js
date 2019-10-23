@@ -532,6 +532,12 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                         }
                     }
 
+                    for (var cc = 0; cc < employeeCalendars.length; cc++) {
+                        if (employeeCalendars[cc].EMP == finalReport[rr].Employee && employeeCalendars[cc].Mese == otherMonth && employeeCalendars[cc].Giorno == otherOtherDay) {
+                            employeeCalendars.splice(cc, 1);
+                        }
+                    }
+
                     //THREE
                /*     console.log("Second Time: ", otherOtherDay + "-" + otherMonth +"-"+  finalReport[r]["Employee"]);
                     console.log("After: ", copyRandomDay);*/
@@ -543,16 +549,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                         }
                     }
                 }
-
-
                 checkAgain = false;
-
-
-                for (var cc = 0; cc < employeeCalendars.length; cc++) {
-                    if (employeeCalendars[cc].EMP == finalReport[rr].Employee && employeeCalendars[cc].Mese == otherMonth && employeeCalendars[cc].Giorno == otherOtherDay) {
-                        employeeCalendars.splice(cc, 1);
-                    }
-                }
             }
             while(checkAgain === true);
 
