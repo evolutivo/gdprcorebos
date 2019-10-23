@@ -525,7 +525,7 @@ function generateFinalReport(finalReport, employeeCalendars, yearOfReference){
             do {
                 otherRandomMonth = getMeseRandomPerWorkPackPerEMP(finalReport[i]["Employee"], finalReport[i]["WP Code"], mesiLavorativi);
                 let otherMonth = otherRandomMonth[Math.floor(Math.random() * otherRandomMonth.length)];
-                copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[rr]["Employee"], otherMonth, employeeCalendars);
+                copyRandomDay = getRandomDayPerMonthPerWPPerEMP(finalReport[i]["Employee"], otherMonth, employeeCalendars);
 
                 //Check if there are days availabele for that month
                 if (Array.isArray(copyRandomDay) && copyRandomDay.length){
