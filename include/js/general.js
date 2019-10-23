@@ -313,17 +313,16 @@ function generateExcelReport(columNames, WPxMonth, EMPxWP, feriePerMonthPerEmp, 
 
 //=========== Load Employee Per Working Package Data ==============
 function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear, feriXMonthXEmp, yearOfReference) {
-    var r_data = [],
+    let r_data = [],
         finalReport = [],
         employeeCalendars = [],
-        //mesiLavorativi = [],
         distEMP = [],
         newGroupedArray = [],
         percentSum = 0,
         finalWorkingDays,
         output = [];
 
-    for (var r = 0; r < emp_x_wp_worksheet.length; r++) {
+    for (let r = 0; r < emp_x_wp_worksheet.length; r++) {
         r_data.push(emp_x_wp_worksheet[r]);
     }
 
@@ -382,7 +381,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
         }
     }
 
-    //Calculate in another varible (Percentuale/PercentualeTotaleWP) * Total Hours Worked: "1,134"
+    //Calculate in another variable (Percentuale/PercentualeTotaleWP) * Total Hours Worked: "1,134"
     for (var g = 0; g < r_data.length; g++) {
         var tot = 0;
         var x = parseInt(r_data[g].Percentuale.slice(0, -1));
@@ -419,13 +418,13 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
     finalWorkingDays = getFinalWorkingDaysXMonth(festivity, weekEndsForYear, yearOfReference);
 
-    // console.log("Working Days: ", finalWorkingDays);
+    console.log("Working Days: ", finalWorkingDays);
     // Add workingDaysxMonth
     // console.log("Report Data: ", r_data);
 
 
     for (var ll = 0; ll < distEMP.length; ll++) {
-        // console.log(distEMP[ll]);
+        console.log(distEMP[ll]);
         for (var h = 0; h < finalWorkingDays.length; h++) {
             // console.log(finalWorkingDays[h]);
             var empCalendar = {
