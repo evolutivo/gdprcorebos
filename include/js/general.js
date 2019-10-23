@@ -515,9 +515,9 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                 //Check if there are days availabele for that month
                 if (Array.isArray(copyRandomDay) && copyRandomDay.length){
                     //TWO
-                    console.log("Before: ", copyRandomDay);
+                    // console.log("Before: ", copyRandomDay);
 
-                    var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
+/*                    var otherOtherDay = copyRandomDay[Math.floor(Math.random() * copyRandomDay.length)];
 
 
                      for (var cal = 0; cal < employeeCalendars.length; cal++) {
@@ -531,12 +531,26 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
                         if ( copyRandomDay[dd] === otherOtherDay) {
                             copyRandomDay.splice(dd, 1);
                         }
+                    }*/
+
+
+                    //get the first day from array of days
+                    var otherOtherDay = copyRandomDay[0];
+                    //remove the selected day from array with all days available
+                    copyRandomDay.splice(0, 1);
+
+                    //remove from calendar the day of that month for that employee
+                    for (var cal = 0; cal < employeeCalendars.length; cal++) {
+                        if (employeeCalendars[cal].EMP == finalReport[r].Employee && employeeCalendars[cal].Mese == otherMonth && employeeCalendars[cal].Giorno == otherOtherDay) {
+                            console.log(employeeCalendars[cal].EMP +'-'+employeeCalendars[cal].Giorno +'-'+ employeeCalendars[cal].Mese);
+                            employeeCalendars.splice(dd, 1);
+                        }
                     }
 
 
                     //THREE
-               /*     console.log("Second Time: ", otherOtherDay + "-" + otherMonth +"-"+  finalReport[r]["Employee"]);*/
-                    console.log("After: ", copyRandomDay);
+                    // console.log("Second Time: ", otherOtherDay + "-" + otherMonth +"-"+  finalReport[r]["Employee"]);
+                    // console.log("After: ", copyRandomDay);
 
                 }else{
                     for( var mm = 0; mm < mesiLavorativi.length; mm++){
