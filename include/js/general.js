@@ -777,7 +777,9 @@ function getFinalWorkingDaysXMonth(festivity, weekEndsForYear, yearOfReference){
     }
     //=============== REMOVE FESTIVITY ==================
 
+    //=============== REMOVE WEEKENDS ==================
     giorniLavorativi = removeWeekendDays(alldates, weekEndsForYear);
+    //=============== REMOVE WEEKENDS ==================
 
     // console.log("Ferie x Month: ", festivity);
     // console.log("All Dates: ", alldates);
@@ -912,8 +914,9 @@ function removeWeekendDays(allDates, weekEndsForYear) {
         }
     }
 
-    // console.log("All days without weekend days: ", allDates);
+    console.log("All days without weekend days: ", allDates);
     return allDates;
+    
 }
 // =========== REMOVE WEEKEND DAYS =====================
 
