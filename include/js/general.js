@@ -535,7 +535,7 @@ for (let i = 0; i < finalReport.length; i++) {
 
                      for (let j = 0; j < employeeCalendars.length; j++) {
                          if (employeeCalendars[j].EMP == finalReport[i].Employee && employeeCalendars[j].Mese == otherMonth && employeeCalendars[j].Giorno == otherOtherDay) {
-                             console.log(employeeCalendars[j].EMP +'-'+employeeCalendars[j].Giorno +'-'+ employeeCalendars[j].Mese);
+                             // console.log(employeeCalendars[j].EMP +'-'+employeeCalendars[j].Giorno +'-'+ employeeCalendars[j].Mese);
                              employeeCalendars.splice(j, 1);
                          }
                      }
