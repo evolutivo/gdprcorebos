@@ -460,7 +460,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
            let empNameFromCalendar = employeeCalendars[kk].EMP.trim();
            let empNameFromFerie = feriXMonthXEmp[gg].Employee.trim();
 
-           // console.log(empNameFromCalendar +'-' + empNameFromFerie);
+           console.log(empNameFromCalendar +'-' + empNameFromFerie);
 
            if (empNameFromCalendar == empNameFromFerie && employeeCalendars[kk].Giorno == day && employeeCalendars[kk].Mese == month && employeeCalendars[kk].Anno == year) {
                // console.log(empNameFromFerie + "-" + day + "-" + month + "-" + year);
