@@ -343,7 +343,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
     for (var i = 0; i < r_data.length; i++) {
         if (!distEMP.includes(r_data[i].Employee)) {
-            let empName = r_data[i].Employee.replace(/\s/g, '').toLowerCase();
+            let empName = r_data[i].Employee;
             distEMP.push(empName);
         }
     }
@@ -364,7 +364,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
     function sumPercentPerWP(employeeName, r_data) {
         var sumPercent = 0;
         for (var k = 0; k < r_data.length; k++) {
-            let emp_name = r_data[k].Employee.replace(/\s/g, '').toLowerCase();
+            let emp_name = r_data[k].Employee;
             if (emp_name == employeeName) {
                 var percentuale = r_data[k].Percentuale.slice(0, -1);
                 // console.log(percentuale);
@@ -458,7 +458,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
 
            let empNameFromCalendar = employeeCalendars[kk].EMP;
-           let empNameFromFerie = feriXMonthXEmp[gg].Employee.replace(/\s/g, '').toLowerCase();
+           let empNameFromFerie = feriXMonthXEmp[gg].Employee;
 
            // console.log(empNameFromCalendar +'-' + empNameFromFerie);
 
