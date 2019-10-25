@@ -428,8 +428,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
         for (var h = 0; h < finalWorkingDays.length; h++) {
             // console.log(finalWorkingDays[h]);
             var empCalendar = {
-                // EMP: distEMP[ll],
-                EMP: (distEMP[ll] == null) ? 'aaa' : distEMP[ll],
+                EMP: distEMP[ll],
                 Giorno: finalWorkingDays[h].Giorno,
                 Mese: finalWorkingDays[h].Mese,
                 Anno: yearOfReference
