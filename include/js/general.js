@@ -176,7 +176,7 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
 
             }
 
-            empXwp = JSON.parse(JSON.stringify(empXwp).split('"contactrolename":').join('"Employee":')).replace(/\s/g, '').toLowerCase();
+            empXwp = JSON.parse(JSON.stringify(empXwp).split('"contactrolename":').join('"Employee":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskprojecttasknumber":').join('"WP Code":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskprojecttaskname":').join('"WP Name":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1828":').join('"Total Hours Worked":'));
@@ -184,6 +184,8 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"projecttaskenddate":').join('"End Time":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1837":').join('"WorkingHour":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"id":').join('"EmployeeID":'));
+
+            console.log(empXwp);
 
             getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid);
 
@@ -218,7 +220,7 @@ function getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp,
         .then(data => {
             var feriXMonthXEmp = data.result;
             var feriePerEmployee = [];
-            feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrolename":').join('"Employee":')).replace(/\s/g, '').toLowerCase();
+            feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrolename":').join('"Employee":'));
       		feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"contactrole_vacations":').join('"Date":'));
 
             //feriXMonthXEmp = JSON.parse(JSON.stringify(feriXMonthXEmp).split('"employeescf_1836":').join('"Date":'));
