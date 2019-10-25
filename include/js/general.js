@@ -323,6 +323,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
         output = [];
 
     for (let r = 0; r < emp_x_wp_worksheet.length; r++) {
+        console.log(emp_x_wp_worksheet[r]);
         r_data.push(emp_x_wp_worksheet[r]);
     }
 
@@ -347,7 +348,7 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
             distEMP.push(empName);
         }
     }
-    console.log('distinct employees', distEMP);
+    // console.log('distinct employees', distEMP);
 
     for (var e = 0; e < distEMP.length; e++) {
         for (var j = 0; j < r_data.length; j++) {
