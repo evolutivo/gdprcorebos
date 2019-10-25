@@ -457,8 +457,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
            let empNameFromFerie = feriXMonthXEmp[gg].Employee.replace(/\s/g, '').toLowerCase();*/
 
 
-           let empNameFromCalendar = employeeCalendars[kk].EMP;
-           let empNameFromFerie = feriXMonthXEmp[gg].Employee;
+           let empNameFromCalendar = employeeCalendars[kk].EMP.trim();
+           let empNameFromFerie = feriXMonthXEmp[gg].Employee.trim();
 
            // console.log(empNameFromCalendar +'-' + empNameFromFerie);
 
