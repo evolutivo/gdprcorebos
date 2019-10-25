@@ -185,8 +185,6 @@ function getEMPxWP(columNames, endpoint, oper, sessionId, wpXMonth, annoRiferime
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"cf_1837":').join('"WorkingHour":'));
             empXwp = JSON.parse(JSON.stringify(empXwp).split('"id":').join('"EmployeeID":'));
 
-            console.log(empXwp);
-
             getFeriePerEmp(columNames, endpoint, oper, sessionId, wpXMonth, empXwp, annoRiferimento, projectid);
 
         })
@@ -345,10 +343,11 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
 
     for (var i = 0; i < r_data.length; i++) {
         if (!distEMP.includes(r_data[i].Employee)) {
-            distEMP.push(r_data[i].Employee)
+            let empName = r_data[i].Employee.replace(/\s/g, '').toLowerCase();
+            distEMP.push(empName);
         }
     }
-    // console.log('distinct employees', distEMP);
+    console.log('distinct employees', distEMP);
 
     for (var e = 0; e < distEMP.length; e++) {
         for (var j = 0; j < r_data.length; j++) {
