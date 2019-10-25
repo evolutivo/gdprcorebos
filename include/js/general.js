@@ -323,7 +323,6 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
         output = [];
 
     for (let r = 0; r < emp_x_wp_worksheet.length; r++) {
-        console.log(emp_x_wp_worksheet[r]);
         r_data.push(emp_x_wp_worksheet[r]);
     }
 
@@ -365,7 +364,8 @@ function loadEMPXWPData(emp_x_wp_worksheet, wpXMonth, festivity, weekEndsForYear
     function sumPercentPerWP(employeeName, r_data) {
         var sumPercent = 0;
         for (var k = 0; k < r_data.length; k++) {
-            if ((r_data[k].Employee == employeeName)) {
+            let emp_name = r_data[k].Employee.replace(/\s/g, '').toLowerCase();
+            if (emp_name == employeeName) {
                 var percentuale = r_data[k].Percentuale.slice(0, -1);
                 // console.log(percentuale);
                 sumPercent += parseInt(percentuale);
